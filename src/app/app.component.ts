@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 
@@ -11,4 +11,9 @@ import { HomeComponent } from './pages/home/home.component';
 })
 export class AppComponent {
     title = 'GVM';
+    darkMode = signal<boolean>(false);
+
+    @HostBinding('class.dark') get mode() {
+        return this.darkMode();
+    }
 }
