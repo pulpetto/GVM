@@ -1,1 +1,67 @@
-<p>header works!</p>
+<header class="flex items-center justify-between">
+    <div>theme switch</div>
+
+    @if (!isMenuVisible) {
+    <button type="button" (click)="isMenuVisible = true" class="p-2">
+        <svg
+            class="w-8 h-8 stroke-black dark:stroke-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M3 5H21"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M3 12H21"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M3 19H21"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+    </button>
+    } @else {
+    <button type="button" (click)="isMenuVisible = false" class="z-50 p-2">
+        <svg
+            class="w-8 h-8 stroke-black dark:stroke-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+    </button>
+    <div
+        class="fixed top-0 left-0 z-40 flex items-center justify-center w-full h-full backdrop-blur-xl"
+    >
+        <li class="flex flex-col items-center gap-4 text-lg font-semibold">
+            <ul>
+                Terms of Use
+            </ul>
+            <ul>
+                Privacy Policy
+            </ul>
+            <ul>
+                Licensing
+            </ul>
+            <ul>
+                Contact
+            </ul>
+        </li>
+    </div>
+    }
+</header>
