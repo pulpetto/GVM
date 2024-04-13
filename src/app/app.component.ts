@@ -1,7 +1,8 @@
-import { Component, HostBinding, signal } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { HeaderComponent } from './shared/header/header.component';
+import { ThemeService } from './services/theme.service';
 
 @Component({
     selector: 'app-root',
@@ -12,9 +13,10 @@ import { HeaderComponent } from './shared/header/header.component';
 })
 export class AppComponent {
     title = 'GVM';
-    darkMode = signal<boolean>(false);
+
+    constructor(private themeService: ThemeService) {}
 
     @HostBinding('class.dark') get mode() {
-        return this.darkMode();
+        return this.themeService.mode;
     }
 }
