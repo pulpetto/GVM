@@ -1,1 +1,32 @@
-<p>login works!</p>
+<div class="flex flex-col items-center justify-start h-screen gap-8 pt-24">
+    <div class="text-4xl font-semibold">Welcome Back!</div>
+    <div class="flex flex-col gap-4">
+        <input
+            type="text"
+            placeholder="Username"
+            class="p-2 border-2 border-transparent border-solid rounded-md dark:bg-neutral-900 bg-neutral-300 focus:border-emerald-500 focus:outline-none placeholder-neutral-500"
+        />
+        <input
+            type="text"
+            placeholder="Password"
+            class="p-2 border-2 border-transparent border-solid rounded-md dark:bg-neutral-900 bg-neutral-300 focus:border-emerald-500 focus:outline-none placeholder-neutral-500"
+        />
+        <div class="flex flex-col items-center gap-3">
+            <button
+                type="button "
+                class="focus:shadow-[0_0_30px_3px_#10b981] hover:shadow-[0_0_30px_3px_#10b981] transition-shadow duration-300 w-full p-2 font-semibold border-2 border-transparent border-solid rounded-md text-neutral-200 bg-emerald-500 focus:outline-none"
+            >
+                Log in
+            </button>
+            <div class="flex gap-1 text-xs text-center -translate-y-2">
+                <div class="opacity-80">Don't have an account?</div>
+                <a
+                    routerLink="/login"
+                    class="font-semibold cursor-pointer text-emerald-500"
+                >
+                    Sing up
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
