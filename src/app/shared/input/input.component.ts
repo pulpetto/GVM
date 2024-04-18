@@ -12,7 +12,8 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 export class InputComponent implements OnInit {
     @Input({ required: true }) type!: string;
     @Input({ required: true }) label!: string;
-    @Input({ required: true }) inputMask!: string;
+    @Input() formControl!: string;
+    @Input() inputMask!: string;
     id!: string;
 
     ngOnInit() {
