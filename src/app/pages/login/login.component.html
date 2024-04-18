@@ -3,18 +3,8 @@
 >
     <div class="text-4xl font-semibold">Welcome Back!</div>
     <div class="flex flex-col gap-4 lg:w-full lg:max-w-xs">
-        <div class="relative w-full">
-            <input
-                type="text"
-                required
-                class="w-full p-2 pt-3 bg-transparent border-2 border-transparent border-solid rounded-t-md focus:border-emerald-500 focus:outline-none focus:rounded-b-md valid:border-emerald-500 valid:outline-none valid:rounded-b-md valid:backdrop-blur-md placeholder-neutral-500 border-b-emerald-500 peer"
-            />
-            <span
-                class="absolute transition-all -translate-y-1/2 border-transparent border-solid opacity-25 select-none border-x-2 left-2 top-1/2 peer-focus:top-0 peer-focus:bg-neutral-200 peer-focus:dark:bg-neutral-950 peer-focus:px-2 peer-focus:opacity-100 peer-valid:top-0 peer-valid:dark:bg-neutral-950 peer-valid:px-2 peer-valid:opacity-100 peer-focus:text-emerald-500 peer-valid:text-emerald-500 peer-focus:border-x-2 peer-focus:border-solid peer-focus:border-emerald-500 peer-focus:text-sm peer-valid:text-sm peer-focus:left-3 peer-valid:left-3"
-            >
-                Username
-            </span>
-        </div>
+        <app-input [type]="'text'" [label]="'Username'"></app-input>
+        <app-input [type]="'password'" [label]="'Password'"></app-input>
 
         <div class="flex flex-col items-center gap-3">
             <button
