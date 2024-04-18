@@ -1,0 +1,15 @@
+.flowing {
+    animation: flowUpDown 10s infinite alternate ease-in-out;
+}
+
+@keyframes flowUpDown {
+    0% {
+        transform: translateY(-50%);
+    }
+    50% {
+        transform: translateY(-45%);
+    }
+    100% {
+        transform: translateY(-50%);
+    }
+}
