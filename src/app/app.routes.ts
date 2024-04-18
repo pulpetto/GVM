@@ -13,6 +13,13 @@ export const routes: Routes = [
                 (component) => component.LoginComponent
             ),
     },
+    {
+        path: 'signup',
+        loadComponent: () =>
+            import('./pages/signup/signup.component').then(
+                (component) => component.SignupComponent
+            ),
+    },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     {
         path: '**',
