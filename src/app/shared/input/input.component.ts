@@ -1,15 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
     selector: 'app-input',
     standalone: true,
-    imports: [],
+    imports: [NgxMaskDirective],
     templateUrl: './input.component.html',
     styleUrl: './input.component.css',
+    providers: [provideNgxMask()],
 })
 export class InputComponent implements OnInit {
     @Input({ required: true }) type!: string;
     @Input({ required: true }) label!: string;
+    @Input({ required: true }) inputMask!: string;
     id!: string;
 
     ngOnInit() {
