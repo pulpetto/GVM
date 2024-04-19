@@ -24,7 +24,6 @@ export class InputComponent implements OnInit {
     }
 
     focusOnInput() {
-        console.log('h');
         this.inputRef.nativeElement.focus();
     }
 }
