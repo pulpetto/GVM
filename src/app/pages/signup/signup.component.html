@@ -2,16 +2,41 @@
     class="relative z-10 flex flex-col items-center justify-center h-screen gap-8"
 >
     <div class="text-4xl font-semibold">Join Today!</div>
-    <div class="flex flex-col gap-4 lg:w-full lg:max-w-xs">
-        <app-input [type]="'text'" [label]="'Username'"></app-input>
-        <app-input [type]="'email'" [label]="'E-mail'"></app-input>
-        <app-input [type]="'password'" [label]="'Password'"></app-input>
-        <app-input [type]="'password'" [label]="'Repeat password'"></app-input>
+    <form
+        [formGroup]="singupForm"
+        (ngSubmit)="signupUser()"
+        class="flex flex-col gap-4 lg:w-full lg:max-w-xs"
+    >
+        <app-input
+            [formControlInput]="singupForm.controls.username"
+            [type]="'text'"
+            [label]="'Username'"
+        ></app-input>
+        <app-input
+            [formControlInput]="singupForm.controls.email"
+            [type]="'email'"
+            [label]="'E-mail'"
+        ></app-input>
+        <app-input
+            [formControlInput]="singupForm.controls.password"
+            [type]="'password'"
+            [label]="'Password'"
+        ></app-input>
+        <app-input
+            [formControlInput]="singupForm.controls.repeatPassword"
+            [type]="'password'"
+            [label]="'Repeat password'"
+        ></app-input>
 
         <div class="flex flex-col items-center gap-3">
             <button
                 type="submit"
+                [disabled]="singupForm.invalid"
                 class="focus:shadow-[0_0_30px_3px_#10b981] hover:shadow-[0_0_30px_3px_#10b981] transition-shadow duration-300 w-full p-2 font-semibold border-2 border-transparent border-solid rounded-md text-neutral-200 bg-emerald-500 focus:outline-none"
+                [ngClass]="{
+                    'cursor-not-allowed': singupForm.invalid,
+                    'opacity-25': singupForm.invalid
+                }"
             >
                 Sign up
             </button>
@@ -25,5 +50,5 @@
                 </a>
             </div>
         </div>
-    </div>
+    </form>
 </div>

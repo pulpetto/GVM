@@ -1,30 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { InputComponent } from '../../shared/input/input.component';
 import {
-    FormBuilder,
+    FormControl,
     FormGroup,
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'app-signup',
     standalone: true,
     templateUrl: './signup.component.html',
     styleUrl: './signup.component.css',
-    imports: [InputComponent, ReactiveFormsModule],
+    imports: [InputComponent, ReactiveFormsModule, CommonModule],
 })
-export class SignupComponent implements OnInit {
-    form!: FormGroup;
+export class SignupComponent {
+    userService = inject(UserService);
 
-    constructor(private formBuilder: FormBuilder) {}
+    singupForm = new FormGroup({
+        username: new FormControl('', [Validators.required]),
+        email: new FormControl('', [Validators.required]),
+        password: new FormControl('', [Validators.required]),
+        repeatPassword: new FormControl('', [Validators.required]),
+    });
 
-    ngOnInit() {
-        this.form = this.formBuilder.group({
-            username: ['', Validators.required],
-            email: ['', Validators.required, Validators.email],
-            password: ['', Validators.required],
-            repeatPassword: ['', Validators.required],
-        });
-    }
+    signupUser() {}
 }

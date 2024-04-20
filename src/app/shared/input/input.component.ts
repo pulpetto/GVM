@@ -1,10 +1,11 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
     selector: 'app-input',
     standalone: true,
-    imports: [NgxMaskDirective],
+    imports: [NgxMaskDirective, ReactiveFormsModule],
     templateUrl: './input.component.html',
     styleUrl: './input.component.css',
     providers: [provideNgxMask()],
@@ -12,7 +13,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 export class InputComponent implements OnInit {
     @Input({ required: true }) type!: string;
     @Input({ required: true }) label!: string;
-    @Input() formControl!: string;
+    @Input() formControlInput!: FormControl;
     @Input() inputMask!: string;
     id!: string;
 
