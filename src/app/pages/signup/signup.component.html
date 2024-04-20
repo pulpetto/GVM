@@ -9,18 +9,22 @@
     >
         <app-input
             [formControlInput]="singupForm.controls.username"
+            [type]="'text'"
             [label]="'Username'"
         ></app-input>
         <app-input
             [formControlInput]="singupForm.controls.email"
+            [type]="'text'"
             [label]="'E-mail'"
         ></app-input>
         <app-input
             [formControlInput]="singupForm.controls.password"
+            [type]="'password'"
             [label]="'Password'"
         ></app-input>
         <app-input
             [formControlInput]="singupForm.controls.repeatPassword"
+            [type]="'password'"
             [label]="'Repeat password'"
         ></app-input>
 
