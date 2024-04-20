@@ -17,3 +17,25 @@
         {{ label }}
     </span>
 </div>
+
+<!-- prettier-ignore -->
+@if (
+    formControlInput.touched &&
+    formControlInput.dirty &&
+    formControlInput.errors
+    )
+{
+
+<div class="mt-1 text-sm text-red-600">
+    <!-- prettier-ignore -->
+    @if (formControlInput.errors['required']) {
+    Field required
+    }
+
+    <!-- prettier-ignore -->
+    @if (formControlInput.errors['email']) {
+    Wrong e-mail format
+    }
+</div>
+
+}
