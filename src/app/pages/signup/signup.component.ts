@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputComponent } from '../../shared/input/input.component';
 import {
@@ -10,6 +10,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-signup',
@@ -18,8 +19,10 @@ import { UserService } from '../../services/user.service';
     styleUrl: './signup.component.css',
     imports: [InputComponent, ReactiveFormsModule, CommonModule],
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
     userService = inject(UserService);
+
+    loading$!: Observable<boolean>;
 
     singupForm = new FormGroup({
         username: new FormControl('', [Validators.required]),
@@ -33,6 +36,10 @@ export class SignupComponent {
             this.matchingPasswordValidator.bind(this),
         ]),
     });
+
+    ngOnInit() {
+        this.loading$ = this.userService.getLoadingState$();
+    }
 
     passwordValidator(control: AbstractControl): ValidationErrors | null {
         const value: string = control.value;
