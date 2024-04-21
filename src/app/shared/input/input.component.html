@@ -25,17 +25,41 @@
     formControlInput.errors
     )
 {
-
 <div class="mt-1 text-sm text-red-600">
     <!-- prettier-ignore -->
     @if (formControlInput.errors['required']) {
     Field required
     }
 
-    <!-- prettier-ignore -->
     @if (formControlInput.errors['email']) {
     Wrong e-mail format
     }
-</div>
 
+    @if (formControlInput.value.length > 0) {
+    <!-- prettier-ignore -->
+    @if (formControlInput.errors['uppercaseLetterMissing']) {
+            Add at least 1 uppercase letter.
+        }
+
+        @if (formControlInput.errors['lowercaseLetterMissing']) {
+            Add at least 1 lowercase letter.
+        }
+
+        @if (formControlInput.errors['numberMissing']) {
+            Add at least 1 number.
+        }
+
+        @if (formControlInput.errors['symbolMissing']) {
+            Add at least 1 symbol.
+        }
+
+        @if (formControlInput.errors['passwordTooShort']) {
+            8 characters minimum.
+        }
+
+        @if (formControlInput.errors['passwordsDoNotMatch']) {
+            Passwords are not the same.
+        }
+    }
+</div>
 }
