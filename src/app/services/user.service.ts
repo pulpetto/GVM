@@ -1,5 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, Firestore } from '@angular/fire/firestore';
+import {
+    addDoc,
+    Firestore,
+    getDocs,
+    query,
+    where,
+} from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 import { User } from '../interfaces/user';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
@@ -31,5 +37,12 @@ export class UserService {
             this.loading.next(false);
             addDoc(this.users, user);
         });
+    }
+
+    async checkIfUserExists(username: string): Promise<boolean> {
+        const q = query(this.users, where('username', '==', username));
+        const data = await getDocs(q);
+
+        return !data.empty;
     }
 }
