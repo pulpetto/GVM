@@ -20,6 +20,22 @@ export const routes: Routes = [
                 (component) => component.SignupComponent
             ),
     },
+    {
+        path: 'user',
+        loadComponent: () =>
+            import('./pages/user/user.component').then(
+                (component) => component.UserComponent
+            ),
+        children: [
+            {
+                path: 'profile',
+                loadComponent: () =>
+                    import('./pages/user/profile/profile.component').then(
+                        (component) => component.ProfileComponent
+                    ),
+            },
+        ],
+    },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     {
         path: '**',
