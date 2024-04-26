@@ -35,6 +35,10 @@
     Wrong e-mail format
     }
 
+    @if (formControlInput.errors['usernameAlreadyTaken']) {
+    Username already taken
+    }
+
     @if (formControlInput.value.length > 0) {
     <!-- prettier-ignore -->
     @if (formControlInput.errors['uppercaseLetterMissing']) {
