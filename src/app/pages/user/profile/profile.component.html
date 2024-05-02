@@ -231,7 +231,28 @@
     </div>
 
     <div class="flex flex-col w-full gap-2">
-        <div>Recent Workouts:</div>
+        <div
+            class="flex items-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 active:scale-95 transition-all"
+        >
+            <div class="transition-colors group-hover:text-emerald-500">
+                Recent Workouts
+            </div>
+            <div>
+                <svg
+                    class="w-5 h-5 mt-1 transition-all stroke-black dark:stroke-white group-hover:stroke-emerald-500 group-hover:rotate-180"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6 9L12 15L18 9"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+        </div>
 
         <div class="flex flex-col gap-2">
             <!-- Followers -->
