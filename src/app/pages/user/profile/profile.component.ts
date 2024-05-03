@@ -3,6 +3,7 @@ import { WorkoutPreviewComponent } from '../../../shared/workout-preview/workout
 import { CommentComponent } from '../../../shared/comment/comment.component';
 import { FollowNotificationComponent } from '../../../shared/follow-notification/follow-notification.component';
 import { IconButtonComponent } from '../../../shared/icon-button/icon-button.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-profile',
@@ -14,6 +15,29 @@ import { IconButtonComponent } from '../../../shared/icon-button/icon-button.com
         CommentComponent,
         FollowNotificationComponent,
         IconButtonComponent,
+        CommonModule,
     ],
 })
-export class ProfileComponent {}
+export class ProfileComponent {
+    modalVisibility: boolean = false;
+
+    options = [
+        {
+            name: 'workouts',
+            active: true,
+        },
+        {
+            name: 'comments',
+            active: false,
+        },
+        {
+            name: 'followers',
+            active: false,
+        },
+    ];
+
+    onActiveTabChange(clickedIndex: number) {
+        this.options.find((option) => option.active === true)!.active = false;
+        this.options[clickedIndex].active = true;
+    }
+}
