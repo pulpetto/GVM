@@ -232,14 +232,13 @@
         </button>
 
         <div class="flex flex-col gap-2">
-            <!-- Followers -->
+            @if (options[0].active === true) {
+            <app-workout-preview></app-workout-preview>
+            } @else if(options[1].active === true) {
+            <app-comment></app-comment>
+            }@else if(options[2].active === true) {
             <app-follow-notification></app-follow-notification>
-
-            <!-- Comments -->
-            <!-- <app-comment></app-comment> -->
-
-            <!-- Workouts: -->
-            <!-- <app-workout-preview></app-workout-preview> -->
+            }
         </div>
     </div>
 </div>
