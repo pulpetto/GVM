@@ -232,68 +232,16 @@
         </button>
 
         <div class="flex flex-col gap-2">
-            @if (options[0].active === true) {
             <app-workout-preview></app-workout-preview>
-            } @else if(options[1].active === true) {
-            <app-comment></app-comment>
-            }@else if(options[2].active === true) {
             <app-follow-notification></app-follow-notification>
-            }
+            <app-comment></app-comment>
         </div>
     </div>
 </div>
 
-@if (modalVisibility) {
-<!-- eslint-disable-next-line -->
-<div
-    (click)="modalVisibility = false"
-    class="fixed top-0 left-0 z-40 w-full h-screen backdrop-brightness-10"
-></div>
-}
-
-<div
-    class="fixed z-50 flex flex-col w-full gap-2 p-4 transition-all duration-300 bg-neutral-950 rounded-t-md pb-44"
-    [ngClass]="{
-        'bottom-0': modalVisibility,
-        '-bottom-full': !modalVisibility
-    }"
->
-    <div class="self-center">Select one option:</div>
-    <div class="flex flex-col gap-1">
-        @for (option of options; track $index) {
-        <button
-            type="button"
-            (click)="onActiveTabChange($index); modalVisibility = false"
-            class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
-        >
-            <div
-                class="p-2 transition-colors group-hover:text-emerald-500"
-                [ngClass]="{
-                    'text-emerald-500': option.active,
-                    'font-semibold': option.active
-                }"
-            >
-                Recent {{ option.name }}
-            </div>
-
-            @if (option.active) {
-            <div>
-                <svg
-                    class="w-6 h-6 stroke-emerald-500"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M5 13L9 17L19 7"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            </div>
-            }
-        </button>
-        }
-    </div>
-</div>
+<app-one-option-modal
+    [options]="['Recent Workouts', 'Recent Followers', 'Recent Comments']"
+    [visibility]="modalVisibility"
+    (activeOption)="handle()"
+    (closeModal)="modalVisibility = false"
+></app-one-option-modal>
