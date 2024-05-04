@@ -1,2 +1,1 @@
-export interface Workout {
-}
+export interface Workout {}
