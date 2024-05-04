@@ -295,7 +295,12 @@
 
 <app-one-option-modal
     [title]="'Choose chart to display'"
-    [options]="['Workout Time', 'Workout Volume']"
+    [options]="[
+        'Workout Time',
+        'Workout Volume',
+        'Reps Performed',
+        'Muscle Groups Distribution'
+    ]"
     [visibility]="chartsModalVisibility"
     (activeOption)="handle()"
     (closeModal)="chartsModalVisibility = false"
