@@ -34,6 +34,13 @@ export const routes: Routes = [
                         (component) => component.ProfileComponent
                     ),
             },
+            {
+                path: 'workout',
+                loadComponent: () =>
+                    import('./pages/user/workout/workout.component').then(
+                        (component) => component.WorkoutComponent
+                    ),
+            },
         ],
     },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
