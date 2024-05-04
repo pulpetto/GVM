@@ -21,23 +21,10 @@ import { CommonModule } from '@angular/common';
 export class ProfileComponent {
     modalVisibility: boolean = false;
 
-    options = [
-        {
-            name: 'workouts',
-            active: true,
-        },
-        {
-            name: 'comments',
-            active: false,
-        },
-        {
-            name: 'followers',
-            active: false,
-        },
-    ];
+    chartsModalVisibility: boolean = false;
+    chartsPeriodModalVisibility: boolean = false;
 
-    onActiveTabChange(clickedIndex: number) {
-        this.options.find((option) => option.active === true)!.active = false;
-        this.options[clickedIndex].active = true;
+    handle() {}
+
     }
 }

@@ -31,11 +31,57 @@
 
     <div class="relative flex flex-col w-full gap-1">
         <div class="flex justify-between">
-            <div>Chart Name:</div>
-            <div>Chart Options:</div>
+            <button
+                type="button"
+                (click)="chartsModalVisibility = true"
+                class="flex items-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 active:scale-95 transition-all"
+            >
+                <div class="transition-colors group-hover:text-emerald-500">
+                    Charts
+                </div>
+                <div>
+                    <svg
+                        class="w-5 h-5 mt-1 transition-all stroke-black dark:stroke-white group-hover:stroke-emerald-500 group-hover:rotate-180"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M6 9L12 15L18 9"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </div>
+            </button>
+            <button
+                type="button"
+                (click)="chartsPeriodModalVisibility = true"
+                class="flex items-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 active:scale-95 transition-all"
+            >
+                <div class="transition-colors group-hover:text-emerald-500">
+                    Period
+                </div>
+                <div>
+                    <svg
+                        class="w-5 h-5 mt-1 transition-all stroke-black dark:stroke-white group-hover:stroke-emerald-500 group-hover:rotate-180"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M6 9L12 15L18 9"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </div>
+            </button>
         </div>
         <div
-            class="border-2 border-solid rounded-md border-neutral-900 h-44"
+            class="p-2 border-2 border-solid rounded-md border-neutral-900"
         ></div>
 
         <div class="absolute -left-6 top-1/2">
@@ -244,4 +290,25 @@
     [visibility]="modalVisibility"
     (activeOption)="handle()"
     (closeModal)="modalVisibility = false"
+></app-one-option-modal>
+
+<app-one-option-modal
+    [options]="['Workout Time', 'Workout Volume']"
+    [visibility]="chartsModalVisibility"
+    (activeOption)="handle()"
+    (closeModal)="chartsModalVisibility = false"
+></app-one-option-modal>
+
+<app-one-option-modal
+    [options]="[
+        'Last Week',
+        'Last Month',
+        'Last 3 Months',
+        'Last 6 Months',
+        'Last Year',
+        'All time'
+    ]"
+    [visibility]="chartsPeriodModalVisibility"
+    (activeOption)="handle()"
+    (closeModal)="chartsPeriodModalVisibility = false"
 ></app-one-option-modal>
