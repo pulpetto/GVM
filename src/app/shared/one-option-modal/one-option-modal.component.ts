@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
     styleUrl: './one-option-modal.component.css',
 })
 export class OneOptionModalComponent implements OnInit {
+    @Input() title!: string;
     @Input() options!: string[];
     @Input() visibility: boolean = false;
 

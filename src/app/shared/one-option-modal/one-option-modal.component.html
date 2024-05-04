@@ -10,7 +10,7 @@
     class="fixed z-50 flex flex-col w-full gap-2 p-4 transition-all duration-300 bg-neutral-950 rounded-t-md pb-44"
     [ngClass]="{ 'bottom-0': visibility, '-bottom-full': !visibility }"
 >
-    <div class="self-center">Select one option:</div>
+    <div class="self-center font-semibold">{{ title }}:</div>
     <div class="flex flex-col gap-1">
         @for (option of optionsConverted; track $index) {
         <button

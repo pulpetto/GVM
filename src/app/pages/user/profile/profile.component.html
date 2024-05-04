@@ -286,6 +286,7 @@
 </div>
 
 <app-one-option-modal
+    [title]="'Select one option to display'"
     [options]="['Recent Workouts', 'Recent Followers', 'Recent Comments']"
     [visibility]="modalVisibility"
     (activeOption)="handle()"
@@ -293,6 +294,7 @@
 ></app-one-option-modal>
 
 <app-one-option-modal
+    [title]="'Choose chart to display'"
     [options]="['Workout Time', 'Workout Volume']"
     [visibility]="chartsModalVisibility"
     (activeOption)="handle()"
@@ -300,6 +302,7 @@
 ></app-one-option-modal>
 
 <app-one-option-modal
+    [title]="'Choose chart period to display'"
     [options]="[
         'Last Week',
         'Last Month',
