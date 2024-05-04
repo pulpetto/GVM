@@ -9,9 +9,9 @@ import { CommonModule } from '@angular/common';
     styleUrl: './one-option-modal.component.css',
 })
 export class OneOptionModalComponent implements OnInit {
-    @Input() title!: string;
-    @Input() options!: string[];
-    @Input() visibility: boolean = false;
+    @Input({ required: true }) title!: string;
+    @Input({ required: true }) options!: string[];
+    @Input({ required: true }) visibility: boolean = false;
 
     @Output() closeModal = new EventEmitter<void>();
     @Output() activeOption = new EventEmitter<{
