@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { WorkoutPreviewComponent } from '../../../shared/workout-preview/workout-preview.component';
-import { CommentComponent } from '../../../shared/comment/comment.component';
-import { FollowNotificationComponent } from '../../../shared/follow-notification/follow-notification.component';
 import { IconButtonComponent } from '../../../shared/icon-button/icon-button.component';
 import { CommonModule } from '@angular/common';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartConfiguration, ChartOptions } from 'chart.js';
+import { Chart, registerables } from 'chart.js';
+import { OneOptionModalComponent } from '../../../shared/one-option-modal/one-option-modal.component';
+import { RecentComponent } from './recent/recent.component';
 
 @Component({
     selector: 'app-profile',
@@ -11,11 +13,11 @@ import { CommonModule } from '@angular/common';
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.css',
     imports: [
-        WorkoutPreviewComponent,
-        CommentComponent,
-        FollowNotificationComponent,
         IconButtonComponent,
         CommonModule,
+        BaseChartDirective,
+        OneOptionModalComponent,
+        RecentComponent,
     ],
 })
 export class ProfileComponent {
