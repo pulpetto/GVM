@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { IconButtonComponent } from '../../../shared/icon-button/icon-button.component';
 import { CommonModule } from '@angular/common';
-import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration, ChartOptions } from 'chart.js';
-import { Chart, registerables } from 'chart.js';
 import { OneOptionModalComponent } from '../../../shared/one-option-modal/one-option-modal.component';
 import { RecentComponent } from './recent/recent.component';
+import { ChartsCarouselComponent } from './charts-carousel/charts-carousel.component';
 
 @Component({
     selector: 'app-profile',
@@ -15,18 +13,9 @@ import { RecentComponent } from './recent/recent.component';
     imports: [
         IconButtonComponent,
         CommonModule,
-        BaseChartDirective,
         OneOptionModalComponent,
         RecentComponent,
+        ChartsCarouselComponent,
     ],
 })
-export class ProfileComponent {
-    modalVisibility: boolean = false;
-
-    chartsModalVisibility: boolean = false;
-    chartsPeriodModalVisibility: boolean = false;
-
-    handle() {}
-
-    }
-}
+export class ProfileComponent {}
