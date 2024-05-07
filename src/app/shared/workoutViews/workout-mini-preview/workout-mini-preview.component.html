@@ -1,4 +1,5 @@
-<div
+<a
+    [routerLink]="routeName"
     class="flex flex-col w-full gap-1 p-2 transition-all border-2 border-solid rounded-md cursor-pointer border-neutral-900 hover:border-emerald-600 active:opacity-50 active:scale-95 group"
 >
     <div class="flex justify-between text-xl font-semibold">
@@ -34,23 +35,28 @@
 
     <div class="flex flex-col text-sm opacity-50 text-start">
         <div class="overflow-hidden text-ellipsis text-nowrap">
-            Exercises <span class="font-semibold"> (8) </span>: Squats Deadlifts
-            Bench Press Pull-Ups/Chin-Ups Overhead Press Rows Lunges Planks
+            Exercises
+            <span class="font-semibold"> ({{ exercises.length }}) </span>:
+            <!-- prettier-ignore-next-line -->
+            @for (exercise of exercises; track $index) {
+            {{ exercise }}
+            }
         </div>
         <div class="overflow-hidden text-ellipsis text-nowrap">
-            Muscle Groups <span class="font-semibold"> (3) </span>: Chest, Back,
-            Shoulders
+            Muscle Groups
+            <span class="font-semibold"> ({{ muscleGroups.length }}) </span>:
+            <!-- prettier-ignore-next-line -->
+            @for (muscleGroup of muscleGroups; track $index) {
+            {{ muscleGroup }}
+            }
         </div>
         <div class="overflow-hidden text-ellipsis text-nowrap">
-            Equipment <span class="font-semibold"> (4) </span>: Bench, Squat
-            Rack, Dumbells, Barbell
+            Equipment
+            <span class="font-semibold"> ({{ equipment.length }}) </span>:
+            <!-- prettier-ignore-next-line -->
+            @for (item of equipment; track $index) {
+            {{ item }}
+            }
         </div>
     </div>
-
-    <!-- <button
-    type="button"
-    class="p-2 mt-1 font-semibold border-2 border-solid rounded-md border-neutral-900"
->
-    Start Workout
-</button> -->
-</div>
+</a>
