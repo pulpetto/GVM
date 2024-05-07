@@ -3,6 +3,7 @@ import { OneOptionModalComponent } from '../../../../shared/one-option-modal/one
 import { WorkoutPreviewComponent } from '../../../../shared/workout-preview/workout-preview.component';
 import { FollowNotificationComponent } from '../../../../shared/follow-notification/follow-notification.component';
 import { CommentComponent } from '../../../../shared/comment/comment.component';
+import { ButtonForModalComponent } from '../../../../shared/button-for-modal/button-for-modal.component';
 
 @Component({
     selector: 'app-recent',
@@ -14,10 +15,11 @@ import { CommentComponent } from '../../../../shared/comment/comment.component';
         WorkoutPreviewComponent,
         FollowNotificationComponent,
         CommentComponent,
+        ButtonForModalComponent,
     ],
 })
 export class RecentComponent {
-    modalVisibility: boolean = false;
+    activeTabName: string = 'workout';
 
-    tabChange() {}
+    activeTabChange() {}
 }
