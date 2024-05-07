@@ -14,7 +14,7 @@ export class OneOptionModalComponent implements OnInit {
     @Input({ required: true }) visibility: boolean = false;
 
     @Output() closeModal = new EventEmitter<void>();
-    @Output() activeOption = new EventEmitter<{
+    @Output() activeOptionChange = new EventEmitter<{
         name: string;
         active: boolean;
     }>();
@@ -38,7 +38,7 @@ export class OneOptionModalComponent implements OnInit {
         const activeOption = this.optionsConverted[clickedIndex];
         activeOption.active = true;
 
-        this.activeOption.emit(activeOption);
+        this.activeOptionChange.emit(activeOption);
         this.closeModal.emit();
     }
 }
