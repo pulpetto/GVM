@@ -1,1 +1,32 @@
-<p>charts-carousel works!</p>
+<div class="relative flex flex-col w-full gap-1">
+    <div class="flex justify-between">
+        <app-button-for-modal
+            [name]="'Charts'"
+            [modalName]="'Choose chart to display'"
+            [modalOptions]="[
+                'Workout Time',
+                'Workout Volume',
+                'Reps Performed',
+                'Muscle Groups Distribution'
+            ]"
+            (activeOptionChange)="handle()"
+        ></app-button-for-modal>
+
+        <app-button-for-modal
+            [name]="'Period'"
+            [modalName]="'Choose chart period to display'"
+            [modalOptions]="[
+                'Last Week',
+                'Last Month',
+                'Last 3 Months',
+                'Last 6 Months',
+                'Last Year',
+                'All time'
+            ]"
+            (activeOptionChange)="handle()"
+        ></app-button-for-modal>
+    </div>
+    <div class="p-2 border-2 border-solid rounded-md border-neutral-900">
+        <app-carousel></app-carousel>
+    </div>
+</div>
