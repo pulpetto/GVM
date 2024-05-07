@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { OneOptionModalComponent } from '../../../../shared/one-option-modal/one-option-modal.component';
-import { WorkoutPreviewComponent } from '../../../../shared/workout-preview/workout-preview.component';
 import { FollowNotificationComponent } from '../../../../shared/follow-notification/follow-notification.component';
 import { CommentComponent } from '../../../../shared/comment/comment.component';
 import { ButtonForModalComponent } from '../../../../shared/button-for-modal/button-for-modal.component';
+import { WorkoutDonePreviewComponent } from '../../../../shared/workoutViews/workout-done-preview/workout-done-preview.component';
 
 @Component({
     selector: 'app-recent',
@@ -12,10 +12,10 @@ import { ButtonForModalComponent } from '../../../../shared/button-for-modal/but
     styleUrl: './recent.component.css',
     imports: [
         OneOptionModalComponent,
-        WorkoutPreviewComponent,
         FollowNotificationComponent,
         CommentComponent,
         ButtonForModalComponent,
+        WorkoutDonePreviewComponent,
     ],
 })
 export class RecentComponent {
