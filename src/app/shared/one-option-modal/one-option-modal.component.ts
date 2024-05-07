@@ -32,6 +32,10 @@ export class OneOptionModalComponent implements OnInit {
     }
 
     onActiveTabChange(clickedIndex: number) {
+        if (this.optionsConverted[clickedIndex].active === true) return;
+
+        this.visibility = false;
+
         this.optionsConverted.find((option) => option.active === true)!.active =
             false;
 
