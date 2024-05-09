@@ -23,4 +23,47 @@
     <div class="w-full">
         <app-charts-carousel></app-charts-carousel>
     </div>
+
+    <div class="flex flex-col self-start w-full gap-4">
+        <div class="flex flex-col gap-1">
+            <a class="flex items-center gap-2">
+                <div
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                >
+                    <img
+                        src="https://www.kettlebellkings.com/cdn/shop/articles/barbell-deadlift-movement.gif?v=1692228918"
+                        class="w-10 h-10"
+                        alt=""
+                    />
+                </div>
+                <div class="text-xl font-semibold text-emerald-500">
+                    Deadlift (Barbell)
+                </div>
+            </a>
+            <div class="flex justify-between px-2 font-semibold opacity-50">
+                <div>Set</div>
+                <div>Type</div>
+                <div>Weight</div>
+                <div>Reps</div>
+                <div>Rpe</div>
+            </div>
+            <div class="flex flex-col text-lg">
+                @for (item of [1,2,3,4,5]; track $index) {
+                <div
+                    class="flex justify-between px-4 py-2 rounded-md"
+                    [ngClass]="{
+                        'bg-neutral-900': $index % 2 === 0,
+                        'bg-opacity-50': $index % 2 === 0
+                    }"
+                >
+                    <div>{{ $index + 1 }}</div>
+                    <div>P</div>
+                    <div>180</div>
+                    <div>14</div>
+                    <div>9</div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
