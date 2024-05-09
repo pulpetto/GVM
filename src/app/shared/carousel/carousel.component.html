@@ -1,11 +1,11 @@
 <div class="relative flex flex-col gap-1">
     <div
-        class="relative flex p-2 overflow-hidden border-2 border-solid rounded-md h-44 border-neutral-900"
+        class="relative flex overflow-hidden border-2 border-solid rounded-md h-44 border-neutral-900"
     >
         @for (item of carouselItems; track $index) {
         <img
             [src]="carouselItems[$index]"
-            class="absolute top-0 left-0 transition-transform duration-500 ease-out h-44 w-80"
+            class="absolute top-0 left-0 w-full transition-transform duration-500 ease-out h-44"
             [style]="
                 'transform: translateX(' + 100 * ($index - activeIndex) + '%)'
             "
