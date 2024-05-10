@@ -1,7 +1,8 @@
-<div class="flex flex-col gap-1">
+<div class="flex flex-col gap-2">
     <div class="flex items-center justify-between">
         <button
             type="button"
+            (click)="toggleExpand(dropdown); isOpen = !isOpen"
             class="flex opacity-50 items-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 active:scale-95 transition-all self-start"
         >
             <div class="transition-colors group-hover:text-emerald-500">
@@ -9,7 +10,8 @@
             </div>
             <div>
                 <svg
-                    class="w-5 h-5 mt-1 transition-all stroke-black dark:stroke-white group-hover:stroke-emerald-500 group-hover:rotate-180"
+                    class="w-5 h-5 mt-1 transition-all stroke-black dark:stroke-white group-hover:stroke-emerald-500"
+                    [ngClass]="{ 'rotate-180': isOpen }"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -53,5 +55,17 @@
         </button>
     </div>
 
-    <app-workout-mini-preview [name]="'Test'"></app-workout-mini-preview>
+    <div #dropdown class="h-0 overflow-y-hidden transition-all duration-300">
+        <div class="flex flex-col gap-1">
+            <app-workout-mini-preview
+                [name]="'Chest / Back'"
+            ></app-workout-mini-preview>
+            <app-workout-mini-preview
+                [name]="'Arms / Shoulders'"
+            ></app-workout-mini-preview>
+            <app-workout-mini-preview
+                [name]="'Legs / Neck'"
+            ></app-workout-mini-preview>
+        </div>
+    </div>
 </div>
