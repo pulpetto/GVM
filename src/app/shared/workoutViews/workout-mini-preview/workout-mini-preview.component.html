@@ -32,31 +32,4 @@
             </svg>
         </button>
     </div>
-
-    <div class="flex flex-col text-sm opacity-50 text-start">
-        <div class="overflow-hidden text-ellipsis text-nowrap">
-            Exercises
-            <span class="font-semibold"> ({{ exercises.length }}) </span>:
-            <!-- prettier-ignore-next-line -->
-            @for (exercise of exercises; track $index) {
-            {{ exercise }}
-            }
-        </div>
-        <div class="overflow-hidden text-ellipsis text-nowrap">
-            Muscle Groups
-            <span class="font-semibold"> ({{ muscleGroups.length }}) </span>:
-            <!-- prettier-ignore-next-line -->
-            @for (muscleGroup of muscleGroups; track $index) {
-            {{ muscleGroup }}
-            }
-        </div>
-        <div class="overflow-hidden text-ellipsis text-nowrap">
-            Equipment
-            <span class="font-semibold"> ({{ equipment.length }}) </span>:
-            <!-- prettier-ignore-next-line -->
-            @for (item of equipment; track $index) {
-            {{ item }}
-            }
-        </div>
-    </div>
 </a>
