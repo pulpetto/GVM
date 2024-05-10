@@ -11,9 +11,6 @@ import { ButtonForModalComponent } from '../../button-for-modal/button-for-modal
 })
 export class WorkoutMiniPreviewComponent {
     @Input({ required: true }) name!: string;
-    @Input({ required: true }) exercises!: string[];
-    @Input({ required: true }) muscleGroups!: string[];
-    @Input({ required: true }) equipment!: string[];
 
     get routeName(): string {
         return this.name.replace(/\s&\s/g, '&');
