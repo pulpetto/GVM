@@ -3,8 +3,8 @@
     class="flex flex-col w-full gap-1 p-2 transition-all border-2 border-solid rounded-md cursor-pointer border-neutral-900 hover:border-emerald-600 active:opacity-50 active:scale-95 group"
 >
     <div class="flex justify-between text-xl font-semibold">
-        <button class="group">
         <div class="text-start">{{ name }}</div>
+        <button class="group" (click)="onMenuClick($event)">
             <svg
                 class="w-6 h-6 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500 fill-black dark:fill-white group-hover:fill-emerald-500"
                 viewBox="0 0 24 24"

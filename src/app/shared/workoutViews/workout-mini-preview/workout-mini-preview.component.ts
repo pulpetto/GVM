@@ -15,4 +15,11 @@ export class WorkoutMiniPreviewComponent {
     get routeName(): string {
         return this.name.replace(/\s&\s/g, '&');
     }
+
+    onMenuClick($event: Event) {
+        $event.stopPropagation();
+        $event.preventDefault();
+    }
+
+    handle() {}
 }
