@@ -25,16 +25,12 @@
     </div>
 
     <div class="flex flex-col w-full gap-1">
-        <app-workout-split></app-workout-split>
-
-        <div
-            class="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-        >
-            @for (x of [1,2,3,4,5,6]; track $index) {
-            <app-workout-mini-preview
-                [name]="'Shoulders & Legs'"
-            ></app-workout-mini-preview>
-            }
-        </div>
+        <app-workout-split
+            [workoutsNames]="[
+                'Chest / Back',
+                'Arms / Shoulders',
+                'Legs / Neck'
+            ]"
+        ></app-workout-split>
     </div>
 </div>

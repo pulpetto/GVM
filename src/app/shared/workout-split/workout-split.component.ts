@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { WorkoutMiniPreviewComponent } from '../workoutViews/workout-mini-preview/workout-mini-preview.component';
 import { CommonModule } from '@angular/common';
 
@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
     imports: [WorkoutMiniPreviewComponent, CommonModule],
 })
 export class WorkoutSplitComponent {
+    @Input({ required: true }) workoutsNames!: string[];
     isOpen: boolean = false;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -57,15 +57,9 @@
 
     <div #dropdown class="h-0 overflow-y-hidden transition-all duration-300">
         <div class="flex flex-col gap-1">
-            <app-workout-mini-preview
-                [name]="'Chest / Back'"
-            ></app-workout-mini-preview>
-            <app-workout-mini-preview
-                [name]="'Arms / Shoulders'"
-            ></app-workout-mini-preview>
-            <app-workout-mini-preview
-                [name]="'Legs / Neck'"
-            ></app-workout-mini-preview>
+            @for (name of workoutsNames; track $index) {
+            <app-workout-mini-preview [name]="name"></app-workout-mini-preview>
+            }
         </div>
     </div>
 </div>
