@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
     imports: [WorkoutMiniPreviewComponent, CommonModule],
 })
 export class WorkoutSplitComponent {
+    @Input({ required: true }) splitName!: string;
     @Input({ required: true }) workoutsNames!: string[];
     isOpen: boolean = false;
 
