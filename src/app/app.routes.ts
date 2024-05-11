@@ -35,6 +35,13 @@ export const routes: Routes = [
                     ),
             },
             {
+                path: 'profile/calendar',
+                loadComponent: () =>
+                    import(
+                        './pages/user/profile/calendar/calendar.component'
+                    ).then((component) => component.CalendarComponent),
+            },
+            {
                 path: 'workout',
                 loadComponent: () =>
                     import('./pages/user/workout/workout.component').then(
