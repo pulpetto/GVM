@@ -1,0 +1,30 @@
+<div
+    class="fixed top-0 left-0 flex flex-col items-center w-full gap-2 px-8 pt-2 bg-opacity-50 backdrop-blur-md rounded-b-md"
+>
+    <div class="text-sm font-semibold">- November 2024 -</div>
+    <div class="flex justify-center gap-1 text-emerald-500">
+        @for (day of ['M', 'T', 'W', 'T', 'F', 'S', 'S']; track $index) {
+        <div
+            class="flex items-start justify-center w-10 h-10 font-semibold text-center"
+        >
+            {{ day }}
+        </div>
+        }
+    </div>
+</div>
+<div class="flex flex-col gap-4 p-8 pt-14">
+    @for (mnth of [1,2,3,4,5]; track $index) {
+    <div class="flex flex-col items-center gap-2">
+        <div class="text-xl font-semibold">November 2024</div>
+        <div class="grid grid-cols-7 gap-1">
+            @for (x of [].constructor(30); track $index) {
+            <a
+                class="flex items-center justify-center w-10 h-10 font-semibold text-center rounded-md bg-neutral-900"
+            >
+                <div>{{ $index + 1 }}</div>
+            </a>
+            }
+        </div>
+    </div>
+    }
+</div>
