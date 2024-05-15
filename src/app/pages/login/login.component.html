@@ -3,8 +3,16 @@
 >
     <div class="text-4xl font-semibold">Welcome Back!</div>
     <div class="flex flex-col gap-4 lg:w-full lg:max-w-xs">
-        <app-input [type]="'text'" [label]="'Username'"></app-input>
-        <app-input [type]="'password'" [label]="'Password'"></app-input>
+        <app-input
+            [formControlInput]="singupForm.controls.username"
+            [type]="'text'"
+            [label]="'Username'"
+        ></app-input>
+        <app-input
+            [formControlInput]="singupForm.controls.password"
+            [type]="'password'"
+            [label]="'Password'"
+        ></app-input>
 
         <div class="flex flex-col items-center gap-3">
             <button
