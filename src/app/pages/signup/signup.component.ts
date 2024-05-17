@@ -41,6 +41,21 @@ export class SignupComponent implements OnInit {
         this.loading$ = this.userService.getLoadingState$();
     }
 
+
+    async usernameValidator(
+        control: AbstractControl
+    ): Promise<ValidationErrors | null> {
+        if (
+            (await this.userService.checkIfUserExists(
+                String(control.value)
+            )) === true
+        ) {
+            return { usernameAlreadyTaken: true };
+        }
+
+        return null;
+    }
+
     passwordValidator(control: AbstractControl): ValidationErrors | null {
         const value: string = control.value;
 
