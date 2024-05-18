@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InputComponent } from '../../shared/input/input.component';
 import {
     AbstractControl,
+    AsyncValidatorFn,
     FormControl,
     FormGroup,
     ReactiveFormsModule,
