@@ -9,7 +9,7 @@ import {
 import { collection } from '@firebase/firestore';
 import { User } from '../interfaces/user';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, from, map, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -39,10 +39,8 @@ export class UserService {
         });
     }
 
-    async checkIfUserExists(username: string): Promise<boolean> {
+    checkIfUserExists(username: string): Observable<boolean> {
         const q = query(this.users, where('username', '==', username));
-        const data = await getDocs(q);
-
-        return !data.empty;
+        return from(getDocs(q)).pipe(map((data) => !data.empty));
     }
 }

@@ -11,7 +11,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { Observable } from 'rxjs';
+import { catchError, debounceTime, map, Observable, of, switchMap } from 'rxjs';
 
 @Component({
     selector: 'app-signup',
@@ -26,7 +26,11 @@ export class SignupComponent implements OnInit {
     loading$!: Observable<boolean>;
 
     singupForm = new FormGroup({
-        username: new FormControl('', [Validators.required]),
+        username: new FormControl('', {
+            validators: [Validators.required],
+            asyncValidators: [this.usernameAsyncValidator()],
+            updateOn: 'blur',
+        }),
         email: new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', [
             Validators.required,
@@ -42,19 +46,28 @@ export class SignupComponent implements OnInit {
         this.loading$ = this.userService.getLoadingState$();
     }
 
+    usernameAsyncValidator(): AsyncValidatorFn {
+        return (
+            control: AbstractControl
+        ): Observable<ValidationErrors | null> => {
+            if (!control.value) {
+                return of(null);
+            }
 
-    async usernameValidator(
-        control: AbstractControl
-    ): Promise<ValidationErrors | null> {
-        if (
-            (await this.userService.checkIfUserExists(
-                String(control.value)
-            )) === true
-        ) {
-            return { usernameAlreadyTaken: true };
-        }
-
-        return null;
+            return of(control.value).pipe(
+                debounceTime(300),
+                switchMap((username) =>
+                    this.userService.checkIfUserExists(username)
+                ),
+                map((exists) =>
+                    exists ? { usernameAlreadyTaken: true } : null
+                ),
+                catchError((error) => {
+                    console.error('Error checking username:', error);
+                    return of({ serverError: true });
+                })
+            );
+        };
     }
 
     passwordValidator(control: AbstractControl): ValidationErrors | null {
