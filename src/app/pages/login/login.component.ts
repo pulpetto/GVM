@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { InputComponent } from '../../shared/input/input.component';
 import {
     AbstractControl,
@@ -16,13 +17,13 @@ import { Observable, of, debounceTime, switchMap, map, catchError } from 'rxjs';
     standalone: true,
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
-    imports: [InputComponent],
+    imports: [InputComponent, CommonModule],
 })
 export class LoginComponent {
     userService = inject(UserService);
 
-    singupForm = new FormGroup({
         password: new FormControl('', [Validators.required]),
+    loginForm = new FormGroup({
         username: new FormControl('', {
             validators: [Validators.required],
             asyncValidators: [this.usernameValidator()],
