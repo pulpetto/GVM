@@ -43,4 +43,9 @@ export class UserService {
         const q = query(this.users, where('username', '==', username));
         return from(getDocs(q)).pipe(map((data) => !data.empty));
     }
+
+    checkIfEmailIsRegistered(email: string): Observable<boolean> {
+        const q = query(this.users, where('email', '==', email));
+        return from(getDocs(q)).pipe(map((data) => !data.empty));
+    }
 }

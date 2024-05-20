@@ -31,7 +31,11 @@ export class SignupComponent implements OnInit {
             asyncValidators: [this.usernameAsyncValidator()],
             updateOn: 'blur',
         }),
-        email: new FormControl('', [Validators.required, Validators.email]),
+        email: new FormControl('', {
+            validators: [Validators.required, Validators.email],
+            asyncValidators: [this.emailValidator()],
+            updateOn: 'blur',
+        }),
         password: new FormControl('', [
             Validators.required,
             this.passwordValidator.bind(this),
@@ -64,6 +68,28 @@ export class SignupComponent implements OnInit {
                 ),
                 catchError((error) => {
                     console.error('Error checking username:', error);
+                    return of({ serverError: true });
+                })
+            );
+        };
+    }
+
+    emailValidator(): AsyncValidatorFn {
+        return (
+            control: AbstractControl
+        ): Observable<ValidationErrors | null> => {
+            if (!control.value) {
+                return of(null);
+            }
+
+            return of(control.value).pipe(
+                debounceTime(300),
+                switchMap((email) =>
+                    this.userService.checkIfEmailIsRegistered(email)
+                ),
+                map((exists) => (exists ? { emailAlreadyTaken: true } : null)),
+                catchError((error) => {
+                    console.error('Error checking email:', error);
                     return of({ serverError: true });
                 })
             );

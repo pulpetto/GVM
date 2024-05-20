@@ -39,6 +39,10 @@
     Username already taken
     }
 
+    @if (formControlInput.errors['emailAlreadyTaken']) {
+    E-mail already taken
+    }
+
     @if (formControlInput.value.length > 0) {
     <!-- prettier-ignore -->
     @if (formControlInput.errors['uppercaseLetterMissing']) {
