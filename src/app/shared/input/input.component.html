@@ -43,6 +43,10 @@
     E-mail already taken
     }
 
+    @if (formControlInput.errors['usernameDoesntExist']) {
+    Username does not exist
+    }
+
     @if (formControlInput.errors['serverError']) {
     Server error
     }
