@@ -40,10 +40,13 @@ export class SignupComponent implements OnInit {
             Validators.required,
             this.passwordValidator.bind(this),
         ]),
-        repeatPassword: new FormControl('', [
-            Validators.required,
-            this.matchingPasswordValidator.bind(this),
-        ]),
+        repeatPassword: new FormControl('', {
+            validators: [
+                Validators.required,
+                this.matchingPasswordValidator.bind(this),
+            ],
+            updateOn: 'blur',
+        }),
     });
 
     ngOnInit() {
