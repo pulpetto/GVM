@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import {
-    addDoc,
+    setDoc,
+    doc,
     Firestore,
     getDocs,
     query,
@@ -33,10 +34,23 @@ export class UserService {
             this.authentication,
             user.email,
             user.password
-        ).then(() => {
-            this.loading.next(false);
-            addDoc(this.users, user);
-        });
+        )
+            .then((userCredentials) => {
+                const userObj = {
+                    username: user.username,
+                    email: user.email,
+                };
+
+                setDoc(
+                    doc(this.firestore, 'users', userCredentials.user.uid),
+                    userObj
+                );
+
+                this.loading.next(false);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     checkIfUserExists(username: string): Observable<boolean> {
