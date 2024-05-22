@@ -10,6 +10,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { RouterModule } from '@angular/router';
 import { Observable, of, debounceTime, switchMap, map, catchError } from 'rxjs';
 
 @Component({
@@ -17,7 +18,7 @@ import { Observable, of, debounceTime, switchMap, map, catchError } from 'rxjs';
     standalone: true,
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
-    imports: [InputComponent, CommonModule],
+    imports: [InputComponent, CommonModule, RouterModule],
 })
 export class LoginComponent {
     userService = inject(UserService);

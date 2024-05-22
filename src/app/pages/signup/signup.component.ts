@@ -11,6 +11,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { RouterModule } from '@angular/router';
 import { catchError, debounceTime, map, Observable, of, switchMap } from 'rxjs';
 
 @Component({
@@ -18,7 +19,7 @@ import { catchError, debounceTime, map, Observable, of, switchMap } from 'rxjs';
     standalone: true,
     templateUrl: './signup.component.html',
     styleUrl: './signup.component.css',
-    imports: [InputComponent, ReactiveFormsModule, CommonModule],
+    imports: [InputComponent, ReactiveFormsModule, CommonModule, RouterModule],
 })
 export class SignupComponent implements OnInit {
     userService = inject(UserService);
