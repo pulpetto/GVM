@@ -23,11 +23,14 @@ import { Observable, of, debounceTime, switchMap, map, catchError } from 'rxjs';
 export class LoginComponent {
     userService = inject(UserService);
 
-        password: new FormControl('', [Validators.required]),
     loginForm = new FormGroup({
         username: new FormControl('', {
             validators: [Validators.required],
             asyncValidators: [this.usernameValidator()],
+            updateOn: 'blur',
+        }),
+        password: new FormControl('', {
+            validators: [Validators.required],
             updateOn: 'blur',
         }),
     });
