@@ -11,6 +11,7 @@ import { collection } from '@firebase/firestore';
 import { User } from '../interfaces/user';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { BehaviorSubject, from, map, Observable } from 'rxjs';
+import { Router } from 'express';
 
 @Injectable({
     providedIn: 'root',
@@ -18,6 +19,7 @@ import { BehaviorSubject, from, map, Observable } from 'rxjs';
 export class UserService {
     firestore = inject(Firestore);
     authentication = inject(Auth);
+    router = inject(Router);
 
     private users = collection(this.firestore, 'users');
 
@@ -45,6 +47,10 @@ export class UserService {
                     doc(this.firestore, 'users', userCredentials.user.uid),
                     userObj
                 );
+
+                this.router.navigate([
+                    `/user/${userCredentials.user.uid}/profile`,
+                ]);
 
                 this.loading.next(false);
             })
