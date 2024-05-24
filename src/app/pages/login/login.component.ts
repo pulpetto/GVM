@@ -58,4 +58,8 @@ export class LoginComponent {
             );
         };
     }
+
+    loginUser(email: string, password: string) {
+        this.userService.loginUser(email, password);
+    }
 }
