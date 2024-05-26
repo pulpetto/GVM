@@ -102,3 +102,8 @@ export class ExercisesComponent {
             focusOn: 'center',
         },
     ];
+
+    onMuscleGroupSelect($index: number) {
+        this.muscleGroups[$index].isSelected =
+            !this.muscleGroups[$index].isSelected;
+    }

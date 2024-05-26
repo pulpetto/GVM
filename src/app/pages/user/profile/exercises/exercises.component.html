@@ -153,6 +153,7 @@
         @for (muscleGroup of muscleGroups; track $index) {
         <button
             type="button"
+            (click)="onMuscleGroupSelect($index)"
             class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
         >
             <div class="flex items-center gap-1">
