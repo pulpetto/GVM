@@ -110,7 +110,9 @@
                 </svg>
             </div>
             <div class="transition-colors group-hover:text-emerald-500">
-                Muscles (1)
+                Muscles
+                <!-- prettier-ignore-next-line -->
+                @if (checkedCount > 0) { ({{ checkedCount }}) }
             </div>
         </button>
     </div>

@@ -107,3 +107,8 @@ export class ExercisesComponent {
         this.muscleGroups[$index].isSelected =
             !this.muscleGroups[$index].isSelected;
     }
+
+    get checkedCount(): number {
+        return this.muscleGroups.filter((muscleGroup) => muscleGroup.isSelected)
+            .length;
+    }
