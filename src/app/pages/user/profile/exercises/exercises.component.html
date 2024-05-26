@@ -145,12 +145,12 @@
 }
 
 <div
-    class="fixed left-0 z-50 flex flex-col w-full gap-2 p-4 transition-all duration-300 bg-neutral-950 rounded-t-md pb-44"
-    [ngClass]="{ 'bottom-0': visibility, '-bottom-full': !visibility }"
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
+    [ngClass]="{ 'top-1/4': visibility, 'top-full': !visibility }"
 >
     <div class="self-center font-semibold">Choose muscle groups:</div>
     <div class="flex flex-col gap-2">
-        @for (option of [1,2,3,4,5,6]; track $index) {
+        @for (muscleGroup of muscleGroups; track $index) {
         <button
             type="button"
             class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
@@ -160,23 +160,24 @@
                     class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
                 >
                     <img
-                        src="https://cdn.muscleandstrength.com/sites/all/themes/mnsnew/images/taxonomy/exercises/muscle-groups/full/Lower-Back.jpg"
+                        [src]="muscleGroup.imageUrl"
                         class="object-cover w-12 h-12"
-                        alt=""
+                        [class]="'object-' + muscleGroup.focusOn"
+                        [alt]="muscleGroup.name + ' image'"
                     />
                 </div>
                 <div
                     class="p-2 transition-colors group-hover:text-emerald-500"
                     [ngClass]="{
-                        'text-emerald-500': $index === 3,
-                        'font-semibold': $index === 3
+                        'text-emerald-500': muscleGroup.isSelected === true,
+                        'font-semibold': muscleGroup.isSelected === true
                     }"
                 >
-                    Lower Back
+                    {{ muscleGroup.name }}
                 </div>
             </div>
 
-            @if ($index === 3) {
+            @if (muscleGroup.isSelected === true) {
             <div>
                 <svg
                     class="w-6 h-6 stroke-emerald-500"
