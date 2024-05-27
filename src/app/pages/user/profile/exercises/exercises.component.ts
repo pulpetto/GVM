@@ -103,6 +103,24 @@ export class ExercisesComponent {
         },
     ];
 
+    equipment = [
+        {
+            name: 'Dumbells',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/calves_0.jpg',
+        },
+        {
+            name: 'Barbell',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/calves_0.jpg',
+        },
+        {
+            name: 'Bodyweight',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/calves_0.jpg',
+        },
+    ];
+
     onMuscleGroupSelect($index: number) {
         this.muscleGroups[$index].isSelected =
             !this.muscleGroups[$index].isSelected;
