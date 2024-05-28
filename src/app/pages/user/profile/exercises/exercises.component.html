@@ -20,6 +20,7 @@
     <div class="flex items-center justify-between w-full gap-1">
         <button
             type="button"
+            (click)="openModal('equipement')"
             class="flex items-center w-1/2 gap-2 p-2.5 transition-all border-2 border-solid rounded-md cursor-pointer border-neutral-900 hover:border-emerald-600 group active:opacity-50 active:scale-95 text-nowrap"
         >
             <div>
@@ -62,12 +63,14 @@
                 </svg>
             </div>
             <div class="transition-colors group-hover:text-emerald-500">
-                Equipment (1)
+                Equipment @if (checkedEquipementCount > 0) { ({{
+                    checkedEquipementCount
+                }}) }
             </div>
         </button>
         <button
             type="button"
-            (click)="visibility = true"
+            (click)="openModal('muscleGroups')"
             class="flex items-center w-1/2 gap-2 p-2.5 transition-all border-2 border-solid rounded-md cursor-pointer border-neutral-900 hover:border-emerald-600 group active:opacity-50 active:scale-95"
         >
             <div>
@@ -110,9 +113,9 @@
                 </svg>
             </div>
             <div class="transition-colors group-hover:text-emerald-500">
-                Muscles
-                <!-- prettier-ignore-next-line -->
-                @if (checkedCount > 0) { ({{ checkedCount }}) }
+                Muscles @if (checkedMuscleGroupsCount > 0) { ({{
+                    checkedMuscleGroupsCount
+                }}) }
             </div>
         </button>
     </div>
@@ -138,24 +141,85 @@
     </div>
 </div>
 
-@if (visibility) {
+@if (bgBlurVisibility) {
 <!-- eslint-disable-next-line    -->
 <div
-    (click)="visibility = false"
+    (click)="closeModal()"
     class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
 ></div>
 }
 
 <div
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md"
+    [ngClass]="{
+        'top-1/4': equipementModalVisibility,
+        'top-full': !equipementModalVisibility
+    }"
+>
+    <div class="self-center font-semibold">Choose equipment:</div>
+    <div class="flex flex-col gap-2">
+        @for (item of equipment; track $index) {
+        <button
+            type="button"
+            (click)="onOptionSelect('equipment', $index)"
+            class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
+        >
+            <div class="flex items-center gap-1">
+                <div
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                >
+                    <img
+                        [src]="item.imageUrl"
+                        class="object-cover w-12 h-12"
+                        [alt]="item.name + ' image'"
+                    />
+                </div>
+                <div
+                    class="p-2 transition-colors group-hover:text-emerald-500"
+                    [ngClass]="{
+                        'text-emerald-500': item.isSelected === true,
+                        'font-semibold': item.isSelected === true
+                    }"
+                >
+                    {{ item.name }}
+                </div>
+            </div>
+
+            @if (item.isSelected === true) {
+            <div>
+                <svg
+                    class="w-6 h-6 stroke-emerald-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M5 13L9 17L19 7"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+            }
+        </button>
+        }
+    </div>
+</div>
+
+<div
     class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
-    [ngClass]="{ 'top-1/4': visibility, 'top-full': !visibility }"
+    [ngClass]="{
+        'top-1/4': muscleGroupsModalVisibility,
+        'top-full': !muscleGroupsModalVisibility
+    }"
 >
     <div class="self-center font-semibold">Choose muscle groups:</div>
     <div class="flex flex-col gap-2">
         @for (muscleGroup of muscleGroups; track $index) {
         <button
             type="button"
-            (click)="onMuscleGroupSelect($index)"
+            (click)="onOptionSelect('muscleGroups', $index)"
             class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
         >
             <div class="flex items-center gap-1">
@@ -199,5 +263,19 @@
             }
         </button>
         }
+    </div>
+    <div class="flex justify-between w-full gap-2 mt-2">
+        <button
+            type="button"
+            class="w-full p-2 font-semibold transition-all border-2 border-solid rounded-md active:opacity-50 active:scale-95 hover:bg-emerald-500 border-emerald-500"
+        >
+            Apply
+        </button>
+        <button
+            type="button"
+            class="w-full p-2 font-semibold transition-all border-2 border-red-500 border-solid rounded-md active:opacity-50 active:scale-95 hover:bg-red-500"
+        >
+            Clear All
+        </button>
     </div>
 </div>

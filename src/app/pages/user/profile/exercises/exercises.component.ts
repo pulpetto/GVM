@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import {
+    Component,
+    Inject,
+    Renderer2,
+} from '@angular/core';
 import { InputComponent } from '../../../../shared/input/input.component';
-import { MuscleGroup } from '../../../../interfaces/muscle-group';
+import { CommonModule, DOCUMENT } from '@angular/common';
 
 @Component({
     selector: 'app-exercises',
     standalone: true,
     templateUrl: './exercises.component.html',
     styleUrl: './exercises.component.css',
-    imports: [InputComponent],
+    imports: [InputComponent, CommonModule],
 })
 export class ExercisesComponent {
     muscleGroups = [
@@ -121,12 +125,43 @@ export class ExercisesComponent {
         },
     ];
 
-    onMuscleGroupSelect($index: number) {
-        this.muscleGroups[$index].isSelected =
-            !this.muscleGroups[$index].isSelected;
+    constructor(
+        private renderer: Renderer2,
+        @Inject(DOCUMENT) private document: Document
+    ) {}
+
+    bgBlurVisibility: boolean = false;
+    muscleGroupsModalVisibility: boolean = false;
+    equipementModalVisibility: boolean = false;
+
+    openModal(whichToOpen: 'equipement' | 'muscleGroups') {
+        whichToOpen === 'equipement'
+            ? (this.equipementModalVisibility = true)
+            : (this.muscleGroupsModalVisibility = true);
+
+        this.bgBlurVisibility = true;
+        this.renderer.addClass(this.document.body, 'overflow-y-hidden');
     }
 
-    get checkedCount(): number {
+    closeModal() {
+        this.equipementModalVisibility = false;
+        this.muscleGroupsModalVisibility = false;
+
+        this.bgBlurVisibility = false;
+        this.renderer.removeClass(this.document.body, 'overflow-y-hidden');
+    }
+
+    onOptionSelect(modalName: 'equipment' | 'muscleGroups', $index: number) {
+        this[modalName][$index].isSelected =
+            !this[modalName][$index].isSelected;
+    }
+
+    get checkedEquipementCount(): number {
+        return this.equipment.filter((item) => item.isSelected).length;
+    }
+
+    get checkedMuscleGroupsCount(): number {
         return this.muscleGroups.filter((muscleGroup) => muscleGroup.isSelected)
             .length;
     }
+}
