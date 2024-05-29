@@ -26,6 +26,21 @@ export class ExercisesComponent {
             iconRoute: 'assets/exercisesThumbnails/frame_00_delay-1s.jpg',
             muscleGroups: 'Chest, Triceps, Shoulders',
         },
+        {
+            name: 'Bicep Curl',
+            iconRoute: 'assets/exercisesThumbnails/Bicep-Curl.jpg',
+            muscleGroups: 'Biceps',
+        },
+        {
+            name: 'Close Grip Pushup',
+            iconRoute: 'assets/exercisesThumbnails/Close-Grip-Pushup.jpg',
+            muscleGroups: 'Triceps, Chest, Shoulders',
+        },
+        {
+            name: 'Sumo Squat',
+            iconRoute: 'assets/exercisesThumbnails/Sumo-Squat.jpg',
+            muscleGroups: 'Glutes, Quads, Hamstrings',
+        },
     ];
 
     muscleGroups = [
