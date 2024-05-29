@@ -1,7 +1,13 @@
 <div class="flex flex-col">
     <div class="flex justify-between w-full font-semibold">
         @for (x of [1,2,3,4]; track $index) {
-        <button type="button" (click)="tabChange($index)">
+        <button
+            type="button"
+            (click)="tabChange($index)"
+            [ngClass]="{
+                'text-emerald-500 transition-colors': $index === activeTabIndex
+            }"
+        >
             Tab {{ $index }}
         </button>
         }
