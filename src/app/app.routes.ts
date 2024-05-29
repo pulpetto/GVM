@@ -49,6 +49,13 @@ export const routes: Routes = [
                     ).then((component) => component.ExercisesComponent),
             },
             {
+                path: 'profile/exercises/:ecerciseName',
+                loadComponent: () =>
+                    import('./shared/exercise/exercise.component').then(
+                        (component) => component.ExerciseComponent
+                    ),
+            },
+            {
                 path: 'workout',
                 loadComponent: () =>
                     import('./pages/user/workout/workout.component').then(
