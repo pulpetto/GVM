@@ -1,90 +1,79 @@
 <div class="flex flex-col items-center gap-4 p-8">
-    <div class="relative w-full">
+    <div class="flex flex-col w-full gap-2">
         <input
-            #inputElement
-            required
             type="text"
-            id="huj"
-            class="w-full p-2 pt-3 bg-transparent border-2 border-transparent border-solid rounded-t-md focus:border-emerald-500 focus:outline-none focus:rounded-b-md valid:border-emerald-500 valid:outline-none valid:rounded-b-md valid:backdrop-blur-md border-b-emerald-500 peer"
+            placeholder="Search for an exercise..."
+            class="w-full p-3 border-2 border-solid rounded-md outline-none placeholder-neutral-700 border-neutral-900 bg-neutral-950 focus:outline-none focus:border-emerald-500"
         />
 
-        <!-- eslint-disable-next-line -->
-        <span
-            (click)="focusOnInput()"
-            class="absolute transition-all duration-300 -translate-y-1/2 border-transparent border-solid opacity-50 select-none dark:opacity-25 cursor-text border-x-2 left-2 top-1/2 peer-focus:top-0 peer-focus:bg-neutral-200 peer-focus:dark:bg-neutral-950 peer-focus:px-2 peer-focus:opacity-100 peer-valid:top-0 peer-valid:bg-neutral-200 peer-valid:dark:bg-neutral-950 peer-valid:px-2 peer-valid:opacity-100 peer-focus:text-emerald-500 peer-valid:text-emerald-500 peer-focus:border-x-2 peer-focus:border-solid peer-focus:border-emerald-500 peer-focus:text-sm peer-valid:text-sm peer-focus:left-1/2 peer-valid:left-1/2 peer-focus:-translate-x-1/2 peer-valid:-translate-x-1/2"
-        >
-            Exercise name
-        </span>
-    </div>
-
-    <div class="flex items-center justify-between w-full gap-1">
-        <button
-            type="button"
-            (click)="openModal('equipement')"
-            class="flex items-center w-1/2 gap-2 p-2.5 transition-all border-2 border-solid rounded-md cursor-pointer border-neutral-900 hover:border-emerald-600 group active:opacity-50 active:scale-95 text-nowrap"
-        >
-            <div>
-                <svg
-                    class="rotate-45 w-5 h-5 stroke-black dark:stroke-white mt-0.5 group-hover:stroke-emerald-500 transition-colors"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M7.4 7H4.6C4.26863 7 4 7.26863 4 7.6V16.4C4 16.7314 4.26863 17 4.6 17H7.4C7.73137 17 8 16.7314 8 16.4V7.6C8 7.26863 7.73137 7 7.4 7Z"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                    <path
-                        d="M19.4 7H16.6C16.2686 7 16 7.26863 16 7.6V16.4C16 16.7314 16.2686 17 16.6 17H19.4C19.7314 17 20 16.7314 20 16.4V7.6C20 7.26863 19.7314 7 19.4 7Z"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                    <path
-                        d="M1 14.4V9.6C1 9.26863 1.26863 9 1.6 9H3.4C3.73137 9 4 9.26863 4 9.6V14.4C4 14.7314 3.73137 15 3.4 15H1.6C1.26863 15 1 14.7314 1 14.4Z"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                    <path
-                        d="M23 14.4V9.6C23 9.26863 22.7314 9 22.4 9H20.6C20.2686 9 20 9.26863 20 9.6V14.4C20 14.7314 20.2686 15 20.6 15H22.4C22.7314 15 23 14.7314 23 14.4Z"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                    <path
-                        d="M8 12H16"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            </div>
-            <div class="transition-colors group-hover:text-emerald-500">
-                Equipment @if (checkedEquipementCount > 0) { ({{
-                    checkedEquipementCount
-                }}) }
-            </div>
-        </button>
-        <button
-            type="button"
-            (click)="openModal('muscleGroups')"
-            class="flex items-center w-1/2 gap-2 p-2.5 transition-all border-2 border-solid rounded-md cursor-pointer border-neutral-900 hover:border-emerald-600 group active:opacity-50 active:scale-95"
-        >
-            <div>
-                <svg
-                    class="w-5 h-5 fill-black dark:fill-white mt-0.5 group-hover:fill-emerald-500 transition-colors"
-                    version="1.1"
-                    id="Capa_1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    viewBox="0 0 449.162 449.162"
-                    xml:space="preserve"
-                >
-                    <path
-                        d="M432.519,249.894l-27.386-54.958c-2.361-4.74-8.008-6.815-12.879-4.736l-27.849,11.896
+        <div class="flex items-center justify-between w-full gap-2">
+            <button
+                type="button"
+                (click)="openModal('equipement')"
+                class="flex items-center w-1/2 gap-2 p-2.5 transition-all border-2 border-solid rounded-md cursor-pointer border-neutral-900 hover:border-emerald-600 group active:opacity-50 active:scale-95 text-nowrap outline-none focus:border-emerald-500"
+            >
+                <div>
+                    <svg
+                        class="rotate-45 w-5 h-5 stroke-black dark:stroke-white mt-0.5 group-hover:stroke-emerald-500 transition-colors"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M7.4 7H4.6C4.26863 7 4 7.26863 4 7.6V16.4C4 16.7314 4.26863 17 4.6 17H7.4C7.73137 17 8 16.7314 8 16.4V7.6C8 7.26863 7.73137 7 7.4 7Z"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                        <path
+                            d="M19.4 7H16.6C16.2686 7 16 7.26863 16 7.6V16.4C16 16.7314 16.2686 17 16.6 17H19.4C19.7314 17 20 16.7314 20 16.4V7.6C20 7.26863 19.7314 7 19.4 7Z"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                        <path
+                            d="M1 14.4V9.6C1 9.26863 1.26863 9 1.6 9H3.4C3.73137 9 4 9.26863 4 9.6V14.4C4 14.7314 3.73137 15 3.4 15H1.6C1.26863 15 1 14.7314 1 14.4Z"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                        <path
+                            d="M23 14.4V9.6C23 9.26863 22.7314 9 22.4 9H20.6C20.2686 9 20 9.26863 20 9.6V14.4C20 14.7314 20.2686 15 20.6 15H22.4C22.7314 15 23 14.7314 23 14.4Z"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                        <path
+                            d="M8 12H16"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </div>
+                <div class="transition-colors group-hover:text-emerald-500">
+                    Equipment @if (checkedEquipementCount > 0) { ({{
+                        checkedEquipementCount
+                    }}) }
+                </div>
+            </button>
+            <button
+                type="button"
+                (click)="openModal('muscleGroups')"
+                class="flex items-center w-1/2 gap-2 p-2.5 transition-all border-2 border-solid rounded-md cursor-pointer border-neutral-900 hover:border-emerald-600 group active:opacity-50 active:scale-95 outline-none focus:border-emerald-500"
+            >
+                <div>
+                    <svg
+                        class="w-5 h-5 fill-black dark:fill-white mt-0.5 group-hover:fill-emerald-500 transition-colors"
+                        version="1.1"
+                        id="Capa_1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 449.162 449.162"
+                        xml:space="preserve"
+                    >
+                        <path
+                            d="M432.519,249.894l-27.386-54.958c-2.361-4.74-8.008-6.815-12.879-4.736l-27.849,11.896
                 c-3.383-7.177-10.578-11.567-18.794-11.188c-9.327,0.448-16.788,6.908-18.564,16.075c-1.084,5.594-1.798,11.747-2.488,17.696
                 c-1.299,11.194-2.771,23.881-6.741,30.234c-4.404,7.045-6.243,15.519-6.667,23.933c-16.053,16.65-44.004,22.562-58.941,20.302
                 c-6.902-1.044-16.145-2.957-25.929-4.981c-7.358-1.523-15.27-3.159-23.364-4.679c18.96-32.719,18.878-73.831-1.345-106.784
@@ -109,22 +98,23 @@
                 c7.687,26.972,0.627,60.464,0.555,60.802c-1.168,5.394,2.255,10.714,7.649,11.887c5.396,1.169,10.723-2.25,11.896-7.647
                 c0.108-0.499,0.972-4.56,1.813-10.885l18.951-14.47c4.39-3.352,5.231-9.627,1.88-14.017c-3.352-4.388-9.626-5.232-14.017-1.879
                 l-5.147,3.93c-0.053-5.543-0.389-11.372-1.145-17.254l22.442-9.586l20.467,41.074L371.309,308.993z"
-                    />
-                </svg>
-            </div>
-            <div class="transition-colors group-hover:text-emerald-500">
-                Muscles @if (checkedMuscleGroupsCount > 0) { ({{
-                    checkedMuscleGroupsCount
-                }}) }
-            </div>
-        </button>
+                        />
+                    </svg>
+                </div>
+                <div class="transition-colors group-hover:text-emerald-500">
+                    Muscles @if (checkedMuscleGroupsCount > 0) { ({{
+                        checkedMuscleGroupsCount
+                    }}) }
+                </div>
+            </button>
+        </div>
     </div>
 
-    <div class="flex flex-col self-start gap-2">
+    <div class="flex flex-col self-start w-full gap-2">
         @for (exercise of exercises; track $index) {
         <a
             [routerLink]="exercise.name"
-            class="flex items-center gap-2 transition-all rounded-md cursor-pointer active:opacity-50 active:scale-95"
+            class="flex items-center w-full gap-2 transition-all rounded-md cursor-pointer active:opacity-50 active:scale-95"
         >
             <div
                 class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
