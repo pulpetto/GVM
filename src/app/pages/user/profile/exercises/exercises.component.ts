@@ -5,15 +5,29 @@ import {
 } from '@angular/core';
 import { InputComponent } from '../../../../shared/input/input.component';
 import { CommonModule, DOCUMENT } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-exercises',
     standalone: true,
     templateUrl: './exercises.component.html',
     styleUrl: './exercises.component.css',
-    imports: [InputComponent, CommonModule],
+    imports: [InputComponent, CommonModule, RouterModule],
 })
 export class ExercisesComponent {
+    exercises = [
+        {
+            name: 'Squat',
+            iconRoute: 'assets/exercisesThumbnails/Squat-Thumbnail.jpg',
+            muscleGroups: 'Quads, Glutes, Hamstrings',
+        },
+        {
+            name: 'Bench Press',
+            iconRoute: 'assets/exercisesThumbnails/frame_00_delay-1s.jpg',
+            muscleGroups: 'Chest, Triceps, Shoulders',
+        },
+    ];
+
     muscleGroups = [
         {
             name: 'Upper Back',
