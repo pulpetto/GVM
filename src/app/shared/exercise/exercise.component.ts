@@ -3,6 +3,7 @@ import { ChartsCarouselComponent } from '../charts-carousel/charts-carousel.comp
 import { TabsComponent } from '../tabs/tabs.component';
 import { InstructionComponent } from './instruction/instruction.component';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-exercise',
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
         TabsComponent,
         InstructionComponent,
         RouterModule,
+        CommonModule,
     ],
 })
 export class ExerciseComponent {

@@ -26,7 +26,49 @@
             ></app-instruction>
         </ng-template>
         <ng-template #tabContent2>
-            <div>tab content 2</div>
+            <div class="flex flex-col gap-8">
+                <div
+                    *ngFor="let item of [1, 2, 3, 4]"
+                    class="flex flex-col gap-1"
+                >
+                    <div class="flex items-start justify-between mb-1">
+                        <a
+                            class="flex items-center gap-2 text-2xl font-semibold"
+                        >
+                            Chest / Back
+                        </a>
+                        <div class="mt-1 text-sm font-semibold opacity-50">
+                            00.00.0000 - 00:00
+                        </div>
+                    </div>
+                    <div
+                        class="flex justify-between px-2 font-semibold opacity-50"
+                    >
+                        <div>Set</div>
+                        <div>Type</div>
+                        <div>Weight</div>
+                        <div>Reps</div>
+                        <div>Rpe</div>
+                    </div>
+                    <div class="flex flex-col text-lg">
+                        @for (item of [1,2,3,4,5]; track $index) {
+                        <div
+                            class="flex justify-between px-4 py-2 rounded-md"
+                            [ngClass]="{
+                                'bg-neutral-900': $index % 2 === 0,
+                                'bg-opacity-50': $index % 2 === 0
+                            }"
+                        >
+                            <div>{{ $index + 1 }}</div>
+                            <div>P</div>
+                            <div>180</div>
+                            <div>14</div>
+                            <div>9</div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </ng-template>
         <ng-template #tabContent3>
             <div>tab content 3</div>
