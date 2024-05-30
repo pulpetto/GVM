@@ -18,7 +18,18 @@
         </div>
     </div>
     <app-charts-carousel class="w-full"></app-charts-carousel>
-    <app-tabs
-        [tabNames]="['How to', 'History', 'Variations', 'Records']"
-    ></app-tabs>
+    <app-tabs [tabNames]="['How to', 'History', 'Variations', 'Records']">
+        <ng-template #tabContent1>
+            <div>tab content 1</div>
+        </ng-template>
+        <ng-template #tabContent2>
+            <div>tab content 2</div>
+        </ng-template>
+        <ng-template #tabContent3>
+            <div>tab content 3</div>
+        </ng-template>
+        <ng-template #tabContent4>
+            <div>tab content 4</div>
+        </ng-template>
+    </app-tabs>
 </div>

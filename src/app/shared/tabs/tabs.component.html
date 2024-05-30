@@ -1,4 +1,4 @@
-<div class="relative flex flex-col">
+<div class="relative flex flex-col gap-4">
     <div class="flex justify-between w-full font-semibold">
         @for (tabName of tabNames; track $index) {
         <button
@@ -19,4 +19,12 @@
             'left:' + leftDistancePx + 'px; width:' + underlineWidthPx + 'px'
         "
     ></div>
+    <div>
+        <!-- <ng-content></ng-content> -->
+        @if (activeTabContent) {
+        <ng-container>
+            <ng-container *ngTemplateOutlet="activeTabContent"></ng-container>
+        </ng-container>
+        }
+    </div>
 </div>
