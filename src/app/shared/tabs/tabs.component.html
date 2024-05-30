@@ -1,6 +1,6 @@
 <div class="relative flex flex-col">
     <div class="flex justify-between w-full font-semibold">
-        @for (x of [1,1,1,1]; track $index) {
+        @for (tabName of tabNames; track $index) {
         <button
             type="button"
             #tabButton
@@ -9,7 +9,7 @@
                 'text-emerald-500 transition-colors': $index === activeTabIndex
             }"
         >
-            Tab {{ $index + 1 }}
+            {{ tabName }}
         </button>
         }
     </div>

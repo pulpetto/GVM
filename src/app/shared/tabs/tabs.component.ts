@@ -4,6 +4,7 @@ import {
     Component,
     ElementRef,
     inject,
+    Input,
     QueryList,
     ViewChildren,
 } from '@angular/core';
@@ -17,6 +18,8 @@ import { CommonModule } from '@angular/common';
     styleUrl: './tabs.component.css',
 })
 export class TabsComponent implements AfterViewInit {
+    @Input({ required: true }) tabNames!: string[];
+
     @ViewChildren('tabButton') tabButtons!: QueryList<ElementRef>;
 
     cdr = inject(ChangeDetectorRef);
