@@ -20,7 +20,10 @@
     <app-charts-carousel class="w-full"></app-charts-carousel>
     <app-tabs [tabNames]="['How to', 'History', 'Variations', 'Records']">
         <ng-template #tabContent1>
-            <div>tab content 1</div>
+            <app-instruction
+                [stepsSimplified]="stepsSimplified"
+                [stepsDetailed]="stepsDetailed"
+            ></app-instruction>
         </ng-template>
         <ng-template #tabContent2>
             <div>tab content 2</div>
