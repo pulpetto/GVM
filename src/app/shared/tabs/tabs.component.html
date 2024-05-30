@@ -1,16 +1,22 @@
-<div class="flex flex-col">
+<div class="relative flex flex-col">
     <div class="flex justify-between w-full font-semibold">
-        @for (x of [1,2,3,4]; track $index) {
+        @for (x of [1,1,1,1]; track $index) {
         <button
             type="button"
+            #tabButton
             (click)="tabChange($index)"
             [ngClass]="{
                 'text-emerald-500 transition-colors': $index === activeTabIndex
             }"
         >
-            Tab {{ $index }}
+            Tab {{ $index + 1 }}
         </button>
         }
     </div>
-    <div class="h-0.5 bg-emerald-500 rounded-full w-full"></div>
+    <div
+        class="h-0.5 bg-emerald-500 rounded-full absolute transition-all top-6 duration-300"
+        [style]="
+            'left:' + leftDistancePx + 'px; width:' + underlineWidthPx + 'px'
+        "
+    ></div>
 </div>
