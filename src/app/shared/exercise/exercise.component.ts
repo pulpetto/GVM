@@ -2,13 +2,19 @@ import { Component } from '@angular/core';
 import { ChartsCarouselComponent } from '../charts-carousel/charts-carousel.component';
 import { TabsComponent } from '../tabs/tabs.component';
 import { InstructionComponent } from './instruction/instruction.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-exercise',
     standalone: true,
     templateUrl: './exercise.component.html',
     styleUrl: './exercise.component.css',
-    imports: [ChartsCarouselComponent, TabsComponent, InstructionComponent],
+    imports: [
+        ChartsCarouselComponent,
+        TabsComponent,
+        InstructionComponent,
+        RouterModule,
+    ],
 })
 export class ExerciseComponent {
     stepsSimplified = [
