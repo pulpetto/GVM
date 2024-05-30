@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { InstructionStep } from '../../../interfaces/instruction-step';
 
 @Component({
     selector: 'app-instruction',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
     templateUrl: './instruction.component.html',
     styleUrl: './instruction.component.css',
 })
-export class InstructionComponent {}
+export class InstructionComponent {
+    @Input({ required: true }) stepsSimplified!: InstructionStep[];
+    @Input({ required: true }) stepsDetailed!: InstructionStep[];
+
+    simplifiedVersion: boolean = true;
+}
