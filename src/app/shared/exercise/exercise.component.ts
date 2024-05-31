@@ -19,6 +19,34 @@ import { CommonModule } from '@angular/common';
     ],
 })
 export class ExerciseComponent {
+    exercises = [
+        {
+            name: 'Squat',
+            iconRoute: 'assets/exercisesThumbnails/Squat-Thumbnail.jpg',
+            muscleGroups: 'Quads, Glutes, Hamstrings',
+        },
+        {
+            name: 'Bench Press',
+            iconRoute: 'assets/exercisesThumbnails/frame_00_delay-1s.jpg',
+            muscleGroups: 'Chest, Triceps, Shoulders',
+        },
+        {
+            name: 'Bicep Curl',
+            iconRoute: 'assets/exercisesThumbnails/Bicep-Curl.jpg',
+            muscleGroups: 'Biceps',
+        },
+        {
+            name: 'Close Grip Pushup',
+            iconRoute: 'assets/exercisesThumbnails/Close-Grip-Pushup.jpg',
+            muscleGroups: 'Triceps, Chest, Shoulders',
+        },
+        {
+            name: 'Sumo Squat',
+            iconRoute: 'assets/exercisesThumbnails/Sumo-Squat.jpg',
+            muscleGroups: 'Glutes, Quads, Hamstrings',
+        },
+    ];
+
     stepsSimplified = [
         {
             stepName: 'Setup',
