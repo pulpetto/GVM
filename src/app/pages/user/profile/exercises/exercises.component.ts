@@ -1,8 +1,4 @@
-import {
-    Component,
-    Inject,
-    Renderer2,
-} from '@angular/core';
+import { Component, Inject, Renderer2 } from '@angular/core';
 import { InputComponent } from '../../../../shared/input/input.component';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { RouterModule } from '@angular/router';
