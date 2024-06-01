@@ -1,24 +1,13 @@
 <div
-    class="fixed top-0 left-0 z-50 flex flex-col items-center w-full gap-2 px-8 pt-2 bg-opacity-50 backdrop-blur-md rounded-b-md"
+    class="fixed top-0 left-0 flex flex-col items-center w-full gap-2 px-8 pt-2 bg-opacity-50 backdrop-blur-md rounded-b-md"
 >
     <button
         type="button"
-        (click)="toggleExpand(dropdown); isOpen = !isOpen"
-        class="z-50 text-sm font-semibold"
+        (click)="toggleModalVisibility()"
+        class="text-sm font-semibold"
     >
         - November 2024 -
     </button>
-
-    <div
-        #dropdown
-        class="absolute z-50 h-0 mt-10 overflow-y-hidden transition-all duration-300 -translate-x-1/2 rounded-md left-1/2 bg-neutral-950"
-    >
-        <div class="flex flex-col gap-3 p-2 text-sm font-semibold">
-            @for (name of [1,2,3,4,5,6,7]; track $index) {
-            <div>November 2024</div>
-            }
-        </div>
-    </div>
 
     <div class="relative flex justify-center gap-1 text-emerald-5">
         @for (day of daysNames; track $index) {
@@ -67,15 +56,8 @@
             </svg>
         </button>
     </div>
-
-    @if (isOpen) {
-    <!-- eslint-disable-next-line -->
-    <div
-        (click)="isOpen = false"
-        class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
-    ></div>
-    }
 </div>
+
 <div class="flex flex-col gap-4 p-8 pt-20">
     @for (mnth of [1,2,3,4,5]; track $index) {
     <div class="flex flex-col items-center gap-2">
@@ -91,4 +73,57 @@
         </div>
     </div>
     }
+</div>
+
+@if (isOpen) {
+<!-- eslint-disable-next-line    -->
+<div
+    (click)="toggleModalVisibility()"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+></div>
+}
+
+<div
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
+    [ngClass]="{
+        'top-1/4': isOpen,
+        'top-full': !isOpen
+    }"
+>
+    <div class="self-center font-semibold">Choose month:</div>
+    <div class="flex flex-col gap-1">
+        @for (option of [].constructor(10); track $index) {
+        <button
+            type="button"
+            (click)="onMonthChange()"
+            class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
+        >
+            <div class="p-2 transition-colors group-hover:text-emerald-500">
+                <!-- [ngClass]="{
+                    'text-emerald-500': option.active,
+                    'font-semibold': option.active
+                }" -->
+                November 2022
+            </div>
+
+            <!-- @if (option.active) {
+            <div>
+                <svg
+                    class="w-6 h-6 stroke-emerald-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M5 13L9 17L19 7"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+            } -->
+        </button>
+        }
+    </div>
 </div>

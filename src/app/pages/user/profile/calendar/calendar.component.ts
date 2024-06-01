@@ -8,17 +8,21 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DOCUMENT } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-calendar',
     standalone: true,
-    imports: [CommonModule],
     templateUrl: './calendar.component.html',
     styleUrl: './calendar.component.css',
+    imports: [CommonModule, RouterModule],
 })
 export class CalendarComponent {
     isOpen: boolean = false;
+    currentActiveMonth: string = 'November 2022';
     daysNames: string[] = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+    onMonthChange() {}
 
     constructor(
         private elementRef: ElementRef,
@@ -46,26 +50,15 @@ export class CalendarComponent {
         this.daysNames.unshift(this.daysNames.pop()!);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    calculateHeight(element: any) {
-        element.style.height =
-            Array.prototype.reduce.call(
-                element.childNodes,
-                function (p, c) {
-                    return p + (c.offsetHeight || 0);
-                },
-                0
-            ) + 'px';
-    }
+    toggleModalVisibility() {
+        this.isOpen = !this.isOpen;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    toggleExpand(element: any) {
-        if (!element.style.height || element.style.height == '0px') {
-            this.renderer.addClass(this.document.body, 'overflow-y-hidden');
-            this.calculateHeight(element);
-        } else {
-            this.renderer.removeClass(this.document.body, 'overflow-y-hidden');
-            element.style.height = '0px';
-        }
+        // prettier-ignore
+        this.isOpen
+            ? this.renderer.addClass(this.document.body, 'overflow-y-hidden')
+            : this.renderer.removeClass(
+                this.document.body,
+                'overflow-y-hidden'
+            );
     }
 }
