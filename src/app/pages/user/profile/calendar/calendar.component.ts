@@ -19,7 +19,8 @@ import { RouterModule } from '@angular/router';
 })
 export class CalendarComponent {
     isOpen: boolean = false;
-    currentActiveMonth: string = 'November 2022';
+    currentActiveMonth: string = 'November';
+    currentActiveYear: number = 2022;
     daysNames: string[] = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
     onMonthChange() {}
