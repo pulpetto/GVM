@@ -65,7 +65,15 @@
         <div class="grid grid-cols-7 gap-1">
             @for (x of [].constructor(30); track $index) {
             <a
-                class="flex items-center justify-center w-10 h-10 font-semibold text-center rounded-md bg-neutral-900"
+                [routerLink]="'day' + x"
+                [ngClass]="{
+                    'border-emerald-500': $index <= 10,
+                    'focus:border-white': $index >= 0,
+                    'text-emerald-500': $index <= 10,
+                    'border-transparent': $index > 10,
+                    'text-neutral-700': $index > 10,
+                }"
+                class="flex items-center justify-center w-10 h-10 font-semibold text-center transition-all border-2 border-solid rounded-md outline-none cursor-pointer hover:bg-emerald-500 active:scale-95 active:opacity-50 focus:text-white focus:border-white bg-neutral-900"
             >
                 <div>{{ $index + 1 }}</div>
             </a>
