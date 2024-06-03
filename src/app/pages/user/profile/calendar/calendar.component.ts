@@ -23,6 +23,8 @@ export class CalendarComponent {
     currentActiveYear: number = 2022;
     daysNames: string[] = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
+    activeIndex: number = 0;
+
     onMonthChange() {}
 
     constructor(
