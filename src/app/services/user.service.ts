@@ -9,7 +9,11 @@ import {
 } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 import { User } from '../interfaces/user';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import {
+    Auth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+} from '@angular/fire/auth';
 import { BehaviorSubject, from, map, Observable } from 'rxjs';
 import { Router } from 'express';
 
