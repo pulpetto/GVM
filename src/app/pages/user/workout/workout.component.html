@@ -1,27 +1,43 @@
 <div class="flex flex-col items-center justify-center gap-2 p-8 text-center">
     <div class="self-start text-4xl font-semibold text-emerald-500">
-        Quick access
+        Quick Access
     </div>
     <div class="flex flex-col w-full gap-2 mb-2">
         <a
+            routerLink="builder"
             class="w-full p-3 font-semibold border-2 border-solid rounded-md hover:shadow-[0_0_20px_2px_#10b981] transition-all text-center cursor-pointer px-6 border-neutral-900 hover:border-emerald-600 group active:opacity-50 active:scale-95 dark:bg-neutral-950"
         >
             Workout Builder
         </a>
         <a
+            routerLink=""
             class="w-full p-3 font-semibold border-2 border-solid rounded-md hover:shadow-[0_0_20px_2px_#10b981] transition-all text-center cursor-pointer px-6 border-neutral-900 hover:border-emerald-600 group active:opacity-50 active:scale-95 dark:bg-neutral-950"
         >
-            Start empty workout
+            New Workout Split
         </a>
         <a
+            routerLink=""
             class="w-full p-3 font-semibold border-2 border-solid rounded-md hover:shadow-[0_0_20px_2px_#10b981] transition-all text-center cursor-pointer px-6 border-neutral-900 hover:border-emerald-600 group active:opacity-50 active:scale-95 dark:bg-neutral-950"
         >
-            New workout split
+            Quick Workout
         </a>
     </div>
 
     <div class="self-start text-4xl font-semibold text-emerald-500">
         Your Workouts
+    </div>
+
+    <div class="flex flex-col w-full gap-2">
+        <app-workout-mini-preview
+            [name]="'Full Body'"
+        ></app-workout-mini-preview>
+        <app-workout-mini-preview
+            [name]="'Functional'"
+        ></app-workout-mini-preview>
+    </div>
+
+    <div class="self-start text-4xl font-semibold text-start text-emerald-500">
+        Your Splits
     </div>
 
     <div class="flex flex-col w-full">
