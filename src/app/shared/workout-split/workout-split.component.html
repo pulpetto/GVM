@@ -3,17 +3,24 @@
         <button
             type="button"
             (click)="toggleExpand(dropdown); isOpen = !isOpen"
-            class="flex opacity-50 items-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 active:scale-95 transition-all self-start"
+            class="flex items-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 active:scale-95 transition-all self-start"
         >
             <div
                 class="font-semibold transition-colors group-hover:text-emerald-500"
+                [ngClass]="{ 'text-emerald-500': isOpen }"
             >
                 {{ splitName }}
             </div>
             <div>
                 <svg
-                    class="w-5 h-5 mt-1 transition-all stroke-black dark:stroke-white group-hover:stroke-emerald-500"
-                    [ngClass]="{ 'rotate-180': isOpen }"
+                    class="w-5 h-5 mt-1 transition-all group-hover:stroke-emerald-500"
+                    [ngClass]="{
+                        'rotate-180': isOpen,
+                        'stroke-black': !isOpen,
+                        'dark:stroke-white': !isOpen,
+                        'stroke-emerald-500': isOpen,
+                        'dark:stroke-emerald-500': isOpen
+                    }"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +35,7 @@
             </div>
         </button>
 
-        <button type="button" class="opacity-50 group mt-0.5">
+        <button type="button" class="group mt-0.5">
             <svg
                 class="w-6 h-6 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500 fill-black dark:fill-white group-hover:fill-emerald-500"
                 viewBox="0 0 24 24"
