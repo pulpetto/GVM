@@ -4,7 +4,6 @@ import {
     HostListener,
     Inject,
     Renderer2,
-    ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DOCUMENT } from '@angular/common';
@@ -23,8 +22,6 @@ export class CalendarComponent {
     currentActiveYear: number = 2022;
     daysNames: string[] = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
-    activeIndex: number = 0;
-
     onMonthChange() {}
 
     constructor(
@@ -33,14 +30,10 @@ export class CalendarComponent {
         @Inject(DOCUMENT) private document: Document
     ) {}
 
-    @ViewChild('dropdown', { read: ElementRef, static: false })
-    dropdown!: ElementRef;
-
     @HostListener('document:click', ['$event'])
     clickout(event: Event) {
         if (!this.elementRef.nativeElement.contains(event.target)) {
             this.renderer.removeClass(this.document.body, 'overflow-y-hidden');
-            this.dropdown.nativeElement.style.height = '0px';
             this.isOpen = false;
         }
     }
