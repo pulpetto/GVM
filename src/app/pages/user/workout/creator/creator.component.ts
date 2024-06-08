@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -14,6 +14,17 @@ export class CreatorComponent {
     title: string = 'My Workout 1';
 
     @ViewChild('inputRef') inputEl!: ElementRef;
+
+    @HostListener('document:keydown', ['$event'])
+    handleKeyboardEvent(event: KeyboardEvent) {
+        if (event.key === 'Escape') {
+            this.cancelNewTitle();
+        }
+
+        if (event.key === 'Enter') {
+            this.updateTitle();
+        }
+    }
 
     openTitleEditMode() {
         this.nameEditMode = true;
