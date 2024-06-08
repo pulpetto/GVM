@@ -63,7 +63,7 @@ export const routes: Routes = [
                     ),
             },
             {
-                path: 'creator',
+                path: 'workout/creator',
                 loadComponent: () =>
                     import(
                         './pages/user/workout/creator/creator.component'
