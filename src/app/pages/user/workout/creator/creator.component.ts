@@ -1,12 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-creator',
-  standalone: true,
-  imports: [],
-  templateUrl: './creator.component.html',
-  styleUrl: './creator.component.css'
+    selector: 'app-creator',
+    standalone: true,
+    imports: [FormsModule],
+    templateUrl: './creator.component.html',
+    styleUrl: './creator.component.css',
 })
 export class CreatorComponent {
+    nameEditMode: boolean = false;
+    previousTitle: string = 'My Workout 1';
+    title: string = 'My Workout 1';
 
+    @ViewChild('inputRef') inputEl!: ElementRef;
+
+    openTitleEditMode() {
+        this.nameEditMode = true;
+        this.title = '';
+
+        setTimeout(() => {
+            this.inputEl.nativeElement.focus();
+        }, 0);
+    }
+
+    cancelNewTitle() {
+        this.nameEditMode = false;
+        this.title = this.previousTitle;
+    }
+
+    updateTitle() {
+        this.nameEditMode = false;
+        this.previousTitle = this.title;
+    }
 }
