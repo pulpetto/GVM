@@ -49,13 +49,6 @@ export const routes: Routes = [
                     ).then((component) => component.ExercisesComponent),
             },
             {
-                path: 'profile/exercises/creator',
-                loadComponent: () =>
-                    import('./shared/exercise/exercise.component').then(
-                        (component) => component.ExerciseComponent
-                    ),
-            },
-            {
                 path: 'profile/exercises/:ecerciseName',
                 loadComponent: () =>
                     import('./shared/exercise/exercise.component').then(
@@ -68,6 +61,13 @@ export const routes: Routes = [
                     import('./pages/user/workout/workout.component').then(
                         (component) => component.WorkoutComponent
                     ),
+            },
+            {
+                path: 'creator',
+                loadComponent: () =>
+                    import(
+                        './pages/user/workout/creator/creator.component'
+                    ).then((component) => component.CreatorComponent),
             },
             {
                 path: 'workout/:name',
