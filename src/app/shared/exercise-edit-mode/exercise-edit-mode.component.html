@@ -89,21 +89,21 @@
 <div
     class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md"
     [ngClass]="{
-        'top-1/4': optionsModalVisibility,
+        'top-1/2': optionsModalVisibility,
         'top-full': !optionsModalVisibility
     }"
 >
-    <div class="self-center font-semibold">Choose Action:</div>
-    <div class="flex flex-col gap-2">
+    <div class="self-center">Choose Action:</div>
+    <div class="flex flex-col gap-1.5">
         <button
             type="button"
-            class="flex items-center gap-2 transition-all active:opacity-50 active:scale-95 group"
+            class="flex items-center gap-0.5 transition-all active:opacity-50 active:scale-95 group"
         >
             <div
                 class="mt-1 overflow-hidden border-2 border-solid rounded-full border-emerald-500"
             >
                 <svg
-                    class="w-8 h-8 stroke-emerald-500"
+                    class="w-10 h-10 stroke-emerald-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -116,19 +116,21 @@
                     />
                 </svg>
             </div>
-            <div class="p-2 transition-colors group-hover:text-emerald-500">
+            <div
+                class="p-2 text-lg font-semibold transition-colors group-hover:text-emerald-500"
+            >
                 Add exercise to superset
             </div>
         </button>
         <button
             type="button"
-            class="flex items-center gap-2 transition-all active:opacity-50 active:scale-95 group"
+            class="flex items-center gap-0.5 transition-all active:opacity-50 active:scale-95 group"
         >
             <div
                 class="mt-1 overflow-hidden border-2 border-solid rounded-full border-emerald-500"
             >
                 <svg
-                    class="w-8 h-8 fill-emerald-500 p-1.5"
+                    class="w-10 h-10 fill-emerald-500 p-1.5"
                     viewBox="0 0 32 32"
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -138,19 +140,21 @@
                     ></path>
                 </svg>
             </div>
-            <div class="p-2 transition-colors group-hover:text-emerald-500">
+            <div
+                class="p-2 text-lg font-semibold transition-colors group-hover:text-emerald-500"
+            >
                 Change exercise order
             </div>
         </button>
         <button
             type="button"
-            class="flex items-center gap-2 transition-all active:opacity-50 active:scale-95 group"
+            class="flex items-center gap-0.5 transition-all active:opacity-50 active:scale-95 group"
         >
             <div
                 class="mt-1 overflow-hidden border-2 border-solid rounded-full border-emerald-500"
             >
                 <svg
-                    class="w-8 h-8 fill-emerald-500 p-1.5"
+                    class="w-10 h-10 fill-emerald-500 p-1.5"
                     viewBox="0 0 32 32"
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -160,19 +164,21 @@
                     ></path>
                 </svg>
             </div>
-            <div class="p-2 transition-colors group-hover:text-emerald-500">
+            <div
+                class="p-2 text-lg font-semibold transition-colors group-hover:text-emerald-500"
+            >
                 Replace exercise
             </div>
         </button>
         <button
             type="button"
-            class="flex items-center gap-2 transition-all active:opacity-50 active:scale-95 group"
+            class="flex items-center gap-0.5 transition-all active:opacity-50 active:scale-95 group"
         >
             <div
                 class="mt-1 overflow-hidden border-2 border-red-500 border-solid rounded-full"
             >
                 <svg
-                    class="w-8 h-8 stroke-red-500"
+                    class="w-10 h-10 stroke-red-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -185,7 +191,9 @@
                     />
                 </svg>
             </div>
-            <div class="p-2 transition-colors group-hover:text-red-500">
+            <div
+                class="p-2 text-lg font-semibold transition-colors group-hover:text-red-500"
+            >
                 Remove exercise
             </div>
         </button>
