@@ -65,55 +65,9 @@
 
     <div class="flex flex-col w-full gap-2">
         @for (exercise of [1,2,3]; track $index) {
-        <div class="flex flex-col gap-2">
-            <div class="flex flex-col gap-1">
-                <a class="flex items-center gap-2">
-                    <div
-                        class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
-                    >
-                        <img
-                            src="https://www.kettlebellkings.com/cdn/shop/articles/barbell-deadlift-movement.gif?v=1692228918"
-                            class="w-10 h-10"
-                            alt=""
-                        />
-                    </div>
-                    <div class="text-xl font-semibold text-emerald-500">
-                        Deadlift (Barbell)
-                    </div>
-                </a>
-                <div class="flex justify-between px-2 font-semibold opacity-50">
-                    <div>Set</div>
-                    <div>Type</div>
-                    <div>Weight</div>
-                    <div>Reps</div>
-                    <div>Rpe</div>
-                </div>
-                <div class="flex flex-col text-lg">
-                    @for (item of [1,2,3,4]; track $index) {
-                    <div
-                        class="flex justify-between px-4 py-2 rounded-md"
-                        [ngClass]="{
-                            'bg-neutral-900': $index % 2 === 0,
-                            'bg-opacity-25': $index % 2 === 0
-                        }"
-                    >
-                        <div>{{ $index + 1 }}</div>
-                        <div>P</div>
-                        <div>180</div>
-                        <div>14</div>
-                        <div>9</div>
-                    </div>
-                    }
-                    <button
-                        type="button"
-                        class="w-full my-2 py-1.5 overflow-hidden font-semibold rounded-md transition-all hover:border-transparent active:scale-95 active:opacity-50 bg-neutral-900"
-                    >
-                        Add Set
-                    </button>
-                </div>
-            </div>
-        </div>
+        <app-exercise-edit-mode></app-exercise-edit-mode>
         }
+
         <button
             type="button"
             class="relative w-full py-2 overflow-hidden font-semibold rounded-md bg-emerald-500 hover:shadow-[0_0_20px_2px_#10b981] transition-all hover:border-transparent active:scale-95 active:opacity-50"

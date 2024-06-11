@@ -1,13 +1,14 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ExerciseEditModeComponent } from '../../../../shared/exercise-edit-mode/exercise-edit-mode.component';
 
 @Component({
     selector: 'app-creator',
     standalone: true,
-    imports: [FormsModule, CommonModule],
     templateUrl: './creator.component.html',
     styleUrl: './creator.component.css',
+    imports: [FormsModule, CommonModule, ExerciseEditModeComponent],
 })
 export class CreatorComponent {
     nameEditMode: boolean = false;
