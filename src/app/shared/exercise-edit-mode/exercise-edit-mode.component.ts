@@ -13,9 +13,9 @@ export class ExerciseEditModeComponent {
     optionsModalVisibility: boolean = false;
 
     sets: Set[] = [
-        { number: 1, type: 'normal', weight: 100, reps: 20, rpe: 9, rir: 1 },
-        { number: 2, type: 'normal', weight: 100, reps: 20, rpe: 9, rir: 1 },
-        { number: 3, type: 'normal', weight: 100, reps: 20, rpe: 9, rir: 1 },
-        { number: 4, type: 'normal', weight: 100, reps: 20, rpe: 9, rir: 1 },
+        { number: 1, type: 'W', weight: 100, reps: 20, rpe: 9 },
+        { number: 2, type: 'W', weight: 100, reps: 20, rpe: 9 },
+        { number: 3, type: 'W', weight: 100, reps: 20, rpe: 9 },
+        { number: 4, type: 'W', weight: 100, reps: 20, rpe: 9 },
     ];
 }
