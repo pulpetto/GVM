@@ -8,4 +8,6 @@ import { CommonModule } from '@angular/common';
     templateUrl: './exercise-edit-mode.component.html',
     styleUrl: './exercise-edit-mode.component.css',
 })
-export class ExerciseEditModeComponent {}
+export class ExerciseEditModeComponent {
+    optionsModalVisibility: boolean = true;
+}

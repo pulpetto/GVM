@@ -16,6 +16,7 @@
         </a>
         <button
             type="button"
+            (click)="optionsModalVisibility = true"
             class="transition-all group active:opacity-50 active:scale-95"
         >
             <svg
@@ -73,6 +74,120 @@
             class="w-full my-2 py-1.5 overflow-hidden font-semibold rounded-md transition-all hover:border-transparent active:scale-95 active:opacity-50 bg-neutral-900"
         >
             Add Set
+        </button>
+    </div>
+</div>
+
+@if (optionsModalVisibility) {
+<!-- eslint-disable-next-line    -->
+<div
+    (click)="optionsModalVisibility = false"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+></div>
+}
+
+<div
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md"
+    [ngClass]="{
+        'top-1/4': optionsModalVisibility,
+        'top-full': !optionsModalVisibility
+    }"
+>
+    <div class="self-center font-semibold">Choose Action:</div>
+    <div class="flex flex-col gap-2">
+        <button
+            type="button"
+            class="flex items-center gap-2 transition-all active:opacity-50 active:scale-95 group"
+        >
+            <div
+                class="mt-1 overflow-hidden border-2 border-solid rounded-full border-emerald-500"
+            >
+                <svg
+                    class="w-8 h-8 stroke-emerald-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6 12H12M18 12H12M12 12V6M12 12V18"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+            <div class="p-2 transition-colors group-hover:text-emerald-500">
+                Add exercise to superset
+            </div>
+        </button>
+        <button
+            type="button"
+            class="flex items-center gap-2 transition-all active:opacity-50 active:scale-95 group"
+        >
+            <div
+                class="mt-1 overflow-hidden border-2 border-solid rounded-full border-emerald-500"
+            >
+                <svg
+                    class="w-8 h-8 fill-emerald-500 p-1.5"
+                    viewBox="0 0 32 32"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M27.885 24.115c-0.227-0.226-0.539-0.366-0.885-0.366s-0.658 0.14-0.885 0.366v0l-2.865 2.867v-24.982c0-0.69-0.56-1.25-1.25-1.25s-1.25 0.56-1.25 1.25v0 24.981l-2.866-2.866c-0.226-0.226-0.539-0.366-0.884-0.366-0.691 0-1.251 0.56-1.251 1.251 0 0.346 0.14 0.658 0.367 0.885v0l4.999 5c0.013 0.013 0.031 0.017 0.044 0.029 0.102 0.098 0.222 0.179 0.355 0.237l0.008 0.003 0.001 0c0.142 0.060 0.306 0.096 0.479 0.096 0.345 0 0.657-0.14 0.883-0.365l5-5c0.225-0.227 0.365-0.54 0.365-0.885s-0.139-0.658-0.365-0.885l0 0zM15.884 6.116l-5-5c-0.011-0.011-0.027-0.015-0.039-0.026-0.104-0.1-0.225-0.183-0.359-0.243l-0.008-0.003-0.004-0c-0.129-0.050-0.279-0.079-0.435-0.079-0.072 0-0.144 0.006-0.213 0.018l0.007-0.001c-0.056 0.007-0.106 0.017-0.154 0.030l0.008-0.002c-0.224 0.051-0.418 0.158-0.572 0.306l0.001-0-5 5c-0.224 0.226-0.363 0.537-0.363 0.881 0 0.69 0.56 1.25 1.25 1.25 0.344 0 0.655-0.139 0.881-0.363l2.866-2.866v24.982c0 0.69 0.56 1.25 1.25 1.25s1.25-0.56 1.25-1.25v0-24.982l2.866 2.866c0.226 0.225 0.537 0.363 0.881 0.363 0.69 0 1.25-0.56 1.25-1.25 0-0.344-0.139-0.655-0.363-0.881l0 0z"
+                    ></path>
+                </svg>
+            </div>
+            <div class="p-2 transition-colors group-hover:text-emerald-500">
+                Change exercise order
+            </div>
+        </button>
+        <button
+            type="button"
+            class="flex items-center gap-2 transition-all active:opacity-50 active:scale-95 group"
+        >
+            <div
+                class="mt-1 overflow-hidden border-2 border-solid rounded-full border-emerald-500"
+            >
+                <svg
+                    class="w-8 h-8 fill-emerald-500 p-1.5"
+                    viewBox="0 0 32 32"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M30.445 13.837c-0.085-0.616-0.608-1.085-1.24-1.085-0.691 0-1.251 0.56-1.251 1.251 0 0.056 0.004 0.112 0.011 0.166l-0.001-0.006c0.071 0.505 0.111 1.089 0.111 1.682 0 7.044-5.707 12.755-12.749 12.762h-0.001c-0.009 0-0.020 0-0.030 0-3.771 0-7.155-1.653-9.469-4.273l-0.012-0.014h4.582c0.69 0 1.25-0.56 1.25-1.25s-0.56-1.25-1.25-1.25v0h-7.071c-0.035 0-0.064 0.017-0.098 0.020-0.080 0.009-0.152 0.024-0.222 0.046l0.009-0.002c-0.099 0.023-0.185 0.055-0.266 0.095l0.007-0.003c-0.024 0.012-0.051 0.012-0.075 0.027-0.036 0.030-0.069 0.060-0.1 0.091l-0 0c-0.073 0.054-0.137 0.113-0.195 0.178l-0.001 0.001c-0.155 0.178-0.258 0.405-0.28 0.656l-0 0.004c-0.010 0.037-0.020 0.084-0.027 0.131l-0.001 0.006v7.072c0 0.69 0.56 1.25 1.25 1.25s1.25-0.56 1.25-1.25v0-3.471c2.736 2.741 6.518 4.436 10.697 4.436 0.019 0 0.037-0 0.056-0h-0.003c8.418-0.009 15.24-6.831 15.25-15.248v-0.001c-0-0.713-0.048-1.414-0.14-2.102l0.009 0.080zM3.12 19.393c0.059 0 0.117-0.004 0.173-0.012l-0.006 0.001c0.616-0.084 1.085-0.606 1.085-1.238 0-0.058-0.004-0.116-0.012-0.172l0.001 0.006c-0.072-0.507-0.112-1.093-0.112-1.689 0-7.043 5.708-12.752 12.75-12.755h0c0.009-0 0.019-0 0.029-0 3.771 0 7.156 1.653 9.469 4.274l0.012 0.014h-4.581c-0.69 0-1.25 0.56-1.25 1.25s0.56 1.25 1.25 1.25h7.072c0.030 0 0.056-0.015 0.085-0.017 0.179-0.024 0.342-0.071 0.492-0.14l-0.011 0.004c0.025-0.013 0.053-0.013 0.078-0.028 0.037-0.030 0.070-0.060 0.101-0.092l0-0c0.073-0.054 0.137-0.112 0.194-0.177l0.001-0.001c0.093-0.116 0.171-0.251 0.226-0.396l0.003-0.010c0.024-0.073 0.042-0.158 0.050-0.246l0-0.005c0.011-0.038 0.021-0.086 0.028-0.135l0.001-0.006v-7.071c0-0.69-0.56-1.25-1.25-1.25s-1.25 0.56-1.25 1.25v0 3.472c-2.736-2.742-6.52-4.439-10.699-4.439-0.018 0-0.036 0-0.055 0h0.003c-8.423 0.005-15.25 6.835-15.25 15.259 0 0.711 0.049 1.411 0.143 2.096l-0.009-0.079c0.085 0.614 0.606 1.083 1.237 1.084h0z"
+                    ></path>
+                </svg>
+            </div>
+            <div class="p-2 transition-colors group-hover:text-emerald-500">
+                Replace exercise
+            </div>
+        </button>
+        <button
+            type="button"
+            class="flex items-center gap-2 transition-all active:opacity-50 active:scale-95 group"
+        >
+            <div
+                class="mt-1 overflow-hidden border-2 border-red-500 border-solid rounded-full"
+            >
+                <svg
+                    class="w-8 h-8 stroke-red-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+            <div class="p-2 transition-colors group-hover:text-red-500">
+                Remove exercise
+            </div>
         </button>
     </div>
 </div>
