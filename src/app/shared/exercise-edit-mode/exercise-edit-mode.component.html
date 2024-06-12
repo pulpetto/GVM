@@ -82,7 +82,9 @@
             }"
         >
             <div>{{ set.number }}</div>
-            <div>{{ set.type }}</div>
+            <button type="button" (click)="setTypeModalVisibility = true">
+                {{ set.type }}
+            </button>
             <div>{{ set.weight }}</div>
             <div>{{ set.reps }}</div>
             <div>{{ set.rpe }}</div>
@@ -97,10 +99,10 @@
     </div>
 </div>
 
-@if (optionsModalVisibility) {
+@if (optionsModalVisibility || setTypeModalVisibility) {
 <!-- eslint-disable-next-line    -->
 <div
-    (click)="optionsModalVisibility = false"
+    (click)="optionsModalVisibility = false; setTypeModalVisibility = false"
     class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
 ></div>
 }
@@ -216,5 +218,60 @@
                 Remove exercise
             </div>
         </button>
+    </div>
+</div>
+
+<div
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
+    [ngClass]="{
+        'top-1/4': setTypeModalVisibility,
+        'top-full': !setTypeModalVisibility
+    }"
+>
+    <div class="self-center font-semibold">Choose set type:</div>
+    <div class="flex flex-col gap-2">
+        @for (setType of setTypes; track $index) {
+        <button
+            type="button"
+            (click)="onSetTypeChange($index)"
+            class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
+        >
+            <div class="flex items-center gap-1">
+                <div
+                    class="flex items-center justify-center w-10 h-10 overflow-hidden text-xl font-semibold border-2 border-solid rounded-full min-w-max"
+                    [class]="[setType.borderColor, setType.textColor]"
+                >
+                    {{ setType.name[0] | titlecase }}
+                </div>
+                <div
+                    class="p-2 transition-colors group-hover:text-emerald-500"
+                    [ngClass]="{
+                        'text-emerald-500': setType.isSelected === true,
+                        'font-semibold': setType.isSelected === true
+                    }"
+                >
+                    {{ setType.name | titlecase }}
+                </div>
+            </div>
+
+            @if (setType.isSelected === true) {
+            <div>
+                <svg
+                    class="w-6 h-6 stroke-emerald-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M5 13L9 17L19 7"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+            }
+        </button>
+        }
     </div>
 </div>
