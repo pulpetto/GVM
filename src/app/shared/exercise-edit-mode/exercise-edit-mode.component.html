@@ -46,12 +46,31 @@
             </svg>
         </button>
     </div>
-    <div class="flex justify-between px-2 font-semibold opacity-50">
-        <div>Set</div>
-        <div>Type</div>
-        <div>Weight</div>
-        <div>Reps</div>
-        <div>Rpe</div>
+    <div class="flex justify-between px-2 font-semibold">
+        <app-info-modal-button
+            [name]="'Set'"
+            [infoContent]="'Indicates the number of a set of an exercise.'"
+        ></app-info-modal-button>
+        <app-info-modal-button
+            [name]="'Type'"
+            [infoContent]="'Indicates the type of set of an exercise.'"
+        ></app-info-modal-button>
+        <app-info-modal-button
+            [name]="'Weight'"
+            [infoContent]="
+                'Indicates the weight used on given set of an exercise.'
+            "
+        ></app-info-modal-button>
+        <app-info-modal-button
+            [name]="'Reps'"
+            [infoContent]="'Indicates the amount of reps performed.'"
+        ></app-info-modal-button>
+        <app-info-modal-button
+            [name]="'Rpe'"
+            [infoContent]="
+                'Rate of perceived exertion (RPE) is used to measure how hard your body works during physical activity. 10 for example, means maximal effort and no reps in reserve. (muscular failure)'
+            "
+        ></app-info-modal-button>
     </div>
     <div class="flex flex-col text-lg">
         @for (set of sets; track $index) {
