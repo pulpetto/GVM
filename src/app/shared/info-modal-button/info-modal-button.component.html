@@ -1,4 +1,8 @@
-<button type="button" (click)="modalVisibility = true" class="opacity-50">
+<button
+    type="button"
+    (click)="modalVisibility = true"
+    class="transition-all opacity-50 hover:text-emerald-500 hover:opacity-100 active:scale-95"
+>
     {{ name }}
 </button>
 
@@ -22,7 +26,7 @@
     <button
         type="button"
         (click)="modalVisibility = false"
-        class="font-semibold text-center text-emerald-500"
+        class="font-semibold text-center transition-all text-emerald-500 active:opacity-50 active:scale-95"
     >
         Got it!
     </button>
