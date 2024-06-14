@@ -24,4 +24,6 @@ export class ExerciseEditModeComponent {
         { number: 3, weight: 100, reps: 20, rpe: 9 },
         { number: 4, weight: 100, reps: 20, rpe: 9 },
     ];
+
+    addSet() {}
 }
