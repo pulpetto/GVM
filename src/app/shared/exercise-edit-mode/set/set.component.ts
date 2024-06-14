@@ -43,9 +43,27 @@ export class SetComponent {
             isSelected: false,
         },
         {
+            name: 'partials',
+            textColor: 'text-fuchsia-500',
+            borderColor: 'border-fuchsia-500',
+            isSelected: false,
+        },
+        {
             name: 'paused',
             textColor: 'text-blue-500',
             borderColor: 'border-blue-500',
+            isSelected: false,
+        },
+        {
+            name: 'iso',
+            textColor: 'text-indigo-500',
+            borderColor: 'border-indigo-500',
+            isSelected: false,
+        },
+        {
+            name: 'slow eccentric',
+            textColor: 'text-green-500',
+            borderColor: 'border-green-500',
             isSelected: false,
         },
         {
@@ -58,24 +76,6 @@ export class SetComponent {
             name: 'cluster',
             textColor: 'text-amber-500',
             borderColor: 'border-amber-500',
-            isSelected: false,
-        },
-        {
-            name: 'iso',
-            textColor: 'text-indigo-500',
-            borderColor: 'border-indigo-500',
-            isSelected: false,
-        },
-        {
-            name: 'partials',
-            textColor: 'text-fuchsia-500',
-            borderColor: 'border-fuchsia-500',
-            isSelected: false,
-        },
-        {
-            name: 'slow eccentric',
-            textColor: 'text-green-500',
-            borderColor: 'border-green-500',
             isSelected: false,
         },
     ];
