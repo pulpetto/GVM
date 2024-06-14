@@ -1,5 +1,5 @@
 <div
-    class="flex justify-between px-4 py-2 rounded-md"
+    class="flex justify-around py-2 rounded-md"
     [ngClass]="{
         'bg-neutral-900': lighterBg,
         'bg-opacity-25': lighterBg
@@ -14,9 +14,30 @@
     >
         {{ setTypes[setTypeIndex].name[0] | titlecase }}
     </button>
-    <div>{{ weight }}</div>
-    <div>{{ reps }}</div>
-    <div>{{ rpe }}</div>
+    <div class="flex justify-center w-10">
+        <input
+            type="text"
+            [(ngModel)]="weight"
+            class="bg-transparent outline-none placeholder-neutral-800 max-w-10"
+            placeholder="-"
+        />
+    </div>
+    <div>
+        <input
+            type="text"
+            [(ngModel)]="reps"
+            class="w-5 text-center bg-transparent outline-none placeholder-neutral-800"
+            placeholder="-"
+        />
+    </div>
+    <div>
+        <input
+            type="text"
+            [(ngModel)]="rpe"
+            class="w-2.5 bg-transparent outline-none placeholder-neutral-800"
+            placeholder="-"
+        />
+    </div>
 </div>
 
 @if (modalVisibility) {
