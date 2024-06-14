@@ -78,7 +78,7 @@
             [lighterBg]="$index % 2 === 0 ? true : false"
             [number]="set.number"
         ></app-set>
-        }
+        } @if (sets.length < 9) {
         <button
             type="button"
             (click)="addSet()"
@@ -86,6 +86,7 @@
         >
             Add Set
         </button>
+        }
     </div>
 </div>
 
