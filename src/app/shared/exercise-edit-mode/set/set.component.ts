@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-set',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, FormsModule],
     templateUrl: './set.component.html',
     styleUrl: './set.component.css',
 })
@@ -13,6 +14,7 @@ export class SetComponent {
     @Input({ required: true }) number!: number;
 
     weight!: number;
+    weightLength!: number;
     reps!: number;
     rpe!: number;
 
