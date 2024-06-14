@@ -16,6 +16,8 @@
     </button>
     <div class="flex justify-center w-10">
         <input
+            mask="0000"
+            [maxlength]="4"
             type="text"
             [(ngModel)]="weight"
             class="bg-transparent outline-none placeholder-neutral-800 max-w-10"
@@ -24,6 +26,8 @@
     </div>
     <div>
         <input
+            mask="00"
+            [maxlength]="2"
             type="text"
             [(ngModel)]="reps"
             class="w-5 text-center bg-transparent outline-none placeholder-neutral-800"
@@ -32,6 +36,8 @@
     </div>
     <div>
         <input
+            mask="00"
+            [maxlength]="1"
             type="text"
             [(ngModel)]="rpe"
             class="w-2.5 bg-transparent outline-none placeholder-neutral-800"
