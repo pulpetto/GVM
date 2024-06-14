@@ -11,10 +11,12 @@ import { CommonModule } from '@angular/common';
 export class SetComponent {
     @Input({ required: true }) lighterBg: boolean = false;
     @Input({ required: true }) number!: number;
+
+    weight!: number;
+    reps!: number;
+    rpe!: number;
+
     setTypeIndex: number = 0;
-    @Input({ required: true }) weight!: number;
-    @Input({ required: true }) reps!: number;
-    @Input({ required: true }) rpe!: number;
 
     modalVisibility: boolean = false;
 
