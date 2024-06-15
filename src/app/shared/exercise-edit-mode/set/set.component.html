@@ -45,8 +45,9 @@
         />
     </div>
 
+    @for (dropset of [1,2,3]; track $index) {
     <ng-container>
-        <div class="col-span-2 font-semibold text-nowrap">Drop 5kgs:</div>
+        <div class="col-span-2 text-nowrap">Drop 5kgs:</div>
         <div>
             <input
                 mask="000"
@@ -78,6 +79,8 @@
             />
         </div>
     </ng-container>
+    }
+
     <button
         type="button"
         class="col-span-5 text-base font-semibold transition-all text-neutral-700 hover:text-emerald-500 active:scale-95 active:opacity-50"
