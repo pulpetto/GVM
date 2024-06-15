@@ -1,5 +1,5 @@
 <div
-    class="grid grid-cols-5 py-2 rounded-md justify-items-center"
+    class="grid grid-cols-5 py-2 rounded-md justify-items-center gap-y-3"
     [ngClass]="{
         'bg-neutral-900': lighterBg,
         'bg-opacity-25': lighterBg
@@ -14,7 +14,6 @@
     >
         {{ setTypes[setTypeIndex].name[0] | titlecase }}
     </button>
-
     <div>
         <input
             mask="000"
@@ -45,6 +44,40 @@
             placeholder="-"
         />
     </div>
+
+    <ng-container>
+        <div class="col-span-2 font-semibold text-nowrap">Drop 5kgs:</div>
+        <div>
+            <input
+                mask="000"
+                [maxlength]="4"
+                type="text"
+                [(ngModel)]="weight"
+                class="text-center bg-transparent outline-none placeholder-neutral-800 w-7.5"
+                placeholder="-"
+            />
+        </div>
+        <div>
+            <input
+                mask="00"
+                [maxlength]="2"
+                type="text"
+                [(ngModel)]="reps"
+                class="w-5 text-center bg-transparent outline-none placeholder-neutral-800"
+                placeholder="-"
+            />
+        </div>
+        <div>
+            <input
+                mask="0"
+                [maxlength]="1"
+                type="text"
+                [(ngModel)]="rpe"
+                class="text-center bg-transparent outline-none placeholder-neutral-800 w-2.5"
+                placeholder="-"
+            />
+        </div>
+    </ng-container>
 </div>
 
 @if (modalVisibility) {
