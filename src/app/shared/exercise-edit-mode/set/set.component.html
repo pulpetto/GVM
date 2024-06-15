@@ -1,5 +1,5 @@
 <div
-    class="flex justify-around py-2 rounded-md"
+    class="grid grid-cols-5 py-2 rounded-md justify-items-center"
     [ngClass]="{
         'bg-neutral-900': lighterBg,
         'bg-opacity-25': lighterBg
@@ -14,13 +14,14 @@
     >
         {{ setTypes[setTypeIndex].name[0] | titlecase }}
     </button>
-    <div class="flex justify-center w-10">
+
+    <div>
         <input
-            mask="0000"
+            mask="000"
             [maxlength]="4"
             type="text"
             [(ngModel)]="weight"
-            class="bg-transparent outline-none placeholder-neutral-800 w-2.5"
+            class="text-center bg-transparent outline-none placeholder-neutral-800 w-7.5"
             placeholder="-"
         />
     </div>
@@ -36,11 +37,11 @@
     </div>
     <div>
         <input
-            mask="00"
+            mask="0"
             [maxlength]="1"
             type="text"
             [(ngModel)]="rpe"
-            class="w-2.5 bg-transparent outline-none placeholder-neutral-800"
+            class="text-center bg-transparent outline-none placeholder-neutral-800 w-2.5"
             placeholder="-"
         />
     </div>

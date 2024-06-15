@@ -46,7 +46,7 @@
             </svg>
         </button>
     </div>
-    <div class="flex justify-around font-semibold">
+    <div class="grid grid-cols-5 font-semibold justify-items-center">
         <app-info-modal-button
             [name]="'Set'"
             [infoContent]="'Indicates the number of a set of an exercise.'"
@@ -56,7 +56,7 @@
             [infoContent]="'Indicates the type of set of an exercise.'"
         ></app-info-modal-button>
         <app-info-modal-button
-            [name]="'Weight'"
+            [name]="'Kg'"
             [infoContent]="
                 'Indicates the weight used on given set of an exercise.'
             "
