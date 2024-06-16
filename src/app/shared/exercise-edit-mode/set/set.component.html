@@ -34,16 +34,19 @@
             placeholder="-"
         />
     </div>
-    <div>
-        <input
-            mask="0"
-            [maxlength]="1"
-            type="text"
-            [(ngModel)]="rpe"
-            class="text-center bg-transparent outline-none placeholder-neutral-800 w-2.5"
-            placeholder="-"
-        />
-    </div>
+
+    <button
+        type="button"
+        class="select-none"
+        [ngClass]="{ 'text-neutral-800': !rpe, 'text-white': rpe }"
+    >
+        <!-- prettier-ignore -->
+        @if (!rpe) {
+            -
+        } @else {
+        {{ rpe }}
+        }
+    </button>
 
     @for (dropset of [1,2,3]; track $index) {
     <ng-container>

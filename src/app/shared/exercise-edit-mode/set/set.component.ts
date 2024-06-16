@@ -17,7 +17,7 @@ export class SetComponent {
     weight!: number;
     weightLength!: number;
     reps!: number;
-    rpe!: number;
+    rpe!: number | null;
 
     setTypeIndex: number = 0;
 
