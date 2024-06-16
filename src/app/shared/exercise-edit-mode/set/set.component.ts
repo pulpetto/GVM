@@ -21,7 +21,7 @@ export class SetComponent {
 
     setTypeIndex: number = 0;
 
-    modalVisibility: boolean = false;
+    setTypeModalVisibility: boolean = false;
 
     setTypes = [
         {
