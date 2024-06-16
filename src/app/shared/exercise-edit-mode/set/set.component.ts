@@ -91,6 +91,6 @@ export class SetComponent {
         this.setTypes[$index].isSelected = true;
         this.setTypeIndex = $index;
 
-        this.modalVisibility = false;
+        this.setTypeModalVisibility = false;
     }
 }
