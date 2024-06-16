@@ -67,6 +67,12 @@ export class SetComponent {
             isSelected: false,
         },
         {
+            name: 'tempo',
+            textColor: 'text-teal-500',
+            borderColor: 'border-teal-500',
+            isSelected: false,
+        },
+        {
             name: 'drop',
             textColor: 'text-orange-500',
             borderColor: 'border-orange-500',
