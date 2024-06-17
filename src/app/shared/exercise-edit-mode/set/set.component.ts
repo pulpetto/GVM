@@ -22,6 +22,7 @@ export class SetComponent {
     setTypeIndex: number = 0;
 
     setTypeModalVisibility: boolean = false;
+    rpeModalVisibility: boolean = false;
 
     setTypes = [
         {
