@@ -71,16 +71,19 @@
                 placeholder="-"
             />
         </div>
-        <div>
-            <input
-                mask="00"
-                [maxlength]="1"
-                type="text"
-                [(ngModel)]="rpe"
-                class="w-5 text-center bg-transparent outline-none placeholder-neutral-800"
-                placeholder="-"
-            />
-        </div>
+        <button
+            type="button"
+            class="select-none"
+            [ngClass]="{ 'text-neutral-800': !rpe, 'text-white': rpe }"
+            (click)="rpeModalVisibility = true"
+        >
+            <!-- prettier-ignore -->
+            @if (!rpe) {
+            -
+        } @else {
+            {{ rpe }}
+            }
+        </button>
     </ng-container>
     }
 
