@@ -169,12 +169,13 @@
 >
     <div class="flex flex-col">
         <div class="self-center text-xl font-semibold">Choose rpe value:</div>
-        <button
-            type="button"
-            class="self-center text-sm transition-all opacity-50 active:scale-95 hover:text-emerald-500 hover:opacity-100"
-        >
-            Don't know what <span class="font-semibold">RPE</span> is?
-        </button>
+        <app-info-modal-button
+            class="self-center font-semibold"
+            [name]="'Dont know what RPE is?'"
+            [infoContent]="
+                'Rate of perceived exertion (RPE) is used to measure how hard your body works during physical activity. 10 for example, means maximal effort and no reps in reserve. (muscular failure)'
+            "
+        ></app-info-modal-button>
     </div>
 
     <div class="flex flex-col gap-2">

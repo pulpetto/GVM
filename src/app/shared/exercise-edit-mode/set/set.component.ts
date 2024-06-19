@@ -8,13 +8,19 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
+import { InfoModalButtonComponent } from '../../info-modal-button/info-modal-button.component';
 
 @Component({
     selector: 'app-set',
     standalone: true,
-    imports: [CommonModule, FormsModule, NgxMaskDirective],
     templateUrl: './set.component.html',
     styleUrl: './set.component.css',
+    imports: [
+        CommonModule,
+        FormsModule,
+        NgxMaskDirective,
+        InfoModalButtonComponent,
+    ],
 })
 export class SetComponent {
     @Input({ required: true }) lighterBg: boolean = false;
