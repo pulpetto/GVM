@@ -1,3 +1,4 @@
+<!-- eslint-disable @angular-eslint/template/mouse-events-have-key-events -->
 <div
     class="grid grid-cols-5 py-2 rounded-md justify-items-center gap-y-3"
     [ngClass]="{
@@ -182,6 +183,8 @@
             <button
                 #rpeValBtn
                 (click)="onRpeValueChange(rpeValue, $index)"
+                (mouseover)="onRpeMouseOver(rpeValue, $index)"
+                (mouseout)="onRpeMouseOut()"
                 class="relative z-10 w-10 h-10 font-semibold rounded-md"
             >
                 {{ rpeValue }}
@@ -200,6 +203,20 @@
                     'bg-red-500': rpe === 10,
                 }"
                 [style]="'left:' + leftDistancePx + 'px;'"
+            ></div>
+            <div
+                class="absolute top-0 w-10 h-10 transition-all rounded-md"
+                [ngClass]="{
+                    'opacity-0': !hoveredRpeValue,
+                    'opacity-75': hoveredRpeValue,
+                    'bg-green-500': hoveredRpeValue === 6,
+                    'bg-lime-500': hoveredRpeValue === 7,
+                    'bg-yellow-500': hoveredRpeValue === 8,
+                    'bg-amber-500': hoveredRpeValue === 9,
+                    'bg-orange-500': hoveredRpeValue === 9.5,
+                    'bg-red-500': hoveredRpeValue === 10,
+                }"
+                [style]="'left:' + leftDistancePxHover + 'px;'"
             ></div>
         </div>
         <div class="text-sm text-center">

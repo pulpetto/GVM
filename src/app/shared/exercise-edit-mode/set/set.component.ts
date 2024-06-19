@@ -47,6 +47,20 @@ export class SetComponent {
         }
     }
 
+    leftDistancePxHover: number = 0;
+    hoveredRpeValue: number | null = null;
+
+    onRpeMouseOver(rpeValue: number, $index: number) {
+        this.hoveredRpeValue = rpeValue;
+
+        this.leftDistancePxHover =
+            this.rpeValuesButtons.toArray()[$index].nativeElement.offsetLeft;
+    }
+
+    onRpeMouseOut() {
+        this.hoveredRpeValue = null;
+    }
+
     setTypes = [
         {
             name: 'normal',
