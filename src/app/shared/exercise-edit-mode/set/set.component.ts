@@ -32,9 +32,11 @@ export class SetComponent {
     rpe!: number | null;
 
     setTypeIndex: number = 0;
+    setTypeName: string = 'normal';
 
     setTypeModalVisibility: boolean = false;
     rpeModalVisibility: boolean = false;
+
     leftDistancePx: number = 0;
     rpeScale = [6, 7, 8, 9, 9.5, 10];
 
@@ -133,8 +135,12 @@ export class SetComponent {
     onSetTypeChange($index: number) {
         this.setTypes.forEach((set) => (set.isSelected = false));
         this.setTypes[$index].isSelected = true;
+
         this.setTypeIndex = $index;
+        this.setTypeName = this.setTypes[$index].name;
 
         this.setTypeModalVisibility = false;
     }
+
+    dropsets = [];
 }
