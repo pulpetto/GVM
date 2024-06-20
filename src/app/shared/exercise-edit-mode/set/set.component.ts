@@ -142,5 +142,19 @@ export class SetComponent {
         this.setTypeModalVisibility = false;
     }
 
-    dropsets = [];
+    dropsets: {
+        number: number;
+        weight: null | number;
+        reps: null | number;
+        rpe: null | number;
+    }[] = [];
+
+    addDropSet() {
+        this.dropsets.push({
+            number: this.dropsets.length + 1,
+            weight: null,
+            reps: null,
+            rpe: null,
+        });
+    }
 }

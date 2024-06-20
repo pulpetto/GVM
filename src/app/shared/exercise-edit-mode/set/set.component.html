@@ -50,6 +50,8 @@
         }
     </button>
 
+    <!-- prettier-ignore -->
+    @if (setTypeName === 'drop') {
     @for (dropset of dropsets; track $index) {
     <ng-container>
         <div class="col-span-2 text-nowrap">Drop 5kg:</div>
@@ -58,7 +60,7 @@
                 mask="000"
                 [maxlength]="4"
                 type="text"
-                [(ngModel)]="weight"
+                [(ngModel)]="dropset.weight"
                 class="text-center bg-transparent outline-none placeholder-neutral-800 w-7.5"
                 placeholder="-"
             />
@@ -68,22 +70,26 @@
                 mask="00"
                 [maxlength]="2"
                 type="text"
-                [(ngModel)]="reps"
+                [(ngModel)]="dropset.reps"
                 class="w-5 text-center bg-transparent outline-none placeholder-neutral-800"
                 placeholder="-"
             />
         </div>
+        <!-- FIX RPE -->
         <button
             type="button"
             class="select-none"
-            [ngClass]="{ 'text-neutral-800': !rpe, 'text-white': rpe }"
+            [ngClass]="{
+                'text-neutral-800': !dropset.rpe,
+                'text-white': dropset.rpe
+            }"
             (click)="rpeModalVisibility = true"
         >
             <!-- prettier-ignore -->
-            @if (!rpe) {
-            -
-        } @else {
-            {{ rpe }}
+            @if (!dropset.rpe) {
+                -
+            } @else {
+            {{ dropset.rpe }}
             }
         </button>
     </ng-container>
@@ -91,10 +97,12 @@
 
     <button
         type="button"
+        (click)="addDropSet()"
         class="col-span-5 text-base font-semibold transition-all text-neutral-700 hover:text-emerald-500 active:scale-95 active:opacity-50"
     >
         Add Dropset
     </button>
+    }
 </div>
 
 @if (setTypeModalVisibility || rpeModalVisibility) {
