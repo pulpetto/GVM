@@ -103,6 +103,47 @@
         Add Dropset
     </button>
     }
+
+    <!-- prettier-ignore -->
+    @if (setTypeName === 'cluster') {
+    <div class="col-span-2 text-nowrap">Rest time:</div>
+    <div class="col-span-1 text-nowrap">20s</div>
+    <div>
+        <input
+            mask="00"
+            [maxlength]="2"
+            type="text"
+            [(ngModel)]="reps"
+            class="w-5 text-center bg-transparent outline-none placeholder-neutral-800"
+            placeholder="-"
+        />
+    </div>
+    <!-- FIX RPE -->
+    <button
+        type="button"
+        class="select-none"
+        [ngClass]="{
+            'text-neutral-800': !rpe,
+            'text-white': rpe
+        }"
+        (click)="rpeModalVisibility = true"
+    >
+        <!-- prettier-ignore -->
+        @if (!rpe) {
+            -
+        } @else {
+        {{ rpe }}
+        }
+    </button>
+
+    <button
+        type="button"
+        (click)="addDropSet()"
+        class="col-span-5 text-base font-semibold transition-all text-neutral-700 hover:text-emerald-500 active:scale-95 active:opacity-50"
+    >
+        Add Subset
+    </button>
+    }
 </div>
 
 @if (setTypeModalVisibility || rpeModalVisibility) {
