@@ -27,7 +27,6 @@ export class SetComponent {
     @Input({ required: true }) number!: number;
 
     weight!: number;
-    weightLength!: number;
     reps!: number;
     rpe!: number | null;
 
