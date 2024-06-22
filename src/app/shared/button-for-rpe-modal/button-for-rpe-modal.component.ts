@@ -17,9 +17,7 @@ import { InfoModalButtonComponent } from '../info-modal-button/info-modal-button
     imports: [CommonModule, InfoModalButtonComponent],
 })
 export class ButtonForRpeModalComponent {
-    @Output() rpeValueChangeEvent = new EventEmitter<{
-        rpeValue: number;
-    }>();
+    @Output() rpeValueChangeEvent = new EventEmitter<number>();
 
     modalVisibility: boolean = false;
 
