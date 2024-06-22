@@ -46,6 +46,7 @@
     @for (dropset of dropsets; track $index) {
     <app-drop-set
         [dropsetNumber]="$index + 1"
+        (inputValuesChangeEvent)="updateDropsetValues($event, $index)"
         class="w-full col-span-5"
     ></app-drop-set>
     }

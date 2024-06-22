@@ -26,7 +26,7 @@ export class SetComponent {
 
     weight!: number;
     reps!: number;
-    onRpeValueChange($event: number) {
+    onRpeValueChange($event: number | null) {
         this.rpe = $event;
     }
     rpe!: number | null;
@@ -109,8 +109,8 @@ export class SetComponent {
         this.setTypeModalVisibility = false;
     }
 
+    // Dropset Logic ---------------------------
     dropsets: {
-        number: number;
         weight: null | number;
         reps: null | number;
         rpe: null | number;
@@ -118,10 +118,18 @@ export class SetComponent {
 
     addDropSet() {
         this.dropsets.push({
-            number: this.dropsets.length + 1,
             weight: null,
             reps: null,
             rpe: null,
         });
+    }
+
+    updateDropsetValues(
+        $event: { weight: number; reps: number; rpe: number | null },
+        $index: number
+    ) {
+        this.dropsets[$index] = $event;
+
+        console.log(this.dropsets);
     }
 }

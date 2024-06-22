@@ -8,6 +8,7 @@
         [maxlength]="3"
         type="text"
         [(ngModel)]="weight"
+        (change)="onAnyValueChange()"
         class="text-center bg-transparent outline-none placeholder-neutral-800 w-7.5 col-span-1"
         placeholder="-"
     />
@@ -17,12 +18,13 @@
         [maxlength]="2"
         type="text"
         [(ngModel)]="reps"
+        (change)="onAnyValueChange()"
         class="w-5 col-span-1 text-center bg-transparent outline-none placeholder-neutral-800 place-self-center"
         placeholder="-"
     />
 
     <app-button-for-rpe-modal
-        (rpeValueChangeEvent)="onRpeValueChange($event)"
+        (rpeValueChangeEvent)="updateRpeValue($event)"
         class="place-self-center"
     ></app-button-for-rpe-modal>
 </div>

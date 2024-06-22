@@ -17,7 +17,7 @@ import { InfoModalButtonComponent } from '../info-modal-button/info-modal-button
     imports: [CommonModule, InfoModalButtonComponent],
 })
 export class ButtonForRpeModalComponent {
-    @Output() rpeValueChangeEvent = new EventEmitter<number>();
+    @Output() rpeValueChangeEvent = new EventEmitter<number | null>();
 
     modalVisibility: boolean = false;
 
@@ -33,9 +33,11 @@ export class ButtonForRpeModalComponent {
     onRpeValueChange(rpeValue: number, $index: number) {
         if (this.rpe === rpeValue) {
             this.rpe = null;
+            this.rpeValueChangeEvent.emit(null);
             this.hoverShadowLeftDistancePx = 0;
         } else {
             this.rpe = rpeValue;
+            this.rpeValueChangeEvent.emit(rpeValue);
             this.hoverShadowLeftDistancePx =
                 this.rpeValuesButtons.toArray()[
                     $index

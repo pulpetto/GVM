@@ -12,14 +12,29 @@ import { ButtonForRpeModalComponent } from '../../../button-for-rpe-modal/button
 })
 export class DropSetComponent {
     @Input({ required: true }) dropsetNumber!: number;
-    @Output() rpeValueChangeEvent = new EventEmitter<number>();
+    @Output() inputValuesChangeEvent = new EventEmitter<{
+        weight: number;
+        reps: number;
+        rpe: number | null;
+    }>();
 
-    onRpeValueChange($event: number) {
-        this.rpeValueChangeEvent.emit($event);
+    updateRpeValue($event: number | null) {
+        this.rpe = $event;
+
+        this.onAnyValueChange();
+    }
+
+    onAnyValueChange() {
+        this.inputValuesChangeEvent.emit({
+            weight: this.weight,
+            reps: this.reps,
+            rpe: this.rpe,
+        });
     }
 
     weight!: number;
     reps!: number;
+    rpe!: number | null;
 
     rpeModalVisibility: boolean = false;
 }
