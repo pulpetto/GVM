@@ -36,19 +36,10 @@
         />
     </div>
 
-    <button
-        type="button"
-        class="select-none"
-        [ngClass]="{ 'text-neutral-800': !rpe, 'text-white': rpe }"
-        (click)="rpeModalVisibility = true"
-    >
-        <!-- prettier-ignore -->
-        @if (!rpe) {
-            -
-        } @else {
-        {{ rpe }}
-        }
-    </button>
+    <app-button-for-rpe-modal
+        (rpeValueChangeEvent)="onRpeValueChange($event)"
+        class="place-self-center"
+    ></app-button-for-rpe-modal>
 
     <!-- prettier-ignore -->
     @if (setTypeName === 'drop') {
@@ -64,53 +55,12 @@
         Add Dropset
     </button>
     }
-
-    <!-- prettier-ignore -->
-    @if (setTypeName === 'cluster') {
-    <div class="col-span-2 text-nowrap">Rest time:</div>
-    <div class="col-span-1 text-nowrap">20s</div>
-    <div>
-        <input
-            mask="00"
-            [maxlength]="2"
-            type="text"
-            [(ngModel)]="reps"
-            class="w-5 text-center bg-transparent outline-none placeholder-neutral-800"
-            placeholder="-"
-        />
-    </div>
-    <!-- FIX RPE -->
-    <button
-        type="button"
-        class="select-none"
-        [ngClass]="{
-            'text-neutral-800': !rpe,
-            'text-white': rpe
-        }"
-        (click)="rpeModalVisibility = true"
-    >
-        <!-- prettier-ignore -->
-        @if (!rpe) {
-            -
-        } @else {
-        {{ rpe }}
-        }
-    </button>
-
-    <button
-        type="button"
-        (click)="addDropSet()"
-        class="col-span-5 text-base font-semibold transition-all text-neutral-700 hover:text-emerald-500 active:scale-95 active:opacity-50"
-    >
-        Add Subset
-    </button>
-    }
 </div>
 
-@if (setTypeModalVisibility || rpeModalVisibility) {
+@if (setTypeModalVisibility) {
 <!-- eslint-disable-next-line    -->
 <div
-    (click)="setTypeModalVisibility = false; rpeModalVisibility = false"
+    (click)="setTypeModalVisibility = false"
     class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
 ></div>
 }
@@ -168,101 +118,4 @@
         </button>
         }
     </div>
-</div>
-
-<div
-    class="fixed left-0 z-50 flex flex-col w-full h-full gap-12 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
-    [ngClass]="{
-        'top-1/2': rpeModalVisibility,
-        'top-full': !rpeModalVisibility
-    }"
->
-    <div class="flex flex-col">
-        <div class="self-center text-xl font-semibold">Choose rpe value:</div>
-        <app-info-modal-button
-            class="self-center font-semibold"
-            [name]="'Dont know what RPE is?'"
-            [infoContent]="
-                'Rate of perceived exertion (RPE) is used to measure how hard your body works during physical activity. 10 for example, means maximal effort and no reps in reserve. (muscular failure)'
-            "
-        ></app-info-modal-button>
-    </div>
-
-    <div class="flex flex-col gap-2">
-        <div class="relative flex justify-between bg-black rounded-md">
-            @for (rpeValue of rpeScale; track $index) {
-            <button
-                #rpeValBtn
-                (click)="onRpeValueChange(rpeValue, $index)"
-                (mouseover)="onRpeMouseOver(rpeValue, $index)"
-                (mouseout)="onRpeMouseOut()"
-                class="relative z-10 w-10 h-10 font-semibold rounded-md"
-            >
-                {{ rpeValue }}
-            </button>
-            }
-            <div
-                class="absolute top-0 w-10 h-10 transition-all duration-300 rounded-md"
-                [ngClass]="{
-                    'opacity-0': !rpe,
-                    'opacity-100': rpe,
-                    'bg-green-500': rpe === 6,
-                    'bg-lime-500': rpe === 7,
-                    'bg-yellow-500': rpe === 8,
-                    'bg-amber-500': rpe === 9,
-                    'bg-orange-500': rpe === 9.5,
-                    'bg-red-500': rpe === 10,
-                }"
-                [style]="'left:' + leftDistancePx + 'px;'"
-            ></div>
-            <div
-                class="absolute top-0 w-10 h-10 transition-all rounded-md"
-                [ngClass]="{
-                    'opacity-0': !hoveredRpeValue,
-                    'opacity-75': hoveredRpeValue,
-                    'bg-green-500': hoveredRpeValue === 6,
-                    'bg-lime-500': hoveredRpeValue === 7,
-                    'bg-yellow-500': hoveredRpeValue === 8,
-                    'bg-amber-500': hoveredRpeValue === 9,
-                    'bg-orange-500': hoveredRpeValue === 9.5,
-                    'bg-red-500': hoveredRpeValue === 10,
-                }"
-                [style]="'left:' + leftDistancePxHover + 'px;'"
-            ></div>
-        </div>
-        <div class="text-sm text-center">
-            <!-- prettier-ignore -->
-            @if(rpe === 6) {
-                Noticeable effort, but nothing too crazy a few reps left in the tank tank.
-            }
-
-            @if(rpe === 7) {
-                Muscle pain is getting more noticable, around 3 reps left in the tank.
-            }
-
-            @if(rpe === 8) {
-                Difficult, 2 reps left in the tank.
-            }
-
-            @if(rpe === 9) {
-                Very difficult, 1 rep left in the tank.
-            }
-
-            @if(rpe === 9.5) {
-                Super difficult, 1 rep may be possible.
-            }
-
-            @if(rpe === 10) {
-                Extra difficult, not a chance to make another rep, only failure is beyond there.
-            }
-        </div>
-    </div>
-
-    <button
-        type="button"
-        (click)="rpeModalVisibility = false"
-        class="absolute py-1 font-semibold -translate-y-16 rounded-md left-4 right-4 top-1/2 bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
-    >
-        Ok
-    </button>
 </div>

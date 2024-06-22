@@ -1,15 +1,10 @@
-import {
-    Component,
-    ElementRef,
-    Input,
-    QueryList,
-    ViewChildren,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { InfoModalButtonComponent } from '../../info-modal-button/info-modal-button.component';
 import { DropSetComponent } from './drop-set/drop-set.component';
+import { ButtonForRpeModalComponent } from '../../button-for-rpe-modal/button-for-rpe-modal.component';
 
 @Component({
     selector: 'app-set',
@@ -22,6 +17,7 @@ import { DropSetComponent } from './drop-set/drop-set.component';
         NgxMaskDirective,
         InfoModalButtonComponent,
         DropSetComponent,
+        ButtonForRpeModalComponent,
     ],
 })
 export class SetComponent {
@@ -30,45 +26,15 @@ export class SetComponent {
 
     weight!: number;
     reps!: number;
+    onRpeValueChange($event: number) {
+        this.rpe = $event;
+    }
     rpe!: number | null;
 
     setTypeIndex: number = 0;
     setTypeName: string = 'normal';
 
     setTypeModalVisibility: boolean = false;
-    rpeModalVisibility: boolean = false;
-
-    leftDistancePx: number = 0;
-    rpeScale = [6, 7, 8, 9, 9.5, 10];
-
-    @ViewChildren('rpeValBtn') rpeValuesButtons!: QueryList<ElementRef>;
-
-    onRpeValueChange(rpeValue: number, $index: number) {
-        if (this.rpe === rpeValue) {
-            this.rpe = null;
-            this.leftDistancePx = 0;
-        } else {
-            this.rpe = rpeValue;
-            this.leftDistancePx =
-                this.rpeValuesButtons.toArray()[
-                    $index
-                ].nativeElement.offsetLeft;
-        }
-    }
-
-    leftDistancePxHover: number = 0;
-    hoveredRpeValue: number | null = null;
-
-    onRpeMouseOver(rpeValue: number, $index: number) {
-        this.hoveredRpeValue = rpeValue;
-
-        this.leftDistancePxHover =
-            this.rpeValuesButtons.toArray()[$index].nativeElement.offsetLeft;
-    }
-
-    onRpeMouseOut() {
-        this.hoveredRpeValue = null;
-    }
 
     setTypes = [
         {
