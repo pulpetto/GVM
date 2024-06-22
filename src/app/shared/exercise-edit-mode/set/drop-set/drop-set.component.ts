@@ -35,6 +35,4 @@ export class DropSetComponent {
     weight!: number;
     reps!: number;
     rpe!: number | null;
-
-    rpeModalVisibility: boolean = false;
 }
