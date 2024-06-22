@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { InfoModalButtonComponent } from '../../info-modal-button/info-modal-button.component';
+import { DropSetComponent } from './drop-set/drop-set.component';
 
 @Component({
     selector: 'app-set',
@@ -20,6 +21,7 @@ import { InfoModalButtonComponent } from '../../info-modal-button/info-modal-but
         FormsModule,
         NgxMaskDirective,
         InfoModalButtonComponent,
+        DropSetComponent,
     ],
 })
 export class SetComponent {

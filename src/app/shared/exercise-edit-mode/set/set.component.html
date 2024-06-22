@@ -53,46 +53,7 @@
     <!-- prettier-ignore -->
     @if (setTypeName === 'drop') {
     @for (dropset of dropsets; track $index) {
-    <ng-container>
-        <div class="col-span-2 text-nowrap">Drop 5kg:</div>
-        <div>
-            <input
-                mask="000"
-                [maxlength]="4"
-                type="text"
-                [(ngModel)]="dropset.weight"
-                class="text-center bg-transparent outline-none placeholder-neutral-800 w-7.5"
-                placeholder="-"
-            />
-        </div>
-        <div>
-            <input
-                mask="00"
-                [maxlength]="2"
-                type="text"
-                [(ngModel)]="dropset.reps"
-                class="w-5 text-center bg-transparent outline-none placeholder-neutral-800"
-                placeholder="-"
-            />
-        </div>
-        <!-- FIX RPE -->
-        <button
-            type="button"
-            class="select-none"
-            [ngClass]="{
-                'text-neutral-800': !dropset.rpe,
-                'text-white': dropset.rpe
-            }"
-            (click)="rpeModalVisibility = true"
-        >
-            <!-- prettier-ignore -->
-            @if (!dropset.rpe) {
-                -
-            } @else {
-            {{ dropset.rpe }}
-            }
-        </button>
-    </ng-container>
+    <app-drop-set class="w-full col-span-5"></app-drop-set>
     }
 
     <button
