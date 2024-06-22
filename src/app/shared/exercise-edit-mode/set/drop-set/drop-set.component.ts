@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonForRpeModalComponent } from '../../../button-for-rpe-modal/button-for-rpe-modal.component';
@@ -11,9 +11,14 @@ import { ButtonForRpeModalComponent } from '../../../button-for-rpe-modal/button
     imports: [CommonModule, FormsModule, ButtonForRpeModalComponent],
 })
 export class DropSetComponent {
+    @Output() rpeValueChangeEvent = new EventEmitter<number>();
+
+    onRpeValueChange($event: number) {
+        this.rpeValueChangeEvent.emit($event);
+    }
+
     weight!: number;
     reps!: number;
-    rpe!: number;
 
     rpeModalVisibility: boolean = false;
 }
