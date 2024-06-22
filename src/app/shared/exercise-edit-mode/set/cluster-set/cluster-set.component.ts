@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ButtonForRpeModalComponent } from '../../../button-for-rpe-modal/button-for-rpe-modal.component';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-cluster-set',
     standalone: true,
     templateUrl: './cluster-set.component.html',
     styleUrl: './cluster-set.component.css',
-    imports: [ButtonForRpeModalComponent, FormsModule],
+    imports: [ButtonForRpeModalComponent, FormsModule, CommonModule],
 })
 export class ClusterSetComponent {
     @Output() inputValuesChangeEvent = new EventEmitter<{
@@ -34,5 +35,5 @@ export class ClusterSetComponent {
     reps!: number;
     rpe!: number | null;
 
-    rpeModalVisibility: boolean = false;
+    restTimeModalVisibility: boolean = false;
 }

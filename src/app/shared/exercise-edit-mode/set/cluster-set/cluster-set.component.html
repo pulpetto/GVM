@@ -1,6 +1,18 @@
 <div class="grid grid-cols-5 py-1">
     <div class="col-span-2 place-self-center">Rest time:</div>
-    <button type="button" class="col-span-1 place-self-center">20s</button>
+    <button
+        type="button"
+        class="col-span-1 select-none place-self-center"
+        [ngClass]="{ 'text-neutral-800': !restTime, 'text-white': restTime }"
+        (click)="restTimeModalVisibility = true"
+    >
+        <!-- prettier-ignore -->
+        @if (!restTime) {
+            -
+        } @else {
+        {{ restTime }}
+        }
+    </button>
 
     <input
         mask="00"
