@@ -5,6 +5,7 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { InfoModalButtonComponent } from '../../info-modal-button/info-modal-button.component';
 import { DropSetComponent } from './drop-set/drop-set.component';
 import { ButtonForRpeModalComponent } from '../../button-for-rpe-modal/button-for-rpe-modal.component';
+import { ClusterSetComponent } from './cluster-set/cluster-set.component';
 
 @Component({
     selector: 'app-set',
@@ -18,6 +19,7 @@ import { ButtonForRpeModalComponent } from '../../button-for-rpe-modal/button-fo
         InfoModalButtonComponent,
         DropSetComponent,
         ButtonForRpeModalComponent,
+        ClusterSetComponent,
     ],
 })
 export class SetComponent {
@@ -134,5 +136,20 @@ export class SetComponent {
         this.dropsets[$index] = $event;
 
         console.log(this.dropsets);
+    }
+
+    // Clusterset Logic ---------------------------
+    clustersets: {
+        restTime: null | number;
+        reps: null | number;
+        rpe: null | number;
+    }[] = [];
+
+    addClusterSet() {
+        this.clustersets.push({
+            restTime: null,
+            reps: null,
+            rpe: null,
+        });
     }
 }

@@ -59,6 +59,21 @@
         Add Dropset
     </button>
     }
+
+    <!-- prettier-ignore -->
+    @if (setTypeName === 'cluster') {
+    @for (clusterset of clustersets; track $index) {
+    <app-cluster-set></app-cluster-set>
+    }
+
+    <button
+        type="button"
+        (click)="addClusterSet()"
+        class="col-span-5 text-base font-semibold transition-all text-neutral-700 hover:text-emerald-500 active:scale-95 active:opacity-50"
+    >
+        Add Clusterset
+    </button>
+    }
 </div>
 
 @if (setTypeModalVisibility) {
