@@ -44,7 +44,10 @@
     <!-- prettier-ignore -->
     @if (setTypeName === 'drop') {
     @for (dropset of dropsets; track $index) {
-    <app-drop-set class="w-full col-span-5"></app-drop-set>
+    <app-drop-set
+        [dropsetNumber]="$index + 1"
+        class="w-full col-span-5"
+    ></app-drop-set>
     }
 
     <button
