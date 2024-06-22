@@ -19,20 +19,7 @@
         placeholder="-"
     />
 
-    <button
-        type="button"
-        class="select-none"
-        [ngClass]="{
-            'text-neutral-800': !rpe,
-            'text-white': rpe
-        }"
-        (click)="rpeModalVisibility = true"
-    >
-        <!-- prettier-ignore -->
-        @if (!rpe) {
-            -
-        } @else {
-        {{ rpe }}
-        }
-    </button>
+    <app-button-for-rpe-modal
+        class="place-self-center"
+    ></app-button-for-rpe-modal>
 </div>
