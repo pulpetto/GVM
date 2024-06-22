@@ -1,1 +1,18 @@
-<p>cluster-set works!</p>
+<div class="grid grid-cols-5 py-1">
+    <div class="col-span-2 place-self-center">Rest time:</div>
+    <button type="button" class="col-span-1 place-self-center">20s</button>
+
+    <input
+        mask="00"
+        [maxlength]="2"
+        type="text"
+        [(ngModel)]="reps"
+        class="w-5 col-span-1 text-center bg-transparent outline-none placeholder-neutral-800 place-self-center"
+        placeholder="-"
+    />
+
+    <app-button-for-rpe-modal
+        (rpeValueChangeEvent)="updateRpeValue($event)"
+        class="place-self-center"
+    ></app-button-for-rpe-modal>
+</div>
