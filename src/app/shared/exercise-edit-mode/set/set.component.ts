@@ -110,6 +110,7 @@ export class SetComponent {
 
         // clear all settypes data
         this.dropsets = [];
+        this.clustersets = [];
 
         this.setTypeModalVisibility = false;
     }
