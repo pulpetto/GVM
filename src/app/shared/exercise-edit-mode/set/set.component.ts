@@ -152,4 +152,15 @@ export class SetComponent {
             rpe: null,
         });
     }
+
+    updateClustersetValues(
+        $event: {
+            restTime: number | null;
+            reps: number;
+            rpe: number | null;
+        },
+        $index: number
+    ) {
+        this.clustersets[$index] = $event;
+    }
 }
