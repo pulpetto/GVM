@@ -42,7 +42,7 @@ export class ClusterSetComponent {
     reps!: number;
     rpe!: number | null;
 
-    restTimeModalVisibility: boolean = true;
+    restTimeModalVisibility: boolean = false;
     restTimesScale: number[] = [5, 10, 15, 20, 25, 30];
 
     hoveredRestTimeValue: number | null = null;
