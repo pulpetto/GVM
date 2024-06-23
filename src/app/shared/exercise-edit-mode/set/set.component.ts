@@ -134,8 +134,6 @@ export class SetComponent {
         $index: number
     ) {
         this.dropsets[$index] = $event;
-
-        console.log(this.dropsets);
     }
 
     // Clusterset Logic ---------------------------
