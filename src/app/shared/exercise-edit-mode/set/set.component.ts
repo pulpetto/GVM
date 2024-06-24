@@ -6,6 +6,7 @@ import { InfoModalButtonComponent } from '../../info-modal-button/info-modal-but
 import { DropSetComponent } from './drop-set/drop-set.component';
 import { ButtonForRpeModalComponent } from '../../button-for-rpe-modal/button-for-rpe-modal.component';
 import { ClusterSetComponent } from './cluster-set/cluster-set.component';
+import { SetType } from '../../../types/set-type';
 
 @Component({
     selector: 'app-set',
@@ -34,7 +35,7 @@ export class SetComponent {
     rpe!: number | null;
 
     setTypeIndex: number = 0;
-    setTypeName: string = 'normal';
+    setTypeName: SetType = 'normal';
 
     setTypeModalVisibility: boolean = false;
 
