@@ -1,3 +1,4 @@
+<!-- eslint-disable @angular-eslint/template/mouse-events-have-key-events -->
 <div class="grid grid-cols-5 py-1">
     <div class="col-span-2 place-self-center">Tempo:</div>
     <button
@@ -5,7 +6,44 @@
         (click)="tempoModalVisibility = true"
         class="col-span-3 text-xl text-center select-none text-neutral-800 place-self-center"
     >
-        {{ eccentricPhaseLength }} - {{ isometricPhaseOneLength }} -
-        {{ concentricPhaseLength }} - {{ isometricPhaseTwoLength }}
+        {{ tempo.eccentricPhaseLength }} - {{ tempo.isometricPhaseOneLength }} -
+        {{ tempo.concentricPhaseLength }} - {{ tempo.isometricPhaseTwoLength }}
+    </button>
+</div>
+
+@if (tempoModalVisibility) {
+<!-- eslint-disable-next-line -->
+<div
+    (click)="tempoModalVisibility = false"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+></div>
+}
+
+<div
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-12 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
+    [ngClass]="{
+        'top-1/2': tempoModalVisibility,
+        'top-full': !tempoModalVisibility
+    }"
+>
+    <div class="flex flex-col items-center">
+        <div class="self-center text-xl font-semibold">
+            Choose tempo values:
+        </div>
+        <button type="button" class="text-sm opacity-50">
+            Don't know how <span class="font-semibold">tempo</span> reps work?
+        </button>
+    </div>
+
+    <div class="flex items-center">
+        <!-- Tempo -->
+    </div>
+
+    <button
+        type="button"
+        (click)="tempoModalVisibility = false"
+        class="absolute py-1 font-semibold -translate-y-16 rounded-md left-4 right-4 top-1/2 bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
+    >
+        Ok
     </button>
 </div>
