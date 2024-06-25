@@ -1,1 +1,11 @@
-<p>tempo-set works!</p>
+<div class="grid grid-cols-5 py-1">
+    <div class="col-span-2 place-self-center">Tempo:</div>
+    <button
+        type="button"
+        (click)="tempoModalVisibility = true"
+        class="col-span-3 text-xl text-center select-none text-neutral-800 place-self-center"
+    >
+        {{ eccentricPhaseLength }} - {{ isometricPhaseOneLength }} -
+        {{ concentricPhaseLength }} - {{ isometricPhaseTwoLength }}
+    </button>
+</div>
