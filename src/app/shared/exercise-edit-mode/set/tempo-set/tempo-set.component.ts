@@ -24,6 +24,7 @@ export class TempoSetComponent {
     };
 
     tempoModalVisibility: boolean = true;
+    instructionsModalVisibility: boolean = false;
 
     onTempoValueChange() {}
 }
