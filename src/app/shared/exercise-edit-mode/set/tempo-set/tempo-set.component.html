@@ -37,13 +37,32 @@
 
     <div class="flex items-center self-center gap-1">
         @for (tempoVariable of tempo | keyvalue; track $index) {
-        <input
-            mask="0"
-            type="text"
-            [(ngModel)]="tempoVariable.value"
-            class="w-12 h-12 text-2xl font-semibold text-center rounded-md outline-none bg-neutral-900 placeholder-neutral-800"
-            placeholder="0"
-        />
+        <div class="relative">
+            <input
+                mask="0"
+                type="text"
+                [(ngModel)]="tempoVariable.value"
+                class="w-12 h-12 text-2xl font-semibold text-center rounded-md outline-none bg-neutral-900 placeholder-neutral-800 focus:outline-emerald-500 outline-offset-0"
+                placeholder="0"
+            />
+            <div
+                class="absolute text-base font-semibold -translate-x-1/2 text-neutral-800 left-1/2 -top-6"
+            >
+                <!-- prettier-ignore -->
+                @if ($index === 0) {
+                    Ecc.
+                }
+                @else if($index === 1) {
+                    Iso
+                }
+                @else if($index === 2) {
+                    Con.
+                }
+                @else if($index === 3) {
+                    Iso
+                }
+            </div>
+        </div>
         @if ($index !== 3) {
         <div>
             <svg
