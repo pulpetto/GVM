@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NgxMaskDirective } from 'ngx-mask';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TempoSet } from '../../../../interfaces/tempo-set';
 
 @Component({
     selector: 'app-tempo-set',
@@ -11,20 +12,19 @@ import { CommonModule } from '@angular/common';
     styleUrl: './tempo-set.component.css',
 })
 export class TempoSetComponent {
-    tempo: {
-        eccentricPhaseLength: number | null;
-        isometricPhaseOneLength: number | null;
-        concentricPhaseLength: number | null;
-        isometricPhaseTwoLength: number | null;
-    } = {
+    @Output() tempoChangeEvent = new EventEmitter<TempoSet>();
+
+    tempo: TempoSet = {
         eccentricPhaseLength: null,
         isometricPhaseOneLength: null,
         concentricPhaseLength: null,
         isometricPhaseTwoLength: null,
     };
 
-    tempoModalVisibility: boolean = true;
+    tempoModalVisibility: boolean = false;
     instructionsModalVisibility: boolean = false;
 
-    onTempoValueChange() {}
+    onTempoValueChange() {
+        this.tempoChangeEvent.emit(this.tempo);
+    }
 }
