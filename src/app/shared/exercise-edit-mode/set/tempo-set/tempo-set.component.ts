@@ -11,11 +11,16 @@ import { CommonModule } from '@angular/common';
     styleUrl: './tempo-set.component.css',
 })
 export class TempoSetComponent {
-    tempo!: {
-        eccentricPhaseLength: number;
-        isometricPhaseOneLength: number;
-        concentricPhaseLength: number;
-        isometricPhaseTwoLength: number;
+    tempo: {
+        eccentricPhaseLength: number | null;
+        isometricPhaseOneLength: number | null;
+        concentricPhaseLength: number | null;
+        isometricPhaseTwoLength: number | null;
+    } = {
+        eccentricPhaseLength: null,
+        isometricPhaseOneLength: null,
+        concentricPhaseLength: null,
+        isometricPhaseTwoLength: null,
     };
 
     tempoModalVisibility: boolean = true;
