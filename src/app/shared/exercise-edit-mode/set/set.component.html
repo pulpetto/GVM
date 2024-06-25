@@ -77,6 +77,14 @@
         Add Clusterset
     </button>
     }
+
+    <!-- prettier-ignore -->
+    @if (setTypeName === 'tempo') {
+    <app-tempo-set
+        (tempoChangeEvent)="updateTempo($event)"
+        class="w-full col-span-5"
+    ></app-tempo-set>
+    }
 </div>
 
 @if (setTypeModalVisibility) {

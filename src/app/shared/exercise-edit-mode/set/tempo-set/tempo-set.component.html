@@ -40,13 +40,13 @@
     </div>
 
     <div class="flex items-center self-center gap-1">
-        @for (tempoVariable of tempo | keyvalue; track $index) {
+        @for (tempoKeyValue of tempoObjEntries; track $index) {
         <div class="relative">
             <input
                 mask="0"
                 type="text"
                 (change)="onTempoValueChange()"
-                [(ngModel)]="tempoVariable.value"
+                [(ngModel)]="tempo[tempoKeyValue[0]]"
                 class="w-12 h-12 text-2xl font-semibold text-center rounded-md outline-none bg-neutral-900 placeholder-neutral-800 focus:outline-emerald-500 outline-offset-0"
                 placeholder="0"
             />

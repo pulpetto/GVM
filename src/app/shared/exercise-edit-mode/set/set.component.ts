@@ -7,6 +7,8 @@ import { DropSetComponent } from './drop-set/drop-set.component';
 import { ButtonForRpeModalComponent } from '../../button-for-rpe-modal/button-for-rpe-modal.component';
 import { ClusterSetComponent } from './cluster-set/cluster-set.component';
 import { SetType } from '../../../types/set-type';
+import { TempoSetComponent } from './tempo-set/tempo-set.component';
+import { TempoSet } from '../../../interfaces/tempo-set';
 
 @Component({
     selector: 'app-set',
@@ -21,6 +23,7 @@ import { SetType } from '../../../types/set-type';
         DropSetComponent,
         ButtonForRpeModalComponent,
         ClusterSetComponent,
+        TempoSetComponent,
     ],
 })
 export class SetComponent {
@@ -33,6 +36,13 @@ export class SetComponent {
         this.rpe = $event;
     }
     rpe!: number | null;
+
+    // Additional properties
+    tempo!: TempoSet;
+
+    updateTempo($event: TempoSet) {
+        this.tempo = $event;
+    }
 
     setTypeIndex: number = 0;
     setTypeName: SetType = 'normal';

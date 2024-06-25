@@ -21,6 +21,10 @@ export class TempoSetComponent {
         isometricPhaseTwoLength: null,
     };
 
+    get tempoObjEntries() {
+        return Object.entries(this.tempo);
+    }
+
     tempoModalVisibility: boolean = false;
     instructionsModalVisibility: boolean = false;
 
