@@ -50,7 +50,12 @@ export class SetComponent {
 
     setTypeModalVisibility: boolean = false;
 
-    setTypes = [
+    setTypes: {
+        name: SetType;
+        textColor: string;
+        borderColor: string;
+        isSelected: boolean;
+    }[] = [
         {
             name: 'normal',
             textColor: 'text-white',
