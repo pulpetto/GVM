@@ -122,6 +122,9 @@ export class SetComponent {
         // clear all settypes data
         this.dropsets = [];
         this.clustersets = [];
+        Object.keys(this.tempo).forEach((key) => {
+            this.tempo[key] = null;
+        });
 
         this.setTypeModalVisibility = false;
     }
