@@ -64,12 +64,6 @@ export class SetComponent {
             isSelected: false,
         },
         {
-            name: 'failure',
-            textColor: 'text-red-500',
-            borderColor: 'border-red-500',
-            isSelected: false,
-        },
-        {
             name: 'partials',
             textColor: 'text-fuchsia-500',
             borderColor: 'border-fuchsia-500',

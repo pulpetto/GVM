@@ -1,7 +1,6 @@
 export type SetType =
     | 'normal'
     | 'warmup'
-    | 'failure'
     | 'paused'
     | 'drop'
     | 'cluster'
