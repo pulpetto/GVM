@@ -119,7 +119,6 @@ export class SetComponent {
         this.setTypeIndex = $index;
         this.setTypeName = this.setTypes[$index].name;
 
-        // clear all settypes data
         this.dropsets = [];
         this.clustersets = [];
         Object.keys(this.tempo).forEach((key) => {
