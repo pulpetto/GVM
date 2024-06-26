@@ -105,17 +105,17 @@
         'top-full': !optionsModalVisibility
     }"
 >
-    <div class="self-center">Choose Action:</div>
-    <div class="flex flex-col gap-1.5">
+    <div class="self-center text-lg font-semibold">Choose Action:</div>
+    <div class="flex flex-col gap-1.5 text-lg">
         <button
             type="button"
             class="flex items-center gap-0.5 transition-all active:opacity-50 active:scale-95 group"
         >
             <div
-                class="mt-1 overflow-hidden border-2 border-solid rounded-full border-emerald-500"
+                class="mt-1 overflow-hidden transition-colors border-2 border-white border-solid rounded-full group-hover:border-emerald-500"
             >
                 <svg
-                    class="w-10 h-10 stroke-emerald-500"
+                    class="w-10 h-10 transition-colors stroke-white group-hover:stroke-emerald-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -128,9 +128,7 @@
                     />
                 </svg>
             </div>
-            <div
-                class="p-2 text-lg transition-colors group-hover:text-emerald-500"
-            >
+            <div class="p-2 transition-colors group-hover:text-emerald-500">
                 Add exercise to superset
             </div>
         </button>
@@ -139,10 +137,10 @@
             class="flex items-center gap-0.5 transition-all active:opacity-50 active:scale-95 group"
         >
             <div
-                class="mt-1 overflow-hidden border-2 border-solid rounded-full border-emerald-500"
+                class="mt-1 overflow-hidden transition-colors border-2 border-white border-solid rounded-full group-hover:border-emerald-500"
             >
                 <svg
-                    class="w-10 h-10 p-2 fill-emerald-500"
+                    class="w-10 h-10 p-2 transition-colors fill-white group-hover:fill-emerald-500"
                     viewBox="0 0 32 32"
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -152,9 +150,7 @@
                     ></path>
                 </svg>
             </div>
-            <div
-                class="p-2 text-lg transition-colors group-hover:text-emerald-500"
-            >
+            <div class="p-2 transition-colors group-hover:text-emerald-500">
                 Change exercise order
             </div>
         </button>
@@ -163,10 +159,10 @@
             class="flex items-center gap-0.5 transition-all active:opacity-50 active:scale-95 group"
         >
             <div
-                class="mt-1 overflow-hidden border-2 border-solid rounded-full border-emerald-500"
+                class="mt-1 overflow-hidden transition-colors border-2 border-white border-solid rounded-full group-hover:border-emerald-500"
             >
                 <svg
-                    class="w-10 h-10 p-2 fill-emerald-500"
+                    class="w-10 h-10 p-2 transition-colors fill-white group-hover:fill-emerald-500"
                     viewBox="0 0 32 32"
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -176,9 +172,7 @@
                     ></path>
                 </svg>
             </div>
-            <div
-                class="p-2 text-lg transition-colors group-hover:text-emerald-500"
-            >
+            <div class="p-2 transition-colors group-hover:text-emerald-500">
                 Replace exercise
             </div>
         </button>
@@ -203,7 +197,7 @@
                     />
                 </svg>
             </div>
-            <div class="p-2 text-lg transition-colors group-hover:text-red-500">
+            <div class="p-2 transition-colors group-hover:text-red-500">
                 Remove Sets
             </div>
         </button>
@@ -228,9 +222,17 @@
                     />
                 </svg>
             </div>
-            <div class="p-2 text-lg transition-colors group-hover:text-red-500">
+            <div class="p-2 transition-colors group-hover:text-red-500">
                 Remove exercise
             </div>
         </button>
     </div>
+
+    <button
+        type="button"
+        (click)="optionsModalVisibility = false"
+        class="absolute py-1.5 font-semibold -translate-y-12 rounded-md left-4 right-4 top-1/2 bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
+    >
+        Close window
+    </button>
 </div>
