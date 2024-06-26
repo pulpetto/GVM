@@ -39,7 +39,7 @@ export class SetComponent {
     rpe!: RpeType;
 
     // Additional properties
-    tempo!: TempoSet;
+    tempo: TempoSet | null = null;
 
     updateTempo($event: TempoSet) {
         this.tempo = $event;
@@ -121,9 +121,7 @@ export class SetComponent {
 
         this.dropsets = [];
         this.clustersets = [];
-        Object.keys(this.tempo).forEach((key) => {
-            this.tempo[key] = null;
-        });
+        this.tempo = null;
 
         this.setTypeModalVisibility = false;
     }
