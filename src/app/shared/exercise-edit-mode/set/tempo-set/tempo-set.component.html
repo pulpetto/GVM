@@ -4,10 +4,87 @@
     <button
         type="button"
         (click)="tempoModalVisibility = true"
-        class="col-span-3 text-xl text-center select-none text-neutral-800 place-self-center"
+        class="col-span-3 text-xl text-center select-none place-self-center"
     >
-        {{ tempo.eccentricPhaseLength }} - {{ tempo.isometricPhaseOneLength }} -
-        {{ tempo.concentricPhaseLength }} - {{ tempo.isometricPhaseTwoLength }}
+        <span
+            [ngClass]="{
+                'text-neutral-800': !tempo.eccentricPhaseLength,
+                'text-white': tempo.eccentricPhaseLength
+            }"
+        >
+            {{ tempo.eccentricPhaseLength ? tempo.eccentricPhaseLength : 0 }}
+        </span>
+
+        <span
+            [ngClass]="{
+                'text-neutral-800':
+                    !tempo.eccentricPhaseLength ||
+                    !tempo.isometricPhaseOneLength,
+                'text-white':
+                    tempo.eccentricPhaseLength && tempo.isometricPhaseOneLength
+            }"
+        >
+            -
+        </span>
+
+        <span
+            [ngClass]="{
+                'text-neutral-800': !tempo.isometricPhaseOneLength,
+                'text-white': tempo.isometricPhaseOneLength
+            }"
+        >
+            {{
+                tempo.isometricPhaseOneLength
+                    ? tempo.isometricPhaseOneLength
+                    : 0
+            }}
+        </span>
+
+        <span
+            [ngClass]="{
+                'text-neutral-800':
+                    !tempo.isometricPhaseOneLength ||
+                    !tempo.concentricPhaseLength,
+                'text-white':
+                    tempo.isometricPhaseOneLength && tempo.concentricPhaseLength
+            }"
+        >
+            -
+        </span>
+
+        <span
+            [ngClass]="{
+                'text-neutral-800': !tempo.concentricPhaseLength,
+                'text-white': tempo.concentricPhaseLength
+            }"
+        >
+            {{ tempo.concentricPhaseLength ? tempo.concentricPhaseLength : 0 }}
+        </span>
+
+        <span
+            [ngClass]="{
+                'text-neutral-800':
+                    !tempo.concentricPhaseLength ||
+                    !tempo.isometricPhaseTwoLength,
+                'text-white':
+                    tempo.concentricPhaseLength && tempo.isometricPhaseTwoLength
+            }"
+        >
+            -
+        </span>
+
+        <span
+            [ngClass]="{
+                'text-neutral-800': !tempo.isometricPhaseTwoLength,
+                'text-white': tempo.isometricPhaseTwoLength
+            }"
+        >
+            {{
+                tempo.isometricPhaseTwoLength
+                    ? tempo.isometricPhaseTwoLength
+                    : 0
+            }}
+        </span>
     </button>
 </div>
 
