@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonForRpeModalComponent } from '../../../button-for-rpe-modal/button-for-rpe-modal.component';
+import { RpeType } from '../../../../types/rpe-type';
 
 @Component({
     selector: 'app-drop-set',
@@ -15,10 +16,10 @@ export class DropSetComponent {
     @Output() inputValuesChangeEvent = new EventEmitter<{
         weight: number;
         reps: number;
-        rpe: number | null;
+        rpe: RpeType;
     }>();
 
-    updateRpeValue($event: number | null) {
+    updateRpeValue($event: RpeType) {
         this.rpe = $event;
 
         this.onAnyValueChange();
@@ -34,5 +35,5 @@ export class DropSetComponent {
 
     weight!: number;
     reps!: number;
-    rpe!: number | null;
+    rpe!: RpeType;
 }

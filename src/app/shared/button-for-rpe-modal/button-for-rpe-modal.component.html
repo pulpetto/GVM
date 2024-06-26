@@ -2,7 +2,11 @@
 <button
     type="button"
     class="select-none"
-    [ngClass]="{ 'text-neutral-800': !rpe, 'text-white': rpe }"
+    [ngClass]="{
+        'text-neutral-800': !rpe,
+        'text-white': rpe && rpe !== 'F',
+        'text-red-500': rpe === 'F'
+    }"
     (click)="modalVisibility = true"
 >
     <!-- prettier-ignore -->
@@ -55,29 +59,30 @@
             <div
                 class="absolute top-0 w-10 h-10 transition-all duration-300 rounded-md"
                 [ngClass]="{
-                        'opacity-0': !rpe,
-                        'opacity-100': rpe,
-                        'bg-green-500': rpe === 6,
-                        'bg-lime-500': rpe === 7,
-                        'bg-yellow-500': rpe === 8,
-                        'bg-amber-500': rpe === 9,
-                        'bg-orange-500': rpe === 9.5,
-                        'bg-red-500': rpe === 10,
-                    }"
+                    'opacity-0': !rpe,
+                    'opacity-100': rpe,
+                    'bg-green-500': rpe === 6,
+                    'bg-lime-500': rpe === 7,
+                    'bg-yellow-500': rpe === 8,
+                    'bg-amber-500': rpe === 9,
+                    'bg-orange-500': rpe === 9.5,
+                    'bg-red-500': rpe === 10 || rpe === 'F',
+                    'shadow-[0_0_20px_2px_#ef4444]': rpe === 'F'
+                }"
                 [style]="'left:' + hoverShadowLeftDistancePx + 'px;'"
             ></div>
             <div
                 class="absolute top-0 w-10 h-10 transition-all rounded-md"
                 [ngClass]="{
-                        'opacity-0': !hoveredRpeValue,
-                        'opacity-75': hoveredRpeValue,
-                        'bg-green-500': hoveredRpeValue === 6,
-                        'bg-lime-500': hoveredRpeValue === 7,
-                        'bg-yellow-500': hoveredRpeValue === 8,
-                        'bg-amber-500': hoveredRpeValue === 9,
-                        'bg-orange-500': hoveredRpeValue === 9.5,
-                        'bg-red-500': hoveredRpeValue === 10,
-                    }"
+                    'opacity-0': !hoveredRpeValue,
+                    'opacity-75': hoveredRpeValue,
+                    'bg-green-500': hoveredRpeValue === 6,
+                    'bg-lime-500': hoveredRpeValue === 7,
+                    'bg-yellow-500': hoveredRpeValue === 8,
+                    'bg-amber-500': hoveredRpeValue === 9,
+                    'bg-orange-500': hoveredRpeValue === 9.5,
+                    'bg-red-500': hoveredRpeValue === 10 || hoveredRpeValue === 'F',
+                }"
                 [style]="'left:' + leftDistancePxHover + 'px;'"
             ></div>
         </div>
@@ -104,7 +109,11 @@
             }
 
             @if(rpe === 10) {
-                Extra difficult, not a chance to make another rep, only failure is beyond there.
+                Extra difficult, not a chance to make another rep.
+            }
+
+            @if(rpe === 'F') {
+                Muscular failure, this rep isn't full done, but only to some extent.
             }
         </div>
     </div>

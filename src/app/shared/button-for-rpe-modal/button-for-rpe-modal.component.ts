@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InfoModalButtonComponent } from '../info-modal-button/info-modal-button.component';
+import { RpeType } from '../../types/rpe-type';
 
 @Component({
     selector: 'app-button-for-rpe-modal',
@@ -17,20 +18,20 @@ import { InfoModalButtonComponent } from '../info-modal-button/info-modal-button
     imports: [CommonModule, InfoModalButtonComponent],
 })
 export class ButtonForRpeModalComponent {
-    @Output() rpeValueChangeEvent = new EventEmitter<number | null>();
+    @Output() rpeValueChangeEvent = new EventEmitter<RpeType>();
 
     modalVisibility: boolean = false;
 
-    rpe!: number | null;
-    rpeScale = [6, 7, 8, 9, 9.5, 10];
+    rpe!: RpeType;
+    rpeScale: (number | 'F')[] = [6, 7, 8, 9, 9.5, 10, 'F'];
 
-    hoveredRpeValue: number | null = null;
+    hoveredRpeValue: RpeType = null;
     leftDistancePxHover: number = 0;
     hoverShadowLeftDistancePx: number = 0;
 
     @ViewChildren('rpeValBtn') rpeValuesButtons!: QueryList<ElementRef>;
 
-    onRpeValueChange(rpeValue: number, $index: number) {
+    onRpeValueChange(rpeValue: number | 'F', $index: number) {
         if (this.rpe === rpeValue) {
             this.rpe = null;
             this.rpeValueChangeEvent.emit(null);
@@ -45,7 +46,7 @@ export class ButtonForRpeModalComponent {
         }
     }
 
-    onRpeMouseOver(rpeValue: number, $index: number) {
+    onRpeMouseOver(rpeValue: number | 'F', $index: number) {
         this.hoveredRpeValue = rpeValue;
 
         this.leftDistancePxHover =

@@ -9,6 +9,7 @@ import { ClusterSetComponent } from './cluster-set/cluster-set.component';
 import { SetType } from '../../../types/set-type';
 import { TempoSetComponent } from './tempo-set/tempo-set.component';
 import { TempoSet } from '../../../interfaces/tempo-set';
+import { RpeType } from '../../../types/rpe-type';
 
 @Component({
     selector: 'app-set',
@@ -32,10 +33,10 @@ export class SetComponent {
 
     weight!: number;
     reps!: number;
-    onRpeValueChange($event: number | null) {
+    onRpeValueChange($event: RpeType) {
         this.rpe = $event;
     }
-    rpe!: number | null;
+    rpe!: RpeType;
 
     // Additional properties
     tempo!: TempoSet;
@@ -130,7 +131,7 @@ export class SetComponent {
     dropsets: {
         weight: null | number;
         reps: null | number;
-        rpe: null | number;
+        rpe: RpeType;
     }[] = [];
 
     addDropSet() {
@@ -142,7 +143,7 @@ export class SetComponent {
     }
 
     updateDropsetValues(
-        $event: { weight: number; reps: number; rpe: number | null },
+        $event: { weight: number; reps: number; rpe: RpeType },
         $index: number
     ) {
         this.dropsets[$index] = $event;
@@ -152,7 +153,7 @@ export class SetComponent {
     clustersets: {
         restTime: null | number;
         reps: null | number;
-        rpe: null | number;
+        rpe: RpeType;
     }[] = [];
 
     addClusterSet() {
@@ -167,7 +168,7 @@ export class SetComponent {
         $event: {
             restTime: number | null;
             reps: number;
-            rpe: number | null;
+            rpe: RpeType;
         },
         $index: number
     ) {
