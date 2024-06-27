@@ -1,0 +1,89 @@
+<button
+    type="button"
+    (click)="exercisesModalVisibility = true"
+    class="w-full py-2 overflow-hidden font-semibold rounded-md bg-emerald-500 hover:shadow-[0_0_20px_2px_#10b981] transition-all hover:border-transparent active:scale-95 active:opacity-50 text-lg"
+>
+    Add Exercise
+</button>
+
+@if (exercisesModalVisibility) {
+<!-- eslint-disable-next-line    -->
+<div
+    (click)="exercisesModalVisibility = false"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+></div>
+}
+
+<div
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
+    [ngClass]="{
+        'top-1/4': exercisesModalVisibility,
+        'top-full': !exercisesModalVisibility
+    }"
+>
+    <div class="text-lg font-semibold text-center">
+        Choose exercise(s) to add:
+    </div>
+
+    <div class="flex flex-col self-start w-full gap-1">
+        @for (exercise of exercises; track $index) {
+        <button
+            type="button"
+            (click)="exercise.isSelected = !exercise.isSelected"
+            class="flex items-center justify-between w-full p-1 transition-all rounded-md cursor-pointer active:opacity-50 active:scale-95"
+            [ngClass]="{
+                    'bg-neutral-900': exercise.isSelected,
+                }"
+        >
+            <div class="flex items-center gap-2">
+                <div
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                >
+                    <img
+                        [src]="exercise.iconRoute"
+                        class="w-12 h-12"
+                        [alt]="exercise.name + ' icon'"
+                    />
+                </div>
+                <div class="flex flex-col items-start">
+                    <div class="font-semibold">{{ exercise.name }}</div>
+                    <div class="text-sm opacity-50">
+                        {{ exercise.muscleGroups }}
+                    </div>
+                </div>
+            </div>
+
+            @if (exercise.isSelected === true) {
+            <div>
+                <svg
+                    class="w-8 h-8 stroke-emerald-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M5 13L9 17L19 7"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+            }
+        </button>
+        }
+    </div>
+
+    @if (exercisesModalVisibility) {
+    <div
+        class="fixed bottom-0 left-0 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
+    >
+        <button
+            type="button"
+            class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
+        >
+            Add Exercises
+        </button>
+    </div>
+    }
+</div>
