@@ -9,4 +9,6 @@ import { NameEditorComponent } from './name-editor/name-editor.component';
     styleUrl: './creator.component.css',
     imports: [ExerciseEditModeComponent, NameEditorComponent],
 })
-export class CreatorComponent {}
+export class CreatorComponent {
+    exercises = [1];
+}
