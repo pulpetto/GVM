@@ -11,6 +11,7 @@ import { TempoSetComponent } from './tempo-set/tempo-set.component';
 import { TempoSet } from '../../../interfaces/tempo-set';
 import { RpeType } from '../../../types/rpe-type';
 import { DropSet } from '../../../interfaces/set-types/drop-set';
+import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
 
 @Component({
     selector: 'app-set',
@@ -143,11 +144,7 @@ export class SetComponent {
     }
 
     // Clusterset Logic ---------------------------
-    clustersets: {
-        restTime: null | number;
-        reps: null | number;
-        rpe: RpeType;
-    }[] = [];
+    clustersets: ClusterSet[] = [];
 
     addClusterSet() {
         this.clustersets.push({
@@ -157,14 +154,7 @@ export class SetComponent {
         });
     }
 
-    updateClustersetValues(
-        $event: {
-            restTime: number | null;
-            reps: number;
-            rpe: RpeType;
-        },
-        $index: number
-    ) {
+    updateClustersetValues($event: ClusterSet, $index: number) {
         this.clustersets[$index] = $event;
     }
 }

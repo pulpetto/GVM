@@ -10,6 +10,7 @@ import { ButtonForRpeModalComponent } from '../../../button-for-rpe-modal/button
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RpeType } from '../../../../types/rpe-type';
+import { ClusterSet } from '../../../../interfaces/set-types/cluster-set';
 
 @Component({
     selector: 'app-cluster-set',
@@ -19,11 +20,7 @@ import { RpeType } from '../../../../types/rpe-type';
     imports: [ButtonForRpeModalComponent, FormsModule, CommonModule],
 })
 export class ClusterSetComponent {
-    @Output() inputValuesChangeEvent = new EventEmitter<{
-        restTime: number | null;
-        reps: number;
-        rpe: RpeType;
-    }>();
+    @Output() inputValuesChangeEvent = new EventEmitter<ClusterSet>();
 
     updateRpeValue($event: RpeType) {
         this.rpe = $event;
@@ -40,7 +37,7 @@ export class ClusterSetComponent {
     }
 
     restTime!: number | null;
-    reps!: number;
+    reps!: number | null;
     rpe!: RpeType;
 
     restTimeModalVisibility: boolean = false;
