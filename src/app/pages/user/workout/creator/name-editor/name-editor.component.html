@@ -1,1 +1,62 @@
-<p>name-editor works!</p>
+@if (!nameEditMode) {
+<div class="flex items-center self-start justify-between w-full">
+    <div class="text-2xl font-semibold text-center">{{ title }}</div>
+    <button type="button" (click)="openTitleEditMode()" class="group">
+        <svg
+            class="w-5 h-5 mt-0.5 transition-all stroke-neutral-700 group-hover:stroke-emerald-500 group-active:opacity-50 group-active:scale-95"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M13.0207 5.82839L15.8491 2.99996L20.7988 7.94971L17.9704 10.7781M13.0207 5.82839L3.41405 15.435C3.22652 15.6225 3.12116 15.8769 3.12116 16.1421V20.6776H7.65669C7.92191 20.6776 8.17626 20.5723 8.3638 20.3847L17.9704 10.7781M13.0207 5.82839L17.9704 10.7781"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+    </button>
+</div>
+} @else {
+<div class="flex items-center self-start justify-between w-full gap-2">
+    <input
+        type="text"
+        #inputRef
+        [(ngModel)]="title"
+        class="w-full text-2xl font-semibold outline-none bg-neutral-950 placeholder-neutral-800"
+        placeholder="Workout Name..."
+    />
+    <div class="flex items-center gap-1">
+        <button type="button" (click)="cancelNewTitle()" class="group">
+            <svg
+                class="w-6 h-6 mt-0.5 transition-all stroke-neutral-700 group-hover:stroke-red-500 group-active:opacity-50 group-active:scale-95"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+        <button type="button" (click)="updateTitle()" class="group">
+            <svg
+                class="w-6 h-6 mt-0.5 transition-all stroke-neutral-700 group-hover:stroke-emerald-500 group-active:opacity-50 group-active:scale-95"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M5 13L9 17L19 7"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+    </div>
+</div>
+}
