@@ -18,7 +18,7 @@ import { DropSet } from '../../../../interfaces/set-types/drop-set';
     styleUrl: './drop-set.component.css',
     imports: [CommonModule, FormsModule, ButtonForRpeModalComponent],
 })
-export class DropSetComponent {
+export class DropSetComponent implements OnDestroy {
     @Input({ required: true }) dropsetNumber!: number;
     @Output() inputValuesChangeEvent = new EventEmitter<DropSet>();
 
@@ -39,4 +39,10 @@ export class DropSetComponent {
     weight: number | null = null;
     reps: number | null = null;
     rpe: RpeType = null;
+
+    ngOnDestroy() {
+        this.weight = null;
+        this.reps = null;
+        this.rpe = null;
+    }
 }
