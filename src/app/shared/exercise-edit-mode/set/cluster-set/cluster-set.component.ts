@@ -36,9 +36,9 @@ export class ClusterSetComponent {
         });
     }
 
-    restTime!: number | null;
-    reps!: number | null;
-    rpe!: RpeType;
+    restTime: number | null = null;
+    reps: number | null = null;
+    rpe: RpeType = null;
 
     restTimeModalVisibility: boolean = false;
     restTimesScale: number[] = [5, 10, 15, 20, 25, 30];
