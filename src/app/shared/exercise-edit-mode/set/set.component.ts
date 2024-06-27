@@ -10,6 +10,7 @@ import { SetType } from '../../../types/set-type';
 import { TempoSetComponent } from './tempo-set/tempo-set.component';
 import { TempoSet } from '../../../interfaces/tempo-set';
 import { RpeType } from '../../../types/rpe-type';
+import { DropSet } from '../../../interfaces/set-types/drop-set';
 
 @Component({
     selector: 'app-set',
@@ -127,11 +128,7 @@ export class SetComponent {
     }
 
     // Dropset Logic ---------------------------
-    dropsets: {
-        weight: null | number;
-        reps: null | number;
-        rpe: RpeType;
-    }[] = [];
+    dropsets: DropSet[] = [];
 
     addDropSet() {
         this.dropsets.push({
@@ -141,10 +138,7 @@ export class SetComponent {
         });
     }
 
-    updateDropsetValues(
-        $event: { weight: number; reps: number; rpe: RpeType },
-        $index: number
-    ) {
+    updateDropsetValues($event: DropSet, $index: number) {
         this.dropsets[$index] = $event;
     }
 
