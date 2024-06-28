@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-exercises-selector',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, FormsModule],
     templateUrl: './exercises-selector.component.html',
     styleUrl: './exercises-selector.component.css',
 })
@@ -126,5 +127,16 @@ export class ExercisesSelectorComponent {
         } else {
             this.newlyChosenExercisesCount--;
         }
+    }
+
+    searchTerm: string = '';
+    exercisesDisplayCopy = this.exercises;
+
+    onExerciseSearch() {
+        this.exercisesDisplayCopy = this.exercises.filter((exercise) =>
+            exercise.name
+                .toLowerCase()
+                .startsWith(this.searchTerm.toLowerCase())
+        );
     }
 }

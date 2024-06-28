@@ -17,7 +17,7 @@
 <div
     class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
     [ngClass]="{
-        'top-1/4': exercisesModalVisibility,
+        'top-0': exercisesModalVisibility,
         'top-full': !exercisesModalVisibility
     }"
 >
@@ -25,8 +25,16 @@
         Choose exercise(s) to add:
     </div>
 
+    <input
+        type="text"
+        placeholder="Search for an exercise..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onExerciseSearch()"
+        class="w-full p-3 border-2 border-solid rounded-md outline-none placeholder-neutral-700 border-neutral-900 bg-neutral-950 focus:outline-none focus:border-emerald-500"
+    />
+
     <div class="flex flex-col self-start w-full gap-1">
-        @for (exercise of exercises; track $index) {
+        @for (exercise of exercisesDisplayCopy; track $index) {
         <button
             type="button"
             (click)="onExerciseClick($index)"
