@@ -111,6 +111,13 @@ export class ExercisesSelectorComponent {
         this.newlyChosenExercisesCount = 0;
     }
 
+    closeExercisesModal() {
+        this.exercisesModalVisibility = false;
+        this.exercises.forEach((exercise) => {
+            exercise.isSelected = false;
+        });
+    }
+
     onExerciseClick($index: number) {
         this.exercises[$index].isSelected = !this.exercises[$index].isSelected;
 
