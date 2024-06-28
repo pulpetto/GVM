@@ -102,5 +102,22 @@ export class ExercisesSelectorComponent {
         },
     ];
 
+    newlyChosenExercisesCount: number = 0;
+
     exercisesModalVisibility: boolean = true;
+
+    openExercisesModal() {
+        this.exercisesModalVisibility = true;
+        this.newlyChosenExercisesCount = 0;
+    }
+
+    onExerciseClick($index: number) {
+        this.exercises[$index].isSelected = !this.exercises[$index].isSelected;
+
+        if (this.exercises[$index].isSelected === true) {
+            this.newlyChosenExercisesCount++;
+        } else {
+            this.newlyChosenExercisesCount--;
+        }
+    }
 }
