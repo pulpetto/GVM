@@ -17,7 +17,8 @@
 <div
     class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
     [ngClass]="{
-        'top-0': exercisesModalVisibility,
+        'top-1/4': exercisesModalVisibility && !innerModalsVisibility,
+        'top-0': innerModalsVisibility === true,
         'top-full': !exercisesModalVisibility
     }"
 >
@@ -35,7 +36,10 @@
         />
 
         <div class="flex items-center justify-between w-full gap-1.5">
-            <app-muscle-groups-modal class="w-1/2"></app-muscle-groups-modal>
+            <app-muscle-groups-modal
+                (visibilityChangeEvent)="innerModalsVisibility = $event"
+                class="w-1/2"
+            ></app-muscle-groups-modal>
             <button
                 type="button"
                 class="flex items-center w-1/2 gap-2 p-3 transition-all border-2 border-solid rounded-md outline-none cursor-pointer border-neutral-900 hover:border-emerald-600 group active:opacity-50 active:scale-95 text-nowrap focus:border-emerald-500"
@@ -154,6 +158,13 @@
             {{ newlyChosenExercisesCount ? newlyChosenExercisesCount : "" }}
 
             {{ newlyChosenExercisesCount === 1 ? "Exercise" : "Exercises" }}
+        </button>
+        <button
+            type="button"
+            [disabled]="!newlyChosenExercisesCount"
+            class="py-1.5 mt-2 font-semibold rounded-md w-full bg-red-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
+        >
+            Cancel & Close
         </button>
     </div>
     }

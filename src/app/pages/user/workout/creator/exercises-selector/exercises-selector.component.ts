@@ -108,6 +108,8 @@ export class ExercisesSelectorComponent {
 
     exercisesModalVisibility: boolean = true;
 
+    innerModalsVisibility: boolean = false;
+
     openExercisesModal() {
         this.exercisesModalVisibility = true;
         this.newlyChosenExercisesCount = 0;
