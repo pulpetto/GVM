@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "name": "Dumbells",
+        "imageUrl": "assets/images/muscleGroups/calves_0.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Barbell",
+        "imageUrl": "assets/images/muscleGroups/calves_0.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Bodyweight",
+        "imageUrl": "assets/images/muscleGroups/calves_0.jpg"
+    }
+]
