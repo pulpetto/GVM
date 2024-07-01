@@ -1,75 +1,90 @@
 [
     {
+        "id": 1,
         "name": "Upper Back",
         "imageUrl": "assets/images/muscleGroups/Upper-Back.jpg",
         "focusOn": "top"
     },
     {
+        "id": 2,
         "name": "Lower Back",
         "imageUrl": "assets/images/muscleGroups/Lower-Back.jpg",
         "focusOn": "top"
     },
     {
+        "id": 3,
         "name": "Lats",
         "imageUrl": "assets/images/muscleGroups/Lats.jpg",
         "focusOn": "top"
     },
     {
+        "id": 4,
         "name": "Chest",
         "imageUrl": "assets/images/muscleGroups/Chest.jpg",
         "focusOn": "top"
     },
     {
+        "id": 5,
         "name": "Abs",
         "imageUrl": "assets/images/muscleGroups/Abs.jpg",
         "focusOn": "top"
     },
     {
+        "id": 6,
         "name": "Biceps",
         "imageUrl": "assets/images/muscleGroups/Biceps.jpg",
         "focusOn": "top"
     },
     {
+        "id": 7,
         "name": "Triceps",
         "imageUrl": "assets/images/muscleGroups/Triceps.jpg",
         "focusOn": "top"
     },
     {
+        "id": 8,
         "name": "Shoulders",
         "imageUrl": "assets/images/muscleGroups/Shoulders.jpg",
         "focusOn": "top"
     },
     {
+        "id": 9,
         "name": "Forearms",
         "imageUrl": "assets/images/muscleGroups/Forearms.jpg",
         "focusOn": "center"
     },
     {
+        "id": 10,
         "name": "Traps",
         "imageUrl": "assets/images/muscleGroups/Traps.jpg",
         "focusOn": "top"
     },
     {
+        "id": 11,
         "name": "Neck",
         "imageUrl": "assets/images/muscleGroups/Neck.jpg",
         "focusOn": "top"
     },
     {
+        "id": 12,
         "name": "Quads",
         "imageUrl": "assets/images/muscleGroups/Quads.jpg",
         "focusOn": "bottom"
     },
     {
+        "id": 13,
         "name": "Hamstrings",
         "imageUrl": "assets/images/muscleGroups/Hamstrings.jpg",
         "focusOn": "bottom"
     },
     {
+        "id": 14,
         "name": "Glutes",
         "imageUrl": "assets/images/muscleGroups/Glutes.jpg",
         "focusOn": "bottom"
     },
     {
+        "id": 15,
         "name": "Calves",
         "imageUrl": "assets/images/muscleGroups/calves_0.jpg",
         "focusOn": "center"
