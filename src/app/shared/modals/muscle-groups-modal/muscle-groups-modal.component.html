@@ -45,11 +45,9 @@
     <div
         class="transition-colors group-hover:text-emerald-500 group-focus:text-emerald-500"
     >
-        Muscles
-
-        <!-- @if (checkedMuscleGroupsCount > 0) { ({{
-        checkedMuscleGroupsCount
-    }}) } -->
+        Muscles @if (selectedMuscleGroupsIds.size > 0) { ({{
+            selectedMuscleGroupsIds.size
+        }}) }
     </div>
 </button>
 
