@@ -1,0 +1,77 @@
+[
+    {
+        "name": "Upper Back",
+        "imageUrl": "assets/images/muscleGroups/Upper-Back.jpg",
+        "focusOn": "top"
+    },
+    {
+        "name": "Lower Back",
+        "imageUrl": "assets/images/muscleGroups/Lower-Back.jpg",
+        "focusOn": "top"
+    },
+    {
+        "name": "Lats",
+        "imageUrl": "assets/images/muscleGroups/Lats.jpg",
+        "focusOn": "top"
+    },
+    {
+        "name": "Chest",
+        "imageUrl": "assets/images/muscleGroups/Chest.jpg",
+        "focusOn": "top"
+    },
+    {
+        "name": "Abs",
+        "imageUrl": "assets/images/muscleGroups/Abs.jpg",
+        "focusOn": "top"
+    },
+    {
+        "name": "Biceps",
+        "imageUrl": "assets/images/muscleGroups/Biceps.jpg",
+        "focusOn": "top"
+    },
+    {
+        "name": "Triceps",
+        "imageUrl": "assets/images/muscleGroups/Triceps.jpg",
+        "focusOn": "top"
+    },
+    {
+        "name": "Shoulders",
+        "imageUrl": "assets/images/muscleGroups/Shoulders.jpg",
+        "focusOn": "top"
+    },
+    {
+        "name": "Forearms",
+        "imageUrl": "assets/images/muscleGroups/Forearms.jpg",
+        "focusOn": "center"
+    },
+    {
+        "name": "Traps",
+        "imageUrl": "assets/images/muscleGroups/Traps.jpg",
+        "focusOn": "top"
+    },
+    {
+        "name": "Neck",
+        "imageUrl": "assets/images/muscleGroups/Neck.jpg",
+        "focusOn": "top"
+    },
+    {
+        "name": "Quads",
+        "imageUrl": "assets/images/muscleGroups/Quads.jpg",
+        "focusOn": "bottom"
+    },
+    {
+        "name": "Hamstrings",
+        "imageUrl": "assets/images/muscleGroups/Hamstrings.jpg",
+        "focusOn": "bottom"
+    },
+    {
+        "name": "Glutes",
+        "imageUrl": "assets/images/muscleGroups/Glutes.jpg",
+        "focusOn": "bottom"
+    },
+    {
+        "name": "Calves",
+        "imageUrl": "assets/images/muscleGroups/calves_0.jpg",
+        "focusOn": "center"
+    }
+]
