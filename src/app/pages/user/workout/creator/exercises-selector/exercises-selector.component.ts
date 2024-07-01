@@ -2,13 +2,19 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MuscleGroupsModalComponent } from '../../../../../shared/modals/muscle-groups-modal/muscle-groups-modal.component';
+import { EquipmentModalComponent } from '../../../../../shared/modals/equipment-modal/equipment-modal.component';
 
 @Component({
     selector: 'app-exercises-selector',
     standalone: true,
     templateUrl: './exercises-selector.component.html',
     styleUrl: './exercises-selector.component.css',
-    imports: [CommonModule, FormsModule, MuscleGroupsModalComponent],
+    imports: [
+        CommonModule,
+        FormsModule,
+        MuscleGroupsModalComponent,
+        EquipmentModalComponent,
+    ],
 })
 export class ExercisesSelectorComponent {
     exercises = [
