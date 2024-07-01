@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MuscleGroup } from '../../../interfaces/muscle-group';
+import { DataService } from '../../../services/data.service';
 
 @Component({
     selector: 'app-muscle-groups-modal',
@@ -8,10 +10,26 @@ import { CommonModule } from '@angular/common';
     templateUrl: './muscle-groups-modal.component.html',
     styleUrl: './muscle-groups-modal.component.css',
 })
-export class MuscleGroupsModalComponent {
+export class MuscleGroupsModalComponent implements OnInit {
     visibility: boolean = false;
+    muscleGroups!: MuscleGroup[];
+    selectedMuscleGroupsIds = new Set<number>();
 
-    onOptionSelect($index: number) {}
+    dataService = inject(DataService);
+
+    ngOnInit() {
+        this.dataService.getMuscleGroups().subscribe((data) => {
+            this.muscleGroups = data;
+        });
+    }
+
+    onOptionSelect($index: number) {
+        if (this.selectedMuscleGroupsIds.has($index + 1)) {
+            this.selectedMuscleGroupsIds.delete($index + 1);
+        } else {
+            this.selectedMuscleGroupsIds.add($index + 1);
+        }
+    }
 
     openModal() {
         this.visibility = true;
@@ -20,97 +38,4 @@ export class MuscleGroupsModalComponent {
     closeModal() {
         this.visibility = false;
     }
-
-    muscleGroups = [
-        {
-            name: 'Upper Back',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Upper-Back.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Lower Back',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Lower-Back.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Lats',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Lats.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Chest',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Chest.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Abs',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Abs.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Biceps',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Biceps.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Triceps',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Triceps.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Shoulders',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Shoulders.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Forearms',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Forearms.jpg',
-            focusOn: 'center',
-        },
-        {
-            name: 'Traps',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Traps.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Neck',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Neck.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Quads',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Quads.jpg',
-            focusOn: 'bottom',
-        },
-        {
-            name: 'Hamstrings',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Hamstrings.jpg',
-            focusOn: 'bottom',
-        },
-        {
-            name: 'Glutes',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Glutes.jpg',
-            focusOn: 'bottom',
-        },
-        {
-            name: 'Calves',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/calves_0.jpg',
-            focusOn: 'center',
-        },
-    ];
 }

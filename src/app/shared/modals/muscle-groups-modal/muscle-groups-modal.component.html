@@ -90,15 +90,19 @@
                 <div
                     class="p-2 transition-colors group-hover:text-emerald-500"
                     [ngClass]="{
-                        'text-emerald-500': muscleGroup.isSelected === true,
-                        'font-semibold': muscleGroup.isSelected === true
+                        'text-emerald-500': selectedMuscleGroupsIds.has(
+                            muscleGroup.id
+                        ),
+                        'font-semibold': selectedMuscleGroupsIds.has(
+                            muscleGroup.id
+                        )
                     }"
                 >
                     {{ muscleGroup.name }}
                 </div>
             </div>
 
-            @if (muscleGroup.isSelected === true) {
+            @if (selectedMuscleGroupsIds.has(muscleGroup.id)) {
             <div>
                 <svg
                     class="w-6 h-6 stroke-emerald-500"
