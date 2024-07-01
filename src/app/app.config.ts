@@ -8,6 +8,7 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 
 import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { provideHttpClient } from '@angular/common/http';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyBp6UEpfH1dveqp_HplEfvwop_lWx4pdKU',
@@ -28,6 +29,7 @@ const firebaseConfig = {
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(routes),
+        provideHttpClient(),
         provideClientHydration(),
         provideEnvironmentNgxMask(),
         importProvidersFrom([
