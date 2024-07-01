@@ -66,13 +66,16 @@
         'top-full': !visibility
     }"
 >
-    <div class="self-center font-semibold">Choose muscle groups:</div>
-    <div class="flex flex-col gap-2">
+    <div class="self-center text-lg font-semibold">Choose muscle groups:</div>
+    <div class="flex flex-col gap-1">
         @for (muscleGroup of muscleGroups; track $index) {
         <button
             type="button"
             (click)="onOptionSelect($index)"
-            class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
+            class="flex items-center justify-between p-1 transition-all rounded-md active:opacity-50 active:scale-95 group"
+            [ngClass]="{
+                'bg-neutral-900': selectedMuscleGroupsIds.has(muscleGroup.id)
+            }"
         >
             <div class="flex items-center gap-1">
                 <div
@@ -103,14 +106,14 @@
             @if (selectedMuscleGroupsIds.has(muscleGroup.id)) {
             <div>
                 <svg
-                    class="w-6 h-6 stroke-emerald-500"
+                    class="w-8 h-8 stroke-emerald-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
                         d="M5 13L9 17L19 7"
-                        stroke-width="1.5"
+                        stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     />
