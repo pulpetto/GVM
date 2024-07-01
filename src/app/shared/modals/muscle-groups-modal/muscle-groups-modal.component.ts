@@ -9,5 +9,108 @@ import { CommonModule } from '@angular/common';
     styleUrl: './muscle-groups-modal.component.css',
 })
 export class MuscleGroupsModalComponent {
+    visibility: boolean = false;
 
+    onOptionSelect($index: number) {}
+
+    openModal() {
+        this.visibility = true;
+    }
+
+    closeModal() {
+        this.visibility = false;
+    }
+
+    muscleGroups = [
+        {
+            name: 'Upper Back',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Upper-Back.jpg',
+            focusOn: 'top',
+        },
+        {
+            name: 'Lower Back',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Lower-Back.jpg',
+            focusOn: 'top',
+        },
+        {
+            name: 'Lats',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Lats.jpg',
+            focusOn: 'top',
+        },
+        {
+            name: 'Chest',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Chest.jpg',
+            focusOn: 'top',
+        },
+        {
+            name: 'Abs',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Abs.jpg',
+            focusOn: 'top',
+        },
+        {
+            name: 'Biceps',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Biceps.jpg',
+            focusOn: 'top',
+        },
+        {
+            name: 'Triceps',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Triceps.jpg',
+            focusOn: 'top',
+        },
+        {
+            name: 'Shoulders',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Shoulders.jpg',
+            focusOn: 'top',
+        },
+        {
+            name: 'Forearms',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Forearms.jpg',
+            focusOn: 'center',
+        },
+        {
+            name: 'Traps',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Traps.jpg',
+            focusOn: 'top',
+        },
+        {
+            name: 'Neck',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Neck.jpg',
+            focusOn: 'top',
+        },
+        {
+            name: 'Quads',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Quads.jpg',
+            focusOn: 'bottom',
+        },
+        {
+            name: 'Hamstrings',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Hamstrings.jpg',
+            focusOn: 'bottom',
+        },
+        {
+            name: 'Glutes',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/Glutes.jpg',
+            focusOn: 'bottom',
+        },
+        {
+            name: 'Calves',
+            isSelected: false,
+            imageUrl: 'assets/images/muscleGroups/calves_0.jpg',
+            focusOn: 'center',
+        },
+    ];
 }

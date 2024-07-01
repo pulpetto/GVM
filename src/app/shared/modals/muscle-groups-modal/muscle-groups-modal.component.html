@@ -1,1 +1,135 @@
-<p>muscle-groups-modal works!</p>
+<button
+    type="button"
+    (click)="openModal()"
+    class="flex items-center w-full gap-2 p-3 transition-all border-2 border-solid rounded-md outline-none cursor-pointer border-neutral-900 hover:border-emerald-600 group active:opacity-50 active:scale-95 text-nowrap focus:border-emerald-500"
+>
+    <div>
+        <svg
+            class="rotate-45 w-5 h-5 stroke-black dark:stroke-white mt-0.5 group-hover:stroke-emerald-500 group-focus:stroke-emerald-500 transition-colors"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M7.4 7H4.6C4.26863 7 4 7.26863 4 7.6V16.4C4 16.7314 4.26863 17 4.6 17H7.4C7.73137 17 8 16.7314 8 16.4V7.6C8 7.26863 7.73137 7 7.4 7Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M19.4 7H16.6C16.2686 7 16 7.26863 16 7.6V16.4C16 16.7314 16.2686 17 16.6 17H19.4C19.7314 17 20 16.7314 20 16.4V7.6C20 7.26863 19.7314 7 19.4 7Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M1 14.4V9.6C1 9.26863 1.26863 9 1.6 9H3.4C3.73137 9 4 9.26863 4 9.6V14.4C4 14.7314 3.73137 15 3.4 15H1.6C1.26863 15 1 14.7314 1 14.4Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M23 14.4V9.6C23 9.26863 22.7314 9 22.4 9H20.6C20.2686 9 20 9.26863 20 9.6V14.4C20 14.7314 20.2686 15 20.6 15H22.4C22.7314 15 23 14.7314 23 14.4Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M8 12H16"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+    </div>
+    <div
+        class="transition-colors group-hover:text-emerald-500 group-focus:text-emerald-500"
+    >
+        Equipment
+
+        <!-- @if (checkedEquipementCount > 0) { ({{
+        checkedEquipementCount
+    }}) } -->
+    </div>
+</button>
+
+@if (visibility) {
+<!-- eslint-disable-next-line    -->
+<div
+    (click)="closeModal()"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+></div>
+}
+
+<div
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
+    [ngClass]="{
+        'top-1/4': visibility,
+        'top-full': !visibility
+    }"
+>
+    <div class="self-center font-semibold">Choose muscle groups:</div>
+    <div class="flex flex-col gap-2">
+        @for (muscleGroup of muscleGroups; track $index) {
+        <button
+            type="button"
+            (click)="onOptionSelect($index)"
+            class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
+        >
+            <div class="flex items-center gap-1">
+                <div
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                >
+                    <img
+                        [src]="muscleGroup.imageUrl"
+                        class="object-cover w-12 h-12"
+                        [class]="'object-' + muscleGroup.focusOn"
+                        [alt]="muscleGroup.name + ' image'"
+                    />
+                </div>
+                <div
+                    class="p-2 transition-colors group-hover:text-emerald-500"
+                    [ngClass]="{
+                        'text-emerald-500': muscleGroup.isSelected === true,
+                        'font-semibold': muscleGroup.isSelected === true
+                    }"
+                >
+                    {{ muscleGroup.name }}
+                </div>
+            </div>
+
+            @if (muscleGroup.isSelected === true) {
+            <div>
+                <svg
+                    class="w-6 h-6 stroke-emerald-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M5 13L9 17L19 7"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+            }
+        </button>
+        }
+    </div>
+    <div class="flex justify-between w-full gap-2 mt-2">
+        <button
+            type="button"
+            class="w-full p-2 font-semibold transition-all border-2 border-solid rounded-md active:opacity-50 active:scale-95 hover:bg-emerald-500 border-emerald-500"
+        >
+            Apply
+        </button>
+        <button
+            type="button"
+            class="w-full p-2 font-semibold transition-all border-2 border-red-500 border-solid rounded-md active:opacity-50 active:scale-95 hover:bg-red-500"
+        >
+            Clear All
+        </button>
+    </div>
+</div>
