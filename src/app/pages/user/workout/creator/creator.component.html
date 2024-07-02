@@ -1,12 +1,17 @@
 <div class="flex flex-col items-center gap-4 p-4">
     <app-name-editor class="w-full px-1"></app-name-editor>
 
-    <div class="flex flex-col w-full">
+    <div class="flex flex-col w-full gap-2">
         @for (exercise of exercises; track $index) {
-        <app-exercise-edit-mode></app-exercise-edit-mode>
+        <app-exercise-edit-mode
+            [exerciseName]="exercise.name"
+            [exerciseImgUrl]="exercise.imageUrl"
+        ></app-exercise-edit-mode>
         }
 
-        <app-exercises-selector></app-exercises-selector>
+        <app-exercises-selector
+            (exercisesSelectEvent)="addExercises($event)"
+        ></app-exercises-selector>
     </div>
 
     @if (exercises.length === 0) {

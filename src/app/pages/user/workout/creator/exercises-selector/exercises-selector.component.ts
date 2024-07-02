@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MuscleGroupsModalComponent } from '../../../../../shared/modals/muscle-groups-modal/muscle-groups-modal.component';
@@ -19,6 +19,8 @@ import { DataService } from '../../../../../services/data.service';
     ],
 })
 export class ExercisesSelectorComponent implements OnInit {
+    @Output() exercisesSelectEvent = new EventEmitter<Set<number>>();
+
     dataService = inject(DataService);
 
     exercisesModalVisibility: boolean = false;
@@ -46,6 +48,8 @@ export class ExercisesSelectorComponent implements OnInit {
         this.newlySelectedExercisesIds.forEach((value) =>
             this.selectedExercisesIds.add(value)
         );
+
+        this.exercisesSelectEvent.emit(this.newlySelectedExercisesIds);
 
         this.closeExercisesModal();
     }
