@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InfoModalButtonComponent } from '../info-modal-button/info-modal-button.component';
 import { SetComponent } from './set/set.component';
@@ -11,6 +11,8 @@ import { SetComponent } from './set/set.component';
     imports: [CommonModule, InfoModalButtonComponent, SetComponent],
 })
 export class ExerciseEditModeComponent {
+    @Output() exercisesRemoveEvent = new EventEmitter<string>();
+
     @Input({ required: true }) exerciseName!: string;
     @Input({ required: true }) exerciseImgUrl!: string;
 
@@ -26,5 +28,14 @@ export class ExerciseEditModeComponent {
         this.sets.push({
             number: this.sets.length + 1,
         });
+    }
+
+    exerciseRemove() {
+        this.exercisesRemoveEvent.emit(this.exerciseName);
+        this.closeOptionsModal();
+    }
+
+    closeOptionsModal() {
+        this.optionsModalVisibility = false;
     }
 }

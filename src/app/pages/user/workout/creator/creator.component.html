@@ -4,6 +4,7 @@
     <div class="flex flex-col w-full gap-2">
         @for (exercise of exercises; track $index) {
         <app-exercise-edit-mode
+            (exercisesRemoveEvent)="removeExercise($event)"
             [exerciseName]="exercise.name"
             [exerciseImgUrl]="exercise.imageUrl"
         ></app-exercise-edit-mode>

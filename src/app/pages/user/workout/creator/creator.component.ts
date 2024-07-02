@@ -33,4 +33,12 @@ export class CreatorComponent {
                 });
         });
     }
+
+    removeExercise(exerciseName: string) {
+        const indexToRemove = this.exercises.findIndex(
+            (exercise) => exercise.name === exerciseName
+        );
+
+        this.exercises.splice(indexToRemove, 1);
+    }
 }
