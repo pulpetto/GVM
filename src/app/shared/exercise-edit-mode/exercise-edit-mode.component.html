@@ -1,6 +1,9 @@
 <div class="flex flex-col gap-1">
     <div class="flex items-center justify-between">
-        <a class="flex items-center gap-2">
+        <a
+            [routerLink]="['../../profile/exercises', exerciseName]"
+            class="flex items-center gap-2 transition-all active:scale-95 hover:opacity-50 active:opacity-50"
+        >
             <div
                 class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
             >
