@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "Squat",
+        "imageUrl": "assets/exercisesThumbnails/Squat-Thumbnail.jpg",
+        "muscleGroups": ["Quads", "Glutes", "Hamstrings"]
+    },
+    {
+        "id": 2,
+        "name": "Bench Press",
+        "imageUrl": "assets/exercisesThumbnails/frame_00_delay-1s.jpg",
+        "muscleGroups": ["Chest", "Triceps", "Shoulders"]
+    },
+    {
+        "id": 3,
+        "name": "Bicep Curl",
+        "imageUrl": "assets/exercisesThumbnails/Bicep-Curl.jpg",
+        "muscleGroups": ["Biceps"]
+    },
+    {
+        "id": 4,
+        "name": "Close Grip Pushup",
+        "imageUrl": "assets/exercisesThumbnails/Close-Grip-Pushup.jpg",
+        "muscleGroups": ["Triceps", "Chest", "Shoulders"]
+    },
+    {
+        "id": 5,
+        "name": "Sumo Squat",
+        "imageUrl": "assets/exercisesThumbnails/Sumo-Squat.jpg",
+        "muscleGroups": ["Glutes", "Quads", "Hamstrings"]
+    }
+]
