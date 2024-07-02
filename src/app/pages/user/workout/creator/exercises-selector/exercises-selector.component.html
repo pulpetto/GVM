@@ -48,13 +48,13 @@
     </div>
 
     <div class="flex flex-col self-start w-full gap-1">
-        @for (exercise of exercisesDisplayCopy; track $index) {
+        @for (exercise of exercises; track $index) {
         <button
             type="button"
-            (click)="onExerciseClick($index)"
+            (click)="onExerciseSelect($index)"
             class="flex items-center justify-between w-full p-1 transition-all rounded-md cursor-pointer active:opacity-50 active:scale-95"
             [ngClass]="{
-                    'bg-neutral-900': exercise.isSelected,
+                    'bg-neutral-900': selectedExercisesIds.has(exercise.id),
                 }"
         >
             <div class="flex items-center gap-2">
@@ -62,20 +62,31 @@
                     class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
                 >
                     <img
-                        [src]="exercise.iconRoute"
+                        [src]="exercise.imageUrl"
                         class="w-12 h-12"
                         [alt]="exercise.name + ' icon'"
                     />
                 </div>
                 <div class="flex flex-col items-start">
                     <div class="font-semibold">{{ exercise.name }}</div>
-                    <div class="text-sm opacity-50">
-                        {{ exercise.muscleGroups }}
+
+                    <div class="flex gap-1">
+                        @for (muscleGroup of exercise.muscleGroups; track
+                        $index) {
+                        <div class="flex text-sm opacity-50">
+                            <span>
+                                {{ muscleGroup }}
+                            </span>
+                            @if ($index + 1 !== exercise.muscleGroups.length) {
+                            <span>,</span>
+                            }
+                        </div>
+                        }
                     </div>
                 </div>
             </div>
 
-            @if (exercise.isSelected === true) {
+            @if (selectedExercisesIds.has(exercise.id)) {
             <div>
                 <svg
                     class="w-8 h-8 stroke-emerald-500"
@@ -102,17 +113,12 @@
     >
         <button
             type="button"
-            [disabled]="!newlyChosenExercisesCount"
             class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
         >
-            Add
-            {{ newlyChosenExercisesCount ? newlyChosenExercisesCount : "" }}
-
-            {{ newlyChosenExercisesCount === 1 ? "Exercise" : "Exercises" }}
+            Add Exercises
         </button>
         <button
             type="button"
-            [disabled]="!newlyChosenExercisesCount"
             class="py-1.5 mt-2 font-semibold rounded-md w-full bg-red-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#ef4444] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
         >
             Cancel & Close
