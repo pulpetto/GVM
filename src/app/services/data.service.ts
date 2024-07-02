@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MuscleGroup } from '../interfaces/muscle-group';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Equipment } from '../interfaces/equipment';
 import { Exercise } from '../interfaces/exercise';
 
@@ -13,6 +13,18 @@ export class DataService {
 
     getExercises(): Observable<Exercise[]> {
         return this.http.get<Exercise[]>('assets/data/exercises.json');
+    }
+
+    getExerciseById(id: number): Observable<Exercise | null> {
+        return this.getExercises().pipe(
+            map((exercises: Exercise[]) => {
+                const exercise = exercises.find(
+                    (exercise) => exercise.id === id
+                );
+
+                return exercise ? exercise : null;
+            })
+        );
     }
 
     getMuscleGroups(): Observable<MuscleGroup[]> {
