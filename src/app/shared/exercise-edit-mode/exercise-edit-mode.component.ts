@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InfoModalButtonComponent } from '../info-modal-button/info-modal-button.component';
 import { SetComponent } from './set/set.component';
@@ -11,6 +11,9 @@ import { SetComponent } from './set/set.component';
     imports: [CommonModule, InfoModalButtonComponent, SetComponent],
 })
 export class ExerciseEditModeComponent {
+    @Input({ required: true }) exerciseName!: string;
+    @Input({ required: true }) exerciseImgUrl!: string;
+
     optionsModalVisibility: boolean = false;
 
     sets = [
