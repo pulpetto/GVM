@@ -26,6 +26,7 @@ export class ExercisesSelectorComponent implements OnInit {
 
     exercises!: Exercise[];
     selectedExercisesIds = new Set<number>();
+    newlySelectedExercisesIds = new Set<number>();
 
     ngOnInit() {
         this.dataService.getExercises().subscribe((data) => {
@@ -34,14 +35,23 @@ export class ExercisesSelectorComponent implements OnInit {
     }
 
     onExerciseSelect($index: number) {
-        if (this.selectedExercisesIds.has($index + 1)) {
-            this.selectedExercisesIds.delete($index + 1);
+        if (this.newlySelectedExercisesIds.has($index + 1)) {
+            this.newlySelectedExercisesIds.delete($index + 1);
         } else {
-            this.selectedExercisesIds.add($index + 1);
+            this.newlySelectedExercisesIds.add($index + 1);
         }
     }
 
+    addExercises() {
+        this.newlySelectedExercisesIds.forEach((value) =>
+            this.selectedExercisesIds.add(value)
+        );
+
+        this.closeExercisesModal();
+    }
+
     openExercisesModal() {
+        this.newlySelectedExercisesIds.clear();
         this.exercisesModalVisibility = true;
     }
 
