@@ -28,5 +28,17 @@
         "name": "Sumo Squat",
         "imageUrl": "assets/exercisesThumbnails/Sumo-Squat.jpg",
         "muscleGroups": ["Glutes", "Quads", "Hamstrings"]
+    },
+    {
+        "id": 6,
+        "name": "Deadlift",
+        "imageUrl": "assets/exercisesThumbnails/Conventional-Deadlift.jpg",
+        "muscleGroups": ["Back", "Glutes", "Hamstrings"]
+    },
+    {
+        "id": 7,
+        "name": "Sumo Deadlift",
+        "imageUrl": "assets/exercisesThumbnails/Sumo-Deadlift.jpg",
+        "muscleGroups": ["Glutes", "Back", "Hamstrings"]
     }
 ]
