@@ -21,7 +21,7 @@ import { DataService } from '../../../../../services/data.service';
 export class ExercisesSelectorComponent implements OnInit {
     dataService = inject(DataService);
 
-    exercisesModalVisibility: boolean = true;
+    exercisesModalVisibility: boolean = false;
     innerModalsVisibility: boolean = false;
 
     exercises!: Exercise[];
