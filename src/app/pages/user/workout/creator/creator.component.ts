@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { ExerciseEditModeComponent } from '../../../../shared/exercise-edit-mode/exercise-edit-mode.component';
 import { NameEditorComponent } from './name-editor/name-editor.component';
 import { ExercisesSelectorComponent } from './exercises-selector/exercises-selector.component';
 import { DataService } from '../../../../services/data.service';
 import { Exercise } from '../../../../interfaces/exercise';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-creator',
@@ -18,6 +19,7 @@ import { Exercise } from '../../../../interfaces/exercise';
 })
 export class CreatorComponent {
     dataService = inject(DataService);
+    destroyRef = inject(DestroyRef);
 
     exercises: Exercise[] = [];
 
@@ -25,6 +27,7 @@ export class CreatorComponent {
         $event.forEach((exerciseId: number) => {
             this.dataService
                 .getExerciseById(exerciseId)
+                .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((exercise) => {
                     if (exercise) this.exercises.push(exercise);
                 });
