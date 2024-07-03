@@ -5,6 +5,7 @@ import { ExercisesSelectorComponent } from './exercises-selector/exercises-selec
 import { DataService } from '../../../../services/data.service';
 import { Exercise } from '../../../../interfaces/exercise';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-creator',
@@ -15,6 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         ExerciseEditModeComponent,
         NameEditorComponent,
         ExercisesSelectorComponent,
+        CommonModule,
     ],
 })
 export class CreatorComponent {
@@ -40,5 +42,15 @@ export class CreatorComponent {
         );
 
         this.exercises.splice(indexToRemove, 1);
+    }
+
+    supersetModalVisibility: boolean = true;
+
+    addToSuperset(exerciseName: string) {
+        this.supersetModalVisibility = true;
+
+        const exerciseIndex = this.exercises.findIndex(
+            (exercise) => exercise.name === exerciseName
+        );
     }
 }

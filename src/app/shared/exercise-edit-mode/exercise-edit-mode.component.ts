@@ -18,6 +18,7 @@ import { RouterModule } from '@angular/router';
 })
 export class ExerciseEditModeComponent {
     @Output() exercisesRemoveEvent = new EventEmitter<string>();
+    @Output() addToSupersetEvent = new EventEmitter<string>();
 
     @Input({ required: true }) exerciseName!: string;
     @Input({ required: true }) exerciseImgUrl!: string;
@@ -34,6 +35,10 @@ export class ExerciseEditModeComponent {
         this.sets.push({
             number: this.sets.length + 1,
         });
+    }
+
+    addToSuperset() {
+        this.addToSupersetEvent.emit(this.exerciseName);
     }
 
     exerciseRemove() {
