@@ -45,6 +45,7 @@ export class CreatorComponent {
     }
 
     supersetModalVisibility: boolean = true;
+    exercisesForSuperset: Exercise[] = [];
     exerciseToSupersetIndex!: number;
 
     addToSuperset(exerciseName: string) {
@@ -55,5 +56,10 @@ export class CreatorComponent {
         );
 
         this.exerciseToSupersetIndex = exerciseIndex;
+
+        this.exercisesForSuperset = [
+            ...this.exercises.slice(0, exerciseIndex),
+            ...this.exercises.slice(exerciseIndex + 1),
+        ];
     }
 }
