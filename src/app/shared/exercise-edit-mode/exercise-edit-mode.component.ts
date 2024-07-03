@@ -39,6 +39,7 @@ export class ExerciseEditModeComponent {
 
     addToSuperset() {
         this.addToSupersetEvent.emit(this.exerciseName);
+        this.closeOptionsModal();
     }
 
     exerciseRemove() {
