@@ -44,8 +44,9 @@ export class CreatorComponent {
         this.exercises.splice(indexToRemove, 1);
     }
 
-    supersetModalVisibility: boolean = true;
-    exercisesForSuperset: Exercise[] = [];
+    supersetModalVisibility: boolean = false;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    exercisesForSuperset: any[] = [];
     exerciseToSupersetIndex!: number;
 
     addToSuperset(exerciseName: string) {
@@ -61,5 +62,31 @@ export class CreatorComponent {
             ...this.exercises.slice(0, exerciseIndex),
             ...this.exercises.slice(exerciseIndex + 1),
         ];
+
+        this.exercisesForSuperset.forEach((exercise) => {
+            exercise.isPaired = false;
+        });
     }
+
+    canSubmitSuperset: boolean = false;
+
+    onSupersetExerciseSelect($index: number) {
+        if (!this.exercisesForSuperset[$index].isPaired) {
+            this.exercisesForSuperset.forEach(
+                (exercise) => (exercise.isPaired = false)
+            );
+
+            this.exercisesForSuperset[$index].isPaired = true;
+
+            this.canSubmitSuperset = true;
+        } else {
+            this.exercisesForSuperset.forEach(
+                (exercise) => (exercise.isPaired = false)
+            );
+
+            this.canSubmitSuperset = false;
+        }
+    }
+
+    onSupersetExercisesPair() {}
 }

@@ -107,6 +107,7 @@
     @for (exercise of exercisesForSuperset; track $index) {
     <button
         type="button"
+        (click)="onSupersetExerciseSelect($index)"
         class="flex items-center justify-between w-full p-1 transition-all rounded-md cursor-pointer active:opacity-50 active:scale-95 hover:bg-neutral-900"
     >
         <div class="flex items-center gap-2">
@@ -123,6 +124,7 @@
             <div class="text-lg font-semibold">{{ exercise.name }}</div>
         </div>
 
+        @if (exercise.isPaired) {
         <div>
             <svg
                 class="w-8 h-8 stroke-emerald-500"
@@ -138,6 +140,7 @@
                 />
             </svg>
         </div>
+        }
     </button>
     }
 
@@ -148,6 +151,8 @@
     >
         <button
             type="button"
+            (click)="onSupersetExercisesPair()"
+            [disabled]="!canSubmitSuperset"
             class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
         >
             Add To Superset
