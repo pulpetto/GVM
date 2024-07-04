@@ -1,0 +1,16 @@
+export type MuscleGroup =
+    | 'upper back'
+    | 'lower back'
+    | 'lats'
+    | 'chest'
+    | 'abs'
+    | 'biceps'
+    | 'triceps'
+    | 'shoulders'
+    | 'forearms'
+    | 'traps'
+    | 'neck'
+    | 'quads'
+    | 'hamstrings'
+    | 'glutes'
+    | 'calves';
