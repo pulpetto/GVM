@@ -1,6 +1,8 @@
+import { MuscleGroupName } from '../types/muscle-group-type';
+
 export interface MuscleGroup {
     id: number;
-    name: string;
+    name: MuscleGroupName;
     imageUrl: string;
     focusOn: string;
 }
