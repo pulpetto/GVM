@@ -6,6 +6,7 @@ import { DataService } from '../../../../services/data.service';
 import { Exercise } from '../../../../interfaces/exercise';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
+import { FormArray, FormBuilder } from '@angular/forms';
 
 @Component({
     selector: 'app-creator',
@@ -22,8 +23,12 @@ import { CommonModule } from '@angular/common';
 export class CreatorComponent {
     dataService = inject(DataService);
     destroyRef = inject(DestroyRef);
+    fb = inject(FormBuilder);
 
     exercises: Exercise[] = [];
+    workoutForm = this.fb.group({
+        exercises: this.fb.array([]),
+    });
 
     addExercises($event: Set<number>) {
         $event.forEach((exerciseId: number) => {
