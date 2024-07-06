@@ -21,19 +21,31 @@ import { FormArray, FormBuilder } from '@angular/forms';
     ],
 })
 export class CreatorComponent {
+    fb = inject(FormBuilder);
     dataService = inject(DataService);
     destroyRef = inject(DestroyRef);
-    fb = inject(FormBuilder);
 
     exercises: Exercise[] = [];
+
     workoutForm = this.fb.group({
         exercises: this.fb.array([]),
     });
 
-    addExercises($event: Set<number>) {
-        $event.forEach((exerciseId: number) => {
+    get workoutExercises(): FormArray {
+        return this.workoutForm.get('exercises') as FormArray;
+    }
+
+    addExercises(selectedExercisesIds: Set<number>) {
+        selectedExercisesIds.forEach((selectedExerciseId: number) => {
+            const exerciseGroup = this.fb.group({
+                exerciseId: [selectedExerciseId],
+                sets: this.fb.array([]),
+            });
+
+            this.workoutExercises.push(exerciseGroup);
+
             this.dataService
-                .getExerciseById(exerciseId)
+                .getExerciseById(selectedExerciseId)
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((exercise) => {
                     if (exercise) this.exercises.push(exercise);
@@ -46,6 +58,7 @@ export class CreatorComponent {
             (exercise) => exercise.name === exerciseName
         );
 
+        this.workoutExercises.removeAt(indexToRemove);
         this.exercises.splice(indexToRemove, 1);
     }
 
