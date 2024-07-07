@@ -17,11 +17,11 @@ import { RouterModule } from '@angular/router';
     ],
 })
 export class ExerciseEditModeComponent {
-    @Output() exercisesRemoveEvent = new EventEmitter<string>();
-    @Output() addToSupersetEvent = new EventEmitter<string>();
+    @Output() exercisesRemoveEvent = new EventEmitter<number>();
 
     @Input({ required: true }) exerciseName!: string;
     @Input({ required: true }) exerciseImgUrl!: string;
+    @Input({ required: true }) index!: number;
 
     optionsModalVisibility: boolean = false;
 
@@ -37,13 +37,8 @@ export class ExerciseEditModeComponent {
         });
     }
 
-    addToSuperset() {
-        this.addToSupersetEvent.emit(this.exerciseName);
-        this.closeOptionsModal();
-    }
-
     exerciseRemove() {
-        this.exercisesRemoveEvent.emit(this.exerciseName);
+        this.exercisesRemoveEvent.emit(this.index);
         this.closeOptionsModal();
     }
 
