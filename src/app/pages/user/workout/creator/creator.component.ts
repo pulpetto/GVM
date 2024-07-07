@@ -44,8 +44,6 @@ export class CreatorComponent {
                             sets: this.fb.array([]),
                         });
 
-                        console.log(exerciseGroup);
-
                         this.workoutExercises.push(exerciseGroup);
                     }
                 });
