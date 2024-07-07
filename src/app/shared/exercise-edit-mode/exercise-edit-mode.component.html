@@ -76,10 +76,10 @@
         ></app-info-modal-button>
     </div>
     <div class="flex flex-col text-lg">
-        @for (set of sets; track $index) {
+        @for (set of sets.controls; track $index) {
         <app-set
             [lighterBg]="$index % 2 === 0 ? true : false"
-            [number]="set.number"
+            [number]="$index + 1"
         ></app-set>
         }
 

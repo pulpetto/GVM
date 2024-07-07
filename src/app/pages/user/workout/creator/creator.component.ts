@@ -5,7 +5,7 @@ import { ExercisesSelectorComponent } from './exercises-selector/exercises-selec
 import { DataService } from '../../../../services/data.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../../../shared/loading-spinner/loading-spinner.component';
 
 @Component({
@@ -31,8 +31,8 @@ export class CreatorComponent {
         exercises: this.fb.array([]),
     });
 
-    get workoutExercises(): FormArray {
-        return this.workoutForm.get('exercises') as FormArray;
+    get workoutExercises(): FormArray<FormGroup> {
+        return this.workoutForm.get('exercises') as FormArray<FormGroup>;
     }
 
     addExercises(selectedExercisesIds: Set<number>) {
