@@ -23,6 +23,7 @@ export class CreatorComponent {
     fb = inject(FormBuilder);
     dataService = inject(DataService);
     destroyRef = inject(DestroyRef);
+    loading: boolean = false;
 
     workoutForm = this.fb.group({
         exercises: this.fb.array([]),
@@ -33,6 +34,8 @@ export class CreatorComponent {
     }
 
     addExercises(selectedExercisesIds: Set<number>) {
+        this.loading = true;
+
         selectedExercisesIds.forEach((selectedExerciseId: number) => {
             this.dataService
                 .getExerciseById(selectedExerciseId)
@@ -45,6 +48,8 @@ export class CreatorComponent {
                         });
 
                         this.workoutExercises.push(exerciseGroup);
+
+                        this.loading = false;
                     }
                 });
         });
