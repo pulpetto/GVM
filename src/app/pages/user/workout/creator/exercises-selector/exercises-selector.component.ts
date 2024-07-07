@@ -45,11 +45,13 @@ export class ExercisesSelectorComponent implements OnInit {
     }
 
     addExercises() {
-        this.newlySelectedExercisesIds.forEach((value) =>
-            this.selectedExercisesIds.add(value)
-        );
+        if (this.newlySelectedExercisesIds.size > 0) {
+            this.newlySelectedExercisesIds.forEach((value) =>
+                this.selectedExercisesIds.add(value)
+            );
 
-        this.exercisesSelectEvent.emit(this.newlySelectedExercisesIds);
+            this.exercisesSelectEvent.emit(this.newlySelectedExercisesIds);
+        }
 
         this.closeExercisesModal();
     }
