@@ -6,6 +6,7 @@ import { DataService } from '../../../../services/data.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder } from '@angular/forms';
+import { LoadingSpinnerComponent } from '../../../../shared/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'app-creator',
@@ -17,6 +18,7 @@ import { FormArray, FormBuilder } from '@angular/forms';
         NameEditorComponent,
         ExercisesSelectorComponent,
         CommonModule,
+        LoadingSpinnerComponent,
     ],
 })
 export class CreatorComponent {
