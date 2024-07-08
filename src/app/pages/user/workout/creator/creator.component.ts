@@ -25,6 +25,7 @@ export class CreatorComponent {
     fb = inject(FormBuilder);
     dataService = inject(DataService);
     destroyRef = inject(DestroyRef);
+
     loading: boolean = false;
 
     workoutForm = this.fb.group({
