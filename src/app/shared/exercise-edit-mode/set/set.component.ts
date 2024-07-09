@@ -30,6 +30,7 @@ import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
     ],
 })
 export class SetComponent {
+    @Input({ required: true }) setFormGroup!: FormGroup;
     @Input({ required: true }) lighterBg: boolean = false;
     @Input({ required: true }) number!: number;
 
