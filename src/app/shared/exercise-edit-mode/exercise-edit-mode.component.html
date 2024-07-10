@@ -78,8 +78,9 @@
     <div class="flex flex-col text-lg">
         @for (set of sets.controls; track $index) {
         <app-set
+            [set]="set"
             [lighterBg]="$index % 2 === 0 ? true : false"
-            [number]="$index + 1"
+            [setNumber]="$index + 1"
         ></app-set>
         }
 

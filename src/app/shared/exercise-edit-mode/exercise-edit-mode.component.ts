@@ -25,43 +25,39 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
     ],
 })
 export class ExerciseEditModeComponent implements OnInit {
+    fb = inject(FormBuilder);
+
     @Output() exercisesRemoveEvent = new EventEmitter<number>();
 
+    @Input({ required: true }) exercise!: FormGroup;
+    @Input({ required: true }) exerciseIndex!: number;
     @Input({ required: true }) exerciseName!: string;
     @Input({ required: true }) exerciseImgUrl!: string;
-    @Input({ required: true }) index!: number;
-    @Input({ required: true }) exerciseFormGroup!: FormGroup;
-
-    fb = inject(FormBuilder);
 
     optionsModalVisibility: boolean = false;
 
-    exerciseForm = this.fb.group({
-        sets: this.fb.array([]),
-    });
-
     ngOnInit() {
-        const setGroup = this.fb.group({
+        const set = this.fb.group({
             setNumber: [1],
         });
 
-        this.sets.push(setGroup);
+        this.sets.push(set);
     }
 
     get sets(): FormArray<FormGroup> {
-        return this.exerciseFormGroup.get('sets') as FormArray<FormGroup>;
+        return this.exercise.get('sets') as FormArray<FormGroup>;
     }
 
     addSet() {
-        const setGroup = this.fb.group({
+        const set = this.fb.group({
             setNumber: [this.sets.length + 1],
         });
 
-        this.sets.push(setGroup);
+        this.sets.push(set);
     }
 
     exerciseRemove() {
-        this.exercisesRemoveEvent.emit(this.index);
+        this.exercisesRemoveEvent.emit(this.exerciseIndex);
         this.closeOptionsModal();
     }
 

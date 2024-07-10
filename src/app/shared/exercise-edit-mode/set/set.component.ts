@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { InfoModalButtonComponent } from '../../info-modal-button/info-modal-button.component';
 import { DropSetComponent } from './drop-set/drop-set.component';
@@ -12,6 +12,7 @@ import { TempoSet } from '../../../interfaces/tempo-set';
 import { RpeType } from '../../../types/rpe-type';
 import { DropSet } from '../../../interfaces/set-types/drop-set';
 import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-set',
@@ -27,12 +28,15 @@ import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
         ButtonForRpeModalComponent,
         ClusterSetComponent,
         TempoSetComponent,
+        ReactiveFormsModule,
     ],
 })
 export class SetComponent {
-    @Input({ required: true }) setFormGroup!: FormGroup;
+    fb = inject(FormBuilder);
+
+    @Input({ required: true }) set!: FormGroup;
+    @Input({ required: true }) setNumber!: number;
     @Input({ required: true }) lighterBg: boolean = false;
-    @Input({ required: true }) number!: number;
 
     weight!: number;
     reps!: number;

@@ -4,11 +4,11 @@
     <div class="flex flex-col w-full gap-2">
         @for (exercise of workoutExercises.controls; track $index) {
         <app-exercise-edit-mode
-            [exerciseFormGroup]="exercise"
+            [exercise]="exercise"
             (exercisesRemoveEvent)="removeExercise($event)"
             [exerciseName]="exercise.value.exerciseObj.name"
             [exerciseImgUrl]="exercise.value.exerciseObj.imageUrl"
-            [index]="$index"
+            [exerciseIndex]="$index"
         ></app-exercise-edit-mode>
         }
 
