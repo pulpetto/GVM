@@ -7,6 +7,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../../../shared/loading-spinner/loading-spinner.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-creator',
@@ -19,6 +20,7 @@ import { LoadingSpinnerComponent } from '../../../../shared/loading-spinner/load
         ExercisesSelectorComponent,
         CommonModule,
         LoadingSpinnerComponent,
+        ReactiveFormsModule,
     ],
 })
 export class CreatorComponent {
