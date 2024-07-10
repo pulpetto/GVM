@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -31,12 +31,17 @@ import { ReactiveFormsModule } from '@angular/forms';
         ReactiveFormsModule,
     ],
 })
-export class SetComponent {
+export class SetComponent implements OnInit {
     fb = inject(FormBuilder);
 
     @Input({ required: true }) set!: FormGroup;
     @Input({ required: true }) setNumber!: number;
     @Input({ required: true }) lighterBg: boolean = false;
+
+    ngOnInit() {
+        this.set.addControl('weight', this.fb.control(null));
+        this.set.addControl('reps', this.fb.control(null));
+    }
 
     weight!: number;
     reps!: number;

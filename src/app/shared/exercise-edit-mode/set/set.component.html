@@ -1,5 +1,6 @@
 <!-- eslint-disable @angular-eslint/template/mouse-events-have-key-events -->
 <div
+    [formGroup]="set"
     class="grid grid-cols-5 py-2 rounded-md justify-items-center gap-y-3"
     [ngClass]="{
         'bg-neutral-900': lighterBg,
@@ -17,22 +18,22 @@
     </button>
     <div>
         <input
+            type="text"
+            placeholder="-"
             mask="000"
             [maxlength]="4"
-            type="text"
-            [(ngModel)]="weight"
+            formControlName="weight"
             class="text-center bg-transparent outline-none placeholder-neutral-800 w-7.5"
-            placeholder="-"
         />
     </div>
     <div>
         <input
+            type="text"
+            placeholder="-"
             mask="00"
             [maxlength]="2"
-            type="text"
-            [(ngModel)]="reps"
+            formControlName="reps"
             class="w-5 text-center bg-transparent outline-none placeholder-neutral-800"
-            placeholder="-"
         />
     </div>
 
