@@ -63,9 +63,9 @@
 
     <!-- prettier-ignore -->
     @if (setTypeName === 'cluster') {
-    @for (clusterset of clustersets; track $index) {
+    @for (clusterset of clustersets.controls; track $index) {
     <app-cluster-set
-        (inputValuesChangeEvent)="updateClustersetValues($event, $index)"
+        [clusterset]="clusterset"
         class="w-full col-span-5"
     ></app-cluster-set>
     }

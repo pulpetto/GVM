@@ -1,24 +1,27 @@
 <!-- eslint-disable @angular-eslint/template/mouse-events-have-key-events -->
-<div class="grid grid-cols-5 py-1">
+<div [formGroup]="clusterset" class="grid grid-cols-5 py-1">
     <div class="col-span-2 place-self-center">Rest time:</div>
     <button
         type="button"
         class="col-span-1 select-none place-self-center"
-        [ngClass]="{ 'text-neutral-800': !restTime, 'text-white': restTime }"
+        [ngClass]="{
+            'text-neutral-800': !restTimeValue,
+            'text-white': restTimeValue
+        }"
         (click)="restTimeModalVisibility = true"
     >
         <!-- prettier-ignore -->
-        @if (!restTime) {
+        @if (!restTimeValue) {
             -
         } @else {
-        {{ restTime }}s }
+        {{ restTimeValue }}s }
     </button>
 
     <input
         mask="00"
         [maxlength]="2"
         type="text"
-        [(ngModel)]="reps"
+        formControlName="reps"
         class="w-5 col-span-1 text-center bg-transparent outline-none placeholder-neutral-800 place-self-center"
         placeholder="-"
     />
@@ -53,7 +56,7 @@
             @for (restTime of restTimesScale; track $index) {
             <button
                 #restTimeButton
-                (click)="onRestTimeChange(restTime, $index)"
+                (click)="updateRestTime(restTime, $index)"
                 (mouseover)="onRestTimeMouseOver(restTime, $index)"
                 (mouseout)="onRestTimeMouseOut()"
                 class="relative z-10 w-10 h-10 font-semibold rounded-md"
@@ -64,8 +67,8 @@
             <div
                 class="absolute top-0 w-10 h-10 transition-all duration-300 rounded-md bg-emerald-500"
                 [ngClass]="{
-                        'opacity-0': !restTime,
-                        'opacity-100': restTime,
+                        'opacity-0': !restTimeValue,
+                        'opacity-100': restTimeValue,
                     }"
                 [style]="'left:' + hoverSquareLeftDistancePx + 'px;'"
             ></div>

@@ -136,7 +136,12 @@ export class SetComponent implements OnInit {
             this.set.removeControl('tempo');
         }
 
-        this.clustersets = [];
+        if (this.setTypeName === 'cluster') {
+            this.set.addControl('clustersets', this.fb.array<ClusterSet[]>([]));
+
+            this.set.removeControl('dropsets');
+            this.set.removeControl('tempo');
+        }
 
         this.setTypeModalVisibility = false;
     }
@@ -158,17 +163,18 @@ export class SetComponent implements OnInit {
     }
 
     // Clusterset Logic ---------------------------
-    clustersets: ClusterSet[] = [];
+
+    get clustersets(): FormArray<FormGroup> {
+        return this.set.get('clustersets') as FormArray<FormGroup>;
+    }
 
     addClusterSet() {
-        this.clustersets.push({
+        const clustersetObj = this.fb.group({
             restTime: null,
             reps: null,
             rpe: null,
         });
-    }
 
-    updateClustersetValues($event: ClusterSet, $index: number) {
-        this.clustersets[$index] = $event;
+        this.clustersets.push(clustersetObj);
     }
 }
