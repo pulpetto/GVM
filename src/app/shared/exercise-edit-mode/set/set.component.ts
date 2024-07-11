@@ -143,6 +143,16 @@ export class SetComponent implements OnInit {
             this.set.removeControl('tempo');
         }
 
+        if (this.setTypeName === 'tempo') {
+            this.set.addControl(
+                'tempo',
+                this.fb.control<TempoSet | null>(null)
+            );
+
+            this.set.removeControl('dropsets');
+            this.set.removeControl('clustersets');
+        }
+
         this.setTypeModalVisibility = false;
     }
 
