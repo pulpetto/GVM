@@ -44,10 +44,10 @@
 
     <!-- prettier-ignore -->
     @if (setTypeName === 'drop') {
-    @for (dropset of dropsets; track $index) {
+    @for (dropset of dropsets.controls; track $index) {
     <app-drop-set
+        [dropset]="dropset"
         [dropsetNumber]="$index + 1"
-        (inputValuesChangeEvent)="updateDropsetValues($event, $index)"
         class="w-full col-span-5"
     ></app-drop-set>
     }

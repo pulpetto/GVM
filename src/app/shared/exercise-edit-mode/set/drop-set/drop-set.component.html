@@ -1,4 +1,4 @@
-<div class="grid grid-cols-5 py-1">
+<div [formGroup]="dropset" class="grid grid-cols-5 py-1">
     <div class="col-span-2 text-nowrap place-self-center">
         Drop {{ dropsetNumber }}:
     </div>
@@ -7,8 +7,7 @@
         mask="000"
         [maxlength]="3"
         type="text"
-        [(ngModel)]="weight"
-        (change)="onAnyValueChange()"
+        formControlName="weight"
         class="text-center bg-transparent outline-none placeholder-neutral-800 w-7.5 col-span-1"
         placeholder="-"
     />
@@ -17,8 +16,7 @@
         mask="00"
         [maxlength]="2"
         type="text"
-        [(ngModel)]="reps"
-        (change)="onAnyValueChange()"
+        formControlName="reps"
         class="w-5 col-span-1 text-center bg-transparent outline-none placeholder-neutral-800 place-self-center"
         placeholder="-"
     />

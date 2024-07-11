@@ -1,6 +1,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { InfoModalButtonComponent } from '../../info-modal-button/info-modal-button.component';
 import { DropSetComponent } from './drop-set/drop-set.component';
@@ -127,25 +127,34 @@ export class SetComponent implements OnInit {
         this.setTypeIndex = $index;
         this.setTypeName = this.setTypes[$index].name;
 
-        this.dropsets = [];
+        this.set.get('setTypeName')?.setValue(this.setTypeName);
+
+        if (this.setTypeName === 'drop') {
+            this.set.addControl('dropsets', this.fb.array<DropSet[]>([]));
+
+            this.set.removeControl('clustersets');
+            this.set.removeControl('tempo');
+        }
+
         this.clustersets = [];
 
         this.setTypeModalVisibility = false;
     }
 
     // Dropset Logic ---------------------------
-    dropsets: DropSet[] = [];
+
+    get dropsets(): FormArray<FormGroup> {
+        return this.set.get('dropsets') as FormArray<FormGroup>;
+    }
 
     addDropSet() {
-        this.dropsets.push({
+        const dropsetObj = this.fb.group({
             weight: null,
             reps: null,
             rpe: null,
         });
-    }
 
-    updateDropsetValues($event: DropSet, $index: number) {
-        this.dropsets[$index] = $event;
+        this.dropsets.push(dropsetObj);
     }
 
     // Clusterset Logic ---------------------------
