@@ -45,7 +45,7 @@ export class SetComponent implements OnInit {
         this.set.addControl('rpe', this.fb.control<RpeType>(null));
     }
 
-    onRpeValueChange($event: RpeType) {
+    updateRpe($event: RpeType) {
         this.set.get('rpe')!.setValue($event);
     }
 
