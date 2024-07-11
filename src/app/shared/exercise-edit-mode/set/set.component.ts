@@ -39,22 +39,18 @@ export class SetComponent implements OnInit {
     @Input({ required: true }) lighterBg: boolean = false;
 
     ngOnInit() {
+        this.set.addControl('setTypeName', this.fb.control<SetType>('normal'));
         this.set.addControl('weight', this.fb.control(null));
         this.set.addControl('reps', this.fb.control(null));
+        this.set.addControl('rpe', this.fb.control<RpeType>(null));
     }
 
-    weight!: number;
-    reps!: number;
     onRpeValueChange($event: RpeType) {
-        this.rpe = $event;
+        this.set.get('rpe')!.setValue($event);
     }
-    rpe!: RpeType;
-
-    // Additional properties
-    tempo: TempoSet | null = null;
 
     updateTempo($event: TempoSet) {
-        this.tempo = $event;
+        this.set.get('tempo')!.setValue($event);
     }
 
     setTypeIndex: number = 0;
@@ -133,7 +129,6 @@ export class SetComponent implements OnInit {
 
         this.dropsets = [];
         this.clustersets = [];
-        this.tempo = null;
 
         this.setTypeModalVisibility = false;
     }
