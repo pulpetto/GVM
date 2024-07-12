@@ -54,12 +54,13 @@
 @if (visibility) {
 <!-- eslint-disable-next-line    -->
 <div
+    @openClose2
     (click)="closeModal()"
     class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
 ></div>
-}
 
 <div
+    @openClose
     class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
     [ngClass]="{
         'top-1/4': visibility,
@@ -123,23 +124,31 @@
         </button>
         }
     </div>
-
-    @if (visibility) {
-    <div
-        class="fixed bottom-0 left-0 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
-    >
-        <button
-            type="button"
-            class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
-        >
-            Apply
-        </button>
-        <button
-            type="button"
-            class="py-1.5 mt-2 font-semibold rounded-md w-full bg-red-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#ef4444] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
-        >
-            Cancel & Close
-        </button>
-    </div>
-    }
 </div>
+}
+
+<!-- indentation comment -->
+
+@if (visibility) {
+<div
+    @openClose3
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
+    [ngClass]="{
+        'bottom-0': visibility,
+        '-bottom-full': !visibility,
+    }"
+>
+    <button
+        type="button"
+        class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
+    >
+        Apply
+    </button>
+    <button
+        type="button"
+        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-red-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#ef4444] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
+    >
+        Cancel & Close
+    </button>
+</div>
+}
