@@ -9,19 +9,19 @@
 @if (modalVisibility) {
 <!-- eslint-disable-next-line    -->
 <div
+    @openClose2
     (click)="modalVisibility = false"
     class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
 ></div>
-}
 
 <div
-    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 transition-all duration-300 bg-neutral-950 rounded-t-md"
+    @openClose
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 bg-neutral-950 rounded-t-md"
     [ngClass]="{
         'top-3/4': modalVisibility,
         'top-full': !modalVisibility
     }"
 >
-    <!-- <div class="self-center font-semibold">{{ title }}:</div> -->
     <p class="text-center">{{ infoContent }}</p>
     <button
         type="button"
@@ -31,3 +31,4 @@
         Got it!
     </button>
 </div>
+}
