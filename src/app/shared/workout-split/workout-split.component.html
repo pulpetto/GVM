@@ -73,29 +73,6 @@
             @for (name of workoutsNames; track $index) {
             <app-workout-mini-preview [name]="name"></app-workout-mini-preview>
             }
-            <button
-                type="button"
-                class="flex items-center self-center h-10 gap-0.5 transition-all group opacity-50 active:scale-95"
-            >
-                <svg
-                    class="h-6 w-6 stroke-white mt-0.5 group-hover:stroke-emerald-500 transition-colors"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M6 12H12M18 12H12M12 12V6M12 12V18"
-                        stroke-width="2.2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-                <div
-                    class="font-semibold transition-colors group-hover:text-emerald-500"
-                >
-                    Add Workout
-                </div>
-            </button>
         </div>
     </div>
 </div>
