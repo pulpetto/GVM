@@ -91,12 +91,13 @@
 @if (setTypeModalVisibility) {
 <!-- eslint-disable-next-line    -->
 <div
+    @openClose2
     (click)="setTypeModalVisibility = false"
     class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
 ></div>
-}
 
 <div
+    @openClose
     class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
     [ngClass]="{
         'top-1/4': setTypeModalVisibility,
@@ -150,3 +151,21 @@
         }
     </div>
 </div>
+
+<div
+    @openClose3
+    class="fixed left-0 z-50 w-full p-4 shadow-md pb-7 rounded-t-md bg-neutral-950"
+    [ngClass]="{
+        'bottom-0': setTypeModalVisibility,
+        '-bottom-full': !setTypeModalVisibility,
+    }"
+>
+    <button
+        type="button"
+        (click)="setTypeModalVisibility = false"
+        class="py-1 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
+    >
+        Close window
+    </button>
+</div>
+}
