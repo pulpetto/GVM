@@ -9,6 +9,15 @@ import {
 import { CommonModule } from '@angular/common';
 import { InfoModalButtonComponent } from '../info-modal-button/info-modal-button.component';
 import { RpeType } from '../../types/rpe-type';
+import { trigger, transition, style, animate } from '@angular/animations';
+
+const visibleModal = { top: '50%' };
+const hiddenModal = { top: '100%' };
+
+const visibleBg = { opacity: '100%' };
+const hiddenBg = { opacity: '0%' };
+
+const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 
 @Component({
     selector: 'app-button-for-rpe-modal',
@@ -16,6 +25,28 @@ import { RpeType } from '../../types/rpe-type';
     templateUrl: './button-for-rpe-modal.component.html',
     styleUrl: './button-for-rpe-modal.component.css',
     imports: [CommonModule, InfoModalButtonComponent],
+    animations: [
+        trigger('openClose', [
+            transition(':enter', [
+                style(hiddenModal),
+                animate(timing, style(visibleModal)),
+            ]),
+            transition(':leave', [
+                style(visibleModal),
+                animate(timing, style(hiddenModal)),
+            ]),
+        ]),
+        trigger('openClose2', [
+            transition(':enter', [
+                style(hiddenBg),
+                animate(timing, style(visibleBg)),
+            ]),
+            transition(':leave', [
+                style(visibleBg),
+                animate(timing, style(hiddenBg)),
+            ]),
+        ]),
+    ],
 })
 export class ButtonForRpeModalComponent {
     @Output() rpeValueChangeEvent = new EventEmitter<RpeType>();
