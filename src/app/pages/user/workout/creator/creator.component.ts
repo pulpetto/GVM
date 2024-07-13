@@ -31,6 +31,7 @@ export class CreatorComponent {
     loading: boolean = false;
 
     workoutForm = this.fb.group({
+        name: '',
         exercises: this.fb.array([]),
     });
 
@@ -62,5 +63,9 @@ export class CreatorComponent {
 
     removeExercise(index: number) {
         this.workoutExercises.removeAt(index);
+    }
+
+    updateWorkoutName($event: string) {
+        this.workoutForm.get('name')?.setValue($event);
     }
 }

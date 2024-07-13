@@ -1,4 +1,11 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    HostListener,
+    Output,
+    ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,6 +16,8 @@ import { FormsModule } from '@angular/forms';
     styleUrl: './name-editor.component.css',
 })
 export class NameEditorComponent {
+    @Output() nameChangeEvent = new EventEmitter<string>();
+
     nameEditMode: boolean = false;
     previousTitle: string = 'My Workout 1';
     title: string = 'My Workout 1';
@@ -43,5 +52,6 @@ export class NameEditorComponent {
     updateTitle() {
         this.nameEditMode = false;
         this.previousTitle = this.title;
+        this.nameChangeEvent.emit(this.title);
     }
 }
