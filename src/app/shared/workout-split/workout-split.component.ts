@@ -44,7 +44,7 @@ export class WorkoutSplitComponent {
     @Input({ required: true }) splitName!: string;
     @Input({ required: true }) workoutsNames!: string[];
     isOpen: boolean = false;
-    optionsModalVisibility: boolean = true;
+    optionsModalVisibility: boolean = false;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     calculateHeight(element: any) {
