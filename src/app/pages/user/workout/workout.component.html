@@ -98,6 +98,7 @@
         </a>
         <button
             type="button"
+            (click)="newSplitNameModalVisibility = true"
             class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
         >
             <svg
@@ -151,3 +152,54 @@
         ></app-workout-split>
     </div>
 </div>
+
+@if (newSplitNameModalVisibility) {
+<!-- eslint-disable-next-line    -->
+<div
+    @openClose2
+    (click)="newSplitNameModalVisibility = false"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+></div>
+
+<div
+    @openClose
+    class="fixed left-0 z-50 flex flex-col items-center w-full h-full gap-3 p-4 text-lg rounded-t-md bg-neutral-950"
+    [ngClass]="{
+        'top-1/2': newSplitNameModalVisibility,
+        'top-full': !newSplitNameModalVisibility
+    }"
+>
+    <div class="font-semibold">Split Name:</div>
+    <input
+        type="text"
+        placeholder="Type here..."
+        class="p-2 font-semibold rounded-md outline-none placeholder-neutral-700 bg-neutral-900 focus:outline-emerald-500 outline-offset-0"
+    />
+</div>
+}
+
+<!-- indent -->
+
+@if (newSplitNameModalVisibility) {
+<div
+    @openClose3
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
+    [ngClass]="{
+        'bottom-0': newSplitNameModalVisibility,
+        '-bottom-full': !newSplitNameModalVisibility,
+    }"
+>
+    <button
+        type="button"
+        class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
+    >
+        Add Split
+    </button>
+    <button
+        type="button"
+        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-red-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#ef4444] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
+    >
+        Cancel & Close
+    </button>
+</div>
+}
