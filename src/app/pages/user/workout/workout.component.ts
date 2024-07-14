@@ -4,6 +4,7 @@ import { WorkoutSplitComponent } from '../../../shared/workout-split/workout-spl
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { FormsModule } from '@angular/forms';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -26,6 +27,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         WorkoutSplitComponent,
         RouterModule,
         CommonModule,
+        FormsModule,
     ],
     animations: [
         trigger('openClose', [
@@ -61,5 +63,15 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class WorkoutComponent {
-    newSplitNameModalVisibility: boolean = true;
+    newSplitNameModalVisibility: boolean = false;
+    newSplitName: string = '';
+
+    closeNewSplitNameModal() {
+        this.newSplitNameModalVisibility = false;
+        this.newSplitName = '';
+    }
+
+    addNewSplit() {
+        this.closeNewSplitNameModal();
+    }
 }
