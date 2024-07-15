@@ -15,7 +15,7 @@ import {
     signInWithEmailAndPassword,
 } from '@angular/fire/auth';
 import { BehaviorSubject, from, map, Observable } from 'rxjs';
-import { Router } from 'express';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
