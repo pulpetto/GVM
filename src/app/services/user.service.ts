@@ -6,6 +6,9 @@ import {
     getDocs,
     query,
     where,
+    DocumentReference,
+    CollectionReference,
+    deleteDoc,
 } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 import { User } from '../interfaces/user';
@@ -30,6 +33,8 @@ export class UserService {
 
     loading = new BehaviorSubject<boolean>(false);
     error = new BehaviorSubject<boolean>(false);
+
+    userDocRef!: DocumentReference | null;
 
     getLoadingState$(): Observable<boolean> {
         return this.loading.asObservable();
@@ -58,6 +63,12 @@ export class UserService {
                     userObj
                 );
 
+                this.userDocRef = doc(
+                    this.firestore,
+                    'users',
+                    userCredentials.user.uid
+                );
+
                 this.router.navigate([
                     `/user/${userCredentials.user.uid}/profile`,
                 ]);
@@ -74,6 +85,12 @@ export class UserService {
 
         signInWithEmailAndPassword(this.authentication, email, password)
             .then((userCredentials) => {
+                this.userDocRef = doc(
+                    this.firestore,
+                    'users',
+                    userCredentials.user.uid
+                );
+
                 this.router.navigate([
                     `/user/${userCredentials.user.uid}/profile`,
                 ]);
@@ -108,5 +125,46 @@ export class UserService {
         return from(getDocs(q)).pipe(map((data) => !data.empty));
     }
 
-    addNewSplit(splitName: string) {}
+
+    getWorkoutsSplits() {
+        const workoutSplitsRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workoutsSplits'
+        );
+
+        return from(getDocs(workoutSplitsRef)).pipe(
+            map((querySnapshot) =>
+                querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }))
+            )
+        );
+    }
+
+    addNewSplit(splitName: string) {
+        const workoutSplitsRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workoutsSplits'
+        );
+
+        setDoc(doc(workoutSplitsRef), {
+            splitName: splitName,
+            workoutsIds: [],
+        });
+    }
+
+    removeWorkoutSplit(splitDocId: string) {
+        const workoutSplitsRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workoutsSplits'
+        );
+
+        const splitDocRef: DocumentReference = doc(
+            workoutSplitsRef,
+            splitDocId
+        );
+
+        deleteDoc(splitDocRef);
+    }
 }
