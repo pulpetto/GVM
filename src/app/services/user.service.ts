@@ -28,9 +28,14 @@ export class UserService {
     private users = collection(this.firestore, 'users');
 
     loading = new BehaviorSubject<boolean>(false);
+    error = new BehaviorSubject<boolean>(false);
 
     getLoadingState$(): Observable<boolean> {
         return this.loading.asObservable();
+    }
+
+    getErrorState$(): Observable<boolean> {
+        return this.error.asObservable();
     }
 
     signupUser(user: User) {
