@@ -89,8 +89,6 @@ export class UserService {
     }
 
     logoutUser() {
-        this.loading.next(true);
-
         signOut(this.authentication)
             .then(() => {
                 this.router.navigate(['/login']);
