@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputComponent } from '../../shared/input/input.component';
 import {
@@ -20,8 +20,11 @@ import { Observable, of, debounceTime, switchMap, map, catchError } from 'rxjs';
     styleUrl: './login.component.css',
     imports: [InputComponent, CommonModule, RouterModule],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
     userService = inject(UserService);
+
+    loading$!: Observable<boolean>;
+    loginError$!: Observable<boolean>;
 
     loginForm = new FormGroup({
         email: new FormControl('', {
@@ -31,9 +34,13 @@ export class LoginComponent {
         }),
         password: new FormControl('', {
             validators: [Validators.required],
-            updateOn: 'blur',
         }),
     });
+
+    ngOnInit() {
+        this.loading$ = this.userService.getLoadingState$();
+        this.loginError$ = this.userService.getErrorState$();
+    }
 
     emailValidator(): AsyncValidatorFn {
         return (

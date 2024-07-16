@@ -15,7 +15,7 @@
         ></app-input>
 
         <div class="flex flex-col items-center gap-3">
-            @if(loginForm.pending) {
+            @if(loginForm.pending || (loading$ | async)) {
             <div
                 class="flex items-center justify-center w-full p-2 font-semibold border-2 border-transparent border-solid rounded-md cursor-wait animate-pulse text-neutral-200 bg-emerald-500"
             >
@@ -38,19 +38,28 @@
                 <span class="sr-only">Loading...</span>
             </div>
             } @else {
-            <button
-                type="submit"
-                [disabled]="loginForm.invalid"
-                (click)="loginUser()"
-                class="focus:shadow-[0_0_30px_3px_#10b981] hover:shadow-[0_0_30px_3px_#10b981] transition-shadow duration-300 w-full p-2 font-semibold border-2 border-transparent border-solid rounded-md text-neutral-200 bg-emerald-500 focus:outline-none"
-                [ngClass]="{
-                    'cursor-not-allowed': loginForm.invalid,
-                    'hover:shadow-none': loginForm.invalid,
-                    'opacity-25': loginForm.invalid
-                }"
-            >
-                Log in
-            </button>
+            <div class="flex flex-col w-full">
+                <button
+                    type="submit"
+                    [disabled]="loginForm.invalid"
+                    (click)="loginUser()"
+                    class="focus:shadow-[0_0_30px_3px_#10b981] hover:shadow-[0_0_30px_3px_#10b981] transition-shadow duration-300 w-full p-2 font-semibold border-2 border-transparent border-solid rounded-md text-neutral-200 bg-emerald-500 focus:outline-none"
+                    [ngClass]="{
+                        'cursor-not-allowed': loginForm.invalid,
+                        'hover:shadow-none': loginForm.invalid,
+                        'opacity-25': loginForm.invalid
+                    }"
+                >
+                    Log in
+                </button>
+
+                @if (loginError$ | async) {
+                <div class="text-sm text-red-500">
+                    Login error, check Your <br />
+                    e-mail & password and try again
+                </div>
+                }
+            </div>
             }
 
             <div class="flex gap-1 text-xs text-center -translate-y-2">
