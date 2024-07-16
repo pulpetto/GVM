@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import {
     setDoc,
     doc,
@@ -9,17 +9,20 @@ import {
     DocumentReference,
     CollectionReference,
     deleteDoc,
+    getDoc,
 } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
-import { User } from '../interfaces/user';
 import {
     Auth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
+    user,
 } from '@angular/fire/auth';
 import { BehaviorSubject, from, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { User } from '../interfaces/user';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
     providedIn: 'root',
@@ -28,6 +31,10 @@ export class UserService {
     firestore = inject(Firestore);
     authentication = inject(Auth);
     router = inject(Router);
+    destroyRef = inject(DestroyRef);
+
+    user$ = user(this.authentication);
+    currentUser = signal<User | null | undefined>(undefined);
 
     private users = collection(this.firestore, 'users');
 
@@ -44,7 +51,20 @@ export class UserService {
         return this.error.asObservable();
     }
 
-    signupUser(user: User) {
+    initializeUserAndProperties(uid: string) {
+        this.userDocRef = doc(this.firestore, 'users', uid);
+
+        from(getDoc(this.userDocRef))
+            .pipe(
+                map((querySnapshot) => querySnapshot.data()),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe((data) => {
+                if (data) this.currentUser.set(data as User);
+            });
+    }
+
+    signupUser(user: { username: string; email: string; password: string }) {
         this.loading.next(true);
 
         createUserWithEmailAndPassword(
@@ -56,6 +76,8 @@ export class UserService {
                 const userObj = {
                     username: user.username,
                     email: user.email,
+                    workouts: [],
+                    workoutsSplits: [],
                 };
 
                 setDoc(
@@ -124,7 +146,6 @@ export class UserService {
         const q = query(this.users, where('email', '==', email));
         return from(getDocs(q)).pipe(map((data) => !data.empty));
     }
-
 
     getWorkoutsSplits() {
         const workoutSplitsRef: CollectionReference = collection(
