@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IconButtonComponent } from '../../../shared/icon-button/icon-button.component';
 import { CommonModule } from '@angular/common';
 import { OneOptionModalComponent } from '../../../shared/one-option-modal/one-option-modal.component';
 import { RecentComponent } from './recent/recent.component';
 import { ChartsCarouselComponent } from '../../../shared/charts-carousel/charts-carousel.component';
+import { UserService } from '../../../services/user.service';
 
 @Component({
     selector: 'app-profile',
@@ -18,4 +19,10 @@ import { ChartsCarouselComponent } from '../../../shared/charts-carousel/charts-
         ChartsCarouselComponent,
     ],
 })
-export class ProfileComponent {}
+export class ProfileComponent {
+    userService = inject(UserService);
+
+    logout() {
+        this.userService.logoutUser();
+    }
+}

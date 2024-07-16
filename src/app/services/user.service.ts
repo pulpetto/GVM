@@ -13,6 +13,7 @@ import {
     Auth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
+    signOut,
 } from '@angular/fire/auth';
 import { BehaviorSubject, from, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -83,6 +84,18 @@ export class UserService {
             .catch((error) => {
                 this.error.next(true);
                 this.loading.next(false);
+                console.error(error);
+            });
+    }
+
+    logoutUser() {
+        this.loading.next(true);
+
+        signOut(this.authentication)
+            .then(() => {
+                this.router.navigate(['/login']);
+            })
+            .catch((error) => {
                 console.error(error);
             });
     }
