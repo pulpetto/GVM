@@ -68,6 +68,25 @@ export class UserService {
             });
     }
 
+    loginUser(email: string, password: string) {
+        this.loading.next(true);
+
+        signInWithEmailAndPassword(this.authentication, email, password)
+            .then((userCredentials) => {
+                this.router.navigate([
+                    `/user/${userCredentials.user.uid}/profile`,
+                ]);
+
+                this.error.next(false);
+                this.loading.next(false);
+            })
+            .catch((error) => {
+                this.error.next(true);
+                this.loading.next(false);
+                console.error(error);
+            });
+    }
+
     checkIfUserExists(username: string): Observable<boolean> {
         const q = query(this.users, where('username', '==', username));
         return from(getDocs(q)).pipe(map((data) => !data.empty));
