@@ -109,4 +109,6 @@ export class UserService {
         const q = query(this.users, where('email', '==', email));
         return from(getDocs(q)).pipe(map((data) => !data.empty));
     }
+
+    addNewSplit(splitName: string) {}
 }

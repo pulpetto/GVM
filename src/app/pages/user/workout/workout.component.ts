@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { WorkoutMiniPreviewComponent } from '../../../shared/workoutViews/workout-mini-preview/workout-mini-preview.component';
 import { WorkoutSplitComponent } from '../../../shared/workout-split/workout-split.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { FormsModule } from '@angular/forms';
+import { UserService } from '../../../services/user.service';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -63,6 +64,8 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class WorkoutComponent {
+    userService = inject(UserService);
+
     newSplitNameModalVisibility: boolean = false;
     newSplitName: string = '';
 
@@ -72,6 +75,7 @@ export class WorkoutComponent {
     }
 
     addNewSplit() {
+        this.userService.addNewSplit(this.newSplitName);
         this.closeNewSplitNameModal();
     }
 }
