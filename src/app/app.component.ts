@@ -1,9 +1,16 @@
-import { Component, DestroyRef, HostBinding, inject } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    HostBinding,
+    inject,
+    OnInit,
+} from '@angular/core';
 import { EventType, Router, RouterOutlet } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { ThemeService } from './services/theme.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UserService } from './services/user.service';
 
 @Component({
     selector: 'app-root',
@@ -12,19 +19,34 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrl: './app.component.css',
     imports: [RouterOutlet, HomeComponent, HeaderComponent],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     title = 'GVM';
 
     private destroyRef = inject(DestroyRef);
 
     isNavigating: boolean = true;
 
-    constructor(private themeService: ThemeService, private router: Router) {
+    constructor(
+        private userService: UserService,
+        private themeService: ThemeService,
+        private router: Router
+    ) {
         this.router.events
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((e) => {
                 this.navigationInterceptor(e.type);
             });
+    }
+
+    ngOnInit() {
+        this.userService.user$.subscribe((user) => {
+            if (user) {
+                this.userService.initializeUserAndProperties(user.uid);
+            } else {
+                this.userService.currentUser.set(null);
+                this.router.navigate(['/home']);
+            }
+        });
     }
 
     private navigationInterceptor(eventType: EventType): void {
