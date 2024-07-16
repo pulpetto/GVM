@@ -24,9 +24,9 @@ export class LoginComponent {
     userService = inject(UserService);
 
     loginForm = new FormGroup({
-        username: new FormControl('', {
+        email: new FormControl('', {
             validators: [Validators.required],
-            asyncValidators: [this.usernameValidator()],
+            asyncValidators: [this.emailValidator()],
             updateOn: 'blur',
         }),
         password: new FormControl('', {
@@ -35,7 +35,7 @@ export class LoginComponent {
         }),
     });
 
-    usernameValidator(): AsyncValidatorFn {
+    emailValidator(): AsyncValidatorFn {
         return (
             control: AbstractControl
         ): Observable<ValidationErrors | null> => {
@@ -45,21 +45,22 @@ export class LoginComponent {
 
             return of(control.value).pipe(
                 debounceTime(300),
-                switchMap((username) =>
-                    this.userService.checkIfUserExists(username)
+                switchMap((email) =>
+                    this.userService.checkIfEmailIsRegistered(email)
                 ),
-                map((exists) =>
-                    exists ? null : { usernameDoesntExist: true }
-                ),
+                map((exists) => (exists ? null : { emailDoesntExist: true })),
                 catchError((error) => {
-                    console.error('Error checking username:', error);
+                    console.error('Error checking email:', error);
                     return of({ serverError: true });
                 })
             );
         };
     }
 
-    loginUser(email: string, password: string) {
-        this.userService.loginUser(email, password);
+    loginUser() {
+        this.userService.loginUser(
+            this.loginForm.get('email')!.value!,
+            this.loginForm.get('password')!.value!
+        );
     }
 }
