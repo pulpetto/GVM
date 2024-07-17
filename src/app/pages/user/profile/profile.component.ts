@@ -5,6 +5,7 @@ import { OneOptionModalComponent } from '../../../shared/one-option-modal/one-op
 import { RecentComponent } from './recent/recent.component';
 import { ChartsCarouselComponent } from '../../../shared/charts-carousel/charts-carousel.component';
 import { UserService } from '../../../services/user.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-profile',
@@ -17,6 +18,7 @@ import { UserService } from '../../../services/user.service';
         OneOptionModalComponent,
         RecentComponent,
         ChartsCarouselComponent,
+        RouterModule,
     ],
 })
 export class ProfileComponent {
