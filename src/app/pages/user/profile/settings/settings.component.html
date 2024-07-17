@@ -1,1 +1,47 @@
-<p>settings works!</p>
+<div class="flex flex-col items-center p-4 text-lg">
+    <div class="mb-2 text-2xl font-semibold text-emerald-500">Settings</div>
+    @for (section of [1,2,3,4,5,6]; track $index) {
+    <div class="w-full">
+        <div
+            class="sticky top-0 p-2 my-2 font-semibold bg-opacity-50 rounded-md bg-neutral-900 backdrop-blur-xl"
+        >
+            Personal
+        </div>
+        <!-- when sticked to the top make it full width -->
+        @for (subsect of [1,2,3,4]; track $index) {
+        <button
+            type="button"
+            class="flex items-center w-full gap-1 p-2 transition-all rounded-md hover:bg-neutral-900"
+        >
+            <svg
+                class="stroke-white w-6 h-6 mt-0.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M5 20V19C5 15.134 8.13401 12 12 12V12C15.866 12 19 15.134 19 19V20"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+            <div>Account</div>
+        </button>
+
+        }
+    </div>
+    }
+    <button
+        type="button"
+        class="py-1.5 mt-4 font-semibold rounded-md w-full bg-red-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#ef4444]"
+    >
+        Logout
+    </button>
+</div>
