@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { WorkoutMiniPreviewComponent } from '../workoutViews/workout-mini-preview/workout-mini-preview.component';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { UserService } from '../../services/user.service';
 
 const visibleModal = { top: '75%' };
 const hiddenModal = { top: '100%' };
@@ -44,6 +45,9 @@ export class WorkoutSplitComponent {
     @Input({ required: true }) splitName!: string;
     @Input({ required: true }) splitId!: string;
     @Input({ required: true }) workoutsNames!: string[];
+
+    userService = inject(UserService);
+
     isOpen: boolean = false;
     optionsModalVisibility: boolean = false;
 
@@ -70,5 +74,9 @@ export class WorkoutSplitComponent {
 
     openOptionsModal() {
         this.optionsModalVisibility = true;
+    }
+
+    removeSplit() {
+        this.userService.removeWorkoutSplit(this.splitId);
     }
 }
