@@ -1,9 +1,31 @@
 <div class="flex flex-col items-center p-4 text-lg">
-    <div class="mb-2 text-2xl font-semibold text-emerald-500">Settings</div>
+    <div class="relative flex justify-center w-full">
+        <a [routerLink]="['../']">
+            <svg
+                class="absolute left-0 w-8 h-8 transition-all -translate-y-1/2 top-1/2 stroke-emerald-500 hover:-translate-x-0.5 active:opacity-50 active:scale-95"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M18.5 12H6M6 12L12 6M6 12L12 18"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </a>
+
+        <div class="mt-1 mb-2 text-2xl font-semibold text-emerald-500">
+            Settings
+        </div>
+    </div>
+
     @for (section of [1,2,3,4,5,6]; track $index) {
     <div class="w-full">
         <div
-            class="sticky top-0 p-2 my-2 font-semibold bg-opacity-50 rounded-md bg-neutral-900 backdrop-blur-xl"
+            #stickyElements
+            class="sticky top-0 p-2 my-2 font-semibold transition-all bg-opacity-50 rounded-md bg-neutral-900 backdrop-blur-xl"
         >
             Personal
         </div>
