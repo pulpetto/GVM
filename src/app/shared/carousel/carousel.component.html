@@ -2,7 +2,7 @@
     <div
         class="relative flex overflow-hidden border-2 border-solid rounded-md h-44 border-neutral-900"
     >
-        @for (item of carouselItems; track $index) {
+        <!-- @for (item of carouselItems; track $index) {
         <img
             [src]="carouselItems[$index]"
             class="absolute top-0 left-0 w-full transition-transform duration-500 ease-out h-44"
@@ -11,10 +11,19 @@
             "
             alt=""
         />
-        }
+        } -->
+        <canvas
+            baseChart
+            [type]="'line'"
+            [data]="lineChartData"
+            [options]="lineChartOptions"
+            [legend]="lineChartLegend"
+        >
+        </canvas>
     </div>
 
-    <button
+    <!-- swipe movement -->
+    <!-- <button
         type="button"
         (click)="previous()"
         class="absolute -translate-y-1/2 -left-6 top-1/2 group"
@@ -52,7 +61,7 @@
                 stroke-linejoin="round"
             />
         </svg>
-    </button>
+    </button> -->
 
     <div class="flex justify-center gap-2">
         @for (button of carouselItems; track $index) {
