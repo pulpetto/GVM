@@ -35,6 +35,13 @@ export const routes: Routes = [
                     ),
             },
             {
+                path: 'profile/settings',
+                loadComponent: () =>
+                    import(
+                        './pages/user/profile/settings/settings.component'
+                    ).then((component) => component.SettingsComponent),
+            },
+            {
                 path: 'profile/calendar',
                 loadComponent: () =>
                     import(
