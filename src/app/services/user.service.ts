@@ -10,6 +10,7 @@ import {
     CollectionReference,
     deleteDoc,
     getDoc,
+    onSnapshot,
 } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 import {
@@ -154,17 +155,26 @@ export class UserService {
             'workoutsSplits'
         );
 
-        return from(getDocs(workoutSplitsRef)).pipe(
-            map((querySnapshot) =>
-                querySnapshot.docs.map(
-                    (doc) =>
-                        ({
-                            id: doc.id,
-                            ...doc.data(),
-                        } as WorkoutSplit)
-                )
-            )
-        );
+        return new Observable<WorkoutSplit[]>((observer) => {
+            const unsubscribe = onSnapshot(
+                workoutSplitsRef,
+                (querySnapshot) => {
+                    const splits = querySnapshot.docs.map(
+                        (doc) =>
+                            ({
+                                id: doc.id,
+                                ...doc.data(),
+                            } as WorkoutSplit)
+                    );
+                    observer.next(splits);
+                },
+                (error) => {
+                    observer.error(error);
+                }
+            );
+
+            return { unsubscribe };
+        });
     }
 
     addNewSplit(splitName: string) {
