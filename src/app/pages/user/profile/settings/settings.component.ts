@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
     selector: 'app-settings',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
     templateUrl: './settings.component.html',
     styleUrl: './settings.component.css',
 })
-export class SettingsComponent {}
+export class SettingsComponent {
+    userService = inject(UserService);
+
+    logout() {
+        this.userService.logoutUser();
+    }
+}
