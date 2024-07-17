@@ -23,6 +23,7 @@ import { BehaviorSubject, from, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../interfaces/user';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { WorkoutSplit } from '../interfaces/workout-split';
 
 @Injectable({
     providedIn: 'root',
@@ -147,7 +148,7 @@ export class UserService {
         return from(getDocs(q)).pipe(map((data) => !data.empty));
     }
 
-    getWorkoutsSplits() {
+    getWorkoutsSplits(): Observable<WorkoutSplit[]> {
         const workoutSplitsRef: CollectionReference = collection(
             this.userDocRef!,
             'workoutsSplits'
@@ -155,10 +156,13 @@ export class UserService {
 
         return from(getDocs(workoutSplitsRef)).pipe(
             map((querySnapshot) =>
-                querySnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }))
+                querySnapshot.docs.map(
+                    (doc) =>
+                        ({
+                            id: doc.id,
+                            ...doc.data(),
+                        } as WorkoutSplit)
+                )
             )
         );
     }

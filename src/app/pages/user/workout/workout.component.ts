@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { WorkoutMiniPreviewComponent } from '../../../shared/workoutViews/workout-mini-preview/workout-mini-preview.component';
 import { WorkoutSplitComponent } from '../../../shared/workout-split/workout-split.component';
 import { RouterModule } from '@angular/router';
@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
+import { Observable } from 'rxjs';
+import { WorkoutSplit } from '../../../interfaces/workout-split';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -63,11 +65,17 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         ]),
     ],
 })
-export class WorkoutComponent {
+export class WorkoutComponent implements OnInit {
     userService = inject(UserService);
 
     newSplitNameModalVisibility: boolean = false;
     newSplitName: string = '';
+
+    workoutsSplits$!: Observable<WorkoutSplit[]>;
+
+    ngOnInit() {
+        this.workoutsSplits$ = this.userService.getWorkoutsSplits();
+    }
 
     closeNewSplitNameModal() {
         this.newSplitNameModalVisibility = false;
