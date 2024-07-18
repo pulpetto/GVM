@@ -71,11 +71,20 @@
         class="h-0 overflow-y-hidden transition-all duration-300"
         [ngClass]="{ 'mb-2': isOpen }"
     >
+        @if (workoutsNames.length === 0) {
+        <div
+            class="flex flex-col items-center text-sm font-semibold text-center opacity-50"
+        >
+            <div>Nothing here yet!</div>
+            <div>Drag desired workout here to add it</div>
+        </div>
+        } @else {
         <div class="flex flex-col gap-1">
             @for (name of workoutsNames; track $index) {
             <app-workout-mini-preview [name]="name"></app-workout-mini-preview>
             }
         </div>
+        }
     </div>
 </div>
 
