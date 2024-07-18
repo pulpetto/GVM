@@ -1,6 +1,6 @@
 import { WorkoutExercise } from './workout-exercise';
 
 export interface Workout {
-    workoutName: string;
+    name: string;
     exercises: WorkoutExercise[];
 }
