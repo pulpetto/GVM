@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../../../shared/loading-spinner/loading-spinner.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserService } from '../../../../services/user.service';
+import { Workout } from '../../../../interfaces/workout/workout';
 
 @Component({
     selector: 'app-creator',
@@ -25,6 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class CreatorComponent {
     fb = inject(FormBuilder);
+    userService = inject(UserService);
     dataService = inject(DataService);
     destroyRef = inject(DestroyRef);
 
@@ -80,5 +83,9 @@ export class CreatorComponent {
 
     updateWorkoutName($event: string) {
         this.workoutForm.get('name')?.setValue($event);
+    }
+
+    saveWorkout() {
+        this.userService.saveWorkout(this.workoutForm.getRawValue() as Workout);
     }
 }

@@ -25,6 +25,7 @@ import { Router } from '@angular/router';
 import { User } from '../interfaces/user';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WorkoutSplit } from '../interfaces/workout-split';
+import { Workout } from '../interfaces/workout/workout';
 
 @Injectable({
     providedIn: 'root',
@@ -201,5 +202,14 @@ export class UserService {
         );
 
         deleteDoc(splitDocRef);
+    }
+
+    saveWorkout(workoutObj: Workout) {
+        const workoutsRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workouts'
+        );
+
+        setDoc(doc(workoutsRef), workoutObj);
     }
 }
