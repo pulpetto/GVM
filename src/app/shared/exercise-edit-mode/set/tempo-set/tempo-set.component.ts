@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { NgxMaskDirective } from 'ngx-mask';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { TempoSet } from '../../../../interfaces/tempo-set';
+import { TempoSet } from '../../../../interfaces/set-types/tempo-set';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 const visibleTempoModal = { top: '50%' };

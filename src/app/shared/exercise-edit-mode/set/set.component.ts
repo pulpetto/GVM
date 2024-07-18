@@ -8,7 +8,7 @@ import { ButtonForRpeModalComponent } from '../../button-for-rpe-modal/button-fo
 import { ClusterSetComponent } from './cluster-set/cluster-set.component';
 import { SetType } from '../../../types/set-type';
 import { TempoSetComponent } from './tempo-set/tempo-set.component';
-import { TempoSet } from '../../../interfaces/tempo-set';
+import { TempoSet } from '../../../interfaces/set-types/tempo-set';
 import { RpeType } from '../../../types/rpe-type';
 import { DropSet } from '../../../interfaces/set-types/drop-set';
 import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
