@@ -35,6 +35,12 @@ export class CreatorComponent {
         exercises: this.fb.array([]),
     });
 
+    exercisesPresentionalData: {
+        id: number;
+        name: string;
+        imageUrl: string;
+    }[] = [];
+
     get workoutExercises(): FormArray<FormGroup> {
         return this.workoutForm.get('exercises') as FormArray<FormGroup>;
     }
@@ -48,8 +54,14 @@ export class CreatorComponent {
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((exercise) => {
                     if (exercise) {
+                        this.exercisesPresentionalData.push({
+                            id: exercise.id,
+                            name: exercise.name,
+                            imageUrl: exercise.imageUrl,
+                        });
+
                         const exerciseGroup = this.fb.group({
-                            exerciseObj: [exercise],
+                            exerciseId: exercise.id,
                             sets: this.fb.array([]),
                         });
 
@@ -62,6 +74,7 @@ export class CreatorComponent {
     }
 
     removeExercise(index: number) {
+        this.exercisesPresentionalData.splice(index, 1);
         this.workoutExercises.removeAt(index);
     }
 

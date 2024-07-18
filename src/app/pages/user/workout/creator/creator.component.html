@@ -9,8 +9,8 @@
         <app-exercise-edit-mode
             [exercise]="exercise"
             (exercisesRemoveEvent)="removeExercise($event)"
-            [exerciseName]="exercise.value.exerciseObj.name"
-            [exerciseImgUrl]="exercise.value.exerciseObj.imageUrl"
+            [exerciseName]="exercisesPresentionalData[$index].name"
+            [exerciseImgUrl]="exercisesPresentionalData[$index].imageUrl"
             [exerciseIndex]="$index"
         ></app-exercise-edit-mode>
         }
