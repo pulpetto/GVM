@@ -31,7 +31,7 @@ export class CreatorComponent {
     loading: boolean = false;
 
     workoutForm = this.fb.group({
-        name: '',
+        name: 'My Workout 1',
         exercises: this.fb.array([]),
     });
 
