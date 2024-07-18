@@ -69,7 +69,7 @@ export class ExerciseEditModeComponent implements OnInit {
 
     ngOnInit() {
         const set = this.fb.group({
-            setNumber: [1],
+            setNumber: 1,
         });
 
         this.sets.push(set);

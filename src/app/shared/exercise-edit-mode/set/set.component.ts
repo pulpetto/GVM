@@ -84,8 +84,8 @@ export class SetComponent implements OnInit {
 
     ngOnInit() {
         this.set.addControl('setTypeName', this.fb.control<SetType>('normal'));
-        this.set.addControl('weight', this.fb.control(null));
-        this.set.addControl('reps', this.fb.control(null));
+        this.set.addControl('weight', this.fb.control<string>(''));
+        this.set.addControl('reps', this.fb.control<string>(''));
         this.set.addControl('rpe', this.fb.control<RpeType>(null));
     }
 
