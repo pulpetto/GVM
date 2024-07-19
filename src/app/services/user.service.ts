@@ -82,8 +82,6 @@ export class UserService {
                 const userObj = {
                     username: user.username,
                     email: user.email,
-                    workouts: [],
-                    workoutsSplits: [],
                 };
 
                 setDoc(
