@@ -97,6 +97,16 @@ export class UserService {
                     userCredentials.user.uid
                 );
 
+                const workoutSplitsRef: CollectionReference = collection(
+                    this.userDocRef!,
+                    'workoutsSplits'
+                );
+
+                setDoc(doc(workoutSplitsRef, 'uncategorized'), {
+                    splitName: 'Uncategorized',
+                    workoutsIds: [],
+                });
+
                 this.router.navigate([
                     `/user/${userCredentials.user.uid}/profile`,
                 ]);
