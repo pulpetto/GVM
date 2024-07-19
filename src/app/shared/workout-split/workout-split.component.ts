@@ -44,7 +44,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class WorkoutSplitComponent {
     @Input({ required: true }) splitName!: string;
     @Input({ required: true }) splitId!: string;
-    @Input({ required: true }) workoutsNames!: string[];
+    @Input({ required: true }) workoutsIds!: string[];
 
     userService = inject(UserService);
 

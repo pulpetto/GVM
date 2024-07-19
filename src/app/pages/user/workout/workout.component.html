@@ -131,18 +131,9 @@
         <app-workout-split
             [splitName]="workoutsSplit.splitName"
             [splitId]="workoutsSplit.id"
-            [workoutsNames]="[
-                'Chest / Back',
-                'Arms / Shoulders',
-                'Legs / Neck'
-            ]"
+            [workoutsIds]="workoutsSplit.workoutsIds"
         ></app-workout-split>
         }
-        <app-workout-split
-            [splitName]="'Uncategorized'"
-            [splitId]="'uncategorized'"
-            [workoutsNames]="[]"
-        ></app-workout-split>
     </div>
     } @else {
     <div

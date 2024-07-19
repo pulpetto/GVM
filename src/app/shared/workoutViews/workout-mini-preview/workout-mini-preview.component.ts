@@ -10,16 +10,10 @@ import { ButtonForModalComponent } from '../../button-for-modal/button-for-modal
     imports: [RouterModule, ButtonForModalComponent],
 })
 export class WorkoutMiniPreviewComponent {
-    @Input({ required: true }) name!: string;
-
-    get routeName(): string {
-        return this.name.replace(/\s&\s/g, '&');
-    }
+    @Input({ required: true }) workoutId!: string;
 
     onMenuClick($event: Event) {
         $event.stopPropagation();
         $event.preventDefault();
     }
-
-    handle() {}
 }
