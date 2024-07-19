@@ -11,6 +11,9 @@ import {
     deleteDoc,
     getDoc,
     onSnapshot,
+    updateDoc,
+    arrayUnion,
+    addDoc,
 } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 import {
@@ -210,6 +213,10 @@ export class UserService {
             'workouts'
         );
 
-        setDoc(doc(workoutsRef), workoutObj);
+        addDoc(workoutsRef, workoutObj).then((docRef) => {
+            updateDoc(this.userDocRef!, {
+                uncategorizedWorkouts: arrayUnion(docRef.id),
+            });
+        });
     }
 }
