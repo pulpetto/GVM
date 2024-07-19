@@ -233,4 +233,18 @@ export class UserService {
             });
         });
     }
+
+    getWorkoutById(workoutId: string): Observable<Workout> {
+        const workoutDocRef: DocumentReference = doc(
+            this.userDocRef!,
+            'workouts',
+            workoutId
+        );
+
+        return from(
+            getDoc(workoutDocRef).then((workoutDoc) => {
+                return workoutDoc.data() as Workout;
+            })
+        );
+    }
 }
