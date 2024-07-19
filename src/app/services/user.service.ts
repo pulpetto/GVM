@@ -224,8 +224,14 @@ export class UserService {
         );
 
         addDoc(workoutsRef, workoutObj).then((docRef) => {
-            updateDoc(this.userDocRef!, {
-                uncategorizedWorkouts: arrayUnion(docRef.id),
+            const splitDocRef = doc(
+                this.userDocRef!,
+                'workoutsSplits',
+                'uncategorized'
+            );
+
+            updateDoc(splitDocRef, {
+                workoutsIds: arrayUnion(docRef.id),
             });
         });
     }
