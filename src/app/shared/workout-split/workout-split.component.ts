@@ -63,7 +63,7 @@ export class WorkoutSplitComponent {
     userService = inject(UserService);
 
     isOpen: boolean = false;
-    optionsModalVisibility: boolean = true;
+    optionsModalVisibility: boolean = false;
 
     newSplitName: string = '';
     newSplitNameModalVisibility: boolean = false;
