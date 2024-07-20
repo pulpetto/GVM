@@ -3,6 +3,7 @@ import { WorkoutMiniPreviewComponent } from '../workoutViews/workout-mini-previe
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { UserService } from '../../services/user.service';
+import { FormsModule } from '@angular/forms';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -20,7 +21,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     standalone: true,
     templateUrl: './workout-split.component.html',
     styleUrl: './workout-split.component.css',
-    imports: [WorkoutMiniPreviewComponent, CommonModule],
+    imports: [WorkoutMiniPreviewComponent, CommonModule, FormsModule],
     animations: [
         trigger('openClose', [
             transition(':enter', [
@@ -62,7 +63,10 @@ export class WorkoutSplitComponent {
     userService = inject(UserService);
 
     isOpen: boolean = false;
-    optionsModalVisibility: boolean = false;
+    optionsModalVisibility: boolean = true;
+
+    newSplitName: string = '';
+    newSplitNameModalVisibility: boolean = false;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     calculateHeight(element: any) {
@@ -87,6 +91,16 @@ export class WorkoutSplitComponent {
 
     openOptionsModal() {
         this.optionsModalVisibility = true;
+    }
+
+    changeSplitName() {
+        this.userService.changeSplitName(this.splitId, this.newSplitName);
+        this.closeNewSplitNameModal();
+    }
+
+    closeNewSplitNameModal() {
+        this.newSplitNameModalVisibility = false;
+        this.newSplitName = '';
     }
 
     removeSplit() {
