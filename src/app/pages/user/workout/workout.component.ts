@@ -64,6 +64,16 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
                 animate(timing, style(hiddenBtnFixed)),
             ]),
         ]),
+        trigger('openClose4', [
+            transition(':enter', [
+                style(hiddenModal),
+                animate(timing, style(visibleModalTop0)),
+            ]),
+            transition(':leave', [
+                style(visibleModalTop0),
+                animate(timing, style(hiddenModal)),
+            ]),
+        ]),
     ],
 })
 export class WorkoutComponent implements OnInit {
@@ -74,6 +84,8 @@ export class WorkoutComponent implements OnInit {
     newSplitName: string = '';
 
     workoutsSplits$!: Observable<WorkoutSplit[]>;
+
+    splitsReorderModalVisibility: boolean = true;
 
     ngOnInit() {
         this.userService.user$
