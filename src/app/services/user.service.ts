@@ -202,13 +202,9 @@ export class UserService {
     }
 
     removeWorkoutSplit(splitDocId: string) {
-        const workoutSplitsRef: CollectionReference = collection(
-            this.userDocRef!,
-            'workoutsSplits'
-        );
-
         const splitDocRef: DocumentReference = doc(
-            workoutSplitsRef,
+            this.userDocRef!,
+            'workoutsSplits',
             splitDocId
         );
 
