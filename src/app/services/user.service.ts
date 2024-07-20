@@ -201,6 +201,16 @@ export class UserService {
         });
     }
 
+    changeSplitName(splitDocId: string, newName: string) {
+        const splitDocRef: DocumentReference = doc(
+            this.userDocRef!,
+            'workoutsSplits',
+            splitDocId
+        );
+
+        updateDoc(splitDocRef, { splitName: newName });
+    }
+
     removeWorkoutSplit(splitDocId: string) {
         const splitDocRef: DocumentReference = doc(
             this.userDocRef!,
