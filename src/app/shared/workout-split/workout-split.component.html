@@ -100,25 +100,25 @@
 
 <div
     @openClose
-    class="fixed left-0 z-50 flex flex-col w-full h-full gap-3 p-4 rounded-t-md bg-neutral-950"
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-3 p-4 text-lg rounded-t-md bg-neutral-950"
     [ngClass]="{
-        'top-3/4': optionsModalVisibility,
+        'top-1/2': optionsModalVisibility,
         'top-full': !optionsModalVisibility
     }"
 >
-    <div class="self-center text-xl font-semibold">
+    <div class="self-center font-semibold">
         Choose action for
         <span class="text-emerald-500">{{ splitName }}</span> split:
     </div>
 
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-1">
         <button
             type="button"
-            class="flex items-center gap-2 transition-all active:opacity-50 active:scale-95 group"
+            class="flex items-center gap-2 p-2 transition-all rounded-md active:opacity-50 active:scale-95 hover:bg-neutral-900 group"
         >
             <div class="mt-1 overflow-hidden rounded-full">
                 <svg
-                    class="w-8 h-8 p-1 stroke-white"
+                    class="w-5 h-5 stroke-white"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -131,17 +131,17 @@
                     />
                 </svg>
             </div>
-            <div class="text-xl font-semibold text-white">Edit name</div>
+            <div class="font-semibold text-white">Edit name</div>
         </button>
 
         <button
             type="button"
             (click)="removeSplit()"
-            class="flex items-center gap-2 transition-all active:opacity-50 active:scale-95 group"
+            class="flex items-center gap-2 p-2 transition-all rounded-md active:opacity-50 active:scale-95 hover:bg-neutral-900 group"
         >
             <div class="mt-1 overflow-hidden rounded-full">
                 <svg
-                    class="w-8 h-8 p-1 stroke-red-500"
+                    class="w-5 h-5 stroke-red-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -172,10 +172,28 @@
                     />
                 </svg>
             </div>
-            <div class="font-semibold text-red-500 mt-0.5 text-xl">
-                Remove Split
-            </div>
+            <div class="font-semibold text-red-500 mt-0.5">Delete Split</div>
         </button>
     </div>
+</div>
+}
+
+<!-- indent-comment -->
+@if (optionsModalVisibility) {
+<div
+    @openClose3
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
+    [ngClass]="{
+    'bottom-0': optionsModalVisibility,
+    '-bottom-full': !optionsModalVisibility,
+}"
+>
+    <button
+        type="button"
+        (click)="optionsModalVisibility = false"
+        class="py-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
+    >
+        Close Window
+    </button>
 </div>
 }
