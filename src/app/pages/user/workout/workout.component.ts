@@ -9,7 +9,15 @@ import { UserService } from '../../../services/user.service';
 import { Observable } from 'rxjs';
 import { WorkoutSplit } from '../../../interfaces/workout-split';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+    CdkDropListGroup,
+    CdkDropList,
+    CdkDrag,
+    CdkDragDrop,
+    moveItemInArray,
+} from '@angular/cdk/drag-drop';
 
+const visibleModalTop0 = { top: '0%' };
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
 
@@ -32,6 +40,9 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         RouterModule,
         CommonModule,
         FormsModule,
+        CdkDropListGroup,
+        CdkDropList,
+        CdkDrag,
     ],
     animations: [
         trigger('openClose', [
@@ -85,7 +96,7 @@ export class WorkoutComponent implements OnInit {
 
     workoutsSplits$!: Observable<WorkoutSplit[]>;
 
-    splitsReorderModalVisibility: boolean = true;
+    splitsReorderModalVisibility: boolean = false;
 
     ngOnInit() {
         this.userService.user$
@@ -105,5 +116,13 @@ export class WorkoutComponent implements OnInit {
     addNewSplit() {
         this.userService.addNewSplit(this.newSplitName);
         this.closeNewSplitNameModal();
+    }
+
+    drop(event: CdkDragDrop<WorkoutSplit[]>) {
+        moveItemInArray(
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex
+        );
     }
 }
