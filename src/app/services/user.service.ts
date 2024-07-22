@@ -211,6 +211,9 @@ export class UserService {
         updateDoc(splitDocRef, { splitName: newName });
     }
 
+    batchSplits(splits: WorkoutSplit[]) {
+    }
+
     removeWorkoutSplit(splitDocId: string) {
         const splitDocRef: DocumentReference = doc(
             this.userDocRef!,
