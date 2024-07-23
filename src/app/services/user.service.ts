@@ -14,6 +14,7 @@ import {
     updateDoc,
     arrayUnion,
     addDoc,
+    writeBatch,
 } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 import {
@@ -212,6 +213,21 @@ export class UserService {
     }
 
     batchSplits(splits: WorkoutSplit[]) {
+        const batch = writeBatch(this.firestore);
+
+        splits.forEach((split, index) => {
+            const splitRef = doc(this.userDocRef!, 'workoutsSplits', split.id);
+            batch.update(splitRef, { index: index });
+        });
+
+        batch
+            .commit()
+            .then(() => {
+                console.log('Batch update successful');
+            })
+            .catch((error) => {
+                console.error('Batch update failed: ', error);
+            });
     }
 
     removeWorkoutSplit(splitDocId: string) {

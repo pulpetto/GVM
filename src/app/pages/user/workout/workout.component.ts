@@ -124,5 +124,7 @@ export class WorkoutComponent implements OnInit {
             event.previousIndex,
             event.currentIndex
         );
+
+        this.userService.batchSplits(event.container.data);
     }
 }
