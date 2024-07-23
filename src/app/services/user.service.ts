@@ -15,6 +15,8 @@ import {
     arrayUnion,
     addDoc,
     writeBatch,
+    orderBy,
+    getCountFromServer,
 } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 import {
@@ -102,6 +104,7 @@ export class UserService {
                 );
 
                 setDoc(doc(workoutSplitsRef, 'uncategorized'), {
+                    index: 0,
                     splitName: 'Uncategorized',
                     workoutsIds: [],
                 });
@@ -168,9 +171,14 @@ export class UserService {
             'workoutsSplits'
         );
 
+        const orderedWorkoutsSplitsQuery = query(
+            workoutSplitsRef,
+            orderBy('index')
+        );
+
         return new Observable<WorkoutSplit[]>((observer) => {
             const unsubscribe = onSnapshot(
-                workoutSplitsRef,
+                orderedWorkoutsSplitsQuery,
                 (querySnapshot) => {
                     const splits = querySnapshot.docs.map(
                         (doc) =>
@@ -196,9 +204,12 @@ export class UserService {
             'workoutsSplits'
         );
 
-        setDoc(doc(workoutSplitsRef), {
-            splitName: splitName,
-            workoutsIds: [],
+        getCountFromServer(workoutSplitsRef).then((snapshot) => {
+            setDoc(doc(workoutSplitsRef), {
+                index: snapshot.data().count,
+                splitName: splitName,
+                workoutsIds: [],
+            });
         });
     }
 
