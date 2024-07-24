@@ -7,19 +7,14 @@
         >
             <div
                 class="font-semibold transition-colors group-hover:text-emerald-500"
-                [ngClass]="{ 'text-emerald-500': isOpen }"
             >
                 {{ splitName }}
             </div>
             <div>
                 <svg
-                    class="w-5 h-5 mt-1 transition-all group-hover:stroke-emerald-500"
+                    class="w-5 h-5 mt-1 transition-all group-hover:stroke-emerald-500 stroke-white"
                     [ngClass]="{
                         'rotate-180': isOpen,
-                        'stroke-black': !isOpen,
-                        'dark:stroke-white': !isOpen,
-                        'stroke-emerald-500': isOpen,
-                        'dark:stroke-emerald-500': isOpen
                     }"
                     viewBox="0 0 24 24"
                     fill="none"
