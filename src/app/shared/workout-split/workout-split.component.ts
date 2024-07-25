@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -21,7 +22,13 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     standalone: true,
     templateUrl: './workout-split.component.html',
     styleUrl: './workout-split.component.css',
-    imports: [WorkoutMiniPreviewComponent, CommonModule, FormsModule],
+    imports: [
+        WorkoutMiniPreviewComponent,
+        CommonModule,
+        FormsModule,
+        CdkDrag,
+        CdkDropList,
+    ],
     animations: [
         trigger('openClose', [
             transition(':enter', [
@@ -105,5 +112,9 @@ export class WorkoutSplitComponent {
 
     removeSplit() {
         this.userService.removeWorkoutSplit(this.splitId);
+    }
+
+    drop(event: CdkDragDrop<string[]>) {
+        this.userService.drop(event, this.splitId);
     }
 }

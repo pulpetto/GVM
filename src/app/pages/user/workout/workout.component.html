@@ -155,7 +155,7 @@
     </div>
 
     @if (workoutsSplits$ | async; as workoutsSplits) {
-    <div class="flex flex-col w-full px-2">
+    <div cdkDropListGroup class="flex flex-col w-full px-2 boundary">
         @for (workoutsSplit of workoutsSplits; track $index) {
         <app-workout-split
             [splitName]="workoutsSplit.splitName"

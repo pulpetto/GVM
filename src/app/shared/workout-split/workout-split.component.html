@@ -63,6 +63,9 @@
 
     <div
         #dropdown
+        cdkDropList
+        [cdkDropListData]="workoutsIds"
+        (cdkDropListDropped)="drop($event); calculateHeight(dropdown)"
         class="h-0 overflow-y-hidden transition-all duration-300"
         [ngClass]="{ 'mb-2': isOpen }"
     >
@@ -77,6 +80,8 @@
         <div class="flex flex-col gap-1">
             @for (id of workoutsIds; track $index) {
             <app-workout-mini-preview
+                cdkDrag
+                cdkDragLockAxis="y"
                 [workoutId]="id"
             ></app-workout-mini-preview>
             }
