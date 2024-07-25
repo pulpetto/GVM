@@ -32,6 +32,11 @@ import { User } from '../interfaces/user';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WorkoutSplit } from '../interfaces/workout-split';
 import { Workout } from '../interfaces/workout/workout';
+import {
+    CdkDragDrop,
+    moveItemInArray,
+    transferArrayItem,
+} from '@angular/cdk/drag-drop';
 
 @Injectable({
     providedIn: 'root',
@@ -282,5 +287,22 @@ export class UserService {
                 return workoutDoc.data() as Workout;
             })
         );
+    }
+
+    drop(event: CdkDragDrop<string[]>, splitId: string) {
+        if (event.previousContainer === event.container) {
+            moveItemInArray(
+                event.container.data,
+                event.previousIndex,
+                event.currentIndex
+            );
+        } else {
+            transferArrayItem(
+                event.previousContainer.data,
+                event.container.data,
+                event.previousIndex,
+                event.currentIndex
+            );
+        }
     }
 }
