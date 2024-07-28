@@ -1,10 +1,11 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { WorkoutMiniPreviewComponent } from '../workoutViews/workout-mini-preview/workout-mini-preview.component';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { forkJoin, map, mergeMap, Observable } from 'rxjs';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -62,10 +63,17 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         ]),
     ],
 })
-export class WorkoutSplitComponent {
+export class WorkoutSplitComponent implements OnInit {
     @Input({ required: true }) splitName!: string;
     @Input({ required: true }) splitId!: string;
-    @Input({ required: true }) workoutsIds!: string[];
+
+    splitWorkoutsData$!: Observable<
+        {
+            workoutIndex: number;
+            workoutId: string;
+            workoutName: string;
+        }[]
+    >;
 
     userService = inject(UserService);
 
@@ -74,6 +82,27 @@ export class WorkoutSplitComponent {
 
     newSplitName: string = '';
     newSplitNameModalVisibility: boolean = false;
+
+    ngOnInit() {
+        this.splitWorkoutsData$ = this.userService
+            .getSplitWorkouts(this.splitId)
+            .pipe(
+                mergeMap((workoutsIds) => {
+                    const workoutWithNames$ = workoutsIds.map((workout) =>
+                        this.userService
+                            .getWorkoutNameById(workout.workoutId)
+                            .pipe(
+                                map((workoutName) => ({
+                                    ...workout,
+                                    workoutName,
+                                }))
+                            )
+                    );
+
+                    return forkJoin(workoutWithNames$);
+                })
+            );
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     calculateHeight(element: any) {
@@ -114,7 +143,15 @@ export class WorkoutSplitComponent {
         this.userService.removeWorkoutSplit(this.splitId);
     }
 
-    drop(event: CdkDragDrop<string[]>) {
+    drop(
+        event: CdkDragDrop<
+            {
+                workoutIndex: number;
+                workoutId: string;
+                workoutName: string;
+            }[]
+        >
+    ) {
         this.userService.drop(event, this.splitId);
     }
 }

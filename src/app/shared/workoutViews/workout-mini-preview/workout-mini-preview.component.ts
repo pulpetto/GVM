@@ -1,8 +1,6 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ButtonForModalComponent } from '../../button-for-modal/button-for-modal.component';
-import { UserService } from '../../../services/user.service';
-import { map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,18 +10,9 @@ import { CommonModule } from '@angular/common';
     styleUrl: './workout-mini-preview.component.css',
     imports: [RouterModule, ButtonForModalComponent, CommonModule],
 })
-export class WorkoutMiniPreviewComponent implements OnInit {
+export class WorkoutMiniPreviewComponent {
     @Input({ required: true }) workoutId!: string;
-
-    userService = inject(UserService);
-
-    workoutName$!: Observable<string>;
-
-    ngOnInit() {
-        this.workoutName$ = this.userService
-            .getWorkoutById(this.workoutId)
-            .pipe(map((workout) => workout.name));
-    }
+    @Input({ required: true }) workoutName!: string;
 
     onMenuClick($event: Event) {
         $event.stopPropagation();

@@ -1,3 +1,4 @@
+@if (splitWorkoutsData$ | async; as splitWorkoutsData) {
 <div class="flex flex-col gap-1 text-lg">
     <div class="flex items-center justify-between">
         <button
@@ -64,12 +65,12 @@
     <div
         #dropdown
         cdkDropList
-        [cdkDropListData]="workoutsIds"
+        [cdkDropListData]="splitWorkoutsData"
         (cdkDropListDropped)="drop($event); calculateHeight(dropdown)"
         class="h-0 overflow-y-hidden transition-all duration-300"
         [ngClass]="{ 'mb-2': isOpen }"
     >
-        @if (workoutsIds.length === 0) {
+        @if (splitWorkoutsData.length === 0) {
         <div
             class="flex flex-col items-center text-sm font-semibold text-center opacity-50"
         >
@@ -78,17 +79,19 @@
         </div>
         } @else {
         <div class="flex flex-col gap-1">
-            @for (id of workoutsIds; track $index) {
+            @for (splitWorkoutData of splitWorkoutsData; track $index) {
             <app-workout-mini-preview
                 cdkDrag
                 cdkDragLockAxis="y"
-                [workoutId]="id"
+                [workoutId]="splitWorkoutData.workoutId"
+                [workoutName]="splitWorkoutData.workoutName"
             ></app-workout-mini-preview>
             }
         </div>
         }
     </div>
 </div>
+}
 
 <!-- modals -->
 

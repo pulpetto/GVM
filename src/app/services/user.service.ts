@@ -12,7 +12,6 @@ import {
     getDoc,
     onSnapshot,
     updateDoc,
-    arrayUnion,
     addDoc,
     writeBatch,
     orderBy,
@@ -111,7 +110,6 @@ export class UserService {
                 setDoc(doc(workoutSplitsRef, 'uncategorized'), {
                     index: 0,
                     splitName: 'Uncategorized',
-                    workoutsIds: [],
                 });
 
                 this.router.navigate([
@@ -203,6 +201,53 @@ export class UserService {
         });
     }
 
+    getSplitWorkouts(splitId: string): Observable<
+        {
+            workoutIndex: number;
+            workoutId: string;
+        }[]
+    > {
+        const splitWorkoutsRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workoutsSplits',
+            splitId,
+            'workoutsIds'
+        );
+
+        const orderedSplitWorkoutsQuery = query(
+            splitWorkoutsRef,
+            orderBy('workoutIndex')
+        );
+
+        // prettier-ignore
+        return new Observable<{
+            workoutIndex: number;
+            workoutId: string;
+        }[]>((observer) => {
+            const unsubscribe = onSnapshot(
+                orderedSplitWorkoutsQuery,
+                (querySnapshot) => {
+                    const workouts = querySnapshot.docs.map(
+                        (doc) =>
+                            ({
+                                ...doc.data(),
+                            } as {
+                                workoutIndex: number;
+                                workoutId: string;
+                            })
+                    );
+
+                    observer.next(workouts);
+                },
+                (error) => {
+                    observer.error(error);
+                }
+            );
+
+            return { unsubscribe };
+        });
+    }
+
     addNewSplit(splitName: string) {
         const workoutSplitsRef: CollectionReference = collection(
             this.userDocRef!,
@@ -213,7 +258,6 @@ export class UserService {
             setDoc(doc(workoutSplitsRef), {
                 index: snapshot.data().count,
                 splitName: splitName,
-                workoutsIds: [],
             });
         });
     }
@@ -263,14 +307,23 @@ export class UserService {
         );
 
         addDoc(workoutsRef, workoutObj).then((docRef) => {
-            const splitDocRef = doc(
+            const workoutsInSplitRef: CollectionReference = collection(
                 this.userDocRef!,
                 'workoutsSplits',
-                'uncategorized'
+                'uncategorized',
+                'workoutsIds'
             );
 
-            updateDoc(splitDocRef, {
-                workoutsIds: arrayUnion(docRef.id),
+            const workoutInSplitRef: DocumentReference = doc(
+                workoutsInSplitRef,
+                docRef.id
+            );
+
+            getCountFromServer(workoutsInSplitRef).then((snapshot) => {
+                setDoc(workoutInSplitRef, {
+                    workoutIndex: snapshot.data().count,
+                    workoutId: docRef.id,
+                });
             });
         });
     }
@@ -289,14 +342,62 @@ export class UserService {
         );
     }
 
-    drop(event: CdkDragDrop<string[]>, splitId: string) {
+    getWorkoutNameById(workoutId: string): Observable<string> {
+        const workoutDocRef: DocumentReference = doc(
+            this.userDocRef!,
+            'workouts',
+            workoutId
+        );
+
+        return from(
+            getDoc(workoutDocRef).then((workoutDoc) => {
+                const data = workoutDoc.data() as Workout;
+
+                return data.name;
+            })
+        );
+    }
+
+    drop(
+        event: CdkDragDrop<
+            {
+                workoutIndex: number;
+                workoutId: string;
+                workoutName: string;
+            }[]
+        >,
+        splitId: string
+    ) {
         if (event.previousContainer === event.container) {
             moveItemInArray(
                 event.container.data,
                 event.previousIndex,
                 event.currentIndex
             );
+
+            const batch = writeBatch(this.firestore);
+
+            event.container.data.forEach((dataObj, index) => {
+                const workoutRef: DocumentReference = doc(
+                    this.userDocRef!,
+                    'workoutsSplits',
+                    splitId,
+                    'workoutsIds',
+                    dataObj.workoutId
+                );
+                batch.update(workoutRef, { workoutIndex: index });
+            });
+
+            batch
+                .commit()
+                .then(() => {
+                    console.log('Batch update successful');
+                })
+                .catch((error) => {
+                    console.error('Batch update failed: ', error);
+                });
         } else {
+            console.log('nowa arraika');
             transferArrayItem(
                 event.previousContainer.data,
                 event.container.data,
@@ -304,5 +405,7 @@ export class UserService {
                 event.currentIndex
             );
         }
+
+        // kiedy dodasz do splita usuwasz stamtąd i dodajesz do splita
     }
 }

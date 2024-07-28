@@ -3,13 +3,7 @@
     class="flex flex-col w-full gap-1 p-3 transition-all border-2 border-solid rounded-md cursor-pointer border-neutral-900 hover:border-emerald-500 active:opacity-50 active:scale-95 hover:text-emerald-500"
 >
     <div class="flex items-center justify-between font-semibold">
-        @if (workoutName$ | async; as workoutName) {
-        <div class="text-start">{{ workoutName }}</div>
-        } @else {
-        <div
-            class="w-40 h-2 bg-gray-200 rounded-md dark:bg-neutral-700 animate-pulse"
-        ></div>
-        }
+        {{ workoutName }}
         <button class="group" (click)="onMenuClick($event)">
             <svg
                 class="w-6 h-6 transition-colors stroke-white group-hover:stroke-emerald-500 fill-white group-hover:fill-emerald-500"
