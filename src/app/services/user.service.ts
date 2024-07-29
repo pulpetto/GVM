@@ -366,7 +366,7 @@ export class UserService {
                 workoutName: string;
             }[]
         >,
-        splitId: string
+        droppedToSplitId: string
     ) {
         if (event.previousContainer === event.container) {
             moveItemInArray(
@@ -381,7 +381,7 @@ export class UserService {
                 const workoutRef: DocumentReference = doc(
                     this.userDocRef!,
                     'workoutsSplits',
-                    splitId,
+                    droppedToSplitId,
                     'workoutsIds',
                     dataObj.workoutId
                 );
@@ -397,15 +397,74 @@ export class UserService {
                     console.error('Batch update failed: ', error);
                 });
         } else {
-            console.log('nowa arraika');
             transferArrayItem(
                 event.previousContainer.data,
                 event.container.data,
                 event.previousIndex,
                 event.currentIndex
             );
-        }
 
-        // kiedy dodasz do splita usuwasz stamtąd i dodajesz do splita
+            const droppedWorkoutId = event.item.data.workoutId;
+            const sourceSplitId =
+                event.previousContainer.element.nativeElement.getAttribute(
+                    'splitId'
+                );
+
+            deleteDoc(
+                doc(
+                    this.userDocRef!,
+                    'workoutsSplits',
+                    sourceSplitId!,
+                    'workoutsIds',
+                    droppedWorkoutId
+                )
+            );
+
+            const batch = writeBatch(this.firestore);
+
+            event.previousContainer.data.forEach((dataObj, index) => {
+                const workoutRef: DocumentReference = doc(
+                    this.userDocRef!,
+                    'workoutsSplits',
+                    sourceSplitId!,
+                    'workoutsIds',
+                    dataObj.workoutId
+                );
+                batch.update(workoutRef, { workoutIndex: index });
+            });
+
+            const workoutToAddRef: DocumentReference = doc(
+                this.userDocRef!,
+                'workoutsSplits',
+                droppedToSplitId,
+                'workoutsIds',
+                droppedWorkoutId
+            );
+
+            setDoc(workoutToAddRef, {
+                workoutIndex: 0,
+                workoutId: droppedWorkoutId,
+            });
+
+            event.container.data.forEach((dataObj, index) => {
+                const workoutRef: DocumentReference = doc(
+                    this.userDocRef!,
+                    'workoutsSplits',
+                    droppedToSplitId!,
+                    'workoutsIds',
+                    dataObj.workoutId
+                );
+                batch.update(workoutRef, { workoutIndex: index });
+            });
+
+            batch
+                .commit()
+                .then(() => {
+                    console.log('Batch update successful');
+                })
+                .catch((error) => {
+                    console.error('Batch update failed: ', error);
+                });
+        }
     }
 }
