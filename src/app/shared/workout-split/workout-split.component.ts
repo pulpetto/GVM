@@ -1,7 +1,14 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { WorkoutMiniPreviewComponent } from '../workoutViews/workout-mini-preview/workout-mini-preview.component';
 import { CommonModule } from '@angular/common';
-import { trigger, transition, style, animate } from '@angular/animations';
+import {
+    trigger,
+    transition,
+    style,
+    animate,
+    query,
+    group,
+} from '@angular/animations';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
