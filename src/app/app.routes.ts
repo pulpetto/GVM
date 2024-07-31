@@ -77,6 +77,13 @@ export const routes: Routes = [
                     ).then((component) => component.CreatorComponent),
             },
             {
+                path: 'workout/explore',
+                loadComponent: () =>
+                    import(
+                        './pages/user/workout/explore/explore.component'
+                    ).then((component) => component.ExploreComponent),
+            },
+            {
                 path: 'workout/:name',
                 loadComponent: () =>
                     import(
