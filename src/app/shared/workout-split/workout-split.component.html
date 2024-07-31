@@ -2,7 +2,7 @@
     <div class="flex items-center justify-between">
         <button
             type="button"
-            (click)="toggleExpand(dropdown); isOpen = !isOpen"
+            (click)="isOpen = !isOpen"
             class="flex items-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 active:scale-95 transition-all self-start"
         >
             <div
@@ -61,21 +61,30 @@
         }
     </div>
 
-    <div
-        #dropdown
-        class="h-0 overflow-y-hidden transition-all duration-300"
-        [ngClass]="{ 'mb-2': isOpen }"
-    >
+    @if (isOpen) {
+    <div @dropdownToggle [ngClass]="{ 'mb-2': isOpen }">
         @if (splitWorkoutsData$ | async; as splitWorkoutsData) {
+        <!-- indent -->
+        @if (splitWorkoutsData.length === 0) {
+        <div
+            cdkDropList
+            (cdkDropListDropped)="drop($event)"
+            class="flex flex-col items-center text-sm font-semibold text-center opacity-50"
+        >
+            <div>Nothing here yet!</div>
+            <div>Drag desired workout here to add it</div>
+        </div>
+        } @else {
         <div
             cdkDropList
             [cdkDropListData]="splitWorkoutsData"
             [attr.splitId]="splitId"
-            (cdkDropListDropped)="drop($event); calculateHeight(dropdown)"
-            class="flex flex-col gap-1"
+            (cdkDropListDropped)="drop($event)"
+            class="flex flex-col gap-1 example-list"
         >
             @for (splitWorkoutData of splitWorkoutsData; track $index) {
             <app-workout-mini-preview
+                class="example-box"
                 cdkDrag
                 [cdkDragData]="splitWorkoutData"
                 cdkDragLockAxis="y"
@@ -84,17 +93,48 @@
             ></app-workout-mini-preview>
             }
         </div>
-        } @else {
-        <div
-            cdkDropList
-            (cdkDropListDropped)="drop($event); calculateHeight(dropdown)"
-            class="flex flex-col items-center text-sm font-semibold text-center opacity-50"
-        >
-            <div>Nothing here yet!</div>
-            <div>Drag desired workout here to add it</div>
+        } } @else {
+        <div class="flex flex-col gap-1 example-list">
+            <div
+                class="flex flex-col w-full gap-1 px-3 py-5 transition-all border-2 border-solid rounded-md border-neutral-900"
+            >
+                <div class="flex items-center justify-between animate-pulse">
+                    <div
+                        class="w-40 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
+                    ></div>
+                    <div
+                        class="w-5 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
+                    ></div>
+                </div>
+            </div>
+            <div
+                class="flex flex-col w-full gap-1 px-3 py-5 transition-all border-2 border-solid rounded-md border-neutral-900"
+            >
+                <div class="flex items-center justify-between animate-pulse">
+                    <div
+                        class="w-36 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
+                    ></div>
+                    <div
+                        class="w-5 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
+                    ></div>
+                </div>
+            </div>
+            <div
+                class="flex flex-col w-full gap-1 px-3 py-5 transition-all border-2 border-solid rounded-md border-neutral-900"
+            >
+                <div class="flex items-center justify-between animate-pulse">
+                    <div
+                        class="w-44 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
+                    ></div>
+                    <div
+                        class="w-5 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
+                    ></div>
+                </div>
+            </div>
         </div>
         }
     </div>
+    }
 </div>
 
 <!-- modals -->

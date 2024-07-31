@@ -1,14 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { WorkoutMiniPreviewComponent } from '../workoutViews/workout-mini-preview/workout-mini-preview.component';
 import { CommonModule } from '@angular/common';
-import {
-    trigger,
-    transition,
-    style,
-    animate,
-    query,
-    group,
-} from '@angular/animations';
+import { trigger, transition, style, animate } from '@angular/animations';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
@@ -68,6 +61,16 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
                 animate(timing, style(hiddenBtnFixed)),
             ]),
         ]),
+        trigger('dropdownToggle', [
+            transition(':enter', [
+                style(hiddenBg),
+                animate('0.2s cubic-bezier(0.4, 0, 0.2, 1)', style(visibleBg)),
+            ]),
+            transition(':leave', [
+                style(visibleBg),
+                animate('0.2s cubic-bezier(0.4, 0, 0.2, 1)', style(hiddenBg)),
+            ]),
+        ]),
     ],
 })
 export class WorkoutSplitComponent implements OnInit {
@@ -109,27 +112,6 @@ export class WorkoutSplitComponent implements OnInit {
                     return forkJoin(workoutWithNames$);
                 })
             );
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    calculateHeight(element: any) {
-        element.style.height =
-            Array.prototype.reduce.call(
-                element.childNodes,
-                function (p, c) {
-                    return p + (c.offsetHeight || 0);
-                },
-                0
-            ) + 'px';
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    toggleExpand(element: any) {
-        if (!element.style.height || element.style.height == '0px') {
-            this.calculateHeight(element);
-        } else {
-            element.style.height = '0px';
-        }
     }
 
     openOptionsModal() {
