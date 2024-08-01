@@ -76,6 +76,32 @@
                         {{ set.rpe || "-" }}
                     </div>
 
+                    <!-- TEMPO -->
+                    @if (set.setTypeName === 'tempo') {
+                    <div class="grid w-full grid-cols-5 col-span-5 py-1">
+                        <div class="col-span-2 place-self-center">Tempo:</div>
+                        <div
+                            class="col-span-3 text-xl text-center select-none place-self-center"
+                        >
+                            <span>
+                                {{ set.tempo?.eccentricPhaseLength || "x" }}
+                            </span>
+                            <span> - </span>
+                            <span>
+                                {{ set.tempo?.isometricPhaseOneLength || "x" }}
+                            </span>
+                            <span> - </span>
+                            <span>
+                                {{ set.tempo?.concentricPhaseLength || "x" }}
+                            </span>
+                            <span> - </span>
+                            <span>
+                                {{ set.tempo?.isometricPhaseTwoLength || "x" }}
+                            </span>
+                        </div>
+                    </div>
+                    }
+
                     <!-- DROPSET(s) -->
                     <!-- prettier-ignore -->
                     @if (set.setTypeName === 'drop') {
