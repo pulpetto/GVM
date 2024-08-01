@@ -5,7 +5,7 @@ import { TempoSet } from '../set-types/tempo-set';
 
 export interface Set {
     setNumber: number;
-    setType: SetType;
+    setTypeName: SetType;
     weight: number;
     reps: number;
     rpe: RpeType;
