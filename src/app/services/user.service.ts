@@ -16,8 +16,8 @@ import {
     writeBatch,
     orderBy,
     getCountFromServer,
+    collection,
 } from '@angular/fire/firestore';
-import { collection } from '@firebase/firestore';
 import {
     Auth,
     createUserWithEmailAndPassword,
