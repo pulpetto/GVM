@@ -84,11 +84,11 @@ export const routes: Routes = [
                     ).then((component) => component.ExploreComponent),
             },
             {
-                path: 'workout/:name',
+                path: 'workout/:id',
                 loadComponent: () =>
                     import(
-                        './pages/user/workout/workout-details/workout-details.component'
-                    ).then((component) => component.WorkoutDetailsComponent),
+                        './shared/workoutViews/workout-full-view/workout-full-view.component'
+                    ).then((component) => component.WorkoutFullViewComponent),
             },
         ],
     },
