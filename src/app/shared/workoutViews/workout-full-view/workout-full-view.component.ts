@@ -42,4 +42,6 @@ export class WorkoutFullViewComponent implements OnInit {
                 }
             });
     }
+
+    startWorkout() {}
 }
