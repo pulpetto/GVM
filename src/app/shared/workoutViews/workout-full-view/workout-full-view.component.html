@@ -61,10 +61,60 @@
                     }"
                 >
                     <div>{{ set.setNumber }}</div>
-                    <div>P</div>
-                    <div>{{ set.weight || "-" }}</div>
-                    <div>{{ set.reps || "-" }}</div>
-                    <div>{{ set.rpe || "-" }}</div>
+
+                    <div>{{ set.setTypeName[0] | titlecase }}</div>
+
+                    <div>
+                        {{ set.weight || "-" }}
+                    </div>
+
+                    <div>
+                        {{ set.reps || "-" }}
+                    </div>
+
+                    <div>
+                        {{ set.rpe || "-" }}
+                    </div>
+
+                    <!-- DROPSET(s) -->
+                    <!-- prettier-ignore -->
+                    @if (set.setTypeName === 'drop') {
+                    @for (dropset of set.dropsets; track $index) {
+                    <div class="grid w-full grid-cols-5 col-span-5 py-1">
+                        <div class="col-span-2 text-nowrap place-self-center">
+                            Drop {{ $index + 1 }}:
+                        </div>
+                        <div class="place-self-center">
+                            {{ dropset.weight || "-" }}
+                        </div>
+                        <div class="place-self-center">
+                            {{ dropset.reps || "-" }}
+                        </div>
+                        <div class="place-self-center">
+                            {{ dropset.rpe || "-" }}
+                        </div>
+                    </div>
+                    } }
+
+                    <!-- CLUSTERSET(s) -->
+                    <!-- prettier-ignore -->
+                    @if (set.setTypeName === 'cluster') {
+                    @for (clusterset of set.clustersets; track $index) {
+                    <div class="grid w-full grid-cols-5 py-1">
+                        <div class="col-span-2 text-nowrap place-self-center">
+                            Rest Time:
+                        </div>
+                        <div class="place-self-center">
+                            {{ clusterset.restTime || "-" }}
+                        </div>
+                        <div class="place-self-center">
+                            {{ clusterset.reps || "-" }}
+                        </div>
+                        <div class="place-self-center">
+                            {{ clusterset.rpe || "-" }}
+                        </div>
+                    </div>
+                    } }
                 </div>
                 }
             </div>
