@@ -2,7 +2,9 @@
     [routerLink]="workoutId"
     class="flex flex-col w-full gap-1 p-3 transition-all border-2 border-solid rounded-md cursor-pointer border-neutral-900 hover:border-emerald-500 active:opacity-50 active:scale-95 hover:text-emerald-500"
 >
-    <div class="flex items-center justify-between font-semibold">
+    <div
+        class="flex items-center justify-between font-semibold transition-colors"
+    >
         {{ workoutName }}
         <button class="group" (click)="onMenuClick($event)">
             <svg
