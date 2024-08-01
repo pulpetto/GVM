@@ -1,6 +1,7 @@
-<div class="flex flex-col items-center gap-4 p-8">
+@if (workoutData$ | async; as workoutData) {
+<div class="flex flex-col items-center gap-4 p-4">
     <div class="flex flex-col items-center gap-1">
-        <div class="text-3xl font-semibold">Chest / Back</div>
+        <div class="text-3xl font-semibold">{{ workoutData.name }}</div>
         <div class="flex items-center gap-1.5">
             <div class="opacity-50">Created by:</div>
 
@@ -25,6 +26,7 @@
     </div>
 
     <div class="flex flex-col self-start w-full gap-4">
+        @for (exercise of workoutData.exercises; track $index) {
         <div class="flex flex-col gap-1">
             <a class="flex items-center gap-2">
                 <div
@@ -48,7 +50,7 @@
                 <div>Rpe</div>
             </div>
             <div class="flex flex-col text-lg">
-                @for (item of [1,2,3,4,5]; track $index) {
+                @for (set of exercise.sets; track $index) {
                 <div
                     class="flex justify-between px-4 py-2 rounded-md"
                     [ngClass]="{
@@ -56,14 +58,16 @@
                         'bg-opacity-50': $index % 2 === 0
                     }"
                 >
-                    <div>{{ $index + 1 }}</div>
+                    <div>{{ set.setNumber }}</div>
                     <div>P</div>
-                    <div>180</div>
-                    <div>14</div>
-                    <div>9</div>
+                    <div>{{ set.weight || "-" }}</div>
+                    <div>{{ set.reps || "-" }}</div>
+                    <div>{{ set.rpe || "-" }}</div>
                 </div>
                 }
             </div>
         </div>
+        }
     </div>
 </div>
+}
