@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 export class WorkoutMiniPreviewComponent {
     @Input({ required: true }) workoutId!: string;
     @Input({ required: true }) workoutName!: string;
+    @Input({ required: true }) splitId!: string;
 
     onMenuClick($event: Event) {
         $event.stopPropagation();

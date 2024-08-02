@@ -93,6 +93,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class WorkoutFullViewComponent implements OnInit {
     workoutId!: string;
+    splitId!: string;
     optionsModalVisibility: boolean = false;
     confirmDeleteModalVisibility: boolean = false;
     workoutData$!: Observable<{
@@ -119,7 +120,8 @@ export class WorkoutFullViewComponent implements OnInit {
         this.route.paramMap
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((params) => {
-                this.workoutId = params.get('id')!;
+                this.workoutId = params.get('workoutId')!;
+                this.splitId = params.get('splitId')!;
             });
 
         this.userService.user$

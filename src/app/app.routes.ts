@@ -84,7 +84,7 @@ export const routes: Routes = [
                     ).then((component) => component.ExploreComponent),
             },
             {
-                path: 'workout/:id',
+                path: 'workout/:splitId/:workoutId',
                 loadComponent: () =>
                     import(
                         './shared/workoutViews/workout-full-view/workout-full-view.component'
