@@ -10,7 +10,7 @@ import { DataService } from '../../../services/data.service';
 import { MuscleGroupName } from '../../../types/muscle-group-type';
 import { Set } from '../../../interfaces/workout/set';
 
-const visibleModal = { top: '25%' };
+const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
 
 const visibleBg = { opacity: '100%' };
