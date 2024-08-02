@@ -3,10 +3,12 @@ import { ChartsCarouselComponent } from '../../charts-carousel/charts-carousel.c
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../services/user.service';
-import { Observable } from 'rxjs';
-import { Workout } from '../../../interfaces/workout/workout';
+import { forkJoin, map, Observable, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { DataService } from '../../../services/data.service';
+import { MuscleGroupName } from '../../../types/muscle-group-type';
+import { Set } from '../../../interfaces/workout/set';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -61,13 +63,24 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class WorkoutFullViewComponent implements OnInit {
     workoutId!: string;
     optionsModalVisibility: boolean = false;
-    workoutData$!: Observable<Workout>;
+    workoutData$!: Observable<{
+        name: string;
+        exercises: {
+            exerciseId: number;
+            sets: Set[];
+            id?: number | undefined;
+            name?: string | undefined;
+            imageUrl?: string | undefined;
+            muscleGroups?: MuscleGroupName[] | undefined;
+        }[];
+    }>;
 
     destroyRef = inject(DestroyRef);
 
     constructor(
         private route: ActivatedRoute,
-        private userService: UserService
+        private userService: UserService,
+        private dataService: DataService
     ) {}
 
     ngOnInit() {
@@ -81,9 +94,31 @@ export class WorkoutFullViewComponent implements OnInit {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((user) => {
                 if (user && this.workoutId) {
-                    this.workoutData$ = this.userService.getWorkoutById(
-                        this.workoutId
-                    );
+                    this.workoutData$ = this.userService
+                        .getWorkoutById(this.workoutId)
+                        .pipe(
+                            switchMap((workout) =>
+                                forkJoin(
+                                    workout.exercises.map((exercise) =>
+                                        this.dataService
+                                            .getExerciseById(
+                                                exercise.exerciseId
+                                            )
+                                            .pipe(
+                                                map((exerciseDetails) => ({
+                                                    ...exercise,
+                                                    ...exerciseDetails,
+                                                }))
+                                            )
+                                    )
+                                ).pipe(
+                                    map((exercises) => ({
+                                        ...workout,
+                                        exercises,
+                                    }))
+                                )
+                            )
+                        );
                 }
             });
     }
