@@ -328,6 +328,22 @@ export class UserService {
         });
     }
 
+    deleteWorkout(splitId: string, workoutId: string) {
+        deleteDoc(doc(this.userDocRef!, 'workouts', workoutId));
+
+        deleteDoc(
+            doc(
+                this.userDocRef!,
+                'workoutsSplits',
+                splitId,
+                'workoutsIds',
+                workoutId
+            )
+        );
+
+        this.router.navigate([`/user/x/workout`]);
+    }
+
     getWorkoutById(workoutId: string): Observable<Workout> {
         const workoutDocRef: DocumentReference = doc(
             this.userDocRef!,

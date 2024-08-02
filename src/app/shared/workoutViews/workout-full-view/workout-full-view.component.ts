@@ -158,4 +158,8 @@ export class WorkoutFullViewComponent implements OnInit {
     }
 
     startWorkout() {}
+
+    deleteWorkout() {
+        this.userService.deleteWorkout(this.splitId, this.workoutId);
+    }
 }
