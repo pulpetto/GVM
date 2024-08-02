@@ -11,6 +11,7 @@ import { MuscleGroupName } from '../../../types/muscle-group-type';
 import { Set } from '../../../interfaces/workout/set';
 
 const visibleModal = { top: '50%' };
+const visibleModalLow = { top: '75%' };
 const hiddenModal = { top: '100%' };
 
 const visibleBg = { opacity: '100%' };
@@ -58,11 +59,42 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
                 animate(timing, style(hiddenBtnFixed)),
             ]),
         ]),
+        trigger('openClose4', [
+            transition(':enter', [
+                style(hiddenModal),
+                animate(timing, style(visibleModalLow)),
+            ]),
+            transition(':leave', [
+                style(visibleModalLow),
+                animate(timing, style(hiddenModal)),
+            ]),
+        ]),
+        trigger('openClose5', [
+            transition(':enter', [
+                style(hiddenBg),
+                animate(timing, style(visibleBg)),
+            ]),
+            transition(':leave', [
+                style(visibleBg),
+                animate(timing, style(hiddenBg)),
+            ]),
+        ]),
+        trigger('openClose6', [
+            transition(':enter', [
+                style(hiddenBtnFixed),
+                animate(timing, style(visibleBtnFixed)),
+            ]),
+            transition(':leave', [
+                style(visibleBtnFixed),
+                animate(timing, style(hiddenBtnFixed)),
+            ]),
+        ]),
     ],
 })
 export class WorkoutFullViewComponent implements OnInit {
     workoutId!: string;
     optionsModalVisibility: boolean = false;
+    confirmDeleteModalVisibility: boolean = false;
     workoutData$!: Observable<{
         name: string;
         exercises: {
