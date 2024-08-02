@@ -21,7 +21,7 @@ export const routes: Routes = [
             ),
     },
     {
-        path: 'user/:id',
+        path: 'user',
         loadComponent: () =>
             import('./pages/user/user.component').then(
                 (component) => component.UserComponent

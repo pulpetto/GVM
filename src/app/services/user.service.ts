@@ -112,9 +112,7 @@ export class UserService {
                     splitName: 'Uncategorized',
                 });
 
-                this.router.navigate([
-                    `/user/${userCredentials.user.uid}/profile`,
-                ]);
+                this.router.navigate([`/user/profile`]);
 
                 this.loading.next(false);
             })
@@ -134,9 +132,7 @@ export class UserService {
                     userCredentials.user.uid
                 );
 
-                this.router.navigate([
-                    `/user/${userCredentials.user.uid}/profile`,
-                ]);
+                this.router.navigate([`/user/profile`]);
 
                 this.error.next(false);
                 this.loading.next(false);
@@ -341,7 +337,7 @@ export class UserService {
             )
         );
 
-        this.router.navigate([`/user/x/workout`]);
+        this.router.navigate([`/user/workout`]);
     }
 
     getWorkoutById(workoutId: string): Observable<Workout> {
