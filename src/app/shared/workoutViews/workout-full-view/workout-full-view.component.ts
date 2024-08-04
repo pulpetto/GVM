@@ -121,7 +121,12 @@ export class WorkoutFullViewComponent implements OnInit {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((params) => {
                 this.workoutId = params.get('workoutId')!;
-                this.splitId = params.get('splitId')!;
+            });
+
+        this.route.queryParams
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((queryParams) => {
+                this.splitId = queryParams['splitId'];
             });
 
         this.userService.user$
