@@ -73,8 +73,10 @@ export const routes: Routes = [
                 path: 'workout/editor',
                 loadComponent: () =>
                     import(
-                        './pages/user/workout/creator/creator.component'
-                    ).then((component) => component.CreatorComponent),
+                        './pages/user/workout/workout-template-editor/workout-template-editor.component'
+                    ).then(
+                        (component) => component.WorkoutTemplateEditorComponent
+                    ),
             },
             {
                 path: 'workout/explore',

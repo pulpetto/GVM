@@ -12,10 +12,10 @@ import { UserService } from '../../../../services/user.service';
 import { Workout } from '../../../../interfaces/workout/workout';
 
 @Component({
-    selector: 'app-creator',
+    selector: 'app-workout-template-editor',
     standalone: true,
-    templateUrl: './creator.component.html',
-    styleUrl: './creator.component.css',
+    templateUrl: './workout-template-editor.component.html',
+    styleUrl: './workout-template-editor.component.css',
     imports: [
         ExerciseEditModeComponent,
         NameEditorComponent,
@@ -25,7 +25,7 @@ import { Workout } from '../../../../interfaces/workout/workout';
         ReactiveFormsModule,
     ],
 })
-export class CreatorComponent {
+export class WorkoutTemplateEditorComponent {
     fb = inject(FormBuilder);
     userService = inject(UserService);
     dataService = inject(DataService);
