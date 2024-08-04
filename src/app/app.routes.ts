@@ -92,6 +92,15 @@ export const routes: Routes = [
                         './shared/workoutViews/workout-full-view/workout-full-view.component'
                     ).then((component) => component.WorkoutFullViewComponent),
             },
+            {
+                path: 'workout/:workoutId/edit',
+                loadComponent: () =>
+                    import(
+                        './shared/workoutViews/workout-template-editor/workout-template-editor.component'
+                    ).then(
+                        (component) => component.WorkoutTemplateEditorComponent
+                    ),
+            },
         ],
     },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
