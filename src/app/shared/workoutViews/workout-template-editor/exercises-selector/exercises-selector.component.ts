@@ -1,10 +1,10 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MuscleGroupsModalComponent } from '../../../../../shared/modals/muscle-groups-modal/muscle-groups-modal.component';
-import { EquipmentModalComponent } from '../../../../../shared/modals/equipment-modal/equipment-modal.component';
-import { Exercise } from '../../../../../interfaces/exercise';
-import { DataService } from '../../../../../services/data.service';
+import { MuscleGroupsModalComponent } from '../../../modals/muscle-groups-modal/muscle-groups-modal.component';
+import { EquipmentModalComponent } from '../../../modals/equipment-modal/equipment-modal.component';
+import { Exercise } from '../../../../interfaces/exercise';
+import { DataService } from '../../../../services/data.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 const visibleModal = { top: '25%' };

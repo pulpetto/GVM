@@ -1,15 +1,15 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import { ExerciseEditModeComponent } from '../../../../shared/exercise-edit-mode/exercise-edit-mode.component';
+import { ExerciseEditModeComponent } from '../../exercise-edit-mode/exercise-edit-mode.component';
 import { NameEditorComponent } from './name-editor/name-editor.component';
 import { ExercisesSelectorComponent } from './exercises-selector/exercises-selector.component';
-import { DataService } from '../../../../services/data.service';
+import { DataService } from '../../../services/data.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { LoadingSpinnerComponent } from '../../../../shared/loading-spinner/loading-spinner.component';
+import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UserService } from '../../../../services/user.service';
-import { Workout } from '../../../../interfaces/workout/workout';
+import { UserService } from '../../../services/user.service';
+import { Workout } from '../../../interfaces/workout/workout';
 
 @Component({
     selector: 'app-workout-template-editor',
