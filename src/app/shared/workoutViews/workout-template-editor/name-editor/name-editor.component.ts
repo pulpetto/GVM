@@ -18,7 +18,7 @@ export class NameEditorComponent {
     @Input({ required: true }) title!: FormControl;
 
     previousTitle!: string;
-    nameEditMode: boolean = false;
+    editMode: boolean = false;
 
     @ViewChild('inputRef') inputEl!: ElementRef;
 
@@ -34,7 +34,7 @@ export class NameEditorComponent {
     }
 
     openTitleEditMode() {
-        this.nameEditMode = true;
+        this.editMode = true;
         this.previousTitle = this.title.value;
         this.title.setValue('');
 
@@ -44,12 +44,12 @@ export class NameEditorComponent {
     }
 
     cancelNewTitle() {
-        this.nameEditMode = false;
+        this.editMode = false;
         this.title.setValue(this.previousTitle);
     }
 
     updateTitle() {
-        this.nameEditMode = false;
+        this.editMode = false;
         this.previousTitle = this.title.value;
     }
 }
