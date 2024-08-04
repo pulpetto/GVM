@@ -31,6 +31,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
     userService = inject(UserService);
     dataService = inject(DataService);
     destroyRef = inject(DestroyRef);
+    route = inject(ActivatedRoute);
 
     loading: boolean = false;
 
@@ -54,8 +55,6 @@ export class WorkoutTemplateEditorComponent implements OnInit {
     get workoutExercises(): FormArray<FormGroup> {
         return this.workoutForm.get('exercises') as FormArray<FormGroup>;
     }
-
-    constructor(private route: ActivatedRoute) {}
 
     ngOnInit() {
         this.userService.user$
