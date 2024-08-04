@@ -1,6 +1,6 @@
 @if (!nameEditMode) {
 <div class="flex items-center self-start justify-between w-full">
-    <div class="text-2xl font-semibold text-center">{{ title }}</div>
+    <div class="text-2xl font-semibold text-center">{{ title.value }}</div>
     <button type="button" (click)="openTitleEditMode()" class="group">
         <svg
             class="w-5 h-5 mt-0.5 transition-all stroke-neutral-700 group-hover:stroke-emerald-500 group-active:opacity-50 group-active:scale-95"
@@ -22,7 +22,7 @@
     <input
         type="text"
         #inputRef
-        [(ngModel)]="title"
+        [(ngModel)]="title.value"
         class="w-full text-2xl font-semibold outline-none bg-neutral-950 placeholder-neutral-800"
         placeholder="Workout Name..."
     />

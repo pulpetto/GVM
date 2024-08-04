@@ -1,12 +1,11 @@
 import {
     Component,
     ElementRef,
-    EventEmitter,
     HostListener,
-    Output,
+    Input,
     ViewChild,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-name-editor',
@@ -16,11 +15,10 @@ import { FormsModule } from '@angular/forms';
     styleUrl: './name-editor.component.css',
 })
 export class NameEditorComponent {
-    @Output() nameChangeEvent = new EventEmitter<string>();
+    @Input({ required: true }) title!: FormControl;
 
+    previousTitle!: string;
     nameEditMode: boolean = false;
-    previousTitle: string = 'My Workout 1';
-    title: string = 'My Workout 1';
 
     @ViewChild('inputRef') inputEl!: ElementRef;
 
@@ -37,7 +35,8 @@ export class NameEditorComponent {
 
     openTitleEditMode() {
         this.nameEditMode = true;
-        this.title = '';
+        this.previousTitle = this.title.value;
+        this.title.setValue('');
 
         setTimeout(() => {
             this.inputEl.nativeElement.focus();
@@ -46,12 +45,11 @@ export class NameEditorComponent {
 
     cancelNewTitle() {
         this.nameEditMode = false;
-        this.title = this.previousTitle;
+        this.title.setValue(this.previousTitle);
     }
 
     updateTitle() {
         this.nameEditMode = false;
-        this.previousTitle = this.title;
-        this.nameChangeEvent.emit(this.title);
+        this.previousTitle = this.title.value;
     }
 }

@@ -1,6 +1,6 @@
 <form [formGroup]="workoutForm" class="flex flex-col items-center gap-4 p-4">
     <app-name-editor
-        (nameChangeEvent)="updateWorkoutName($event)"
+        [title]="workoutName"
         class="w-full px-1"
     ></app-name-editor>
 

@@ -1,15 +1,16 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ExerciseEditModeComponent } from '../../exercise-edit-mode/exercise-edit-mode.component';
 import { NameEditorComponent } from './name-editor/name-editor.component';
 import { ExercisesSelectorComponent } from './exercises-selector/exercises-selector.component';
 import { DataService } from '../../../services/data.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { Workout } from '../../../interfaces/workout/workout';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-workout-template-editor',
@@ -25,13 +26,15 @@ import { Workout } from '../../../interfaces/workout/workout';
         ReactiveFormsModule,
     ],
 })
-export class WorkoutTemplateEditorComponent {
+export class WorkoutTemplateEditorComponent implements OnInit {
     fb = inject(FormBuilder);
     userService = inject(UserService);
     dataService = inject(DataService);
     destroyRef = inject(DestroyRef);
 
     loading: boolean = false;
+
+    isNew!: string;
 
     workoutForm = this.fb.group({
         name: 'My Workout 1',
@@ -44,8 +47,47 @@ export class WorkoutTemplateEditorComponent {
         imageUrl: string;
     }[] = [];
 
+    get workoutName(): FormControl<string> {
+        return this.workoutForm.get('name') as FormControl<string>;
+    }
+
     get workoutExercises(): FormArray<FormGroup> {
         return this.workoutForm.get('exercises') as FormArray<FormGroup>;
+    }
+
+    constructor(private route: ActivatedRoute) {}
+
+    ngOnInit() {
+        this.userService.user$
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((user) => {
+                if (user) {
+                    this.route.queryParams
+                        .pipe(takeUntilDestroyed(this.destroyRef))
+                        .subscribe((queryParams) => {
+                            this.isNew = queryParams['isNew'];
+
+                            if (this.isNew === 'false') {
+                                this.route.paramMap
+                                    .pipe(takeUntilDestroyed(this.destroyRef))
+                                    .subscribe((params) => {
+                                        const workoutId =
+                                            params.get('workoutId')!;
+
+                                        this.userService
+                                            .getWorkoutById(workoutId)
+                                            .subscribe((data) => {
+                                                if (data) {
+                                                    this.workoutForm
+                                                        .get('name')!
+                                                        .setValue(data.name);
+                                                }
+                                            });
+                                    });
+                            }
+                        });
+                }
+            });
     }
 
     addExercises(selectedExercisesIds: Set<number>) {
@@ -79,10 +121,6 @@ export class WorkoutTemplateEditorComponent {
     removeExercise(index: number) {
         this.exercisesPresentionalData.splice(index, 1);
         this.workoutExercises.removeAt(index);
-    }
-
-    updateWorkoutName($event: string) {
-        this.workoutForm.get('name')?.setValue($event);
     }
 
     saveWorkout() {
