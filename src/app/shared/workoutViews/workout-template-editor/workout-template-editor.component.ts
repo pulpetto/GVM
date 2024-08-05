@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { Workout } from '../../../interfaces/workout/workout';
 import { ActivatedRoute } from '@angular/router';
+import { WorkoutExercise } from '../../../interfaces/workout/workout-exercise';
 
 @Component({
     selector: 'app-workout-template-editor',
