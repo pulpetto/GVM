@@ -1,17 +1,14 @@
 import {
     Component,
     ElementRef,
-    EventEmitter,
     Input,
-    Output,
     QueryList,
     ViewChildren,
 } from '@angular/core';
 import { ButtonForRpeModalComponent } from '../../../button-for-rpe-modal/button-for-rpe-modal.component';
-import { FormGroup, FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RpeType } from '../../../../types/rpe-type';
-import { ClusterSet } from '../../../../interfaces/set-types/cluster-set';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -29,10 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class ClusterSetComponent {
     @Input({ required: true }) clusterset!: FormGroup;
 
-    @Output() inputValuesChangeEvent = new EventEmitter<ClusterSet>();
-
-    updateRpeValue($event: RpeType) {
-        this.clusterset.get('rpe')?.setValue($event);
+    get rpe(): FormControl<RpeType> {
+        return this.clusterset.get('rpe') as FormControl<RpeType>;
     }
 
     restTimeValue: number | null = null;

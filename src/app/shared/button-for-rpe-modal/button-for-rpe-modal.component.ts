@@ -1,8 +1,7 @@
 import {
     Component,
     ElementRef,
-    EventEmitter,
-    Output,
+    Input,
     QueryList,
     ViewChildren,
 } from '@angular/core';
@@ -10,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { InfoModalButtonComponent } from '../info-modal-button/info-modal-button.component';
 import { RpeType } from '../../types/rpe-type';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { FormControl } from '@angular/forms';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -49,11 +49,9 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class ButtonForRpeModalComponent {
-    @Output() rpeValueChangeEvent = new EventEmitter<RpeType>();
+    @Input() rpe!: FormControl<RpeType>;
 
     modalVisibility: boolean = false;
-
-    rpe!: RpeType;
     rpeScale: (number | 'F')[] = [6, 7, 8, 9, 9.5, 10, 'F'];
 
     hoveredRpeValue: RpeType = null;
@@ -63,13 +61,11 @@ export class ButtonForRpeModalComponent {
     @ViewChildren('rpeValBtn') rpeValuesButtons!: QueryList<ElementRef>;
 
     onRpeValueChange(rpeValue: number | 'F', $index: number) {
-        if (this.rpe === rpeValue) {
-            this.rpe = null;
-            this.rpeValueChangeEvent.emit(null);
+        if (this.rpe.value === rpeValue) {
+            this.rpe.setValue(null);
             this.hoverShadowLeftDistancePx = 0;
         } else {
-            this.rpe = rpeValue;
-            this.rpeValueChangeEvent.emit(rpeValue);
+            this.rpe.setValue(rpeValue);
             this.hoverShadowLeftDistancePx =
                 this.rpeValuesButtons.toArray()[
                     $index

@@ -1,6 +1,12 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import {
+    FormArray,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    FormsModule,
+} from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { InfoModalButtonComponent } from '../../info-modal-button/info-modal-button.component';
 import { DropSetComponent } from './drop-set/drop-set.component';
@@ -89,8 +95,8 @@ export class SetComponent implements OnInit {
         this.set.addControl('rpe', this.fb.control<RpeType>(null));
     }
 
-    updateRpe($event: RpeType) {
-        this.set.get('rpe')!.setValue($event);
+    get rpe(): FormControl<RpeType> {
+        return this.set.get('rpe') as FormControl<RpeType>;
     }
 
     updateTempo($event: TempoSet) {

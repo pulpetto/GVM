@@ -3,17 +3,17 @@
     type="button"
     class="select-none"
     [ngClass]="{
-        'text-neutral-800': !rpe,
-        'text-white': rpe && rpe !== 'F',
-        'text-red-500': rpe === 'F'
+        'text-neutral-800': !rpe.value,
+        'text-white': rpe.value && rpe.value !== 'F',
+        'text-red-500': rpe.value === 'F'
     }"
     (click)="modalVisibility = true"
 >
     <!-- prettier-ignore -->
-    @if (!rpe) {
+    @if (!rpe.value) {
         -
     } @else {
-    {{ rpe }}
+    {{ rpe.value }}
     }
 </button>
 
@@ -60,15 +60,15 @@
             <div
                 class="absolute top-0 w-10 h-10 transition-all duration-300 rounded-md"
                 [ngClass]="{
-                    'opacity-0': !rpe,
-                    'opacity-100': rpe,
-                    'bg-green-500': rpe === 6,
-                    'bg-lime-500': rpe === 7,
-                    'bg-yellow-500': rpe === 8,
-                    'bg-amber-500': rpe === 9,
-                    'bg-orange-500': rpe === 9.5,
-                    'bg-red-500': rpe === 10 || rpe === 'F',
-                    'shadow-[0_0_20px_2px_#ef4444]': rpe === 'F'
+                    'opacity-0': !rpe.value,
+                    'opacity-100': rpe.value,
+                    'bg-green-500': rpe.value === 6,
+                    'bg-lime-500': rpe.value === 7,
+                    'bg-yellow-500': rpe.value === 8,
+                    'bg-amber-500': rpe.value === 9,
+                    'bg-orange-500': rpe.value === 9.5,
+                    'bg-red-500': rpe.value === 10 || rpe.value === 'F',
+                    'shadow-[0_0_20px_2px_#ef4444]': rpe.value === 'F'
                 }"
                 [style]="'left:' + hoverShadowLeftDistancePx + 'px;'"
             ></div>
@@ -89,31 +89,31 @@
         </div>
         <div class="text-sm text-center">
             <!-- prettier-ignore -->
-            @if(rpe === 6) {
+            @if(rpe.value === 6) {
                 Noticeable effort, but nothing too crazy a few reps left in the tank tank.
             }
 
-            @if(rpe === 7) {
+            @if(rpe.value === 7) {
                 Muscle pain is getting more noticable, around 3 reps left in the tank.
             }
 
-            @if(rpe === 8) {
+            @if(rpe.value === 8) {
                 Difficult, 2 reps left in the tank.
             }
 
-            @if(rpe === 9) {
+            @if(rpe.value === 9) {
                 Very difficult, 1 rep left in the tank.
             }
 
-            @if(rpe === 9.5) {
+            @if(rpe.value === 9.5) {
                 Super difficult, 1 rep may be possible.
             }
 
-            @if(rpe === 10) {
+            @if(rpe.value === 10) {
                 Extra difficult, not a chance to make another rep.
             }
 
-            @if(rpe === 'F') {
+            @if(rpe.value === 'F') {
                 Muscular failure, this rep isn't full done, but only to some extent.
             }
         </div>
