@@ -90,6 +90,13 @@ export class SetComponent implements OnInit {
 
     ngOnInit() {
         this.set.addControl('setTypeName', this.fb.control<SetType>('normal'));
+
+        this.setTypeIndex = this.setTypes.indexOf(
+            this.setTypes.find(
+                (setType) => setType.name === this.setTypeNameFormControl.value
+            )!
+        );
+
         this.set.addControl('weight', this.fb.control<string>(''));
         this.set.addControl('reps', this.fb.control<string>(''));
         this.set.addControl('rpe', this.fb.control<RpeType>(null));
@@ -97,6 +104,10 @@ export class SetComponent implements OnInit {
 
     get rpe(): FormControl<RpeType> {
         return this.set.get('rpe') as FormControl<RpeType>;
+    }
+
+    get setTypeNameFormControl(): FormControl<SetType> {
+        return this.set.get('setTypeName') as FormControl<SetType>;
     }
 
     updateTempo($event: TempoSet) {
