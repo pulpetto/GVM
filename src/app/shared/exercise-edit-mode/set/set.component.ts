@@ -97,6 +97,8 @@ export class SetComponent implements OnInit {
             )!
         );
 
+        this.setTypeName = this.setTypes[this.setTypeIndex].name;
+
         this.set.addControl('weight', this.fb.control<string>(''));
         this.set.addControl('reps', this.fb.control<string>(''));
         this.set.addControl('rpe', this.fb.control<RpeType>(null));
