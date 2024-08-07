@@ -43,7 +43,7 @@
     ></app-button-for-rpe-modal>
 
     <!-- prettier-ignore -->
-    @if (setTypeName === 'drop') {
+    @if (setTypeName.value === 'drop') {
     @for (dropset of dropsets.controls; track $index) {
     <app-drop-set
         [dropset]="dropset"
@@ -62,7 +62,7 @@
     }
 
     <!-- prettier-ignore -->
-    @if (setTypeName === 'cluster') {
+    @if (setTypeName.value === 'cluster') {
     @for (clusterset of clustersets.controls; track $index) {
     <app-cluster-set
         [clusterset]="clusterset"
@@ -80,7 +80,7 @@
     }
 
     <!-- prettier-ignore -->
-    @if (setTypeName === 'tempo') {
+    @if (setTypeName.value === 'tempo') {
     <app-tempo-set [tempo]="tempo" class="w-full col-span-5"></app-tempo-set>
     }
 </div>

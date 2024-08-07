@@ -93,11 +93,9 @@ export class SetComponent implements OnInit {
 
         this.setTypeIndex = this.setTypes.indexOf(
             this.setTypes.find(
-                (setType) => setType.name === this.setTypeNameFormControl.value
+                (setType) => setType.name === this.setTypeName.value
             )!
         );
-
-        this.setTypeName = this.setTypes[this.setTypeIndex].name;
 
         this.set.addControl('weight', this.fb.control<string>(''));
         this.set.addControl('reps', this.fb.control<string>(''));
@@ -108,7 +106,7 @@ export class SetComponent implements OnInit {
         return this.set.get('rpe') as FormControl<RpeType>;
     }
 
-    get setTypeNameFormControl(): FormControl<SetType> {
+    get setTypeName(): FormControl<SetType> {
         return this.set.get('setTypeName') as FormControl<SetType>;
     }
 
@@ -117,7 +115,6 @@ export class SetComponent implements OnInit {
     }
 
     setTypeIndex: number = 0;
-    setTypeName: SetType = 'normal';
 
     setTypeModalVisibility: boolean = false;
 
@@ -188,25 +185,24 @@ export class SetComponent implements OnInit {
         this.setTypes[$index].isSelected = true;
 
         this.setTypeIndex = $index;
-        this.setTypeName = this.setTypes[$index].name;
 
-        this.set.get('setTypeName')?.setValue(this.setTypeName);
+        this.setTypeName.setValue(this.setTypes[$index].name);
 
-        if (this.setTypeName === 'drop') {
+        if (this.setTypeName.value === 'drop') {
             this.set.addControl('dropsets', this.fb.array<DropSet[]>([]));
 
             this.set.removeControl('clustersets');
             this.set.removeControl('tempo');
         }
 
-        if (this.setTypeName === 'cluster') {
+        if (this.setTypeName.value === 'cluster') {
             this.set.addControl('clustersets', this.fb.array<ClusterSet[]>([]));
 
             this.set.removeControl('dropsets');
             this.set.removeControl('tempo');
         }
 
-        if (this.setTypeName === 'tempo') {
+        if (this.setTypeName.value === 'tempo') {
             this.set.addControl(
                 'tempo',
                 this.fb.group<TempoSet>({
