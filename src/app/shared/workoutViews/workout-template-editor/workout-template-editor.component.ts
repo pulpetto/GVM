@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { WorkoutExercise } from '../../../interfaces/workout/workout-exercise';
 import { DropSet } from '../../../interfaces/set-types/drop-set';
 import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
+import { EMPTY, filter, switchMap } from 'rxjs';
 
 @Component({
     selector: 'app-workout-template-editor',
@@ -30,6 +31,8 @@ import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
     ],
 })
 export class WorkoutTemplateEditorComponent implements OnInit {
+    editView!: 'new' | 'existing' | 'current' | 'done';
+
     fb = inject(FormBuilder);
     userService = inject(UserService);
     dataService = inject(DataService);
@@ -63,37 +66,30 @@ export class WorkoutTemplateEditorComponent implements OnInit {
 
     ngOnInit() {
         this.userService.user$
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((user) => {
-                if (user) {
-                    this.route.queryParams
-                        .pipe(takeUntilDestroyed(this.destroyRef))
-                        .subscribe((queryParams) => {
-                            this.isNew = queryParams['isNew'];
-
-                            if (this.isNew === 'false') {
-                                this.route.paramMap
-                                    .pipe(takeUntilDestroyed(this.destroyRef))
-                                    .subscribe((params) => {
-                                        this.workoutId =
-                                            params.get('workoutId')!;
-
-                                        this.userService
-                                            .getWorkoutById(this.workoutId)
-                                            .subscribe((data) => {
-                                                if (data) {
-                                                    this.workoutForm
-                                                        .get('name')!
-                                                        .setValue(data.name);
-
-                                                    this.addInitialExercises(
-                                                        data.exercises
-                                                    );
-                                                }
-                                            });
-                                    });
-                            }
-                        });
+            .pipe(
+                takeUntilDestroyed(this.destroyRef),
+                filter((user) => !!user),
+                switchMap(() => this.route.queryParams),
+                switchMap((queryParams) => {
+                    this.editView = queryParams['editView'];
+                    if (this.editView === 'existing') {
+                        return this.route.paramMap.pipe(
+                            switchMap((params) => {
+                                this.workoutId = params.get('workoutId')!;
+                                return this.userService.getWorkoutById(
+                                    this.workoutId
+                                );
+                            })
+                        );
+                    } else {
+                        return EMPTY;
+                    }
+                })
+            )
+            .subscribe((data) => {
+                if (data) {
+                    this.workoutForm.get('name')!.setValue(data.name);
+                    this.addInitialExercises(data.exercises);
                 }
             });
     }
@@ -249,11 +245,13 @@ export class WorkoutTemplateEditorComponent implements OnInit {
     }
 
     saveWorkout() {
-        if (this.isNew === 'true') {
+        if (this.editView === 'new') {
             this.userService.saveWorkout(
                 this.workoutForm.getRawValue() as Workout
             );
-        } else {
+        }
+
+        if (this.editView === 'existing') {
             this.userService.updateWorkout(
                 this.workoutId,
                 this.workoutForm.getRawValue() as Workout
