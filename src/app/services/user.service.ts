@@ -324,6 +324,19 @@ export class UserService {
         });
     }
 
+    updateWorkout(workoutId: string, workoutObj: Workout) {
+        const workoutDocRef: DocumentReference = doc(
+            this.userDocRef!,
+            'workouts',
+            workoutId
+        );
+
+        updateDoc(workoutDocRef, {
+            name: workoutObj.name,
+            exercises: workoutObj.exercises,
+        });
+    }
+
     deleteWorkout(splitId: string, workoutId: string) {
         deleteDoc(doc(this.userDocRef!, 'workouts', workoutId));
 
