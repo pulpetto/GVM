@@ -1,11 +1,4 @@
-import {
-    Component,
-    EventEmitter,
-    inject,
-    Input,
-    OnInit,
-    Output,
-} from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InfoModalButtonComponent } from '../info-modal-button/info-modal-button.component';
 import { SetComponent } from './set/set.component';
@@ -55,7 +48,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         ]),
     ],
 })
-export class ExerciseEditModeComponent implements OnInit {
+export class ExerciseEditModeComponent {
     fb = inject(FormBuilder);
 
     @Output() exercisesRemoveEvent = new EventEmitter<number>();
@@ -66,14 +59,6 @@ export class ExerciseEditModeComponent implements OnInit {
     @Input({ required: true }) exerciseImgUrl!: string;
 
     optionsModalVisibility: boolean = false;
-
-    ngOnInit() {
-        const set = this.fb.group({
-            setNumber: 1,
-        });
-
-        this.sets.push(set);
-    }
 
     get sets(): FormArray<FormGroup> {
         return this.exercise.get('sets') as FormArray<FormGroup>;

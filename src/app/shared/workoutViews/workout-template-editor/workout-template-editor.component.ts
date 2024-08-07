@@ -110,6 +110,14 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                             sets: this.fb.array([]),
                         });
 
+                        const sets = exerciseGroup.get('sets') as FormArray;
+
+                        const set = this.fb.group({
+                            setNumber: 1,
+                        });
+
+                        sets.push(set);
+
                         this.workoutExercises.push(exerciseGroup);
 
                         this.loading = false;
