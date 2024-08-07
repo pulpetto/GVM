@@ -39,6 +39,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
     loading: boolean = false;
 
     isNew!: string;
+    workoutId!: string;
 
     workoutForm = this.fb.group({
         name: 'My Workout 1',
@@ -73,11 +74,11 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                                 this.route.paramMap
                                     .pipe(takeUntilDestroyed(this.destroyRef))
                                     .subscribe((params) => {
-                                        const workoutId =
+                                        this.workoutId =
                                             params.get('workoutId')!;
 
                                         this.userService
-                                            .getWorkoutById(workoutId)
+                                            .getWorkoutById(this.workoutId)
                                             .subscribe((data) => {
                                                 if (data) {
                                                     this.workoutForm
@@ -247,6 +248,15 @@ export class WorkoutTemplateEditorComponent implements OnInit {
     }
 
     saveWorkout() {
-        this.userService.saveWorkout(this.workoutForm.getRawValue() as Workout);
+        if (this.isNew === 'true') {
+            this.userService.saveWorkout(
+                this.workoutForm.getRawValue() as Workout
+            );
+        } else {
+            this.userService.updateWorkout(
+                this.workoutId,
+                this.workoutForm.getRawValue() as Workout
+            );
+        }
     }
 }
