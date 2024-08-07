@@ -24,7 +24,7 @@ export class NameEditorComponent {
 
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        if (event.key === 'Escape') {
+        if (event.key === 'Escape' && this.editMode) {
             this.cancelNewTitle();
         }
 
