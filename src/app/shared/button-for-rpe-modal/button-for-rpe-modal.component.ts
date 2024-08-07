@@ -49,7 +49,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class ButtonForRpeModalComponent {
-    @Input() rpe!: FormControl<RpeType>;
+    @Input({ required: true }) rpe!: FormControl<RpeType>;
 
     modalVisibility: boolean = false;
     rpeScale: (number | 'F')[] = [6, 7, 8, 9, 9.5, 10, 'F'];
