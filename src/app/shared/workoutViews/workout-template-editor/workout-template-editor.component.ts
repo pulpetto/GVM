@@ -12,6 +12,8 @@ import { UserService } from '../../../services/user.service';
 import { Workout } from '../../../interfaces/workout/workout';
 import { ActivatedRoute } from '@angular/router';
 import { WorkoutExercise } from '../../../interfaces/workout/workout-exercise';
+import { DropSet } from '../../../interfaces/set-types/drop-set';
+import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
 
 @Component({
     selector: 'app-workout-template-editor',
@@ -81,6 +83,10 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                                                     this.workoutForm
                                                         .get('name')!
                                                         .setValue(data.name);
+
+                                                    this.addInitialExercises(
+                                                        data.exercises
+                                                    );
                                                 }
                                             });
                                     });
@@ -124,6 +130,115 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                     }
                 });
         });
+    }
+
+    addInitialExercises(initialExercises: WorkoutExercise[]) {
+        this.loading = true;
+
+        initialExercises.forEach((initialExercise) => {
+            this.dataService
+                .getExerciseById(initialExercise.exerciseId)
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe((exercise) => {
+                    if (exercise) {
+                        this.exercisesPresentionalData.push({
+                            id: exercise.id,
+                            name: exercise.name,
+                            imageUrl: exercise.imageUrl,
+                        });
+
+                        const exerciseGroup = this.fb.group({
+                            exerciseId: exercise.id,
+                            sets: this.fb.array([]),
+                        });
+
+                        initialExercise.sets.forEach((set) => {
+                            const setsFormArray = exerciseGroup.get(
+                                'sets'
+                            ) as FormArray;
+
+                            const setFormGroup = this.fb.group({});
+
+                            setFormGroup.addControl(
+                                'setNumber',
+                                this.fb.control(set.setNumber)
+                            );
+                            setFormGroup.addControl(
+                                'setTypeName',
+                                this.fb.control(set.setTypeName)
+                            );
+                            setFormGroup.addControl(
+                                'weight',
+                                this.fb.control(set.weight)
+                            );
+                            setFormGroup.addControl(
+                                'reps',
+                                this.fb.control(set.reps)
+                            );
+                            setFormGroup.addControl(
+                                'rpe',
+                                this.fb.control(set.rpe)
+                            );
+
+                            if (set.dropsets) {
+                                setFormGroup.addControl(
+                                    'dropsets',
+                                    this.fb.array<DropSet[]>([])
+                                );
+
+                                set.dropsets.forEach((dropset) => {
+                                    const dropsetObj = this.fb.group({
+                                        weight: dropset.weight,
+                                        reps: dropset.reps,
+                                        rpe: dropset.rpe,
+                                    });
+
+                                    const dropsetsFormArray = setFormGroup.get(
+                                        'dropsets'
+                                    ) as unknown as FormArray;
+
+                                    dropsetsFormArray.push(dropsetObj);
+                                });
+                            }
+
+                            if (set.clustersets) {
+                                setFormGroup.addControl(
+                                    'clustersets',
+                                    this.fb.array<ClusterSet[]>([])
+                                );
+
+                                set.clustersets.forEach((clusterset) => {
+                                    const clustersetObj = this.fb.group({
+                                        restTime: clusterset.restTime,
+                                        reps: clusterset.reps,
+                                        rpe: clusterset.rpe,
+                                    });
+
+                                    const clustersetsFormArray =
+                                        setFormGroup.get(
+                                            'clustersets'
+                                        ) as unknown as FormArray;
+
+                                    clustersetsFormArray.push(clustersetObj);
+                                });
+                            }
+
+                            if (set.tempo) {
+                                setFormGroup.addControl(
+                                    'tempo',
+                                    this.fb.group(set.tempo)
+                                );
+                            }
+
+                            setsFormArray.push(setFormGroup);
+                        });
+
+                        this.workoutExercises.push(exerciseGroup);
+                    }
+                });
+        });
+
+        this.loading = false;
     }
 
     removeExercise(index: number) {
