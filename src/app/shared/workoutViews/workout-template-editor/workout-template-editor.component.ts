@@ -4,7 +4,7 @@ import { NameEditorComponent } from './name-editor/name-editor.component';
 import { ExercisesSelectorComponent } from './exercises-selector/exercises-selector.component';
 import { DataService } from '../../../services/data.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -35,6 +35,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
     dataService = inject(DataService);
     destroyRef = inject(DestroyRef);
     route = inject(ActivatedRoute);
+    location = inject(Location);
 
     loading: boolean = false;
 
@@ -258,5 +259,9 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                 this.workoutForm.getRawValue() as Workout
             );
         }
+    }
+
+    cancelEdit() {
+        this.location.back();
     }
 }
