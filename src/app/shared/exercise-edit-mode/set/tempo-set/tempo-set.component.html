@@ -8,20 +8,20 @@
     >
         <span
             [ngClass]="{
-                'text-neutral-800': !tempo.eccentricPhaseLength,
-                'text-white': tempo.eccentricPhaseLength
+                'text-neutral-800': !eccentricPhaseLength.value,
+                'text-white': eccentricPhaseLength.value
             }"
         >
-            {{ tempo.eccentricPhaseLength ? tempo.eccentricPhaseLength : 0 }}
+            {{ eccentricPhaseLength.value ? eccentricPhaseLength.value : 0 }}
         </span>
 
         <span
             [ngClass]="{
                 'text-neutral-800':
-                    !tempo.eccentricPhaseLength ||
-                    !tempo.isometricPhaseOneLength,
+                    !eccentricPhaseLength.value ||
+                    !isometricPhaseOneLength.value,
                 'text-white':
-                    tempo.eccentricPhaseLength && tempo.isometricPhaseOneLength
+                    eccentricPhaseLength.value && isometricPhaseOneLength.value
             }"
         >
             -
@@ -29,13 +29,13 @@
 
         <span
             [ngClass]="{
-                'text-neutral-800': !tempo.isometricPhaseOneLength,
-                'text-white': tempo.isometricPhaseOneLength
+                'text-neutral-800': !isometricPhaseOneLength.value,
+                'text-white': isometricPhaseOneLength.value
             }"
         >
             {{
-                tempo.isometricPhaseOneLength
-                    ? tempo.isometricPhaseOneLength
+                isometricPhaseOneLength.value
+                    ? isometricPhaseOneLength.value
                     : 0
             }}
         </span>
@@ -43,10 +43,10 @@
         <span
             [ngClass]="{
                 'text-neutral-800':
-                    !tempo.isometricPhaseOneLength ||
-                    !tempo.concentricPhaseLength,
+                    !isometricPhaseOneLength.value ||
+                    !concentricPhaseLength.value,
                 'text-white':
-                    tempo.isometricPhaseOneLength && tempo.concentricPhaseLength
+                    isometricPhaseOneLength.value && concentricPhaseLength.value
             }"
         >
             -
@@ -54,20 +54,20 @@
 
         <span
             [ngClass]="{
-                'text-neutral-800': !tempo.concentricPhaseLength,
-                'text-white': tempo.concentricPhaseLength
+                'text-neutral-800': !concentricPhaseLength.value,
+                'text-white': concentricPhaseLength.value
             }"
         >
-            {{ tempo.concentricPhaseLength ? tempo.concentricPhaseLength : 0 }}
+            {{ concentricPhaseLength.value ? concentricPhaseLength.value : 0 }}
         </span>
 
         <span
             [ngClass]="{
                 'text-neutral-800':
-                    !tempo.concentricPhaseLength ||
-                    !tempo.isometricPhaseTwoLength,
+                    !concentricPhaseLength.value ||
+                    !isometricPhaseTwoLength.value,
                 'text-white':
-                    tempo.concentricPhaseLength && tempo.isometricPhaseTwoLength
+                    concentricPhaseLength.value && isometricPhaseTwoLength.value
             }"
         >
             -
@@ -75,13 +75,13 @@
 
         <span
             [ngClass]="{
-                'text-neutral-800': !tempo.isometricPhaseTwoLength,
-                'text-white': tempo.isometricPhaseTwoLength
+                'text-neutral-800': !isometricPhaseTwoLength.value,
+                'text-white': isometricPhaseTwoLength.value
             }"
         >
             {{
-                tempo.isometricPhaseTwoLength
-                    ? tempo.isometricPhaseTwoLength
+                isometricPhaseTwoLength.value
+                    ? isometricPhaseTwoLength.value
                     : 0
             }}
         </span>
@@ -121,14 +121,13 @@
         </button>
     </div>
 
-    <div class="flex items-center self-center gap-1">
-        @for (tempoKeyValue of tempoObjEntries; track $index) {
+    <div [formGroup]="tempo" class="flex items-center self-center gap-1">
+        @for (name of phasesNames; track $index) {
         <div class="relative">
             <input
                 mask="0"
                 type="text"
-                (change)="onTempoValueChange()"
-                [(ngModel)]="tempo[tempoKeyValue[0]]"
+                [formControlName]="name"
                 class="w-12 h-12 text-2xl font-semibold text-center rounded-md outline-none bg-neutral-900 placeholder-neutral-800 focus:outline-emerald-500 outline-offset-0"
                 placeholder="0"
             />

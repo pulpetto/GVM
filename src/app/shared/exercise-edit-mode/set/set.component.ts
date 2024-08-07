@@ -112,8 +112,8 @@ export class SetComponent implements OnInit {
         return this.set.get('setTypeName') as FormControl<SetType>;
     }
 
-    updateTempo($event: TempoSet) {
-        this.set.get('tempo')!.setValue($event);
+    get tempo(): FormGroup {
+        return this.set.get('tempo') as FormGroup;
     }
 
     setTypeIndex: number = 0;
@@ -209,7 +209,12 @@ export class SetComponent implements OnInit {
         if (this.setTypeName === 'tempo') {
             this.set.addControl(
                 'tempo',
-                this.fb.control<TempoSet | null>(null)
+                this.fb.group<TempoSet>({
+                    eccentricPhaseLength: null,
+                    isometricPhaseOneLength: null,
+                    concentricPhaseLength: null,
+                    isometricPhaseTwoLength: null,
+                })
             );
 
             this.set.removeControl('dropsets');

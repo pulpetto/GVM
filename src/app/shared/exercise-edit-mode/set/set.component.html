@@ -81,10 +81,7 @@
 
     <!-- prettier-ignore -->
     @if (setTypeName === 'tempo') {
-    <app-tempo-set
-        (tempoChangeEvent)="updateTempo($event)"
-        class="w-full col-span-5"
-    ></app-tempo-set>
+    <app-tempo-set [tempo]="tempo" class="w-full col-span-5"></app-tempo-set>
     }
 </div>
 

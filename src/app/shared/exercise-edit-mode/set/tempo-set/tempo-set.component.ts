@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgxMaskDirective } from 'ngx-mask';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { TempoSet } from '../../../../interfaces/set-types/tempo-set';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const visibleTempoModal = { top: '50%' };
 const hiddenTempoModal = { top: '100%' };
@@ -22,7 +22,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-tempo-set',
     standalone: true,
-    imports: [NgxMaskDirective, FormsModule, CommonModule],
+    imports: [NgxMaskDirective, FormsModule, CommonModule, ReactiveFormsModule],
     templateUrl: './tempo-set.component.html',
     styleUrl: './tempo-set.component.css',
     animations: [
@@ -69,23 +69,34 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class TempoSetComponent {
-    @Output() tempoChangeEvent = new EventEmitter<TempoSet>();
+    @Input() tempo!: FormGroup;
 
-    tempo: TempoSet = {
-        eccentricPhaseLength: null,
-        isometricPhaseOneLength: null,
-        concentricPhaseLength: null,
-        isometricPhaseTwoLength: null,
-    };
-
-    get tempoObjEntries() {
-        return Object.entries(this.tempo);
-    }
-
+    phasesNames = [
+        'eccentricPhaseLength',
+        'isometricPhaseOneLength',
+        'concentricPhaseLength',
+        'isometricPhaseTwoLength',
+    ];
     tempoModalVisibility: boolean = false;
     instructionsModalVisibility: boolean = false;
 
-    onTempoValueChange() {
-        this.tempoChangeEvent.emit(this.tempo);
+    get eccentricPhaseLength(): FormControl {
+        return this.tempo.get('eccentricPhaseLength') as FormControl;
+    }
+
+    get isometricPhaseOneLength(): FormControl {
+        return this.tempo.get('isometricPhaseOneLength') as FormControl;
+    }
+
+    get concentricPhaseLength(): FormControl {
+        return this.tempo.get('concentricPhaseLength') as FormControl;
+    }
+
+    get isometricPhaseTwoLength(): FormControl {
+        return this.tempo.get('isometricPhaseTwoLength') as FormControl;
+    }
+
+    get tempoObjEntries() {
+        return Object.entries(this.tempo.controls);
     }
 }
