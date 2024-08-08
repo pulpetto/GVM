@@ -1,6 +1,8 @@
 import {
+    ChangeDetectorRef,
     Component,
     ElementRef,
+    inject,
     Input,
     QueryList,
     ViewChildren,
@@ -50,6 +52,19 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class ButtonForRpeModalComponent {
     @Input({ required: true }) rpe!: FormControl<RpeType>;
+
+    cdr = inject(ChangeDetectorRef);
+
+    openModal() {
+        this.modalVisibility = true;
+
+        this.cdr.detectChanges();
+
+        this.hoverShadowLeftDistancePx =
+            this.rpeValuesButtons.toArray()[
+                this.rpeScale.indexOf(this.rpe.value!)
+            ].nativeElement.offsetLeft;
+    }
 
     modalVisibility: boolean = false;
     rpeScale: (number | 'F')[] = [6, 7, 8, 9, 9.5, 10, 'F'];

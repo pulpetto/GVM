@@ -7,7 +7,7 @@
         'text-white': rpe.value && rpe.value !== 'F',
         'text-red-500': rpe.value === 'F'
     }"
-    (click)="modalVisibility = true"
+    (click)="openModal()"
 >
     <!-- prettier-ignore -->
     @if (!rpe.value) {
