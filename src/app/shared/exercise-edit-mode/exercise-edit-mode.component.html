@@ -104,48 +104,47 @@
 
 <div
     @openClose
-    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md"
+    class="fixed left-0 z-50 flex flex-col items-center w-full h-full gap-3 p-4 text-lg rounded-t-md bg-neutral-950"
     [ngClass]="{
         'top-1/2': optionsModalVisibility,
         'top-full': !optionsModalVisibility
     }"
 >
-    <div class="self-center text-lg font-semibold">Choose Action:</div>
-    <div class="flex flex-col gap-1.5 text-lg">
+    <div class="self-center font-semibold text-center">
+        Choose action for
+        <span class="text-emerald-500">{{ exerciseName }}:</span>
+    </div>
+
+    <div class="flex flex-col w-full gap-1">
         <button
             type="button"
-            class="flex items-center gap-0.5 transition-all active:opacity-50 active:scale-95 group"
+            class="flex items-center gap-1 p-2 transition-all rounded-md active:opacity-50 active:scale-95 hover:bg-neutral-900 group"
         >
-            <div
-                class="mt-1 overflow-hidden transition-colors border-2 border-white border-solid rounded-full group-hover:border-emerald-500"
-            >
+            <div class="mt-1 overflow-hidden rounded-full">
                 <svg
-                    class="w-10 h-10 transition-colors stroke-white group-hover:stroke-emerald-500"
+                    class="w-5 h-5 stroke-white"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
                         d="M6 12H12M18 12H12M12 12V6M12 12V18"
-                        stroke-width="1.5"
+                        stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     />
                 </svg>
             </div>
-            <div class="p-2 transition-colors group-hover:text-emerald-500">
-                Add exercise to superset
-            </div>
+            <div class="font-semibold text-white">Add to superset</div>
         </button>
+
         <button
             type="button"
-            class="flex items-center gap-0.5 transition-all active:opacity-50 active:scale-95 group"
+            class="flex items-center gap-1 p-2 transition-all rounded-md active:opacity-50 active:scale-95 hover:bg-neutral-900 group"
         >
-            <div
-                class="mt-1 overflow-hidden transition-colors border-2 border-white border-solid rounded-full group-hover:border-emerald-500"
-            >
+            <div class="mt-1 mr-0.5 overflow-hidden rounded-full">
                 <svg
-                    class="w-10 h-10 p-2 transition-colors fill-white group-hover:fill-emerald-500"
+                    class="w-5 py-0.5 h-5 fill-white"
                     viewBox="0 0 32 32"
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -155,19 +154,16 @@
                     ></path>
                 </svg>
             </div>
-            <div class="p-2 transition-colors group-hover:text-emerald-500">
-                Change exercise order
-            </div>
+            <div class="font-semibold text-white">Reorder exercises</div>
         </button>
+
         <button
             type="button"
-            class="flex items-center gap-0.5 transition-all active:opacity-50 active:scale-95 group"
+            class="flex items-center gap-1 p-2 transition-all rounded-md active:opacity-50 active:scale-95 hover:bg-neutral-900 group"
         >
-            <div
-                class="mt-1 overflow-hidden transition-colors border-2 border-white border-solid rounded-full group-hover:border-emerald-500"
-            >
+            <div class="mt-1 mr-0.5 overflow-hidden rounded-full">
                 <svg
-                    class="w-10 h-10 p-2 transition-colors fill-white group-hover:fill-emerald-500"
+                    class="w-5 py-0.5 h-5 fill-white"
                     viewBox="0 0 32 32"
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -177,69 +173,92 @@
                     ></path>
                 </svg>
             </div>
-            <div class="p-2 transition-colors group-hover:text-emerald-500">
-                Replace exercise
-            </div>
+            <div class="font-semibold text-white">Replace Exercise</div>
         </button>
+
         <button
             type="button"
-            class="flex items-center gap-0.5 transition-all active:opacity-50 active:scale-95 group"
+            class="flex items-center gap-2 p-2 transition-all rounded-md active:opacity-50 active:scale-95 hover:bg-neutral-900 group"
         >
-            <div
-                class="mt-1 overflow-hidden border-2 border-red-500 border-solid rounded-full"
-            >
+            <div class="mt-0.5 overflow-hidden rounded-full">
                 <svg
-                    class="w-10 h-10 stroke-red-500"
+                    class="w-5 h-5 stroke-red-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
                         d="M6 12H18"
-                        stroke-width="1.5"
+                        stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     />
                 </svg>
             </div>
-            <div class="p-2 transition-colors group-hover:text-red-500">
-                Remove Sets
-            </div>
+            <div class="font-semibold text-red-500">Remove sets</div>
         </button>
+
         <button
             type="button"
             (click)="exerciseRemove()"
-            class="flex items-center gap-0.5 transition-all active:opacity-50 active:scale-95 group"
+            class="flex items-center gap-2 p-2 transition-all rounded-md active:opacity-50 active:scale-95 hover:bg-neutral-900 group"
         >
-            <div
-                class="mt-1 overflow-hidden border-2 border-red-500 border-solid rounded-full"
-            >
+            <div class="mt-1 overflow-hidden rounded-full">
                 <svg
-                    class="w-10 h-10 stroke-red-500"
+                    class="w-5 h-5 stroke-red-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
-                        d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
-                        stroke-width="1.5"
+                        d="M19 11V20.4C19 20.7314 18.7314 21 18.4 21H5.6C5.26863 21 5 20.7314 5 20.4V11"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M10 17V11"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M14 17V11"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M21 7L16 7M3 7L8 7M8 7V3.6C8 3.26863 8.26863 3 8.6 3L15.4 3C15.7314 3 16 3.26863 16 3.6V7M8 7L16 7"
+                        stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     />
                 </svg>
             </div>
-            <div class="p-2 transition-colors group-hover:text-red-500">
-                Remove exercise
-            </div>
+            <div class="font-semibold text-red-500 mt-0.5">Delete exercise</div>
         </button>
     </div>
+</div>
+}
 
+<!--  -->
+
+@if (optionsModalVisibility) {
+<div
+    @openClose3
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
+    [ngClass]="{
+        'bottom-0': optionsModalVisibility,
+        '-bottom-full': !optionsModalVisibility,
+    }"
+>
     <button
         type="button"
         (click)="closeOptionsModal()"
-        class="absolute py-1.5 font-semibold -translate-y-12 rounded-md left-4 right-4 top-1/2 bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
+        class="py-1.5 text-lg mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
     >
-        Close window
+        Close
     </button>
 </div>
 }
