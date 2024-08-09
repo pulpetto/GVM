@@ -102,5 +102,6 @@ export class ExerciseEditModeComponent {
 
     reorderExercise() {
         this.exercisesReorderEvent.emit();
+        this.optionsModalVisibility = false;
     }
 }
