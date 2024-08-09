@@ -113,7 +113,14 @@
 
     <!-- prettier-ignore -->
     @if (setTypeName.value === 'tempo') {
-    <app-tempo-set [tempo]="tempo" class="w-full col-span-5"></app-tempo-set>
+    <app-tempo-set
+        [tempo]="tempo"
+        class="w-full"
+        [ngClass]="{
+            'col-span-6': editView === 'current',
+            'col-span-5': editView !== 'current',
+        }"
+    ></app-tempo-set>
     }
 </div>
 
