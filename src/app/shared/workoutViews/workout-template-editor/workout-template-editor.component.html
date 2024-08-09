@@ -1,3 +1,7 @@
+@if (loading) {
+<app-loading-spinner></app-loading-spinner>
+}
+
 <form [formGroup]="workoutForm" class="flex flex-col items-center gap-4 p-4">
     @if (editView === 'new' || editView === 'existing') {
     <app-name-editor
@@ -109,7 +113,3 @@
     </div>
     }
 </form>
-
-@if (loading) {
-<app-loading-spinner></app-loading-spinner>
-}
