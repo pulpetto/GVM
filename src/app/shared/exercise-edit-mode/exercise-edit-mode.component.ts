@@ -70,6 +70,11 @@ export class ExerciseEditModeComponent {
     @Input({ required: true }) exerciseIndex!: number;
     @Input({ required: true }) exerciseName!: string;
     @Input({ required: true }) exerciseImgUrl!: string;
+    @Input({ required: true }) editView!:
+        | 'new'
+        | 'existing'
+        | 'current'
+        | 'done';
 
     optionsModalVisibility: boolean = false;
 

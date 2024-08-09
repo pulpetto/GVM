@@ -1,32 +1,42 @@
 <!-- eslint-disable @angular-eslint/template/mouse-events-have-key-events -->
 <div
     [formGroup]="set"
-    class="grid grid-cols-5 py-2 rounded-md justify-items-center gap-y-3"
+    class="relative grid content-center py-2 overflow-hidden font-semibold transition-colors rounded-md justify-items-center gap-y-3 group"
     [ngClass]="{
-        'bg-neutral-900': lighterBg,
-        'bg-opacity-25': lighterBg
+        'bg-neutral-900': lighterBg && !isDone,
+        'bg-opacity-25': lighterBg && !isDone,
+        'grid-cols-6': editView === 'current',
+        'grid-cols-5': editView !== 'current',
     }"
 >
-    <div>{{ setNumber }}</div>
+    <div
+        class="absolute top-0 z-10 w-full h-full transition-all duration-300 rounded-md bg-emerald-700"
+        [ngClass]="{
+            '-right-full': !isDone,
+            'right-0': isDone
+        }"
+    ></div>
+
+    <div class="z-20 self-center">{{ setNumber }}</div>
     <button
         type="button"
-        class="-translate-x-0.5"
+        class="-translate-x-0.5 z-20"
         (click)="setTypeModalVisibility = true"
         [class]="setTypes[setTypeIndex].textColor"
     >
         {{ setTypes[setTypeIndex].name[0] | titlecase }}
     </button>
-    <div>
+    <div class="z-20 self-center">
         <input
             type="text"
             placeholder="-"
             mask="000"
             [maxlength]="4"
             formControlName="weight"
-            class="text-center bg-transparent outline-none placeholder-neutral-800 w-7.5"
+            class="w-10 text-center bg-transparent outline-none placeholder-neutral-800"
         />
     </div>
-    <div>
+    <div class="z-20 self-center">
         <input
             type="text"
             placeholder="-"
@@ -39,8 +49,30 @@
 
     <app-button-for-rpe-modal
         [rpe]="rpe"
-        class="place-self-center"
+        class="self-center place-self-center"
     ></app-button-for-rpe-modal>
+
+    @if (editView === 'current') {
+    <button
+        type="button"
+        (click)="isDone = !isDone"
+        class="z-20 w-8 h-8 p-1 mt-1 transition-colors rounded-md hover:stroke-emerald-500 bg-neutral-950"
+        [ngClass]="{
+
+            'stroke-neutral-900':  !isDone,
+            'stroke-emerald-500': isDone,
+        }"
+    >
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M5 13L9 17L19 7"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+    </button>
+    }
 
     <!-- prettier-ignore -->
     @if (setTypeName.value === 'drop') {

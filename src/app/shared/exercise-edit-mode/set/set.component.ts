@@ -84,9 +84,16 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class SetComponent implements OnInit {
     fb = inject(FormBuilder);
 
+    isDone: boolean = false;
+
     @Input({ required: true }) set!: FormGroup;
     @Input({ required: true }) setNumber!: number;
     @Input({ required: true }) lighterBg: boolean = false;
+    @Input({ required: true }) editView!:
+        | 'new'
+        | 'existing'
+        | 'current'
+        | 'done';
 
     ngOnInit() {
         this.set.addControl('setTypeName', this.fb.control<SetType>('normal'));
