@@ -31,8 +31,6 @@ import { EMPTY, filter, switchMap } from 'rxjs';
     ],
 })
 export class WorkoutTemplateEditorComponent implements OnInit {
-    editView!: 'new' | 'existing' | 'current' | 'done';
-
     fb = inject(FormBuilder);
     userService = inject(UserService);
     dataService = inject(DataService);
@@ -41,20 +39,20 @@ export class WorkoutTemplateEditorComponent implements OnInit {
     location = inject(Location);
 
     loading: boolean = false;
-
+    editView!: 'new' | 'existing' | 'current' | 'done';
     isNew!: string;
     workoutId!: string;
-
-    workoutForm = this.fb.group({
-        name: 'My Workout 1',
-        exercises: this.fb.array([]),
-    });
-
     exercisesPresentionalData: {
         id: number;
         name: string;
         imageUrl: string;
     }[] = [];
+    exercisesReorderModalVisibility: boolean = false;
+
+    workoutForm = this.fb.group({
+        name: 'My Workout 1',
+        exercises: this.fb.array([]),
+    });
 
     get workoutName(): FormControl<string> {
         return this.workoutForm.get('name') as FormControl<string>;
