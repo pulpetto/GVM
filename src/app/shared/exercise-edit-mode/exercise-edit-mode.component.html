@@ -1,22 +1,29 @@
 <div class="flex flex-col gap-1">
     <div class="flex items-center justify-between">
-        <a
-            [routerLink]="['../../profile/exercises', exerciseName]"
-            class="flex items-center gap-2 transition-all active:scale-95 hover:opacity-50 active:opacity-50"
-        >
-            <div
-                class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+        <div class="flex items-center gap-2">
+            <a
+                [routerLink]="['../../profile/exercises', exerciseName]"
+                class="flex items-center gap-2 transition-all active:scale-95 hover:opacity-50 active:opacity-50"
             >
-                <img
-                    [src]="exerciseImgUrl"
-                    class="w-10 h-10"
-                    [alt]="exerciseName + 'photo'"
-                />
+                <div
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                >
+                    <img
+                        [src]="exerciseImgUrl"
+                        class="w-10 h-10"
+                        [alt]="exerciseName + 'photo'"
+                    />
+                </div>
+                <div class="text-xl font-semibold text-emerald-500">
+                    {{ exerciseName }}
+                </div>
+            </a>
+
+            <div class="p-1 text-xs font-semibold rounded-md bg-neutral-900">
+                Superset
             </div>
-            <div class="text-xl font-semibold text-emerald-500">
-                {{ exerciseName }}
-            </div>
-        </a>
+        </div>
+
         <button
             type="button"
             (click)="optionsModalVisibility = true"
