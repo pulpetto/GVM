@@ -60,10 +60,12 @@ export class ButtonForRpeModalComponent {
 
         this.cdr.detectChanges();
 
-        this.hoverShadowLeftDistancePx =
-            this.rpeValuesButtons.toArray()[
-                this.rpeScale.indexOf(this.rpe.value!)
-            ].nativeElement.offsetLeft;
+        if (this.rpe.value) {
+            this.hoverShadowLeftDistancePx =
+                this.rpeValuesButtons.toArray()[
+                    this.rpeScale.indexOf(this.rpe.value!)
+                ].nativeElement.offsetLeft;
+        }
     }
 
     modalVisibility: boolean = false;
