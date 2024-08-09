@@ -65,6 +65,7 @@ export class ExerciseEditModeComponent {
     fb = inject(FormBuilder);
 
     @Output() exercisesRemoveEvent = new EventEmitter<number>();
+    @Output() exercisesReorderEvent = new EventEmitter<void>();
 
     @Input({ required: true }) exercise!: FormGroup;
     @Input({ required: true }) exerciseIndex!: number;
@@ -97,5 +98,9 @@ export class ExerciseEditModeComponent {
 
     closeOptionsModal() {
         this.optionsModalVisibility = false;
+    }
+
+    reorderExercise() {
+        this.exercisesReorderEvent.emit();
     }
 }

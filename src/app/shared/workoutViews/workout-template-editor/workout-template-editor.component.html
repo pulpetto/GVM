@@ -36,6 +36,7 @@
             [editView]="editView"
             [exercise]="exercise"
             (exercisesRemoveEvent)="removeExercise($event)"
+            (exercisesReorderEvent)="exercisesReorderModalVisibility = true"
             [exerciseName]="exercisesPresentionalData[$index].name"
             [exerciseImgUrl]="exercisesPresentionalData[$index].imageUrl"
             [exerciseIndex]="$index"
