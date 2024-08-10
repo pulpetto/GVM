@@ -329,5 +329,11 @@ export class WorkoutTemplateEditorComponent implements OnInit {
             event.previousIndex,
             event.currentIndex
         );
+
+        const from = this.workoutExercises.at(event.previousIndex);
+
+        this.workoutExercises.removeAt(event.previousIndex);
+
+        this.workoutExercises.insert(event.currentIndex, from);
     }
 }
