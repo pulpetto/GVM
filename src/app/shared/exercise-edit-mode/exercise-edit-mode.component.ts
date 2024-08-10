@@ -66,6 +66,7 @@ export class ExerciseEditModeComponent {
 
     @Output() exercisesRemoveEvent = new EventEmitter<number>();
     @Output() exercisesReorderEvent = new EventEmitter<void>();
+    @Output() addSupersetEvent = new EventEmitter<string>();
 
     @Input({ required: true }) exercise!: FormGroup;
     @Input({ required: true }) exerciseIndex!: number;
@@ -103,5 +104,9 @@ export class ExerciseEditModeComponent {
     reorderExercise() {
         this.exercisesReorderEvent.emit();
         this.optionsModalVisibility = false;
+    }
+
+    addSuperset() {
+        this.addSupersetEvent.emit(this.exerciseName);
     }
 }

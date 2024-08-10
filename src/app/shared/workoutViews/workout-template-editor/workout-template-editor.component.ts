@@ -102,6 +102,8 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         imageUrl: string;
     }[] = [];
     exercisesReorderModalVisibility: boolean = false;
+    supersetModalVisibility: boolean = true;
+    supersetedExerciseName: string = 'Deadlift';
 
     workoutForm = this.fb.group({
         name: 'My Workout 1',

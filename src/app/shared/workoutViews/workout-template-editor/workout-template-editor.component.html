@@ -35,6 +35,9 @@
         <app-exercise-edit-mode
             [editView]="editView"
             [exercise]="exercise"
+            (addSupersetEvent)="
+                supersetedExerciseName = $event; supersetModalVisibility = true
+            "
             (exercisesRemoveEvent)="removeExercise($event)"
             (exercisesReorderEvent)="exercisesReorderModalVisibility = true"
             [exerciseName]="exercisesPresentionalData[$index].name"
