@@ -141,7 +141,6 @@
         (cdkDropListDropped)="drop($event)"
         class="flex flex-col w-full gap-1 boundary example-list"
     >
-        <!-- jak zmienisz kolejność to weź workout id przez $index tylko rze z workoutForm.exercises -->
         @for (exercise of exercisesPresentionalData; track $index) {
         <div
             cdkDrag
