@@ -142,7 +142,7 @@
     <div
         cdkDropList
         [cdkDropListData]="exercisesPresentionalData"
-        (cdkDropListDropped)="drop($event)"
+        (cdkDropListDropped)="changeExercisesOrder($event)"
         class="flex flex-col w-full gap-1 boundary example-list"
     >
         @for (exercise of exercisesPresentionalData; track $index) {
@@ -205,9 +205,9 @@
     @openClose3
     class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
     [ngClass]="{
-                'bottom-0': exercisesReorderModalVisibility,
-                '-bottom-full': !exercisesReorderModalVisibility,
-            }"
+        'bottom-0': exercisesReorderModalVisibility,
+        '-bottom-full': !exercisesReorderModalVisibility,
+    }"
 >
     <button
         type="button"

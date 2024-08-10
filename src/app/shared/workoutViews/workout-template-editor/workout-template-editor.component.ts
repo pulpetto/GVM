@@ -317,7 +317,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         this.location.back();
     }
 
-    drop(
+    changeExercisesOrder(
         event: CdkDragDrop<
             {
                 id: number;
