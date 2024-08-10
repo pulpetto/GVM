@@ -138,6 +138,7 @@
     </div>
 
     <div class="flex flex-col w-full gap-1">
+        @if(exercisesAmount > 1) {
         <button
             type="button"
             (click)="addSuperset()"
@@ -180,6 +181,7 @@
             </div>
             <div class="font-semibold text-white">Reorder exercise</div>
         </button>
+        }
 
         <button
             type="button"

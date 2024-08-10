@@ -35,6 +35,7 @@
         <app-exercise-edit-mode
             [editView]="editView"
             [exercise]="exercise"
+            [exercisesAmount]="workoutExercises.value.length"
             (addSupersetEvent)="
                 supersetedExerciseName = $event; supersetModalVisibility = true
             "

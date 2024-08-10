@@ -72,6 +72,7 @@ export class ExerciseEditModeComponent {
     @Input({ required: true }) exerciseIndex!: number;
     @Input({ required: true }) exerciseName!: string;
     @Input({ required: true }) exerciseImgUrl!: string;
+    @Input({ required: true }) exercisesAmount!: number;
     @Input({ required: true }) editView!:
         | 'new'
         | 'existing'
