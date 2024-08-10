@@ -114,3 +114,104 @@
     </div>
     }
 </form>
+
+<!-- indent -->
+
+@if (exercisesReorderModalVisibility) {
+<!-- eslint-disable-next-line -->
+<div
+    @openClose2
+    (click)="exercisesReorderModalVisibility = false"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+></div>
+
+<div
+    @openClose
+    class="fixed left-0 z-50 flex flex-col items-center w-full h-full gap-2 px-3 py-4 text-lg rounded-t-md bg-neutral-950"
+    [ngClass]="{
+        'top-0': exercisesReorderModalVisibility,
+        'top-full': !exercisesReorderModalVisibility
+    }"
+>
+    <div class="font-semibold">Change exercises order:</div>
+
+    <div
+        cdkDropList
+        [cdkDropListData]="exercisesPresentionalData"
+        (cdkDropListDropped)="drop($event)"
+        class="flex flex-col w-full gap-1 boundary example-list"
+    >
+        <!-- jak zmienisz kolejność to weź workout id przez $index tylko rze z workoutForm.exercises -->
+        @for (exercise of exercisesPresentionalData; track $index) {
+        <div
+            cdkDrag
+            cdkDragLockAxis="y"
+            cdkDragBoundary=".boundary"
+            class="flex items-center justify-between w-full p-1.5 rounded-md cursor-move example-box"
+        >
+            <div class="flex items-center gap-2">
+                <div
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                >
+                    <img
+                        [src]="exercise.imageUrl"
+                        class="w-10 h-10"
+                        [alt]="exercise.name + 'photo'"
+                    />
+                </div>
+                <div class="text-xl font-semibold select-none text-emerald-500">
+                    {{ exercise.name }}
+                </div>
+            </div>
+
+            <svg
+                class="w-6 h-6 stroke-white mt-0.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M3 5H21"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M3 12H21"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M3 19H21"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </div>
+        }
+    </div>
+</div>
+}
+
+<!-- indent -->
+
+@if (exercisesReorderModalVisibility) {
+<div
+    @openClose3
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
+    [ngClass]="{
+                'bottom-0': exercisesReorderModalVisibility,
+                '-bottom-full': !exercisesReorderModalVisibility,
+            }"
+>
+    <button
+        type="button"
+        (click)="exercisesReorderModalVisibility = false"
+        class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
+    >
+        Ok
+    </button>
+</div>
+}

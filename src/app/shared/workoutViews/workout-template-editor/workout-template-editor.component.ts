@@ -15,6 +15,25 @@ import { WorkoutExercise } from '../../../interfaces/workout/workout-exercise';
 import { DropSet } from '../../../interfaces/set-types/drop-set';
 import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
 import { EMPTY, filter, switchMap } from 'rxjs';
+import { animate, style, transition, trigger } from '@angular/animations';
+import {
+    CdkDropListGroup,
+    CdkDropList,
+    CdkDrag,
+    CdkDragDrop,
+    moveItemInArray,
+} from '@angular/cdk/drag-drop';
+
+const visibleModal = { top: '0%' };
+const hiddenModal = { top: '100%' };
+
+const visibleBg = { opacity: '100%' };
+const hiddenBg = { opacity: '0%' };
+
+const visibleBtnFixed = { bottom: '0' };
+const hiddenBtnFixed = { bottom: '-100%' };
+
+const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 
 @Component({
     selector: 'app-workout-template-editor',
@@ -28,6 +47,41 @@ import { EMPTY, filter, switchMap } from 'rxjs';
         CommonModule,
         LoadingSpinnerComponent,
         ReactiveFormsModule,
+        CdkDropListGroup,
+        CdkDropList,
+        CdkDrag,
+    ],
+    animations: [
+        trigger('openClose', [
+            transition(':enter', [
+                style(hiddenModal),
+                animate(timing, style(visibleModal)),
+            ]),
+            transition(':leave', [
+                style(visibleModal),
+                animate(timing, style(hiddenModal)),
+            ]),
+        ]),
+        trigger('openClose2', [
+            transition(':enter', [
+                style(hiddenBg),
+                animate(timing, style(visibleBg)),
+            ]),
+            transition(':leave', [
+                style(visibleBg),
+                animate(timing, style(hiddenBg)),
+            ]),
+        ]),
+        trigger('openClose3', [
+            transition(':enter', [
+                style(hiddenBtnFixed),
+                animate(timing, style(visibleBtnFixed)),
+            ]),
+            transition(':leave', [
+                style(visibleBtnFixed),
+                animate(timing, style(hiddenBtnFixed)),
+            ]),
+        ]),
     ],
 })
 export class WorkoutTemplateEditorComponent implements OnInit {
@@ -259,5 +313,21 @@ export class WorkoutTemplateEditorComponent implements OnInit {
 
     cancelEdit() {
         this.location.back();
+    }
+
+    drop(
+        event: CdkDragDrop<
+            {
+                id: number;
+                name: string;
+                imageUrl: string;
+            }[]
+        >
+    ) {
+        moveItemInArray(
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex
+        );
     }
 }
