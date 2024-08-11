@@ -231,6 +231,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         return this.workoutForm.get('exercises') as FormArray<FormGroup>;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     workoutDurationInterval!: any;
     workoutDuration: number = 0;
 
