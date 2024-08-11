@@ -38,6 +38,7 @@
             [exercise]="exercise"
             [exercisesAmount]="workoutExercises.value.length"
             (addSupersetEvent)="initalizeSupersetModal($event)"
+            (removeSupersetEvent)="removeFromSuperset($event)"
             (exercisesRemoveEvent)="removeExercise($event)"
             (exercisesReorderEvent)="exercisesReorderModalVisibility = true"
             [exerciseName]="exercisesPresentionalData[$index].name"

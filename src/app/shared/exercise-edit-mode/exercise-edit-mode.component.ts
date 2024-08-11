@@ -113,10 +113,15 @@ export class ExerciseEditModeComponent {
     }
 
     addSuperset() {
+        this.optionsModalVisibility = false;
         this.addSupersetEvent.emit([this.exerciseName, this.exerciseIndex]);
     }
 
     removeSuperset() {
-        this.removeSupersetEvent.emit([this.exerciseName, this.exerciseIndex]);
+        this.optionsModalVisibility = false;
+        this.removeSupersetEvent.emit([
+            this.supersetColor!,
+            this.exerciseIndex,
+        ]);
     }
 }

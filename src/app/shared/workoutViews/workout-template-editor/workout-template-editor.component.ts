@@ -168,6 +168,8 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                 .at(this.supersetedExerciseIndex)
                 .get('superSetColor')
                 ?.setValue(selectedExerciseObj.superSetColor);
+
+            this.supersetModalVisibility = false;
         } else {
             this.supersetColorPickerModalVisibility = true;
         }
@@ -183,6 +185,33 @@ export class WorkoutTemplateEditorComponent implements OnInit {
             .at(this.secondSupersetedExerciseIndex)
             .get('superSetColor')
             ?.setValue(color);
+
+        this.supersetModalVisibility = false;
+        this.supersetColorPickerModalVisibility = false;
+    }
+
+    removeFromSuperset($event: (string | number)[]) {
+        const indexesArray: number[] = [];
+
+        this.workoutExercises.controls.forEach((exercise, i) => {
+            if (exercise.get('superSetColor')?.value === $event[0]) {
+                indexesArray.push(i);
+            }
+        });
+
+        if (indexesArray.length > 2) {
+            this.workoutForm.controls.exercises
+                .at(+$event[1])
+                .get('superSetColor')
+                ?.setValue(null);
+        } else {
+            indexesArray.forEach((i) => {
+                this.workoutForm.controls.exercises
+                    .at(i)
+                    .get('superSetColor')
+                    ?.setValue(null);
+            });
+        }
     }
 
     get workoutName(): FormControl<string> {
