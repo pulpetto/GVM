@@ -244,8 +244,11 @@
 
     <div class="flex flex-col w-full gap-1 boundary example-list">
         @for (exercise of exercisesPresentionalData; track $index) {
+        <!-- prettier-ignore -->
+        @if (exercise.name !== supersetedExerciseName) {
         <button
             type="button"
+            (click)="addToSuperset($index)"
             class="flex items-center justify-between w-full p-1.5 rounded-md transition-all active:scale-95 active:opacity-50 hover:bg-neutral-900"
         >
             <div class="flex items-center gap-2">
@@ -267,7 +270,7 @@
                 Superset
             </div>
         </button>
-        }
+        } }
     </div>
 </div>
 }
