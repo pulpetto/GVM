@@ -25,6 +25,7 @@ import {
 } from '@angular/cdk/drag-drop';
 
 const visibleModal = { top: '0%' };
+const visibleModalTop50 = { top: '50%' };
 const hiddenModal = { top: '100%' };
 
 const visibleBg = { opacity: '100%' };
@@ -82,6 +83,16 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
                 animate(timing, style(hiddenBtnFixed)),
             ]),
         ]),
+        trigger('openClose4', [
+            transition(':enter', [
+                style(hiddenModal),
+                animate(timing, style(visibleModalTop50)),
+            ]),
+            transition(':leave', [
+                style(visibleModalTop50),
+                animate(timing, style(hiddenModal)),
+            ]),
+        ]),
     ],
 })
 export class WorkoutTemplateEditorComponent implements OnInit {
@@ -102,13 +113,77 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         imageUrl: string;
     }[] = [];
     exercisesReorderModalVisibility: boolean = false;
-    supersetModalVisibility: boolean = true;
-    supersetedExerciseName!: string;
-
     workoutForm = this.fb.group({
         name: 'My Workout 1',
         exercises: this.fb.array([]),
     });
+
+    supersetModalVisibility: boolean = false;
+    supersetColorPickerModalVisibility: boolean = false;
+    supersetedExerciseName!: string;
+    supersetedExerciseIndex!: number;
+    secondSupersetedExerciseIndex!: number;
+    colors: string[] = [
+        'bg-red-500',
+        'bg-orange-500',
+        // 'bg-amber-500',
+        'bg-yellow-500',
+        // 'bg-lime-500',
+        'bg-green-500',
+        // 'bg-teal-500',
+        // 'bg-cyan-500',
+        'bg-sky-500',
+        'bg-blue-500',
+        // 'bg-indigo-500',
+        'bg-violet-500',
+        // 'bg-purple-500',
+        'bg-fuchsia-500',
+        // 'bg-pink-500',
+        // 'bg-rose-500',
+    ];
+
+    initalizeSupersetModal($event: (string | number)[]) {
+        this.supersetedExerciseName = $event[0].toString();
+        this.supersetedExerciseIndex = +$event[1];
+        this.supersetModalVisibility = true;
+    }
+
+    getSupersetColor(index: number) {
+        const selectedExerciseObj = this.workoutForm.controls.exercises.at(
+            index
+        ).value as WorkoutExercise;
+
+        return selectedExerciseObj.superSetColor;
+    }
+
+    addToSuperset(selectedExerciseIndex: number) {
+        this.secondSupersetedExerciseIndex = selectedExerciseIndex;
+
+        const selectedExerciseObj = this.workoutForm.controls.exercises.at(
+            selectedExerciseIndex
+        ).value as WorkoutExercise;
+
+        if (selectedExerciseObj.superSetColor) {
+            this.workoutForm.controls.exercises
+                .at(this.supersetedExerciseIndex)
+                .get('superSetColor')
+                ?.setValue(selectedExerciseObj.superSetColor);
+        } else {
+            this.supersetColorPickerModalVisibility = true;
+        }
+    }
+
+    addNewSuperset(color: string) {
+        this.workoutForm.controls.exercises
+            .at(this.supersetedExerciseIndex)
+            .get('superSetColor')
+            ?.setValue(color);
+
+        this.workoutForm.controls.exercises
+            .at(this.secondSupersetedExerciseIndex)
+            .get('superSetColor')
+            ?.setValue(color);
+    }
 
     get workoutName(): FormControl<string> {
         return this.workoutForm.get('name') as FormControl<string>;
@@ -165,6 +240,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
 
                         const exerciseGroup = this.fb.group({
                             exerciseId: exercise.id,
+                            superSetColor: null,
                             sets: this.fb.array([]),
                         });
 
@@ -201,6 +277,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
 
                         const exerciseGroup = this.fb.group({
                             exerciseId: exercise.id,
+                            superSetColor: initialExercise.superSetColor,
                             sets: this.fb.array([]),
                         });
 

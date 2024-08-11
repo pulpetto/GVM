@@ -66,7 +66,8 @@ export class ExerciseEditModeComponent {
 
     @Output() exercisesRemoveEvent = new EventEmitter<number>();
     @Output() exercisesReorderEvent = new EventEmitter<void>();
-    @Output() addSupersetEvent = new EventEmitter<string>();
+    @Output() addSupersetEvent = new EventEmitter<(string | number)[]>();
+    @Output() removeSupersetEvent = new EventEmitter<(string | number)[]>();
 
     @Input({ required: true }) exercise!: FormGroup;
     @Input({ required: true }) exerciseIndex!: number;
@@ -80,6 +81,10 @@ export class ExerciseEditModeComponent {
         | 'done';
 
     optionsModalVisibility: boolean = false;
+
+    get supersetColor(): string | null {
+        return this.exercise.get('superSetColor')?.value;
+    }
 
     get sets(): FormArray<FormGroup> {
         return this.exercise.get('sets') as FormArray<FormGroup>;
@@ -108,6 +113,10 @@ export class ExerciseEditModeComponent {
     }
 
     addSuperset() {
-        this.addSupersetEvent.emit(this.exerciseName);
+        this.addSupersetEvent.emit([this.exerciseName, this.exerciseIndex]);
+    }
+
+    removeSuperset() {
+        this.removeSupersetEvent.emit([this.exerciseName, this.exerciseIndex]);
     }
 }

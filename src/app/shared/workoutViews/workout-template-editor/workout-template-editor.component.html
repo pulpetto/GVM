@@ -1,3 +1,4 @@
+<!-- eslint-disable @angular-eslint/template/elements-content -->
 @if (loading) {
 <app-loading-spinner></app-loading-spinner>
 }
@@ -36,9 +37,7 @@
             [editView]="editView"
             [exercise]="exercise"
             [exercisesAmount]="workoutExercises.value.length"
-            (addSupersetEvent)="
-                supersetedExerciseName = $event; supersetModalVisibility = true
-            "
+            (addSupersetEvent)="initalizeSupersetModal($event)"
             (exercisesRemoveEvent)="removeExercise($event)"
             (exercisesReorderEvent)="exercisesReorderModalVisibility = true"
             [exerciseName]="exercisesPresentionalData[$index].name"
@@ -266,9 +265,14 @@
                 </div>
             </div>
 
-            <div class="p-1 text-xs font-semibold rounded-md bg-emerald-500">
+            @if (getSupersetColor($index) !== null) {
+            <div
+                class="p-1 text-xs font-semibold rounded-md"
+                [class]="getSupersetColor($index)"
+            >
                 Superset
             </div>
+            }
         </button>
         } }
     </div>
@@ -292,6 +296,62 @@
         class="py-1.5 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
     >
         Close
+    </button>
+</div>
+}
+
+<!-- indent -->
+
+@if (supersetColorPickerModalVisibility) {
+<!-- eslint-disable-next-line -->
+<div
+    @openClose2
+    (click)="supersetColorPickerModalVisibility = false"
+    class="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-80"
+    style="z-index: 50"
+></div>
+
+<div
+    @openClose4
+    class="fixed left-0 flex flex-col items-center w-full h-full gap-16 px-3 py-4 text-lg rounded-t-md bg-neutral-950"
+    style="z-index: 60"
+    [ngClass]="{
+        'top-1/2': supersetColorPickerModalVisibility,
+        'top-full': !supersetColorPickerModalVisibility
+    }"
+>
+    <div class="font-semibold text-center">Pick a color to mark superset:</div>
+    <div class="grid grid-cols-4 gap-3">
+        @for ( color of colors; track $index ) {
+        <button
+            type="button"
+            (click)="addNewSuperset(color)"
+            class="col-span-1 transition-all rounded-md cursor-pointer w-11 h-11 active:opacity-50 active:scale-95 hover:scale-105"
+            [class]="color"
+        ></button>
+        }
+    </div>
+</div>
+}
+
+<!-- indent -->
+
+@if (supersetColorPickerModalVisibility) {
+<div
+    @openClose3
+    class="fixed left-0 flex flex-col w-full gap-2 p-4 shadow-md rounded-t-md"
+    style="z-index: 60"
+    [ngClass]="{
+        'bottom-0': supersetColorPickerModalVisibility,
+        '-bottom-full': !supersetColorPickerModalVisibility,
+    }"
+>
+    <button
+        type="button"
+        (click)="supersetColorPickerModalVisibility = false"
+        class="py-1.5 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
+    >
+        Cancel
     </button>
 </div>
 }
