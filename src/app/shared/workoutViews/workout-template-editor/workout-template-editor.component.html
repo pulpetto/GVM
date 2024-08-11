@@ -17,7 +17,9 @@
         <div class="flex self-start justify-around w-full gap-0.5">
             <div class="flex flex-col items-center">
                 <div>Duration:</div>
-                <div class="font-semibold">1h 13m 55s</div>
+                <div class="font-semibold">
+                    {{ workoutDuration | timeFormatter }}
+                </div>
             </div>
             <div class="flex flex-col items-center">
                 <div>Total weight:</div>

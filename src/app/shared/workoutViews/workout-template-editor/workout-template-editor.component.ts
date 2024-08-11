@@ -23,6 +23,7 @@ import {
     CdkDragDrop,
     moveItemInArray,
 } from '@angular/cdk/drag-drop';
+import { TimeFormatterPipe } from '../../../pipes/time-formatter.pipe';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop50 = { top: '50%' };
@@ -51,6 +52,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         CdkDropListGroup,
         CdkDropList,
         CdkDrag,
+        TimeFormatterPipe,
     ],
     animations: [
         trigger('openClose', [
@@ -229,6 +231,9 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         return this.workoutForm.get('exercises') as FormArray<FormGroup>;
     }
 
+    workoutDurationInterval!: any;
+    workoutDuration: number = 0;
+
     ngOnInit() {
         this.userService.user$
             .pipe(
@@ -238,6 +243,19 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                 switchMap((queryParams) => {
                     this.editView = queryParams['editView'];
                     if (this.editView === 'existing') {
+                        return this.route.paramMap.pipe(
+                            switchMap((params) => {
+                                this.workoutId = params.get('workoutId')!;
+                                return this.userService.getWorkoutById(
+                                    this.workoutId
+                                );
+                            })
+                        );
+                    } else if (this.editView === 'current') {
+                        this.workoutDurationInterval = setInterval(() => {
+                            this.workoutDuration++;
+                        }, 1000);
+
                         return this.route.paramMap.pipe(
                             switchMap((params) => {
                                 this.workoutId = params.get('workoutId')!;
