@@ -188,6 +188,8 @@ export class WorkoutTemplateEditorComponent implements OnInit {
 
         this.supersetModalVisibility = false;
         this.supersetColorPickerModalVisibility = false;
+
+        this.colors = this.colors.filter((col) => col !== color);
     }
 
     removeFromSuperset($event: (string | number)[]) {
@@ -205,6 +207,11 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                 .get('superSetColor')
                 ?.setValue(null);
         } else {
+            this.colors.push(
+                this.workoutForm.controls.exercises.at(0).get('superSetColor')
+                    ?.value
+            );
+
             indexesArray.forEach((i) => {
                 this.workoutForm.controls.exercises
                     .at(i)
