@@ -42,9 +42,9 @@
 
 <div
     @openClose
-    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-4 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
     [ngClass]="{
-        'top-1/2': restTimeModalVisibility,
+        'top-3/4': restTimeModalVisibility,
         'top-full': !restTimeModalVisibility
     }"
 >
@@ -52,7 +52,7 @@
         Choose rest time for clusterset:
     </div>
 
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 justify-self-center">
         <div class="relative flex justify-between bg-black rounded-md">
             @for (restTime of restTimesScale; track $index) {
             <button
@@ -96,7 +96,7 @@
     <button
         type="button"
         (click)="closeRestTimeModal()"
-        class="py-1 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
+        class="py-1 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
     >
         Ok
     </button>

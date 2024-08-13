@@ -14,7 +14,7 @@ import { RpeType } from '../../../../types/rpe-type';
 import { ReactiveFormsModule } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 
-const visibleModal = { top: '50%' };
+const visibleModal = { top: '75%' };
 const hiddenModal = { top: '100%' };
 
 const visibleBg = { opacity: '100%' };
@@ -82,7 +82,7 @@ export class ClusterSetComponent {
     }
 
     restTimeValue: number | null = null;
-    restTimeModalVisibility: boolean = false;
+    restTimeModalVisibility: boolean = true;
     restTimesScale: number[] = [5, 10, 15, 20, 25, 30];
 
     hoveredRestTimeValue: number | null = null;
