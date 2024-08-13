@@ -133,9 +133,19 @@ export class SetComponent implements OnInit {
             this.workoutProperties.controls.setsDone.setValue(
                 this.workoutProperties.controls.setsDone.value! + 1
             );
+
+            this.workoutProperties.controls.volume.setValue(
+                this.workoutProperties.controls.volume.value! +
+                    this.set.get('weight')?.value * this.set.get('reps')?.value
+            );
         } else {
             this.workoutProperties.controls.setsDone.setValue(
                 this.workoutProperties.controls.setsDone.value! - 1
+            );
+
+            this.workoutProperties.controls.volume.setValue(
+                this.workoutProperties.controls.volume.value! -
+                    this.set.get('weight')?.value * this.set.get('reps')?.value
             );
         }
     }
