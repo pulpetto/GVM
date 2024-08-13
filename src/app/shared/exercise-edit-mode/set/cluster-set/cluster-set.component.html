@@ -33,21 +33,22 @@
 </div>
 
 @if (restTimeModalVisibility) {
-<!-- eslint-disable-next-line -->
+<!-- eslint-disable-next-line  -->
 <div
+    @openClose2
     (click)="closeRestTimeModal()"
     class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
 ></div>
-}
 
 <div
-    class="fixed left-0 z-50 flex flex-col w-full h-full gap-4 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
+    @openClose
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
     [ngClass]="{
-        'top-2/3': restTimeModalVisibility,
+        'top-1/2': restTimeModalVisibility,
         'top-full': !restTimeModalVisibility
     }"
 >
-    <div class="self-center text-xl font-semibold">
+    <div class="self-center text-lg font-semibold">
         Choose rest time for clusterset:
     </div>
 
@@ -67,27 +68,37 @@
             <div
                 class="absolute top-0 w-10 h-10 transition-all duration-300 rounded-md bg-emerald-500"
                 [ngClass]="{
-                        'opacity-0': !restTimeValue,
-                        'opacity-100': restTimeValue,
-                    }"
+                    'opacity-0': !restTimeValue,
+                    'opacity-100': restTimeValue,
+                }"
                 [style]="'left:' + hoverSquareLeftDistancePx + 'px;'"
             ></div>
             <div
                 class="absolute top-0 w-10 h-10 transition-all rounded-md bg-emerald-500"
                 [ngClass]="{
-                        'opacity-0': !hoveredRestTimeValue,
-                        'opacity-50': hoveredRestTimeValue,
-                    }"
+                    'opacity-0': !hoveredRestTimeValue,
+                    'opacity-50': hoveredRestTimeValue,
+                }"
                 [style]="'left:' + hoverSquareShadowLeftDistancePx + 'px;'"
             ></div>
         </div>
     </div>
+</div>
 
+<div
+    @openClose3
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
+    [ngClass]="{
+        'bottom-0': restTimeModalVisibility,
+        '-bottom-full': !restTimeModalVisibility,
+    }"
+>
     <button
         type="button"
         (click)="closeRestTimeModal()"
-        class="absolute py-1 font-semibold rounded-md left-4 right-4 top-1/4 bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
+        class="py-1 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
     >
         Ok
     </button>
 </div>
+}
