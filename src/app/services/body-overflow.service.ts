@@ -1,9 +1,20 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, Renderer2 } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class BodyOverflowService {
+    constructor(
+        private renderer: Renderer2,
+        @Inject(DOCUMENT) private document: Document
+    ) {}
 
-  constructor() { }
+    enableOverflowY() {
+        this.renderer.addClass(this.document.body, 'overflow-y-hidden');
+    }
+
+    disableOverflowY() {
+        this.renderer.removeClass(this.document.body, 'overflow-y-hidden');
+    }
 }
