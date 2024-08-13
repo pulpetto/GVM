@@ -89,6 +89,11 @@ export class SetComponent implements OnInit {
     @Input({ required: true }) set!: FormGroup;
     @Input({ required: true }) setNumber!: number;
     @Input({ required: true }) lighterBg: boolean = false;
+    @Input({ required: true }) workoutProperties!: FormGroup<{
+        duration: FormControl<number | null>;
+        volume: FormControl<number | null>;
+        setsDone: FormControl<number | null>;
+    }>;
     @Input({ required: true }) editView!:
         | 'new'
         | 'existing'
@@ -119,6 +124,20 @@ export class SetComponent implements OnInit {
 
     get tempo(): FormGroup {
         return this.set.get('tempo') as FormGroup;
+    }
+
+    toggleSetCompletion() {
+        this.isDone = !this.isDone;
+
+        if (this.isDone) {
+            this.workoutProperties.controls.setsDone.setValue(
+                this.workoutProperties.controls.setsDone.value! + 1
+            );
+        } else {
+            this.workoutProperties.controls.setsDone.setValue(
+                this.workoutProperties.controls.setsDone.value! - 1
+            );
+        }
     }
 
     setTypeIndex: number = 0;

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InfoModalButtonComponent } from '../info-modal-button/info-modal-button.component';
 import { SetComponent } from './set/set.component';
 import { RouterModule } from '@angular/router';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 const visibleModal = { top: '50%' };
@@ -70,6 +70,11 @@ export class ExerciseEditModeComponent {
     @Output() removeSupersetEvent = new EventEmitter<(string | number)[]>();
 
     @Input({ required: true }) exercise!: FormGroup;
+    @Input({ required: true }) workoutProperties!: FormGroup<{
+        duration: FormControl<number | null>;
+        volume: FormControl<number | null>;
+        setsDone: FormControl<number | null>;
+    }>;
     @Input({ required: true }) exerciseIndex!: number;
     @Input({ required: true }) exerciseName!: string;
     @Input({ required: true }) exerciseImgUrl!: string;

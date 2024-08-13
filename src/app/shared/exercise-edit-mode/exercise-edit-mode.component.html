@@ -104,6 +104,7 @@
     <div class="flex flex-col gap-1 text-lg">
         @for (set of sets.controls; track $index) {
         <app-set
+            [workoutProperties]="workoutProperties"
             [editView]="editView"
             [set]="set"
             [lighterBg]="$index % 2 === 0 ? true : false"

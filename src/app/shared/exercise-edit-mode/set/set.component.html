@@ -55,7 +55,7 @@
     @if (editView === 'current') {
     <button
         type="button"
-        (click)="isDone = !isDone"
+        (click)="toggleSetCompletion()"
         class="z-20 w-8 h-8 p-1 mt-1 transition-colors rounded-md hover:stroke-emerald-500 bg-neutral-950"
         [ngClass]="{
 

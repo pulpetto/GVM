@@ -120,6 +120,16 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         exercises: this.fb.array([]),
     });
 
+    workoutProperties: FormGroup<{
+        duration: FormControl<number | null>;
+        volume: FormControl<number | null>;
+        setsDone: FormControl<number | null>;
+    }> = this.fb.group({
+        duration: 0,
+        volume: 0,
+        setsDone: 0,
+    });
+
     supersetModalVisibility: boolean = false;
     supersetColorPickerModalVisibility: boolean = false;
     supersetedExerciseName!: string;
