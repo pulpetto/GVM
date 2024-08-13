@@ -8,7 +8,7 @@
             'text-neutral-800': !restTimeValue,
             'text-white': restTimeValue
         }"
-        (click)="restTimeModalVisibility = true"
+        (click)="openRestTimeModal()"
     >
         <!-- prettier-ignore -->
         @if (!restTimeValue) {
@@ -35,7 +35,7 @@
 @if (restTimeModalVisibility) {
 <!-- eslint-disable-next-line -->
 <div
-    (click)="restTimeModalVisibility = false"
+    (click)="closeRestTimeModal()"
     class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
 ></div>
 }
@@ -85,7 +85,7 @@
 
     <button
         type="button"
-        (click)="restTimeModalVisibility = false"
+        (click)="closeRestTimeModal()"
         class="absolute py-1 font-semibold rounded-md left-4 right-4 top-1/4 bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
     >
         Ok

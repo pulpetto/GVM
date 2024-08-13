@@ -1,13 +1,15 @@
 import {
     Component,
     ElementRef,
+    Inject,
     Input,
     QueryList,
+    Renderer2,
     ViewChildren,
 } from '@angular/core';
 import { ButtonForRpeModalComponent } from '../../../button-for-rpe-modal/button-for-rpe-modal.component';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { RpeType } from '../../../../types/rpe-type';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -24,6 +26,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     ],
 })
 export class ClusterSetComponent {
+    constructor(
+        private renderer: Renderer2,
+        @Inject(DOCUMENT) private document: Document
+    ) {}
+
     @Input({ required: true }) clusterset!: FormGroup;
 
     get rpe(): FormControl<RpeType> {
@@ -37,6 +44,16 @@ export class ClusterSetComponent {
     hoveredRestTimeValue: number | null = null;
     hoverSquareLeftDistancePx: number = 0;
     hoverSquareShadowLeftDistancePx: number = 0;
+
+    openRestTimeModal() {
+        this.restTimeModalVisibility = true;
+        this.renderer.addClass(this.document.body, 'overflow-y-hidden');
+    }
+
+    closeRestTimeModal() {
+        this.restTimeModalVisibility = false;
+        this.renderer.removeClass(this.document.body, 'overflow-y-hidden');
+    }
 
     @ViewChildren('restTimeButton')
     restTimesValuesButtons!: QueryList<ElementRef>;
