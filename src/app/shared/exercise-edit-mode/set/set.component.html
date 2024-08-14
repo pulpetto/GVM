@@ -79,6 +79,7 @@
     @for (dropset of dropsets.controls; track $index) {
     <app-drop-set
         [dropset]="dropset"
+        [mainSetNumber]="setNumber"
         [dropsetNumber]="$index + 1"
         class="w-full col-span-5"
     ></app-drop-set>

@@ -1,6 +1,9 @@
 <div [formGroup]="dropset" class="grid grid-cols-5 py-1">
-    <div class="col-span-2 text-nowrap place-self-center">
-        Drop {{ dropsetNumber }}:
+    <div class="col-span-1 place-self-center">
+        {{ mainSetNumber }}.{{ dropsetNumber }}
+    </div>
+    <div class="col-span-1 text-orange-500 -translate-x-0.5 place-self-center">
+        D
     </div>
 
     <input

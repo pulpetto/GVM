@@ -20,6 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class DropSetComponent {
     @Input({ required: true }) dropset!: FormGroup;
     @Input({ required: true }) dropsetNumber!: number;
+    @Input({ required: true }) mainSetNumber!: number;
 
     get rpe(): FormControl<RpeType> {
         return this.dropset.get('rpe') as FormControl<RpeType>;
