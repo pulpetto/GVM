@@ -1,4 +1,11 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    inject,
+    Input,
+    OnInit,
+    Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MuscleGroupsModalComponent } from '../../../modals/muscle-groups-modal/muscle-groups-modal.component';
@@ -63,6 +70,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class ExercisesSelectorComponent implements OnInit {
+    @Input({ required: true }) selectedExercisesIds!: Set<number>;
     @Output() exercisesSelectEvent = new EventEmitter<Set<number>>();
 
     dataService = inject(DataService);
@@ -71,7 +79,6 @@ export class ExercisesSelectorComponent implements OnInit {
     innerModalsVisibility: boolean = false;
 
     exercises!: Exercise[];
-    selectedExercisesIds = new Set<number>();
     newlySelectedExercisesIds = new Set<number>();
 
     ngOnInit() {

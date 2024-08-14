@@ -52,12 +52,14 @@
             (exercisesReorderEvent)="exercisesReorderModalVisibility = true"
             [exerciseName]="exercisesPresentionalData[$index].name"
             [exerciseImgUrl]="exercisesPresentionalData[$index].imageUrl"
+            [exerciseId]="exercise.value.exerciseId"
             [exerciseIndex]="$index"
         ></app-exercise-edit-mode>
         }
 
         <div class="flex flex-col gap-2">
             <app-exercises-selector
+                [selectedExercisesIds]="selectedExercisesIds"
                 (exercisesSelectEvent)="addExercises($event)"
             ></app-exercises-selector>
             <div class="flex gap-2">

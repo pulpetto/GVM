@@ -114,6 +114,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         name: string;
         imageUrl: string;
     }[] = [];
+    selectedExercisesIds = new Set<number>();
     exercisesReorderModalVisibility: boolean = false;
     workoutForm = this.fb.group({
         name: 'My Workout 1',
@@ -335,6 +336,8 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((exercise) => {
                     if (exercise) {
+                        this.selectedExercisesIds.add(exercise.id);
+
                         this.exercisesPresentionalData.push({
                             id: exercise.id,
                             name: exercise.name,
@@ -442,9 +445,10 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         this.loading = false;
     }
 
-    removeExercise(index: number) {
-        this.exercisesPresentionalData.splice(index, 1);
-        this.workoutExercises.removeAt(index);
+    removeExercise($event: number[]) {
+        this.selectedExercisesIds.delete($event[0]);
+        this.exercisesPresentionalData.splice($event[1], 1);
+        this.workoutExercises.removeAt($event[1]);
     }
 
     saveWorkout() {

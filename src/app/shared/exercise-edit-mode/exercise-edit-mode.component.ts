@@ -64,7 +64,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class ExerciseEditModeComponent {
     fb = inject(FormBuilder);
 
-    @Output() exercisesRemoveEvent = new EventEmitter<number>();
+    @Output() exercisesRemoveEvent = new EventEmitter<number[]>();
     @Output() exercisesReorderEvent = new EventEmitter<void>();
     @Output() addSupersetEvent = new EventEmitter<(string | number)[]>();
     @Output() removeSupersetEvent = new EventEmitter<(string | number)[]>();
@@ -75,6 +75,7 @@ export class ExerciseEditModeComponent {
         volume: FormControl<number | null>;
         setsDone: FormControl<number | null>;
     }>;
+    @Input({ required: true }) exerciseId!: number;
     @Input({ required: true }) exerciseIndex!: number;
     @Input({ required: true }) exerciseName!: string;
     @Input({ required: true }) exerciseImgUrl!: string;
@@ -104,7 +105,7 @@ export class ExerciseEditModeComponent {
     }
 
     exerciseRemove() {
-        this.exercisesRemoveEvent.emit(this.exerciseIndex);
+        this.exercisesRemoveEvent.emit([this.exerciseId, this.exerciseIndex]);
         this.closeOptionsModal();
     }
 
