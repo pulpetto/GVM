@@ -244,6 +244,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     workoutDurationInterval!: any;
     workoutDuration: number = 0;
+    totalSets: number = 0;
 
     ngOnInit() {
         this.userService.user$
@@ -347,6 +348,12 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                         });
 
                         initialExercise.sets.forEach((set) => {
+                            if (
+                                this.editView === 'current' ||
+                                this.editView === 'new'
+                            )
+                                this.totalSets++;
+
                             const setsFormArray = exerciseGroup.get(
                                 'sets'
                             ) as FormArray;
