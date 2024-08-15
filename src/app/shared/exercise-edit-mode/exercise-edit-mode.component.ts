@@ -87,6 +87,7 @@ export class ExerciseEditModeComponent {
         | 'done';
 
     optionsModalVisibility: boolean = false;
+    restTimeConfigModalVisibility: boolean = false;
 
     get supersetColor(): string | null {
         return this.exercise.get('superSetColor')?.value;
