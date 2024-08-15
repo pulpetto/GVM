@@ -131,6 +131,8 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         setsDone: 0,
     });
 
+    workoutDurationModalVisibility: boolean = false;
+
     supersetModalVisibility: boolean = false;
     supersetColorPickerModalVisibility: boolean = false;
     supersetedExerciseName!: string;
