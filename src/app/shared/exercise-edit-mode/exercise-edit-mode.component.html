@@ -386,11 +386,16 @@
     </div>
 
     <div
-        class="relative flex flex-col w-full h-12 overflow-y-scroll font-semibold rounded-md mt-14 bg-neutral-900 snap-y"
+        class="flex flex-col w-full h-12 overflow-y-scroll font-semibold rounded-md mt-14 bg-neutral-900 snap-y"
     >
         @for (timeVal of [15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180,
         195, 210, 225, 240, 255, 270, 285, 300] ; track $index) {
-        <div class="p-2 text-center h-14 snap-center">
+        <div
+            class="p-2 text-center h-14 snap-center"
+            [ngClass]="{
+                'mt-0.5': $index === 0,
+            }"
+        >
             {{ timeVal | timeFormatter }}
         </div>
         }
