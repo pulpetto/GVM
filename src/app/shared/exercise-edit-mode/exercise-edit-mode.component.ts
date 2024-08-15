@@ -5,6 +5,7 @@ import { SetComponent } from './set/set.component';
 import { RouterModule } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -27,6 +28,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         InfoModalButtonComponent,
         SetComponent,
         RouterModule,
+        TimeFormatterPipe,
     ],
     animations: [
         trigger('openClose', [
