@@ -134,8 +134,17 @@ export class SetComponent implements OnInit {
                 this.workoutProperties.controls.setsDone.value! + 1
             );
 
+            let subsetsVolume: number = 0;
+
+            if (this.setTypeName.value === 'drop') {
+                this.dropsets.controls.forEach((dropset) => {
+                    subsetsVolume = dropset.value.weight * dropset.value.reps;
+                });
+            }
+
             this.workoutProperties.controls.volume.setValue(
                 this.workoutProperties.controls.volume.value! +
+                    subsetsVolume +
                     this.set.get('weight')?.value * this.set.get('reps')?.value
             );
         } else {
@@ -143,8 +152,17 @@ export class SetComponent implements OnInit {
                 this.workoutProperties.controls.setsDone.value! - 1
             );
 
+            let subsetsVolume: number = 0;
+
+            if (this.setTypeName.value === 'drop') {
+                this.dropsets.controls.forEach((dropset) => {
+                    subsetsVolume = dropset.value.weight * dropset.value.reps;
+                });
+            }
+
             this.workoutProperties.controls.volume.setValue(
                 this.workoutProperties.controls.volume.value! -
+                    subsetsVolume -
                     this.set.get('weight')?.value * this.set.get('reps')?.value
             );
         }
