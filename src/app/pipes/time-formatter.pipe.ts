@@ -20,7 +20,15 @@ export class TimeFormatterPipe implements PipeTransform {
             formattedTime += `${minutes}m `;
         }
 
-        formattedTime += `${seconds}s`;
+        if (seconds > 0) {
+            formattedTime += `${seconds}s`;
+        }
+
+        if (seconds === 0 && minutes === 0) {
+            formattedTime = `${hours}h `;
+        }
+
+        formattedTime;
 
         return formattedTime;
     }
