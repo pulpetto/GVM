@@ -72,8 +72,7 @@ export class ExerciseEditModeComponent {
     @Output() removeSupersetEvent = new EventEmitter<(string | number)[]>();
 
     @Input({ required: true }) exercise!: FormGroup;
-    @Input({ required: true }) workoutProperties!: FormGroup<{
-        duration: FormControl<number | null>;
+    @Input({ required: true }) workoutComputedValues!: FormGroup<{
         volume: FormControl<number | null>;
         setsDone: FormControl<number | null>;
     }>;
