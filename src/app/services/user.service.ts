@@ -17,6 +17,7 @@ import {
     orderBy,
     getCountFromServer,
     collection,
+    arrayUnion,
 } from '@angular/fire/firestore';
 import {
     Auth,
@@ -36,6 +37,7 @@ import {
     moveItemInArray,
     transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { WorkoutDone } from '../interfaces/workout/workout-done';
 
 @Injectable({
     providedIn: 'root',
@@ -381,6 +383,30 @@ export class UserService {
                 return data.name;
             })
         );
+    }
+
+    finishWorkout(
+        workoutTemplateId: string,
+        workoutDoneObj: WorkoutDone,
+        workoutValues: Workout
+    ) {
+        const workoutsDoneRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workoutsDone'
+        );
+
+        addDoc(workoutsDoneRef, workoutDoneObj).then((docRef) => {
+            const workoutTemplateRef: DocumentReference = doc(
+                this.userDocRef!,
+                'workouts',
+                workoutTemplateId
+            );
+
+            updateDoc(workoutTemplateRef, {
+                doneWorkoutsIds: arrayUnion(docRef.id),
+                exercises: workoutValues.exercises,
+            });
+        });
     }
 
     drop(
