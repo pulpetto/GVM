@@ -387,6 +387,15 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                                 this.fb.control(set.rpe)
                             );
 
+                            if (
+                                this.editView === 'current' ||
+                                this.editView === 'done'
+                            )
+                                setFormGroup.addControl(
+                                    'isDone',
+                                    this.fb.control<boolean>(false)
+                                );
+
                             if (set.dropsets) {
                                 setFormGroup.addControl(
                                     'dropsets',
