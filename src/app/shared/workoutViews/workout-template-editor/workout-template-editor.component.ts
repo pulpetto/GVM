@@ -246,6 +246,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
     workoutDurationInterval!: any;
     workoutDuration: number = 0;
     totalSets: number = 0;
+    dateStart: number = 0;
 
     ngOnInit() {
         this.userService.user$
@@ -265,6 +266,8 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                             })
                         );
                     } else if (this.editView === 'current') {
+                        this.dateStart = Math.floor(Date.now() / 1000);
+
                         this.workoutDurationInterval = setInterval(() => {
                             this.workoutDuration++;
                         }, 1000);
