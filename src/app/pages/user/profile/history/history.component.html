@@ -21,19 +21,27 @@
         </div>
     </div>
 
-    @if (workoutsData$ | async; as workoutsData) {
-    <!-- prettier-ignore -->
-    @if (workoutsData.length > 0) {
     <div class="flex flex-col w-full gap-4 px-2">
-        @for (workoutData of workoutsData; track $index) {
-        <app-workout-done-preview
-            [workoutData]="workoutData"
-        ></app-workout-done-preview>
+        @if (workoutsData$ | async; as workoutsData) {
+        <ng-container>
+            @if (workoutsData.length > 0) {
+            <ng-container>
+                @for (workoutData of workoutsData; track $index) {
+                <app-workout-done-preview
+                    [workoutData]="workoutData"
+                ></app-workout-done-preview>
+                }
+            </ng-container>
+            } @else {
+            <div>You didn't workout yet!</div>
+            }
+        </ng-container>
+        } @else {
+        <ng-container>
+            @for (placeholder of [1,2,3,4]; track $index) {
+            <div>Loading</div>
+            }
+        </ng-container>
         }
     </div>
-    } @else {
-    <div>You didn't workout yet!</div>
-    } } @else {
-    <div>loading</div>
-    }
 </div>
