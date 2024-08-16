@@ -26,7 +26,7 @@ import {
     signOut,
     user,
 } from '@angular/fire/auth';
-import { BehaviorSubject, from, map, Observable } from 'rxjs';
+import { BehaviorSubject, from, map, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../interfaces/user';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -407,6 +407,23 @@ export class UserService {
                 exercises: workoutValues.exercises,
             });
         });
+    }
+
+    getDoneWorkouts(): Observable<WorkoutDone[]> {
+        const arrayToReturn: WorkoutDone[] = [];
+
+        const workoutsDoneRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workoutsDone'
+        );
+
+        getDocs(workoutsDoneRef).then((querySnapshot) => {
+            return querySnapshot.docs.forEach((doc) => {
+                arrayToReturn.push(doc.data() as WorkoutDone);
+            });
+        });
+
+        return of(arrayToReturn);
     }
 
     drop(
