@@ -49,6 +49,13 @@ export const routes: Routes = [
                     ).then((component) => component.CalendarComponent),
             },
             {
+                path: 'profile/history',
+                loadComponent: () =>
+                    import(
+                        './pages/user/profile/history/history.component'
+                    ).then((component) => component.HistoryComponent),
+            },
+            {
                 path: 'profile/exercises',
                 loadComponent: () =>
                     import(
