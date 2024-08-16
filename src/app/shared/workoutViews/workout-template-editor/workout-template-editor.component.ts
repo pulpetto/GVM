@@ -24,6 +24,7 @@ import {
     moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { TimeFormatterPipe } from '../../../pipes/time-formatter.pipe';
+import { WorkoutDone } from '../../../interfaces/workout/workout-done';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop50 = { top: '50%' };
@@ -474,6 +475,39 @@ export class WorkoutTemplateEditorComponent implements OnInit {
             this.userService.updateWorkout(
                 this.workoutId,
                 this.workoutForm.getRawValue() as Workout
+            );
+        }
+
+        if (this.editView === 'current') {
+            const workoutFormObjExtended: any =
+                this.workoutForm.getRawValue() as Workout;
+
+            this.workoutExercises.controls.forEach((exercise) => {
+                const setsFormArray = exercise.get(
+                    'sets'
+                ) as FormArray<FormGroup>;
+
+                setsFormArray.controls.forEach((set) => {
+                    set.removeControl('isDone');
+                });
+            });
+
+            const workoutFormObjBase =
+                this.workoutForm.getRawValue() as Workout;
+
+            workoutFormObjExtended.duration = this.workoutDuration;
+            workoutFormObjExtended.dateStart = this.dateStart;
+            workoutFormObjExtended.dateFinish = Math.floor(Date.now() / 1000);
+            workoutFormObjExtended.volume =
+                this.workoutComputedValues.controls.volume.value;
+            workoutFormObjExtended.setsDone =
+                this.workoutComputedValues.controls.setsDone.value;
+            workoutFormObjExtended.totalSets = this.totalSets;
+
+            this.userService.finishWorkout(
+                this.workoutId,
+                workoutFormObjExtended as WorkoutDone,
+                workoutFormObjBase
             );
         }
     }
