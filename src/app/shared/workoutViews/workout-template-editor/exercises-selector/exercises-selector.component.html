@@ -46,6 +46,38 @@
                 class="w-1/2"
             ></app-equipment-modal>
         </div>
+
+        <button
+            type="button"
+            class="flex items-center gap-2 px-2 transition-all group active:opacity-50 active:scale-95"
+        >
+            <div
+                class="w-full h-0.5 transition-colors border-solid rounded-full bg-neutral-900 group-hover:bg-red-500 mt-0.5"
+            ></div>
+            <div class="flex items-center text-sm font-semibold">
+                <svg
+                    class="w-4 h-4 stroke-white mt-0.5 group-hover:stroke-red-500 transition-colors"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+                <div
+                    class="transition-colors text-nowrap group-hover:text-red-500"
+                >
+                    Clear filters
+                </div>
+            </div>
+            <div
+                class="w-full h-0.5 transition-colors border-solid rounded-full bg-neutral-900 group-hover:bg-red-500 mt-0.5"
+            ></div>
+        </button>
     </div>
 
     <div class="flex flex-col self-start w-full gap-1">
