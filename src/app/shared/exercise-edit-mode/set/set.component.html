@@ -3,8 +3,8 @@
     [formGroup]="set"
     class="relative grid content-center py-2 overflow-hidden font-semibold transition-colors rounded-md justify-items-center gap-y-3 group"
     [ngClass]="{
-        'bg-neutral-900': lighterBg && !isDone,
-        'bg-opacity-25': lighterBg && !isDone,
+        'bg-neutral-900': lighterBg && !isDone.value,
+        'bg-opacity-25': lighterBg && !isDone.value,
         'grid-cols-6': editView === 'current',
         'grid-cols-5': editView !== 'current',
     }"
@@ -12,8 +12,8 @@
     <div
         class="absolute top-0 z-10 w-full h-full transition-all duration-300 rounded-md bg-emerald-600"
         [ngClass]="{
-            '-right-full': !isDone,
-            'right-0': isDone
+            '-right-full': !isDone.value,
+            'right-0': isDone.value
         }"
     ></div>
 
@@ -59,8 +59,8 @@
         class="z-20 w-8 h-8 p-1 mt-1 transition-colors rounded-md hover:stroke-emerald-500 bg-neutral-950"
         [ngClass]="{
 
-            'stroke-neutral-900':  !isDone,
-            'stroke-emerald-500': isDone,
+            'stroke-neutral-900':  !isDone.value,
+            'stroke-emerald-500': isDone.value,
         }"
     >
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

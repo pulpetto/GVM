@@ -84,8 +84,6 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class SetComponent implements OnInit {
     fb = inject(FormBuilder);
 
-    isDone: boolean = false;
-
     @Input({ required: true }) set!: FormGroup;
     @Input({ required: true }) setNumber!: number;
     @Input({ required: true }) lighterBg: boolean = false;
@@ -113,6 +111,10 @@ export class SetComponent implements OnInit {
         this.set.addControl('rpe', this.fb.control<RpeType>(null));
     }
 
+    get isDone(): FormControl<boolean> {
+        return this.set.get('isDone') as FormControl<boolean>;
+    }
+
     get rpe(): FormControl<RpeType> {
         return this.set.get('rpe') as FormControl<RpeType>;
     }
@@ -126,9 +128,9 @@ export class SetComponent implements OnInit {
     }
 
     toggleSetCompletion() {
-        this.isDone = !this.isDone;
+        this.isDone.setValue(!this.isDone.value);
 
-        if (this.isDone) {
+        if (this.isDone.value) {
             this.workoutComputedValues.controls.setsDone.setValue(
                 this.workoutComputedValues.controls.setsDone.value! + 1
             );
