@@ -39,7 +39,30 @@
         } @else {
         <ng-container>
             @for (placeholder of [1,2,3,4]; track $index) {
-            <div>Loading</div>
+            <div
+                class="flex flex-col gap-6 p-2 border-2 border-solid rounded-md border-neutral-900 animate-pulse"
+            >
+                <div class="flex flex-col gap-2">
+                    <div class="w-20 h-2.5 rounded-full bg-neutral-700"></div>
+                    <div class="w-12 h-2 rounded-full bg-neutral-700"></div>
+                </div>
+
+                <div class="flex justify-between gap-2">
+                    @for (placeholder of [1,2,3]; track $index) {
+                    <div class="w-full h-2.5 rounded-full bg-neutral-700"></div>
+                    }
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    @for (placeholder of [1,2,3]; track $index) {
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-neutral-700"></div>
+                        <div class="h-2 rounded-full w-28 bg-neutral-700"></div>
+                        <div class="w-10 h-2 rounded-full bg-neutral-700"></div>
+                    </div>
+                    }
+                </div>
+            </div>
             }
         </ng-container>
         }
