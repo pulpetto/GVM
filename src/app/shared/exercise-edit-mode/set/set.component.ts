@@ -82,6 +82,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class SetComponent implements OnInit {
+    //  include volume calculations on set type change
     fb = inject(FormBuilder);
 
     @Input({ required: true }) set!: FormGroup;
@@ -256,6 +257,25 @@ export class SetComponent implements OnInit {
         this.setTypeIndex = $index;
 
         this.setTypeName.setValue(this.setTypes[$index].name);
+
+        let subsetsVolume: number = 0;
+
+        if (this.dropsets)
+            this.dropsets.controls.forEach((dropset) => {
+                subsetsVolume += dropset.value.weight * dropset.value.reps;
+            });
+
+        if (this.clustersets)
+            this.clustersets.controls.forEach((clusterset) => {
+                subsetsVolume +=
+                    clusterset.value.reps * this.set.get('weight')?.value;
+            });
+
+        if (this.clustersets || this.dropsets)
+            this.workoutComputedValues.controls.volume.setValue(
+                this.workoutComputedValues.controls.volume.value! -
+                    subsetsVolume
+            );
 
         if (this.setTypeName.value === 'drop') {
             this.set.addControl('dropsets', this.fb.array<DropSet[]>([]));
