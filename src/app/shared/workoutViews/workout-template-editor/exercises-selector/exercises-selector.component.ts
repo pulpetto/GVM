@@ -75,15 +75,17 @@ export class ExercisesSelectorComponent implements OnInit {
 
     dataService = inject(DataService);
 
-    exercisesModalVisibility: boolean = false;
+    exercisesModalVisibility: boolean = true;
     innerModalsVisibility: boolean = false;
 
     exercises!: Exercise[];
+    exercisesFiltered: Exercise[] = [];
     newlySelectedExercisesIds = new Set<number>();
 
     ngOnInit() {
         this.dataService.getExercises().subscribe((data) => {
             this.exercises = data;
+            this.exercisesFiltered = data;
         });
     }
 
@@ -119,7 +121,7 @@ export class ExercisesSelectorComponent implements OnInit {
     searchTerm: string = '';
 
     onExerciseSearch() {
-        this.exercises = this.exercises.filter((exercise) =>
+        this.exercisesFiltered = this.exercises.filter((exercise) =>
             exercise.name
                 .toLowerCase()
                 .startsWith(this.searchTerm.toLowerCase())
