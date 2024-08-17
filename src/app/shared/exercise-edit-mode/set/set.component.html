@@ -3,12 +3,13 @@
     [formGroup]="set"
     class="relative grid content-center py-2 overflow-hidden font-semibold transition-colors rounded-md justify-items-center gap-y-3 group"
     [ngClass]="{
-        'bg-neutral-900': lighterBg && !isDone.value,
-        'bg-opacity-25': lighterBg && !isDone.value,
+        'bg-neutral-900': lighterBg,
+        'bg-opacity-25': lighterBg,
         'grid-cols-6': editView === 'current',
         'grid-cols-5': editView !== 'current',
     }"
 >
+    @if (editView === 'current') {
     <div
         class="absolute top-0 z-10 w-full h-full transition-all duration-300 rounded-md bg-emerald-600"
         [ngClass]="{
@@ -16,6 +17,7 @@
             'right-0': isDone.value
         }"
     ></div>
+    }
 
     <div class="z-20 self-center">{{ setNumber }}</div>
     <button
