@@ -268,7 +268,7 @@
     <div class="flex flex-col w-full gap-1 boundary example-list">
         @for (exercise of exercisesPresentionalData; track $index) {
         <!-- prettier-ignore -->
-        @if (exercise.name !== supersetedExerciseName) {
+        @if ($index !== supersetedExerciseIndex) {
         <button
             type="button"
             (click)="addToSuperset($index)"
