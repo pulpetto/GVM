@@ -118,20 +118,20 @@
     </div>
     <div class="self-center text-sm opacity-75">Exercises:</div>
     <div class="flex flex-col gap-2">
-        @for (exercise of workoutData.exercises; track $index) {
+        @for (exercise of exercisesData; track $index) {
         <div class="flex items-center gap-2">
             <div
                 class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
             >
                 <img
-                    src="https://www.kettlebellkings.com/cdn/shop/articles/barbell-deadlift-movement.gif?v=1692228918"
+                    [src]="exercise.imageUrl"
                     class="w-10 h-10"
-                    alt=""
+                    [alt]="exercise.name + ' graphic'"
                 />
             </div>
             <div>
-                <span class="font-semibold">_%NAME%_</span> -
-                {{ exercise.sets.length }} sets
+                <span class="font-semibold">{{ exercise.name }}</span> -
+                {{ workoutData.exercises[$index].sets.length }} sets
             </div>
         </div>
         }
