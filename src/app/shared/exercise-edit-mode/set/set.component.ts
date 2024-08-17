@@ -143,6 +143,13 @@ export class SetComponent implements OnInit {
                 });
             }
 
+            if (this.setTypeName.value === 'cluster') {
+                this.clustersets.controls.forEach((clusterset) => {
+                    subsetsVolume +=
+                        clusterset.value.reps * this.set.get('weight')?.value;
+                });
+            }
+
             this.workoutComputedValues.controls.volume.setValue(
                 this.workoutComputedValues.controls.volume.value! +
                     subsetsVolume +
@@ -158,6 +165,13 @@ export class SetComponent implements OnInit {
             if (this.setTypeName.value === 'drop') {
                 this.dropsets.controls.forEach((dropset) => {
                     subsetsVolume = dropset.value.weight * dropset.value.reps;
+                });
+            }
+
+            if (this.setTypeName.value === 'cluster') {
+                this.clustersets.controls.forEach((clusterset) => {
+                    subsetsVolume +=
+                        clusterset.value.reps * this.set.get('weight')?.value;
                 });
             }
 
