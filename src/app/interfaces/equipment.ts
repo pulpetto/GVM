@@ -1,5 +1,7 @@
+import { EquipmentName } from '../types/equipment-type';
+
 export interface Equipment {
     id: number;
-    name: string;
+    name: EquipmentName;
     imageUrl: string;
 }

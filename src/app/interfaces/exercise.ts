@@ -1,4 +1,4 @@
-import { EquipmentType } from '../types/equipment-type';
+import { EquipmentName } from '../types/equipment-type';
 import { MuscleGroupName } from '../types/muscle-group-type';
 
 export interface Exercise {
@@ -6,5 +6,5 @@ export interface Exercise {
     name: string;
     imageUrl: string;
     muscleGroups: MuscleGroupName[];
-    equipment: EquipmentType;
+    equipment: EquipmentName;
 }
