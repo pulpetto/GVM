@@ -2,12 +2,12 @@
     {
         "id": 1,
         "name": "dumbells",
-        "imageUrl": "assets/images/muscleGroups/calves_0.jpg"
+        "imageUrl": "assets/images/equipment/dumbell-image.jpg"
     },
     {
         "id": 2,
         "name": "barbell",
-        "imageUrl": "assets/images/muscleGroups/calves_0.jpg"
+        "imageUrl": "assets/images/equipment/barbell-image.jpg"
     },
     {
         "id": 3,
