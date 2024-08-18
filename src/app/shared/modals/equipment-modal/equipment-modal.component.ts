@@ -3,6 +3,7 @@ import { DataService } from '../../../services/data.service';
 import { Equipment } from '../../../interfaces/equipment';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { EquipmentName } from '../../../types/equipment-type';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -56,10 +57,12 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class EquipmentModalComponent implements OnInit {
     @Output() visibilityChangeEvent = new EventEmitter<boolean>();
+    @Output() equipmentChangeEvent = new EventEmitter<EquipmentName>();
 
     visibility: boolean = false;
     equipment!: Equipment[];
-    selectedEquipmentItemsIds = new Set<number>();
+    selectedEquipmentName: EquipmentName = 'all equipment';
+    selectedEquipmentId: number = 1;
 
     dataService = inject(DataService);
 
@@ -69,12 +72,18 @@ export class EquipmentModalComponent implements OnInit {
         });
     }
 
-    onOptionSelect($index: number) {
-        if (this.selectedEquipmentItemsIds.has($index + 1)) {
-            this.selectedEquipmentItemsIds.delete($index + 1);
+    onOptionSelect(id: number, name: EquipmentName) {
+        if (id === this.selectedEquipmentId) {
+            this.selectedEquipmentName = 'all equipment';
+            this.selectedEquipmentId = 1;
         } else {
-            this.selectedEquipmentItemsIds.add($index + 1);
+            this.selectedEquipmentName = name;
+            this.selectedEquipmentId = id;
         }
+
+        this.equipmentChangeEvent.emit(this.selectedEquipmentName);
+
+        this.closeModal();
     }
 
     openModal() {

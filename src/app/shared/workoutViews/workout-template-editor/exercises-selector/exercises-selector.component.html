@@ -43,6 +43,7 @@
                 class="w-1/2"
             ></app-muscle-groups-modal>
             <app-equipment-modal
+                (equipmentChangeEvent)="filterExercisesByEquipment($event)"
                 (visibilityChangeEvent)="innerModalsVisibility = $event"
                 class="w-1/2"
             ></app-equipment-modal>

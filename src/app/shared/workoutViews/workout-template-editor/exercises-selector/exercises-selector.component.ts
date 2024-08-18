@@ -14,6 +14,7 @@ import { Exercise } from '../../../../interfaces/exercise';
 import { DataService } from '../../../../services/data.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { MuscleGroupName } from '../../../../types/muscle-group-type';
+import { EquipmentName } from '../../../../types/equipment-type';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -132,6 +133,12 @@ export class ExercisesSelectorComponent implements OnInit {
     filterExercisesByMusclesNames(name: MuscleGroupName) {
         this.exercisesFiltered = this.exercises.filter((exercise) =>
             exercise.muscleGroups.includes(name)
+        );
+    }
+
+    filterExercisesByEquipment(name: EquipmentName) {
+        this.exercisesFiltered = this.exercises.filter(
+            (exercise) => exercise.equipment === name
         );
     }
 }
