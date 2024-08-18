@@ -1,4 +1,5 @@
 export type MuscleGroupName =
+    | 'all muscles'
     | 'upper back'
     | 'lower back'
     | 'lats'
