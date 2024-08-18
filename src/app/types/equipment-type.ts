@@ -1,4 +1,4 @@
-export type SetType =
+export type EquipmentType =
     | 'barbell'
     | 'dumbells'
     | 'bodyweight'
