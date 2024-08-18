@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "name": "upper Back",
+        "name": "all muscles",
         "imageUrl": "assets/images/muscleGroups/Upper-Back.jpg",
         "focusOn": "top"
     },
@@ -88,5 +88,11 @@
         "name": "calves",
         "imageUrl": "assets/images/muscleGroups/calves_0.jpg",
         "focusOn": "center"
+    },
+    {
+        "id": 16,
+        "name": "upper Back",
+        "imageUrl": "assets/images/muscleGroups/Upper-Back.jpg",
+        "focusOn": "top"
     }
 ]
