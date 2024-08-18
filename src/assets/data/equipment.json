@@ -1,16 +1,21 @@
 [
     {
         "id": 1,
-        "name": "dumbells",
+        "name": "all equipment",
         "imageUrl": "assets/images/equipment/dumbell-image.jpg"
     },
     {
         "id": 2,
+        "name": "dumbells",
+        "imageUrl": "assets/images/equipment/dumbell-image.jpg"
+    },
+    {
+        "id": 3,
         "name": "barbell",
         "imageUrl": "assets/images/equipment/barbell-image.jpg"
     },
     {
-        "id": 3,
+        "id": 4,
         "name": "bodyweight",
         "imageUrl": "assets/images/muscleGroups/calves_0.jpg"
     }
