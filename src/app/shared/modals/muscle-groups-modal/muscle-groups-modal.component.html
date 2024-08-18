@@ -1,11 +1,21 @@
 <button
     type="button"
     (click)="openModal()"
-    class="flex items-center w-full gap-2 p-3 transition-all border-2 border-solid rounded-md outline-none cursor-pointer border-neutral-900 hover:border-emerald-600 group active:opacity-50 active:scale-95 focus:border-emerald-500"
+    class="flex items-center w-full gap-2 p-3 font-semibold transition-all border-2 border-solid rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 focus:border-emerald-500"
+    [ngClass]="{
+        'bg-emerald-500': selectedMuscleGroupId !== 1,
+        'border-emerald-500': selectedMuscleGroupId !== 1,
+        'border-neutral-900': selectedMuscleGroupId === 1,
+        'hover:border-emerald-500': selectedMuscleGroupId === 1,
+    }"
 >
     <div>
         <svg
-            class="w-5 h-5 fill-black dark:fill-white mt-0.5 group-hover:fill-emerald-500 transition-colors group-focus:fill-emerald-500"
+            class="w-5 h-5 fill-black dark:fill-white mt-0.5 transition-colors"
+            [ngClass]="{
+                'group-hover:fill-emerald-500': selectedMuscleGroupId === 1,
+                'group-focus:fill-emerald-500': selectedMuscleGroupId === 1,
+            }"
             version="1.1"
             id="Capa_1"
             xmlns="http://www.w3.org/2000/svg"
@@ -43,11 +53,13 @@
         </svg>
     </div>
     <div
-        class="transition-colors group-hover:text-emerald-500 group-focus:text-emerald-500"
+        class="transition-colors"
+        [ngClass]="{
+            'group-hover:text-emerald-500': selectedMuscleGroupId === 1,
+            'group-focus:text-emerald-500': selectedMuscleGroupId === 1,
+        }"
     >
-        Muscles @if (selectedMuscleGroupsIds.size > 0) { ({{
-            selectedMuscleGroupsIds.size
-        }}) }
+        {{ selectedMuscleGroupName | titlecase }}
     </div>
 </button>
 
@@ -67,15 +79,17 @@
         'top-full': !visibility
     }"
 >
-    <div class="self-center text-lg font-semibold">Choose muscle groups:</div>
+    <div class="self-center text-lg font-semibold">
+        Choose muscle group to filter exercises:
+    </div>
     <div class="flex flex-col gap-1">
         @for (muscleGroup of muscleGroups; track $index) {
         <button
             type="button"
-            (click)="onOptionSelect($index)"
+            (click)="onOptionSelect(muscleGroup.id, muscleGroup.name)"
             class="flex items-center justify-between p-1 transition-all rounded-md active:opacity-50 active:scale-95 group"
             [ngClass]="{
-                'bg-neutral-900': selectedMuscleGroupsIds.has(muscleGroup.id)
+                'bg-neutral-900': muscleGroup.id === selectedMuscleGroupId
             }"
         >
             <div class="flex items-center gap-1">
@@ -92,19 +106,17 @@
                 <div
                     class="p-2 transition-colors group-hover:text-emerald-500"
                     [ngClass]="{
-                        'text-emerald-500': selectedMuscleGroupsIds.has(
-                            muscleGroup.id
-                        ),
-                        'font-semibold': selectedMuscleGroupsIds.has(
-                            muscleGroup.id
-                        )
+                        'text-emerald-500':
+                            muscleGroup.id === selectedMuscleGroupId,
+                        'font-semibold':
+                            muscleGroup.id === selectedMuscleGroupId
                     }"
                 >
-                    {{ muscleGroup.name }}
+                    {{ muscleGroup.name | titlecase }}
                 </div>
             </div>
 
-            @if (selectedMuscleGroupsIds.has(muscleGroup.id)) {
+            @if (muscleGroup.id === selectedMuscleGroupId) {
             <div>
                 <svg
                     class="w-8 h-8 stroke-emerald-500"
@@ -140,15 +152,10 @@
 >
     <button
         type="button"
-        class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
-    >
-        Apply
-    </button>
-    <button
-        type="button"
+        (click)="closeModal()"
         class="py-1.5 mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
     >
-        Cancel & Close
+        Close
     </button>
 </div>
 }

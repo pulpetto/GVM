@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MuscleGroup } from '../../../interfaces/muscle-group';
 import { DataService } from '../../../services/data.service';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { MuscleGroupName } from '../../../types/muscle-group-type';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -56,10 +57,12 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class MuscleGroupsModalComponent implements OnInit {
     @Output() visibilityChangeEvent = new EventEmitter<boolean>();
+    @Output() muscleGroupChangeEvent = new EventEmitter<MuscleGroupName>();
 
     visibility: boolean = false;
     muscleGroups!: MuscleGroup[];
-    selectedMuscleGroupsIds = new Set<number>();
+    selectedMuscleGroupName: MuscleGroupName = 'all muscles';
+    selectedMuscleGroupId: number = 1;
 
     dataService = inject(DataService);
 
@@ -69,12 +72,18 @@ export class MuscleGroupsModalComponent implements OnInit {
         });
     }
 
-    onOptionSelect($index: number) {
-        if (this.selectedMuscleGroupsIds.has($index + 1)) {
-            this.selectedMuscleGroupsIds.delete($index + 1);
+    onOptionSelect(id: number, name: MuscleGroupName) {
+        if (id === this.selectedMuscleGroupId) {
+            this.selectedMuscleGroupName = 'all muscles';
+            this.selectedMuscleGroupId = 1;
         } else {
-            this.selectedMuscleGroupsIds.add($index + 1);
+            this.selectedMuscleGroupName = name;
+            this.selectedMuscleGroupId = id;
         }
+
+        this.muscleGroupChangeEvent.emit(this.selectedMuscleGroupName);
+
+        this.closeModal();
     }
 
     openModal() {
