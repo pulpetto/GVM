@@ -1,4 +1,5 @@
-export type EquipmentType =
+export type EquipmentName =
+    | 'all equipment'
     | 'barbell'
     | 'dumbells'
     | 'bodyweight'
