@@ -56,6 +56,15 @@ export const routes: Routes = [
                     ).then((component) => component.HistoryComponent),
             },
             {
+                path: 'profile/history/:workoutId',
+                loadComponent: () =>
+                    import(
+                        './shared/workoutViews/workout-done-full-view/workout-done-full-view.component'
+                    ).then(
+                        (component) => component.WorkoutDoneFullViewComponent
+                    ),
+            },
+            {
                 path: 'profile/exercises',
                 loadComponent: () =>
                     import(
