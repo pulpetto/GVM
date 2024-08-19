@@ -38,6 +38,7 @@ import {
     transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { WorkoutDone } from '../interfaces/workout/workout-done';
+import { WorkoutDoneWithId } from '../interfaces/workout/workout-done-with-id';
 
 @Injectable({
     providedIn: 'root',
@@ -409,8 +410,8 @@ export class UserService {
         });
     }
 
-    getDoneWorkouts(): Observable<WorkoutDone[]> {
-        const arrayToReturn: WorkoutDone[] = [];
+    getDoneWorkouts(): Observable<WorkoutDoneWithId[]> {
+        const arrayToReturn: WorkoutDoneWithId[] = [];
 
         const workoutsDoneRef: CollectionReference = collection(
             this.userDocRef!,
@@ -419,7 +420,11 @@ export class UserService {
 
         getDocs(workoutsDoneRef).then((querySnapshot) => {
             return querySnapshot.docs.forEach((doc) => {
-                arrayToReturn.push(doc.data() as WorkoutDone);
+                const workoutObj = doc.data() as WorkoutDoneWithId;
+
+                workoutObj.id = doc.id;
+
+                arrayToReturn.push(workoutObj);
             });
         });
 
