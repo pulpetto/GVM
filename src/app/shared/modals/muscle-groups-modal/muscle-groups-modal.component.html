@@ -1,7 +1,7 @@
 <button
     type="button"
     (click)="openModal()"
-    class="flex items-center w-full gap-2 p-3 font-semibold transition-all border-2 border-solid rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 focus:border-emerald-500"
+    class="flex items-center w-full gap-2 p-3 transition-all border-2 border-solid rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 focus:border-emerald-500"
     [ngClass]="{
         'bg-emerald-500': selectedMuscleGroupId !== 1,
         'border-emerald-500': selectedMuscleGroupId !== 1,
@@ -57,6 +57,7 @@
         [ngClass]="{
             'group-hover:text-emerald-500': selectedMuscleGroupId === 1,
             'group-focus:text-emerald-500': selectedMuscleGroupId === 1,
+            'font-semibold': selectedMuscleGroupId !== 1,
         }"
     >
         {{ selectedMuscleGroupName | titlecase }}
