@@ -107,6 +107,10 @@ export class ExerciseEditModeComponent {
         this.sets.push(set);
     }
 
+    removeSet($index: number) {
+        this.sets.removeAt($index);
+    }
+
     exerciseRemove() {
         this.exercisesRemoveEvent.emit([this.exerciseId, this.exerciseIndex]);
         this.closeOptionsModal();

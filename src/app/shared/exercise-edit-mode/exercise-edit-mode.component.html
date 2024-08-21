@@ -120,6 +120,7 @@
             @if (setRemovalView) {
             <button
                 type="button"
+                (click)="removeSet($index)"
                 class="absolute transition-all -translate-y-1/2 top-1/2 -right-6 active:opacity-50 active:scale-95"
             >
                 <svg
