@@ -5,6 +5,7 @@ import {
     Input,
     OnInit,
     Output,
+    ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -84,6 +85,20 @@ export class ExercisesSelectorComponent implements OnInit {
     exercisesFiltered: Exercise[] = [];
     newlySelectedExercisesIds = new Set<number>();
 
+    @ViewChild(MuscleGroupsModalComponent)
+    muscleGroupsModalComponent!: MuscleGroupsModalComponent;
+
+    @ViewChild(EquipmentModalComponent)
+    equipmentModalComponent!: EquipmentModalComponent;
+
+    searchTerm: string = '';
+
+    selectedMuscleGroup: MuscleGroupName = 'all muscles';
+    selectedMuscleGroupId: number = 1;
+
+    selectedEquipment: EquipmentName = 'all equipment';
+    selectedEquipmentId: number = 1;
+
     ngOnInit() {
         this.dataService.getExercises().subscribe((data) => {
             this.exercises = data;
@@ -120,25 +135,53 @@ export class ExercisesSelectorComponent implements OnInit {
         this.exercisesModalVisibility = false;
     }
 
-    searchTerm: string = '';
-
-    onExerciseSearch() {
-        this.exercisesFiltered = this.exercises.filter((exercise) =>
-            exercise.name
-                .toLowerCase()
-                .startsWith(this.searchTerm.toLowerCase())
-        );
-    }
-
     filterExercisesByMusclesNames(name: MuscleGroupName) {
-        this.exercisesFiltered = this.exercises.filter((exercise) =>
-            exercise.muscleGroups.includes(name)
-        );
+        this.selectedMuscleGroup = name;
+        this.applyFilters();
     }
 
     filterExercisesByEquipment(name: EquipmentName) {
-        this.exercisesFiltered = this.exercises.filter(
-            (exercise) => exercise.equipment === name
-        );
+        this.selectedEquipment = name;
+        this.applyFilters();
+    }
+
+    applyFilters() {
+        let filtered = this.exercises;
+
+        if (this.searchTerm) {
+            filtered = filtered.filter((exercise) =>
+                exercise.name
+                    .toLowerCase()
+                    .startsWith(this.searchTerm.toLowerCase())
+            );
+        }
+
+        if (this.selectedMuscleGroup !== 'all muscles') {
+            filtered = filtered.filter((exercise) =>
+                exercise.muscleGroups.includes(this.selectedMuscleGroup)
+            );
+        }
+
+        if (this.selectedEquipment !== 'all equipment') {
+            filtered = filtered.filter(
+                (exercise) => exercise.equipment === this.selectedEquipment
+            );
+        }
+
+        this.exercisesFiltered = filtered;
+    }
+
+    clearFilters() {
+        this.muscleGroupsModalComponent.selectedMuscleGroupName = 'all muscles';
+        this.muscleGroupsModalComponent.selectedMuscleGroupId = 1;
+        this.selectedMuscleGroup = 'all muscles';
+        this.selectedMuscleGroupId = 1;
+
+        this.equipmentModalComponent.selectedEquipmentName = 'all equipment';
+        this.equipmentModalComponent.selectedEquipmentId = 1;
+        this.selectedEquipment = 'all equipment';
+        this.selectedEquipmentId = 1;
+
+        this.applyFilters();
     }
 }

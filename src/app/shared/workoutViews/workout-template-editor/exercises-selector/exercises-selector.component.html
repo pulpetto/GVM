@@ -32,7 +32,7 @@
             type="text"
             placeholder="Search for an exercise..."
             [(ngModel)]="searchTerm"
-            (ngModelChange)="onExerciseSearch()"
+            (ngModelChange)="applyFilters()"
             class="w-full p-3 border-2 border-solid rounded-md outline-none placeholder-neutral-700 border-neutral-900 bg-neutral-950 focus:outline-none focus:border-emerald-500"
         />
 
@@ -49,8 +49,11 @@
             ></app-equipment-modal>
         </div>
 
+        <!-- prettier-ignore -->
+        @if (selectedMuscleGroup !== 'all muscles' || selectedEquipment !== 'all equipment') {
         <button
             type="button"
+            (click)="clearFilters()"
             class="flex items-center gap-2 px-2 transition-all group active:opacity-50 active:scale-95"
         >
             <div
@@ -80,6 +83,7 @@
                 class="w-full h-0.5 transition-colors border-solid rounded-full bg-neutral-900 group-hover:bg-red-500 mt-0.5"
             ></div>
         </button>
+        }
     </div>
 
     <div class="flex flex-col self-start w-full gap-1">
