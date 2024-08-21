@@ -110,6 +110,13 @@ export class SetComponent implements OnInit {
         this.set.addControl('weight', this.fb.control<string>(''));
         this.set.addControl('reps', this.fb.control<string>(''));
         this.set.addControl('rpe', this.fb.control<RpeType>(null));
+
+        this.setTypeIndex = this.setTypes.findIndex(
+            (setType) => setType.name === this.setTypeName.value!
+        );
+
+        this.setTypes[0].isSelected = false;
+        this.setTypes[this.setTypeIndex].isSelected = true;
     }
 
     get isDone(): FormControl<boolean> {
