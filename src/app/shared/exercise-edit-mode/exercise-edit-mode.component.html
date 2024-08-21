@@ -1,4 +1,9 @@
-<div class="flex flex-col gap-1">
+<div
+    class="flex flex-col gap-1 transition-transform"
+    [ngClass]="{
+        '-translate-x-3.5': setRemovalView,
+    }"
+>
     <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
             <a
@@ -103,22 +108,57 @@
     </div>
     <div class="flex flex-col gap-1 text-lg">
         @for (set of sets.controls; track $index) {
-        <app-set
-            [workoutComputedValues]="workoutComputedValues"
-            [editView]="editView"
-            [set]="set"
-            [lighterBg]="$index % 2 === 0 ? true : false"
-            [setNumber]="$index + 1"
-        ></app-set>
+        <div class="relative">
+            <app-set
+                [workoutComputedValues]="workoutComputedValues"
+                [editView]="editView"
+                [set]="set"
+                [lighterBg]="$index % 2 === 0 ? true : false"
+                [setNumber]="$index + 1"
+            ></app-set>
+
+            @if (setRemovalView) {
+            <button
+                type="button"
+                class="absolute transition-all -translate-y-1/2 top-1/2 -right-6 active:opacity-50 active:scale-95"
+            >
+                <svg
+                    class="w-6 stroke-red-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6 12H18"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </button>
+            }
+        </div>
         }
 
+        <!-- indent -->
+
+        @if (setRemovalView) {
+        <button
+            type="button"
+            (click)="setRemovalView = false"
+            class="w-full my-2 py-1.5 overflow-hidden font-semibold rounded-md transition-all hover:border-transparent active:scale-95 active:opacity-50 bg-neutral-900 hover:shadow-[0_0_10px_1px_#171717] translate-x-3.5"
+        >
+            Done
+        </button>
+        } @else {
         <button
             type="button"
             (click)="addSet()"
-            class="w-full my-2 py-1.5 overflow-hidden font-semibold rounded-md transition-all hover:border-transparent active:scale-95 active:opacity-50 bg-neutral-900"
+            class="w-full my-2 py-1.5 overflow-hidden font-semibold rounded-md transition-all hover:border-transparent active:scale-95 active:opacity-50 bg-neutral-900 hover:shadow-[0_0_10px_1px_#171717]"
         >
             Add Set
         </button>
+        }
     </div>
 </div>
 
@@ -276,6 +316,7 @@
 
         <button
             type="button"
+            (click)="setRemovalView = true; optionsModalVisibility = false"
             class="flex items-center gap-2 p-2 transition-all rounded-md active:opacity-50 active:scale-95 hover:bg-neutral-900 group"
         >
             <div class="mt-0.5 overflow-hidden rounded-full">
