@@ -83,5 +83,32 @@
     <app-tabs
         class="w-full px-2 mt-24"
         [tabNames]="['Progress', 'Summary', 'Statistics', 'Records']"
-    ></app-tabs>
+    >
+        <ng-template #tabContent1>
+            <div class="relative w-full h-6 rounded-full bg-neutral-900">
+                <div
+                    class="absolute right-0 w-10 h-10 overflow-hidden translate-y-1 border-2 border-solid rounded-full border-emerald-500 -top-1/2"
+                >
+                    <img
+                        src="https://static.vecteezy.com/system/resources/previews/015/696/967/non_2x/gym-fitness-club-logo-design-bodybuilder-illustration-vector.jpg"
+                        class=""
+                        alt=""
+                    />
+                </div>
+
+                <div
+                    class="absolute z-10 text-sm font-semibold -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                >
+                    00/000
+                </div>
+
+                <div
+                    class="absolute left-0 w-3/4 h-6 rounded-full bg-emerald-500"
+                ></div>
+            </div>
+        </ng-template>
+        <ng-template #tabContent2> </ng-template>
+        <ng-template #tabContent3> </ng-template>
+        <ng-template #tabContent4> </ng-template>
+    </app-tabs>
 </div>
