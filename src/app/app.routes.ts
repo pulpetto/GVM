@@ -65,6 +65,13 @@ export const routes: Routes = [
                     ),
             },
             {
+                path: 'profile/history/:workoutId/summary',
+                loadComponent: () =>
+                    import(
+                        './shared/workout-summary/workout-summary.component'
+                    ).then((component) => component.WorkoutSummaryComponent),
+            },
+            {
                 path: 'profile/exercises',
                 loadComponent: () =>
                     import(
