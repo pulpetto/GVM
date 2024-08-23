@@ -7,7 +7,6 @@ import { forkJoin, map, Observable, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { DataService } from '../../../services/data.service';
-import { MuscleGroupName } from '../../../types/muscle-group-type';
 import { Set } from '../../../interfaces/workout/set';
 import { RouterModule } from '@angular/router';
 
@@ -102,10 +101,8 @@ export class WorkoutFullViewComponent implements OnInit {
         exercises: {
             exerciseId: number;
             sets: Set[];
-            id?: number | undefined;
-            name?: string | undefined;
-            imageUrl?: string | undefined;
-            muscleGroups?: MuscleGroupName[] | undefined;
+            name: string;
+            imageUrl: string;
         }[];
     }>;
 
@@ -147,7 +144,10 @@ export class WorkoutFullViewComponent implements OnInit {
                                             .pipe(
                                                 map((exerciseDetails) => ({
                                                     ...exercise,
-                                                    ...exerciseDetails,
+                                                    name: exerciseDetails!.name,
+                                                    imageUrl:
+                                                        exerciseDetails!
+                                                            .imageUrl,
                                                 }))
                                             )
                                     )
