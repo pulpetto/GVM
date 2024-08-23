@@ -9,6 +9,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { DataService } from '../../../services/data.service';
 import { Set } from '../../../interfaces/workout/set';
 import { RouterModule } from '@angular/router';
+import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 
 const visibleModal = { top: '50%' };
 const visibleModalLow = { top: '75%' };
@@ -27,7 +28,12 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     standalone: true,
     templateUrl: './workout-full-view.component.html',
     styleUrl: './workout-full-view.component.css',
-    imports: [ChartsCarouselComponent, CommonModule, RouterModule],
+    imports: [
+        ChartsCarouselComponent,
+        CommonModule,
+        RouterModule,
+        LoadingSpinnerComponent,
+    ],
     animations: [
         trigger('openClose', [
             transition(':enter', [
