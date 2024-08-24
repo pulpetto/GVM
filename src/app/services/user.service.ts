@@ -407,6 +407,10 @@ export class UserService {
                 doneWorkoutsIds: arrayUnion(docRef.id),
                 exercises: workoutValues.exercises,
             });
+
+            this.router.navigate([
+                `/user/profile/history/${docRef.id}/summary`,
+            ]);
         });
     }
 
