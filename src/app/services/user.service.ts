@@ -456,7 +456,6 @@ export class UserService {
 
                     observer.next(arrayToReturn);
                     observer.complete();
-                    console.log(arrayToReturn);
                 })
                 .catch((error) => {
                     observer.error(error);
