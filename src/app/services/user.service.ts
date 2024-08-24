@@ -18,6 +18,9 @@ import {
     getCountFromServer,
     collection,
     arrayUnion,
+    DocumentData,
+    limit,
+    startAfter,
 } from '@angular/fire/firestore';
 import {
     Auth,
@@ -414,25 +417,51 @@ export class UserService {
         });
     }
 
-    getDoneWorkouts(): Observable<WorkoutDoneWithId[]> {
-        const arrayToReturn: WorkoutDoneWithId[] = [];
-
+    getDoneWorkouts(
+        itemLimit: number,
+        lastDoc?: DocumentData
+    ): Observable<WorkoutDoneWithId[]> {
         const workoutsDoneRef: CollectionReference = collection(
             this.userDocRef!,
             'workoutsDone'
         );
 
-        getDocs(workoutsDoneRef).then((querySnapshot) => {
-            return querySnapshot.docs.forEach((doc) => {
-                const workoutObj = doc.data() as WorkoutDoneWithId;
+        let q;
 
-                workoutObj.id = doc.id;
+        if (lastDoc) {
+            q = query(
+                workoutsDoneRef,
+                orderBy('dateFinish', 'desc'),
+                startAfter(lastDoc),
+                limit(itemLimit)
+            );
+        } else {
+            q = query(
+                workoutsDoneRef,
+                orderBy('dateFinish', 'desc'),
+                limit(itemLimit)
+            );
+        }
 
-                arrayToReturn.push(workoutObj);
-            });
+        return new Observable((observer) => {
+            getDocs(q)
+                .then((querySnapshot) => {
+                    const arrayToReturn: WorkoutDoneWithId[] = [];
+
+                    querySnapshot.docs.forEach((doc) => {
+                        const workoutObj = doc.data() as WorkoutDoneWithId;
+                        workoutObj.id = doc.id;
+                        arrayToReturn.push(workoutObj);
+                    });
+
+                    observer.next(arrayToReturn);
+                    observer.complete();
+                    console.log(arrayToReturn);
+                })
+                .catch((error) => {
+                    observer.error(error);
+                });
         });
-
-        return of(arrayToReturn);
     }
 
     drop(

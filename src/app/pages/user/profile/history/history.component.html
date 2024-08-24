@@ -22,11 +22,11 @@
     </div>
 
     <div class="flex flex-col w-full gap-4 px-2">
-        @if (workoutsData$ | async; as workoutsData) {
+        @if (workouts) {
         <ng-container>
-            @if (workoutsData.length > 0) {
+            @if (workouts.length > 0) {
             <ng-container>
-                @for (workoutData of workoutsData; track $index) {
+                @for (workoutData of workouts; track $index) {
                 <app-workout-done-preview
                     [workoutData]="workoutData"
                 ></app-workout-done-preview>
