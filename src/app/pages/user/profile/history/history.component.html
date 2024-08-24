@@ -68,10 +68,13 @@
         }
     </div>
 
+    @if (workoutsCount !== workouts.length) {
     <button
         type="button"
+        (click)="loadWorkouts()"
         class="p-2 px-6 text-sm font-semibold transition-all bg-opacity-50 rounded-md bg-neutral-900 hover:text-emerald-500 active:opacity-50 active:scale-95"
     >
         Load More
     </button>
+    }
 </div>

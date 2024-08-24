@@ -17,8 +17,9 @@ export class HistoryComponent implements OnInit {
     destroyRef = inject(DestroyRef);
 
     workouts: WorkoutDoneWithId[] = [];
+    workoutsCount!: number;
     lastDoc: any;
-    limit = 10;
+    limit = 3;
 
     ngOnInit() {
         this.userService.user$
@@ -26,6 +27,12 @@ export class HistoryComponent implements OnInit {
             .subscribe((user) => {
                 if (user) {
                     this.loadWorkouts();
+
+                    this.userService
+                        .getDoneWorkoutsCount()
+                        .subscribe((data) => {
+                            this.workoutsCount = data;
+                        });
                 }
             });
     }
