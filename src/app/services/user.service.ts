@@ -432,7 +432,7 @@ export class UserService {
             q = query(
                 workoutsDoneRef,
                 orderBy('dateFinish', 'desc'),
-                startAfter(lastDoc),
+                startAfter(lastDoc['dateFinish']),
                 limit(itemLimit)
             );
         } else {
