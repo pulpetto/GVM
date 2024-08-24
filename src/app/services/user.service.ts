@@ -29,7 +29,7 @@ import {
     signOut,
     user,
 } from '@angular/fire/auth';
-import { BehaviorSubject, from, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, from, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../interfaces/user';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -461,6 +461,19 @@ export class UserService {
                     observer.error(error);
                 });
         });
+    }
+
+    getDoneWorkoutsCount(): Observable<number> {
+        const workoutsDoneRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workoutsDone'
+        );
+
+        return from(
+            getCountFromServer(workoutsDoneRef).then((snapshot) => {
+                return snapshot.data().count;
+            })
+        );
     }
 
     drop(
