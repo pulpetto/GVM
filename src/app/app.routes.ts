@@ -56,6 +56,13 @@ export const routes: Routes = [
                     ).then((component) => component.HistoryComponent),
             },
             {
+                path: 'profile/achievements',
+                loadComponent: () =>
+                    import(
+                        './pages/user/profile/achievements/achievements.component'
+                    ).then((component) => component.AchievementsComponent),
+            },
+            {
                 path: 'profile/history/:workoutId',
                 loadComponent: () =>
                     import(
