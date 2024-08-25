@@ -84,9 +84,37 @@
 
     <app-tabs
         class="w-full px-2 mt-16"
-        [tabNames]="['Survey', 'Progress', 'Summary', 'Records']"
+        [tabNames]="['Feedback', 'Progress', 'Summary', 'Records']"
     >
-        <ng-template #tabContent1> </ng-template>
+        <ng-template #tabContent1>
+            <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-2">
+                    <div class="text-xl font-semibold">
+                        How would you rate today's workload?
+                    </div>
+                    <div
+                        class="flex justify-between gap-1 text-xs font-semibold rounded-md bg-neutral-900"
+                    >
+                        <div class="w-full p-2 text-center rounded-md">
+                            Easy, <br />
+                            too light
+                        </div>
+                        <div class="w-full p-2 text-center rounded-md">
+                            Intense, but <br />
+                            manageable
+                        </div>
+                        <div class="w-full p-2 text-center rounded-md">
+                            Too much, <br />
+                            over my limit
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <div class="text-xl font-semibold">Any joint soreness?</div>
+                    <div>scale</div>
+                </div>
+            </div>
+        </ng-template>
         <ng-template #tabContent2>
             <div class="relative size-40">
                 <svg
