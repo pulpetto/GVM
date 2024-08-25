@@ -82,9 +82,10 @@
 
     <app-tabs
         class="w-full px-2 mt-24"
-        [tabNames]="['Progress', 'Summary', 'Statistics', 'Records']"
+        [tabNames]="['Survey', 'Progress', 'Summary', 'Records']"
     >
-        <ng-template #tabContent1>
+        <ng-template #tabContent1> </ng-template>
+        <ng-template #tabContent2>
             <div class="flex flex-col gap-6 mt-2">
                 @for (item of [1,2,3,4]; track $index) {
                 <div class="relative w-full h-6 rounded-full bg-neutral-900">
@@ -111,7 +112,6 @@
                 }
             </div>
         </ng-template>
-        <ng-template #tabContent2> </ng-template>
         <ng-template #tabContent3> </ng-template>
         <ng-template #tabContent4> </ng-template>
     </app-tabs>
