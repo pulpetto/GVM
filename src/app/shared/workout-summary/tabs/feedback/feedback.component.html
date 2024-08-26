@@ -1,23 +1,64 @@
+<!-- eslint-disable @angular-eslint/template/mouse-events-have-key-events -->
 <div class="flex flex-col gap-4">
     <div class="flex flex-col gap-2">
-        <div class="text-xl font-semibold">
+        <div class="text-lg font-semibold text-center">
             How would you rate today's workload?
         </div>
         <div
-            class="flex justify-between gap-1 text-xs font-semibold rounded-md bg-neutral-900"
+            class="relative flex justify-between gap-1 text-xs font-semibold rounded-md bg-neutral-900"
         >
-            <div class="w-full p-2 text-center rounded-md">
-                Easy, <br />
-                too light
-            </div>
-            <div class="w-full p-2 text-center rounded-md">
-                Intense, but <br />
-                manageable
-            </div>
-            <div class="w-full p-2 text-center rounded-md">
-                Too much, <br />
-                over my limit
-            </div>
+            @for (option of workloadOptions; track $index) {
+            <button
+                type="button"
+                #workloadOptionBtn
+                (click)="onWorkloadOptionChange($index)"
+                (mouseover)="onWorkloadOptionsMouseOver($index)"
+                (mouseout)="onWorkloadOptionsMouseOut()"
+                class="relative z-10 w-full p-2 text-center transition-opacity rounded-md"
+                [ngClass]="{
+                    'opacity-25': activeOptionIndex !== $index && hoverOptionIndex !== $index,
+                    'opacity-75': hoverOptionIndex === $index,
+                }"
+            >
+                {{ option }}
+            </button>
+            }
+
+            <div
+                class="absolute top-0 h-full transition-all duration-300 rounded-md bg-gradient-to-br"
+                [ngClass]="{
+                    'opacity-0': activeOptionIndex === null,
+                    'opacity-100': activeOptionIndex !== null,
+                    'from-lime-500 to-green-500': activeOptionIndex === 0,
+                    'from-yellow-500 to-orange-500': activeOptionIndex === 1,
+                    'from-orange-500 to-red-500': activeOptionIndex === 2,
+                }"
+                [style]="
+                    'left:' +
+                    leftDistancePxActive +
+                    'px; width:' +
+                    activeOptionWidthPx +
+                    'px;'
+                "
+            ></div>
+
+            <div
+                class="absolute top-0 h-full transition-all duration-300 rounded-md bg-gradient-to-br"
+                [ngClass]="{
+                    'opacity-0': hoverOptionIndex === null,
+                    'opacity-100': hoverOptionIndex !== null,
+                    'from-lime-500 to-green-500': hoverOptionIndex === 0,
+                    'from-yellow-500 to-orange-500': hoverOptionIndex === 1,
+                    'from-orange-500 to-red-500': hoverOptionIndex === 2,
+                }"
+                [style]="
+                    'left:' +
+                    leftDistancePxHover +
+                    'px; width:' +
+                    hoverOptionWidthPx +
+                    'px;'
+                "
+            ></div>
         </div>
     </div>
     <div class="flex flex-col gap-1">
