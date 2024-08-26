@@ -1,0 +1,131 @@
+<div class="text-3xl font-semibold text-center">Goals</div>
+
+@for (x of [1,2,3]; track $index) {
+<div class="flex justify-between">
+    <div class="flex flex-col gap-2 mt-3.5">
+        <div class="flex items-center gap-2">
+            <div
+                class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+            >
+                <img
+                    src="assets/exercisesThumbnails/frame_00_delay-1s.jpg"
+                    class="w-9 h-9"
+                    alt=""
+                />
+            </div>
+            <div class="text-xl font-semibold">Bench Press</div>
+        </div>
+
+        <div class="flex flex-col items-center gap-1">
+            <div>
+                Estimated 1rm:
+                <span class="font-semibold">122kg</span>
+            </div>
+            @if ($index === 1) {
+            <div class="flex items-center text-sm font-semibold text-red-500">
+                <svg
+                    class="w-5 h-5 stroke-red-500 mt-0.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M12.25 5.5V18M12.25 18L6.25 12M12.25 18L18.25 12"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+                <div>2kg regress</div>
+            </div>
+            } @else {
+            <div class="flex items-center text-sm font-semibold text-green-500">
+                <svg
+                    class="w-5 h-5 stroke-green-500 mt-0.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M12.25 18.5V6M12.25 6L18.25 12M12.25 6L6.25 12"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+                <div>2kg progress</div>
+            </div>
+
+            }
+        </div>
+    </div>
+
+    <div class="relative size-40">
+        <svg
+            class="rotate-180 size-full"
+            viewBox="0 0 36 36"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <circle
+                cx="18"
+                cy="18"
+                r="16"
+                fill="none"
+                class="text-gray-200 stroke-current dark:text-neutral-700"
+                stroke-width="1"
+                stroke-dasharray="50 100"
+                stroke-linecap="round"
+            ></circle>
+
+            <circle
+                cx="18"
+                cy="18"
+                r="16"
+                fill="none"
+                class="stroke-current dark:text-green-500"
+                stroke-width="1.5"
+                stroke-dasharray="37.5 100"
+                stroke-linecap="round"
+            ></circle>
+        </svg>
+
+        <div
+            class="absolute text-center transform -translate-x-1/2 top-9 start-1/2"
+        >
+            <span class="text-3xl font-bold text-green-500">75%</span>
+            <span class="block text-sm">
+                Progress to reach
+                <span class="font-semibold text-emerald-500"> 140kg </span>
+            </span>
+        </div>
+    </div>
+</div>
+
+}
+
+<div class="mb-6 text-3xl font-semibold text-center">Achievements</div>
+<div class="flex flex-col gap-6 mt-2">
+    @for (item of [1,2,3,4]; track $index) {
+    <div class="relative w-full h-6 rounded-full bg-neutral-900">
+        <div
+            class="absolute right-0 w-10 h-10 overflow-hidden translate-y-1 border-2 border-solid rounded-full border-emerald-500 -top-1/2"
+        >
+            <img
+                src="https://static.vecteezy.com/system/resources/previews/015/696/967/non_2x/gym-fitness-club-logo-design-bodybuilder-illustration-vector.jpg"
+                class=""
+                alt=""
+            />
+        </div>
+
+        <div
+            class="absolute z-10 text-sm font-semibold -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+        >
+            00/000
+        </div>
+
+        <div
+            class="absolute left-0 w-3/4 h-6 rounded-full bg-emerald-500"
+        ></div>
+    </div>
+    }
+</div>
