@@ -2,9 +2,12 @@
 <div
     class="fixed bottom-0 z-40 flex justify-around w-full gap-12 p-4 bg-opacity-50 rounded-t-3xl backdrop-blur-xl backdrop-filter"
 >
-    <a>
+    <a
+        routerLink="home"
+        class="flex flex-col items-center transition-all group active:opacity-50 active:scale-95"
+    >
         <svg
-            class="w-12 h-12 transition-colors stroke-black dark:stroke-white hover:stroke-emerald-500 hover:dark:stroke-emerald-500"
+            class="w-12 h-12 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500 group-hover:dark:stroke-emerald-500"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -16,11 +19,19 @@
                 stroke-linejoin="round"
             />
         </svg>
+        <div
+            class="font-semibold transition-colors group-hover:text-emerald-500"
+        >
+            Home
+        </div>
     </a>
 
-    <a [routerLink]="['workout']">
+    <a
+        routerLink="workout"
+        class="flex flex-col items-center transition-all group active:opacity-50 active:scale-95"
+    >
         <svg
-            class="w-12 h-12 transition-colors rotate-45 stroke-neutral-950 dark:stroke-neutral-200 hover:stroke-emerald-500 hover:dark:stroke-emerald-500"
+            class="w-12 h-12 transition-colors rotate-45 stroke-neutral-950 dark:stroke-neutral-200 group-hover:stroke-emerald-500 group-hover:dark:stroke-emerald-500"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -56,11 +67,19 @@
                 stroke-linejoin="round"
             />
         </svg>
+        <div
+            class="font-semibold transition-colors group-hover:text-emerald-500"
+        >
+            Workout
+        </div>
     </a>
 
-    <a [routerLink]="['profile']">
+    <a
+        routerLink="profile"
+        class="flex flex-col items-center transition-all group active:opacity-50 active:scale-95"
+    >
         <svg
-            class="w-12 h-12 transition-colors stroke-black dark:stroke-white hover:stroke-emerald-500 hover:dark:stroke-emerald-500"
+            class="w-12 h-12 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500 group-hover:dark:stroke-emerald-500"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -78,5 +97,10 @@
                 stroke-linejoin="round"
             />
         </svg>
+        <div
+            class="font-semibold transition-colors group-hover:text-emerald-500"
+        >
+            Profile
+        </div>
     </a>
 </div>
