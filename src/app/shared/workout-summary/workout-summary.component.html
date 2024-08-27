@@ -86,7 +86,7 @@
 
     <app-tabs
         class="w-full px-2"
-        [tabNames]="['Feedback', 'Progress', 'Summary', 'Records']"
+        [tabNames]="['Feedback', 'Progress', 'Statistics']"
     >
         <ng-template #tabContent1>
             <app-feedback></app-feedback>
@@ -94,7 +94,76 @@
         <ng-template #tabContent2>
             <app-progress></app-progress>
         </ng-template>
-        <ng-template #tabContent3> </ng-template>
-        <ng-template #tabContent4> </ng-template>
+        <ng-template #tabContent3>
+            <div class="flex flex-col gap-6">
+                <div class="flex flex-col gap-4">
+                    <div class="text-2xl font-semibold text-center">
+                        Worked muscle groups
+                    </div>
+
+                    <div class="flex">
+                        <div>
+                            <img
+                                src="https://app.fitnessai.com/musclegroups/full/08751101-Obliques_transparent.png"
+                                alt=""
+                            />
+                        </div>
+                        <div>
+                            <img
+                                src="https://app.fitnessai.com/musclegroups/full/08761101-Latissimus-Dorsi_transparent.png"
+                                alt=""
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    <div class="text-2xl font-semibold text-center">
+                        Muscle groups distribution
+                    </div>
+
+                    <canvas
+                        baseChart
+                        [type]="'radar'"
+                        [data]="data"
+                        [options]="config.options"
+                    >
+                    </canvas>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    <div class="text-2xl font-semibold text-center">
+                        Other statistics
+                    </div>
+
+                    <div class="flex flex-col gap-0.5">
+                        <div>
+                            <span class="text-neutral-500">
+                                Total volume:
+                            </span>
+                            <span class="font-semibold">12 300kg</span>
+                        </div>
+                        <div>
+                            <span class="text-neutral-500">Duration: </span>
+                            <span class="font-semibold">1h 34m</span>
+                        </div>
+                        <div>
+                            <span class="text-neutral-500"> Total sets: </span>
+                            <span class="font-semibold">22</span>
+                        </div>
+                        <div>
+                            <span class="text-neutral-500"> Done sets: </span>
+                            <span class="font-semibold">20</span>
+                        </div>
+                        <div>
+                            <span class="text-neutral-500">
+                                Skipped sets:
+                            </span>
+                            <span class="font-semibold">2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
     </app-tabs>
 </div>
