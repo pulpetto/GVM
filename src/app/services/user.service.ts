@@ -29,7 +29,7 @@ import {
     signOut,
     user,
 } from '@angular/fire/auth';
-import { BehaviorSubject, from, map, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, from, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../interfaces/user';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -41,7 +41,8 @@ import {
     transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { WorkoutDone } from '../interfaces/workout/workout-done';
-import { WorkoutDoneWithId } from '../interfaces/workout/workout-done-with-id';
+import { WorkoutDoneFull } from '../interfaces/workout/workout-done-full';
+import { DataService } from './data.service';
 
 @Injectable({
     providedIn: 'root',
@@ -51,6 +52,7 @@ export class UserService {
     authentication = inject(Auth);
     router = inject(Router);
     destroyRef = inject(DestroyRef);
+    dataService = inject(DataService);
 
     user$ = user(this.authentication);
     currentUser = signal<User | null | undefined>(undefined);
@@ -420,7 +422,7 @@ export class UserService {
     getDoneWorkouts(
         itemLimit: number,
         lastDoc?: DocumentData
-    ): Observable<WorkoutDoneWithId[]> {
+    ): Observable<WorkoutDoneFull[]> {
         const workoutsDoneRef: CollectionReference = collection(
             this.userDocRef!,
             'workoutsDone'
@@ -446,16 +448,37 @@ export class UserService {
         return new Observable((observer) => {
             getDocs(q)
                 .then((querySnapshot) => {
-                    const arrayToReturn: WorkoutDoneWithId[] = [];
+                    const arrayToReturn: WorkoutDoneFull[] = [];
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const exerciseRequests: Observable<any>[] = [];
 
                     querySnapshot.docs.forEach((doc) => {
-                        const workoutObj = doc.data() as WorkoutDoneWithId;
+                        const workoutObj = doc.data() as WorkoutDoneFull;
                         workoutObj.id = doc.id;
+
+                        workoutObj.exercises.forEach((exercise) => {
+                            const exercise$ = this.dataService
+                                .getExerciseById(exercise.exerciseId)
+                                .pipe(
+                                    map((exerciseData) => {
+                                        exercise.staticData = exerciseData!;
+                                    })
+                                );
+                            exerciseRequests.push(exercise$);
+                        });
+
                         arrayToReturn.push(workoutObj);
                     });
 
-                    observer.next(arrayToReturn);
-                    observer.complete();
+                    forkJoin(exerciseRequests).subscribe({
+                        next: () => {
+                            observer.next(arrayToReturn);
+                            observer.complete();
+                        },
+                        error: (err) => {
+                            observer.error(err);
+                        },
+                    });
                 })
                 .catch((error) => {
                     observer.error(error);

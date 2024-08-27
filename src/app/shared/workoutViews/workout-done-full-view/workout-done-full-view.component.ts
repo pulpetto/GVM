@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { WorkoutDoneWithId } from '../../../interfaces/workout/workout-done-with-id';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { WorkoutDoneFull } from '../../../interfaces/workout/workout-done-full';
 
 const visibleModal = { top: '50%' };
 const visibleModalLow = { top: '75%' };
@@ -88,7 +88,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class WorkoutDoneFullViewComponent implements OnInit {
     optionsModalVisibility: boolean = false;
     confirmDeleteModalVisibility: boolean = false;
-    workoutData!: WorkoutDoneWithId;
+    workoutData!: WorkoutDoneFull;
 
     ngOnInit() {
         this.workoutData = history.state;

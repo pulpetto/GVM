@@ -3,7 +3,7 @@ import { WorkoutDonePreviewComponent } from '../../../../shared/workoutViews/wor
 import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { WorkoutDoneWithId } from '../../../../interfaces/workout/workout-done-with-id';
+import { WorkoutDoneFull } from '../../../../interfaces/workout/workout-done-full';
 
 @Component({
     selector: 'app-history',
@@ -16,8 +16,9 @@ export class HistoryComponent implements OnInit {
     userService = inject(UserService);
     destroyRef = inject(DestroyRef);
 
-    workouts: WorkoutDoneWithId[] = [];
+    workouts: WorkoutDoneFull[] = [];
     workoutsCount!: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lastDoc: any;
     limit = 3;
 
@@ -37,7 +38,7 @@ export class HistoryComponent implements OnInit {
             });
     }
 
-    loadWorkouts(): void {
+    loadWorkouts() {
         this.userService
             .getDoneWorkouts(this.limit, this.lastDoc)
             .subscribe((newWorkouts) => {

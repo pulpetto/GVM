@@ -62,20 +62,20 @@
     <div class="flex flex-col self-start w-full gap-4">
         @for (exercise of workoutData.exercises; track $index) {
         <div class="flex flex-col gap-1">
-            <!-- <a class="flex items-center gap-2">
+            <a class="flex items-center gap-2">
                 <div
                     class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
                 >
                     <img
-                        [src]="exercise.imageUrl"
+                        [src]="exercise.staticData.imageUrl"
                         class="w-10 h-10"
-                        [alt]="exercise.name + ' image'"
+                        [alt]="exercise.staticData.imageUrl + ' image'"
                     />
                 </div>
                 <div class="text-xl font-semibold text-emerald-500">
-                    {{ exercise.name }}
+                    {{ exercise.staticData.name | titlecase }}
                 </div>
-            </a> -->
+            </a>
             <div
                 class="grid grid-cols-5 font-semibold opacity-50 justify-items-center"
             >
@@ -85,7 +85,7 @@
                 <div>Reps</div>
                 <div>Rpe</div>
             </div>
-            <div class="flex flex-col text-lg">
+            <div class="flex flex-col gap-1 text-lg">
                 @for (set of exercise.sets; track $index) {
                 <div
                     class="grid grid-cols-5 py-2 font-semibold rounded-md justify-items-center gap-y-3"
