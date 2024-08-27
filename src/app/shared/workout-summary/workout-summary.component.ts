@@ -5,6 +5,7 @@ import { MotivationalQuotesComponent } from './motivational-quotes/motivational-
 import { FeedbackComponent } from './tabs/feedback/feedback.component';
 import { ProgressComponent } from './tabs/progress/progress.component';
 import { StatisticsComponent } from './tabs/statistics/statistics.component';
+import { WorkoutCounterComponent } from './workout-counter/workout-counter.component';
 @Component({
     selector: 'app-workout-summary',
     standalone: true,
@@ -15,6 +16,7 @@ import { StatisticsComponent } from './tabs/statistics/statistics.component';
         FeedbackComponent,
         ProgressComponent,
         StatisticsComponent,
+        WorkoutCounterComponent,
     ],
     templateUrl: './workout-summary.component.html',
     styleUrl: './workout-summary.component.css',
