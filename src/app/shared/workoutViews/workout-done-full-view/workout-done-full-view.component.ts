@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartsCarouselComponent } from '../../charts-carousel/charts-carousel.component';
 import { RouterModule } from '@angular/router';
 import { WorkoutDoneWithId } from '../../../interfaces/workout/workout-done-with-id';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -20,7 +19,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-workout-done-full-view',
     standalone: true,
-    imports: [CommonModule, ChartsCarouselComponent, RouterModule],
+    imports: [CommonModule, RouterModule],
     templateUrl: './workout-done-full-view.component.html',
     styleUrl: './workout-done-full-view.component.css',
     animations: [
