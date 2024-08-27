@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { WorkoutDoneFull } from '../../../interfaces/workout/workout-done-full';
 
@@ -90,8 +90,18 @@ export class WorkoutDoneFullViewComponent implements OnInit {
     confirmDeleteModalVisibility: boolean = false;
     workoutData!: WorkoutDoneFull;
 
+    router = inject(Router);
+    activatedRoute = inject(ActivatedRoute);
+
     ngOnInit() {
         this.workoutData = history.state;
+    }
+
+    navigateToSummary() {
+        this.router.navigate(['summary'], {
+            relativeTo: this.activatedRoute,
+            state: this.workoutData,
+        });
     }
 
     deleteWorkout() {}
