@@ -1,11 +1,28 @@
 <div class="flex flex-col p-4">
-    <div class="flex w-full mb-4 rounded-md bg-neutral-900">
-        <div
-            class="w-full p-2 font-semibold text-center rounded-md bg-emerald-500"
+    <div class="mb-4 text-3xl font-semibold text-center">Your Goals</div>
+
+    <div
+        class="relative flex w-full mb-4 bg-opacity-50 rounded-md bg-neutral-900"
+    >
+        @for (tab of ['current', 'done']; track $index) {
+        <button
+            type="button"
+            (click)="switchTab(tab)"
+            #tabButton
+            class="relative z-10 w-full p-2 font-semibold text-center rounded-md"
         >
-            Current
-        </div>
-        <div class="w-full p-2 font-semibold text-center">Done</div>
+            {{ tab | titlecase }}
+        </button>
+        }
+
+        <div
+            class="absolute top-0 h-full transition-all duration-300 rounded-md bg-emerald-500"
+            [ngClass]="{
+                'left-0': activeTabName === 'current',
+                'left-1/2': activeTabName === 'done',
+            }"
+            [style]="'width:' + tabWidthPx + 'px;'"
+        ></div>
     </div>
 
     @for (x of [1,2,3]; track $index) {
