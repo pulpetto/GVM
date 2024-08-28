@@ -2,7 +2,7 @@
     <div class="mb-4 text-3xl font-semibold text-center">Your Goals</div>
 
     <div
-        class="relative flex w-full mb-4 bg-opacity-50 rounded-md bg-neutral-900"
+        class="relative flex w-full mb-8 bg-opacity-50 rounded-md bg-neutral-900"
     >
         @for (tab of ['current', 'done']; track $index) {
         <button
@@ -28,7 +28,7 @@
     @if (activeTabName === 'current') {
     <!--  -->
     @for (x of [1,2,3]; track $index) {
-    <div class="relative flex justify-around">
+    <div class="relative flex justify-between">
         <button
             type="button"
             class="absolute transition-all top-1 -right-2 active:opacity-50 active:scale-95"
@@ -60,10 +60,10 @@
             </svg>
         </button>
 
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col w-1/2 gap-2">
             <div class="flex items-center gap-2">
                 <div
-                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-5000"
                 >
                     <img
                         src="assets/exercisesThumbnails/frame_00_delay-1s.jpg"
@@ -71,28 +71,24 @@
                         alt=""
                     />
                 </div>
-                <div class="text-xl font-semibold">Bench Press</div>
+                <div class="text-xl font-semibold text-clip">Bench Press</div>
             </div>
 
-            <div class="flex flex-col items-center gap-1">
+            <div class="flex flex-col gap-1 font-semibold text-center">
                 <div>
-                    Estimated 1rm:
+                    <span class="opacity-50">Estimated 1rm: </span>
+
                     <span class="font-semibold">122kg</span>
                 </div>
+                <div>
+                    <span class="opacity-50">Targeted 1rm: </span>
 
-                <div
-                    class="flex items-center gap-1 text-sm text-center opacity-50"
-                >
-                    <div>
-                        Started on
-                        <span class="font-semibold">10.11.2022</span> <br />
-                        <span class="font-semibold">(42 days ago)</span>
-                    </div>
+                    <span class="font-semibold text-emerald-500">140kg</span>
                 </div>
             </div>
         </div>
 
-        <div class="relative size-40 mt-1.5">
+        <div class="relative w-1/2 mt-2 size-40">
             <svg
                 class="rotate-180 size-full"
                 viewBox="0 0 36 36"
@@ -125,10 +121,7 @@
                 class="absolute text-center transform -translate-x-1/2 top-9 start-1/2"
             >
                 <span class="text-3xl font-bold text-green-500">75%</span>
-                <span class="block text-sm">
-                    Progress to reach
-                    <span class="font-semibold text-emerald-500"> 140kg </span>
-                </span>
+                <span class="block text-sm text-green-500">Progress</span>
             </div>
         </div>
     </div>
