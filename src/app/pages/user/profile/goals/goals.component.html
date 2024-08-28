@@ -1,1 +1,118 @@
-<p>goals works!</p>
+<div class="flex flex-col p-4">
+    <div class="flex w-full mb-4 rounded-md bg-neutral-900">
+        <div
+            class="w-full p-2 font-semibold text-center rounded-md bg-emerald-500"
+        >
+            Current
+        </div>
+        <div class="w-full p-2 font-semibold text-center">Done</div>
+    </div>
+
+    @for (x of [1,2,3]; track $index) {
+    <div class="relative flex justify-around">
+        <button
+            type="button"
+            class="absolute transition-all top-1 -right-2 active:opacity-50 active:scale-95"
+        >
+            <svg
+                class="w-8 h-8 transition-colors stroke-white fill-white hover:fill-emerald-500 hover:stroke-emerald-500"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M12 12.5C12.2761 12.5 12.5 12.2761 12.5 12C12.5 11.7239 12.2761 11.5 12 11.5C11.7239 11.5 11.5 11.7239 11.5 12C11.5 12.2761 11.7239 12.5 12 12.5Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M12 18.5C12.2761 18.5 12.5 18.2761 12.5 18C12.5 17.7239 12.2761 17.5 12 17.5C11.7239 17.5 11.5 17.7239 11.5 18C11.5 18.2761 11.7239 18.5 12 18.5Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M12 6.5C12.2761 6.5 12.5 6.27614 12.5 6C12.5 5.72386 12.2761 5.5 12 5.5C11.7239 5.5 11.5 5.72386 11.5 6C11.5 6.27614 11.7239 6.5 12 6.5Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+
+        <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+                <div
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                >
+                    <img
+                        src="assets/exercisesThumbnails/frame_00_delay-1s.jpg"
+                        class="w-9 h-9"
+                        alt=""
+                    />
+                </div>
+                <div class="text-xl font-semibold">Bench Press</div>
+            </div>
+
+            <div class="flex flex-col items-center gap-1">
+                <div>
+                    Estimated 1rm:
+                    <span class="font-semibold">122kg</span>
+                </div>
+
+                <div
+                    class="flex items-center gap-1 text-sm text-center opacity-50"
+                >
+                    <div>
+                        Started on
+                        <span class="font-semibold">10.11.2022</span> <br />
+                        <span class="font-semibold">(42 days ago)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="relative size-40 mt-1.5">
+            <svg
+                class="rotate-180 size-full"
+                viewBox="0 0 36 36"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <circle
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    fill="none"
+                    class="text-gray-200 stroke-current dark:text-neutral-700"
+                    stroke-width="1"
+                    stroke-dasharray="50 100"
+                    stroke-linecap="round"
+                ></circle>
+
+                <circle
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    fill="none"
+                    class="stroke-current dark:text-green-500"
+                    stroke-width="1.5"
+                    stroke-dasharray="37.5 100"
+                    stroke-linecap="round"
+                ></circle>
+            </svg>
+
+            <div
+                class="absolute text-center transform -translate-x-1/2 top-9 start-1/2"
+            >
+                <span class="text-3xl font-bold text-green-500">75%</span>
+                <span class="block text-sm">
+                    Progress to reach
+                    <span class="font-semibold text-emerald-500"> 140kg </span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    }
+</div>
