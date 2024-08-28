@@ -10,6 +10,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Exercise } from '../../../../interfaces/exercise';
+import { GoalComponent } from './goal/goal.component';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -25,7 +26,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-goals',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, GoalComponent],
     templateUrl: './goals.component.html',
     styleUrl: './goals.component.css',
     animations: [
