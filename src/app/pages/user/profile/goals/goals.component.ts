@@ -25,6 +25,7 @@ export class GoalsComponent implements AfterViewInit {
     activeTabName: 'current' | 'done' = 'current';
     tabWidthPx!: number;
 
+    currentGoals = [1, 2, 3];
     doneGoals = [];
 
     ngAfterViewInit() {
