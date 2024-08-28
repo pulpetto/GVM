@@ -25,6 +25,8 @@ export class GoalsComponent implements AfterViewInit {
     activeTabName: 'current' | 'done' = 'current';
     tabWidthPx!: number;
 
+    doneGoals = [];
+
     ngAfterViewInit() {
         this.tabWidthPx =
             this.tabButtons.toArray()[0].nativeElement.clientWidth;
