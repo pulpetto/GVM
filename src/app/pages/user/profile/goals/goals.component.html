@@ -147,14 +147,43 @@
 ></div>
 
 <div
-    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-500 pb-96 bg-neutral-950 rounded-t-md"
+    class="fixed left-0 z-50 flex flex-col items-center w-full h-full gap-1 p-4 transition-all duration-500 pb-96 bg-neutral-950 rounded-t-md"
     @openClose
     [ngClass]="{
         'top-1/2': newGoalModalVisibility,
         'top-full': !newGoalModalVisibility
     }"
 >
-    modal
+    <button
+        type="button"
+        class="flex flex-col items-center gap-1 transition-all active:opacity-50 active:scale-95"
+    >
+        <div
+            class="overflow-hidden border-2 border-solid rounded-full border-emerald-500 min-w-max border-emerald-5000"
+        >
+            <img
+                src="assets/exercisesThumbnails/frame_00_delay-1s.jpg"
+                class="w-12 h-12"
+                alt=""
+            />
+        </div>
+        <div class="text-2xl font-semibold text-clip text-emerald-500">
+            Bench Press
+        </div>
+    </button>
+    <div class="mb-10 text-sm font-semibold">
+        <span class="opacity-50"> Your currently estimated 1rm is </span>
+        <span class="text-emerald-5003">120kg</span>
+    </div>
+
+    <div class="flex flex-col items-center">
+        <div class="font-semibold">Enter your goal weight:</div>
+        <input
+            type="text"
+            placeholder="-"
+            class="w-16 p-2 text-2xl font-semibold text-center bg-transparent rounded-md outline-none placeholder-neutral-700"
+        />
+    </div>
 </div>
 }
 
