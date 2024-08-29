@@ -88,4 +88,9 @@ export class GoalsComponent implements AfterViewInit {
     switchTab(tabName: string) {
         this.activeTabName = tabName as 'current' | 'done';
     }
+
+    closeNewGoalModal() {
+        this.newGoalModalVisibility = false;
+        this.selectedExercise = null;
+    }
 }
