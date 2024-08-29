@@ -1,1 +1,101 @@
-<p>goals-creator works!</p>
+<button
+    type="button"
+    (click)="newGoalModalVisibility = true"
+    class="fixed z-20 flex items-center p-1 pr-3 transition-all -translate-x-1/2 rounded-full bg-opacity-20 left-1/2 bottom-24 bg-neutral-900 active:scale-95 active:opacity-50 group"
+>
+    <svg
+        class="w-8 h-8 transition-transform stroke-emerald-500 group-hover:rotate-90"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path
+            d="M6 12H12M18 12H12M12 12V6M12 12V18"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+    </svg>
+    <div class="font-semibold text-emerald-500">Add Goal</div>
+</button>
+
+<!-- <app-single-exercise-selector></app-single-exercise-selector> -->
+
+@if (newGoalModalVisibility) {
+<!-- eslint-disable-next-line    -->
+<div
+    @openClose2
+    (click)="closeNewGoalModal()"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+></div>
+
+<div
+    class="fixed left-0 z-50 flex flex-col items-center w-full h-full gap-1 p-4 transition-all duration-500 pb-96 bg-neutral-950 rounded-t-md"
+    @openClose
+    [ngClass]="{
+        'top-1/2': newGoalModalVisibility,
+        'top-full': !newGoalModalVisibility
+    }"
+>
+    <button
+        type="button"
+        class="flex flex-col items-center gap-1 transition-all active:opacity-50 active:scale-95"
+    >
+        <div
+            class="overflow-hidden border-2 border-solid rounded-full border-emerald-500 min-w-max border-emerald-5000"
+        >
+            <img
+                src="assets/exercisesThumbnails/frame_00_delay-1s.jpg"
+                class="w-12 h-12"
+                alt=""
+            />
+        </div>
+        <div class="text-2xl font-semibold text-clip text-emerald-500">
+            Bench Press
+        </div>
+    </button>
+    <div class="mb-10 text-sm font-semibold">
+        <span class="opacity-50"> Your currently estimated 1rm is </span>
+        <span class="text-emerald-5003">120kg</span>
+    </div>
+
+    <div class="flex flex-col items-center">
+        <div class="font-semibold">Enter your goal weight:</div>
+        <input
+            type="text"
+            placeholder="-"
+            suffix="kg"
+            mask="000"
+            class="w-24 p-2 text-2xl font-semibold text-center bg-transparent rounded-md outline-none placeholder-neutral-700"
+        />
+    </div>
+</div>
+}
+
+<!--  -->
+
+@if (newGoalModalVisibility) {
+<div
+    @openClose3
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
+    [ngClass]="{
+            'bottom-0': newGoalModalVisibility,
+            '-bottom-full': !newGoalModalVisibility,
+        }"
+>
+    <button
+        type="button"
+        [disabled]="selectedExercise === null"
+        class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
+    >
+        Add Goal
+    </button>
+    <button
+        type="button"
+        (click)="closeNewGoalModal()"
+        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
+    >
+        Cancel & Close
+    </button>
+</div>
+}
