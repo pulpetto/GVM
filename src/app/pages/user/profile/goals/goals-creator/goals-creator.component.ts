@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Exercise } from '../../../../../interfaces/exercise';
+import { ExerciseSelectorComponent } from '../goalsCreator/exercise-selector/exercise-selector.component';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -17,7 +18,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-goals-creator',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, ExerciseSelectorComponent],
     templateUrl: './goals-creator.component.html',
     styleUrl: './goals-creator.component.css',
     animations: [
@@ -54,12 +55,18 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class GoalsCreatorComponent {
-    newGoalModalVisibility: boolean = true;
+    newGoalModalVisibility: boolean = false;
+    exerciseSelectorModalVisibility: boolean = false;
 
     selectedExercise: Exercise | null = null;
 
     closeNewGoalModal() {
-        this.newGoalModalVisibility = false;
         this.selectedExercise = null;
+        this.newGoalModalVisibility = false;
+    }
+
+    selectExercise($event: Exercise) {
+        this.selectedExercise = $event;
+        this.newGoalModalVisibility = true;
     }
 }

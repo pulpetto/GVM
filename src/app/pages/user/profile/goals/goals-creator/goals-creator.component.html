@@ -1,6 +1,6 @@
 <button
     type="button"
-    (click)="newGoalModalVisibility = true"
+    (click)="exerciseSelectorModalVisibility = true"
     class="fixed z-20 flex items-center p-1 pr-3 transition-all -translate-x-1/2 rounded-full bg-opacity-20 left-1/2 bottom-24 bg-neutral-900 active:scale-95 active:opacity-50 group"
 >
     <svg
@@ -19,7 +19,11 @@
     <div class="font-semibold text-emerald-500">Add Goal</div>
 </button>
 
-<!-- <app-single-exercise-selector></app-single-exercise-selector> -->
+<app-exercise-selector
+    [exercisesModalVisibility]="exerciseSelectorModalVisibility"
+    (exercisesModalCloseEvent)="exerciseSelectorModalVisibility = false"
+    (exerciseChangeEvent)="selectExercise($event)"
+></app-exercise-selector>
 
 @if (newGoalModalVisibility) {
 <!-- eslint-disable-next-line    -->
@@ -39,19 +43,20 @@
 >
     <button
         type="button"
+        (click)="exerciseSelectorModalVisibility = true"
         class="flex flex-col items-center gap-1 transition-all active:opacity-50 active:scale-95"
     >
         <div
             class="overflow-hidden border-2 border-solid rounded-full border-emerald-500 min-w-max border-emerald-5000"
         >
             <img
-                src="assets/exercisesThumbnails/frame_00_delay-1s.jpg"
+                [src]="selectedExercise?.imageUrl"
                 class="w-12 h-12"
-                alt=""
+                [alt]="selectedExercise?.name + ' graphic'"
             />
         </div>
         <div class="text-2xl font-semibold text-clip text-emerald-500">
-            Bench Press
+            {{ selectedExercise?.name | titlecase }}
         </div>
     </button>
     <div class="mb-10 text-sm font-semibold">
