@@ -1,1 +1,194 @@
-<p>exercise-selector works!</p>
+@if (exercisesModalVisibility) {
+<!-- eslint-disable-next-line    -->
+<div
+    (click)="closeExercisesModal()"
+    class="fixed top-0 left-0 z-50 w-screen h-screen bg-black bg-opacity-80"
+    @openClose2
+></div>
+
+<div
+    style="z-index: 60"
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-500 pb-96 bg-neutral-950 rounded-t-md"
+    @openClose
+    [ngClass]="{
+        'top-1/4': exercisesModalVisibility && !innerModalsVisibility,
+        'top-0': innerModalsVisibility === true,
+        'top-full': !exercisesModalVisibility
+    }"
+>
+    <div class="text-lg font-semibold text-center">
+        Choose exercise for your goal:
+    </div>
+
+    <div class="flex flex-col gap-1.5 w-full">
+        <input
+            type="text"
+            placeholder="Search for an exercise..."
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="applyFilters()"
+            class="w-full p-3 border-2 border-solid rounded-md outline-none placeholder-neutral-700 border-neutral-900 bg-neutral-950 focus:outline-none focus:border-emerald-500"
+        />
+
+        <div class="flex items-center justify-between w-full gap-1.5">
+            <app-muscle-groups-modal
+                (muscleGroupChangeEvent)="filterExercisesByMusclesNames($event)"
+                (visibilityChangeEvent)="innerModalsVisibility = $event"
+                class="w-1/2"
+            ></app-muscle-groups-modal>
+            <app-equipment-modal
+                (equipmentChangeEvent)="filterExercisesByEquipment($event)"
+                (visibilityChangeEvent)="innerModalsVisibility = $event"
+                class="w-1/2"
+            ></app-equipment-modal>
+        </div>
+
+        <!-- prettier-ignore -->
+        @if (selectedMuscleGroup !== 'all muscles' || selectedEquipment !== 'all equipment') {
+        <button
+            type="button"
+            (click)="clearFilters()"
+            class="flex items-center gap-2 px-2 transition-all group active:opacity-50 active:scale-95"
+        >
+            <div
+                class="w-full h-0.5 transition-colors border-solid rounded-full bg-neutral-900 group-hover:bg-red-500 mt-0.5"
+            ></div>
+            <div class="flex items-center text-sm font-semibold">
+                <svg
+                    class="w-4 h-4 stroke-white mt-0.5 group-hover:stroke-red-500 transition-colors"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+                <div
+                    class="transition-colors text-nowrap group-hover:text-red-500"
+                >
+                    Clear filters
+                </div>
+            </div>
+            <div
+                class="w-full h-0.5 transition-colors border-solid rounded-full bg-neutral-900 group-hover:bg-red-500 mt-0.5"
+            ></div>
+        </button>
+        }
+    </div>
+
+    <div class="flex flex-col self-start w-full gap-1">
+        @for (exercise of exercisesFiltered; track $index) {
+        <button
+            type="button"
+            (click)="onExerciseChange($index)"
+            class="flex items-center justify-between w-full p-1 transition-all rounded-md cursor-pointer active:opacity-50 active:scale-95"
+        >
+            <div class="flex items-center gap-2">
+                <div
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                >
+                    <img
+                        [src]="exercise.imageUrl"
+                        class="w-12 h-12"
+                        [alt]="exercise.name + ' icon'"
+                    />
+                </div>
+                <div class="flex flex-col items-start">
+                    <div class="font-semibold">
+                        {{ exercise.name | titlecase }}
+                    </div>
+
+                    <div class="flex gap-1">
+                        @for (muscleGroup of exercise.muscleGroups; track
+                        $index) {
+                        <div class="flex text-sm opacity-50">
+                            <span>
+                                {{ muscleGroup | titlecase }}
+                            </span>
+                            @if ($index + 1 !== exercise.muscleGroups.length) {
+                            <span>,</span>
+                            }
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </button>
+        }
+
+        <!--  -->
+
+        @if (exercisesFiltered.length === 0) {
+        <div
+            class="absolute z-20 w-full px-8 py-20 text-sm font-semibold text-center -translate-x-3 opacity-50 -translate-y-3/4 top-1/2 backdrop-blur-lg"
+        >
+            No exercises found.
+        </div>
+        <div>
+            <svg
+                class="absolute z-10 rotate-45 -translate-x-1/2 opacity-50 -translate-y-3/4 w-44 h-44 stroke-black top-1/2 dark:stroke-neutral-700 left-1/2"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M7.4 7H4.6C4.26863 7 4 7.26863 4 7.6V16.4C4 16.7314 4.26863 17 4.6 17H7.4C7.73137 17 8 16.7314 8 16.4V7.6C8 7.26863 7.73137 7 7.4 7Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M19.4 7H16.6C16.2686 7 16 7.26863 16 7.6V16.4C16 16.7314 16.2686 17 16.6 17H19.4C19.7314 17 20 16.7314 20 16.4V7.6C20 7.26863 19.7314 7 19.4 7Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M1 14.4V9.6C1 9.26863 1.26863 9 1.6 9H3.4C3.73137 9 4 9.26863 4 9.6V14.4C4 14.7314 3.73137 15 3.4 15H1.6C1.26863 15 1 14.7314 1 14.4Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M23 14.4V9.6C23 9.26863 22.7314 9 22.4 9H20.6C20.2686 9 20 9.26863 20 9.6V14.4C20 14.7314 20.2686 15 20.6 15H22.4C22.7314 15 23 14.7314 23 14.4Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M8 12H16"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </div>
+        }
+    </div>
+</div>
+}
+
+<!-- indentation comment -->
+
+@if (exercisesModalVisibility && !innerModalsVisibility) {
+<div
+    @openClose3
+    style="z-index: 60"
+    class="fixed left-0 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
+    [ngClass]="{
+        'bottom-0': exercisesModalVisibility,
+        '-bottom-full': !exercisesModalVisibility,
+    }"
+>
+    <button
+        type="button"
+        (click)="closeExercisesModal()"
+        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
+    >
+        Cancel & Close
+    </button>
+</div>
+}
