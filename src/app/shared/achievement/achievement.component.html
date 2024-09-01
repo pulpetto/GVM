@@ -3,22 +3,18 @@
         class="relative w-full text-sm font-semibold text-center rounded-full h-7 bg-neutral-900"
     >
         <div class="absolute z-10 -translate-y-1/2 top-1/2 left-1/2">
-            00/000
+            {{ progressCurrent }}/{{ progressEnd }}
         </div>
 
         <div
             class="absolute left-0 rounded-full h-7 bg-emerald-500"
-            style="width: 99%"
+            [style]="'width:' + percentageProgress + '%'"
         ></div>
     </div>
 
     <div
         class="w-12 mt-0.5 overflow-hidden rounded-full border-solid border-emerald-500 border-2 -translate-x-3"
     >
-        <img
-            src="https://static.vecteezy.com/system/resources/previews/015/696/967/non_2x/gym-fitness-club-logo-design-bodybuilder-illustration-vector.jpg"
-            class=""
-            alt=""
-        />
+        <img [src]="imageUrl" class="" alt="Achievement icon" />
     </div>
 </div>

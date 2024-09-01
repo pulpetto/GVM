@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-achievement',
@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
     templateUrl: './achievement.component.html',
     styleUrl: './achievement.component.css',
 })
-export class AchievementComponent {}
+export class AchievementComponent implements OnInit {
+    @Input({ required: true }) imageUrl!: string;
+    @Input({ required: true }) progressCurrent!: number;
+    @Input({ required: true }) progressEnd!: number;
+
+    percentageProgress!: number;
+
+    ngOnInit() {
+        this.percentageProgress =
+            (this.progressCurrent / this.progressEnd) * 100;
+    }
+}

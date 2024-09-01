@@ -2,7 +2,13 @@
     <div class="mb-4 text-3xl font-semibold text-center">Achievements</div>
     <div class="flex flex-col gap-6 mt-2">
         @for (item of [1,2,3,4]; track $index) {
-        <app-achievement></app-achievement>
+        <app-achievement
+            [imageUrl]="
+                'https://static.vecteezy.com/system/resources/previews/015/696/967/non_2x/gym-fitness-club-logo-design-bodybuilder-illustration-vector.jpg'
+            "
+            [progressCurrent]="70"
+            [progressEnd]="100"
+        ></app-achievement>
         }
     </div>
 </div>
