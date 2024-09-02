@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "100kg Club",
+        "description": "Achieave 100kg total in powerlifting trio: Squat, Bench and Deadlift",
+        "imageUrl": "assets/images/achievements/achv2.jpg"
+    },
+    {
+        "id": 2,
+        "name": "250kg Club",
+        "description": "Achieave 250kg total in powerlifting trio: Squat, Bench and Deadlift",
+        "imageUrl": "assets/images/achievements/achv2.jpg"
+    },
+    {
+        "id": 3,
+        "name": "500kg Club",
+        "description": "Achieave 500kg total in powerlifting trio: Squat, Bench and Deadlift",
+        "imageUrl": "assets/images/achievements/achv2.jpg"
+    },
+    {
+        "id": 4,
+        "name": "1000kg Club",
+        "description": "Achieave 1 ton total in powerlifting trio: Squat, Bench and Deadlift",
+        "imageUrl": "assets/images/achievements/achv2.jpg"
+    }
+]
