@@ -4,6 +4,7 @@ import { MuscleGroup } from '../interfaces/muscle-group';
 import { map, Observable } from 'rxjs';
 import { Equipment } from '../interfaces/equipment';
 import { Exercise } from '../interfaces/exercise';
+import { Achievement } from '../interfaces/achievement';
 
 @Injectable({
     providedIn: 'root',
@@ -33,5 +34,9 @@ export class DataService {
 
     getEquipment(): Observable<Equipment[]> {
         return this.http.get<Equipment[]>('assets/data/equipment.json');
+    }
+
+    getAchievements(): Observable<Achievement[]> {
+        return this.http.get<Achievement[]>('assets/data/achievements.json');
     }
 }
