@@ -1,192 +1,117 @@
-import { Component, Inject, Renderer2 } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { InputComponent } from '../../../../shared/input/input.component';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MuscleGroupsModalComponent } from '../../../../shared/modals/muscle-groups-modal/muscle-groups-modal.component';
+import { EquipmentModalComponent } from '../../../../shared/modals/equipment-modal/equipment-modal.component';
+import { DataService } from '../../../../services/data.service';
+import { Exercise } from '../../../../interfaces/exercise';
+import { MuscleGroupName } from '../../../../types/muscle-group-type';
+import { EquipmentName } from '../../../../types/equipment-type';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-exercises',
     standalone: true,
     templateUrl: './exercises.component.html',
     styleUrl: './exercises.component.css',
-    imports: [InputComponent, CommonModule, RouterModule],
+    imports: [
+        InputComponent,
+        CommonModule,
+        RouterModule,
+        MuscleGroupsModalComponent,
+        EquipmentModalComponent,
+        FormsModule,
+        RouterModule,
+    ],
 })
-export class ExercisesComponent {
-    exercises = [
-        {
-            name: 'Squat',
-            iconRoute: 'assets/exercisesThumbnails/Squat-Thumbnail.jpg',
-            muscleGroups: 'Quads, Glutes, Hamstrings',
-        },
-        {
-            name: 'Bench Press',
-            iconRoute: 'assets/exercisesThumbnails/frame_00_delay-1s.jpg',
-            muscleGroups: 'Chest, Triceps, Shoulders',
-        },
-        {
-            name: 'Bicep Curl',
-            iconRoute: 'assets/exercisesThumbnails/Bicep-Curl.jpg',
-            muscleGroups: 'Biceps',
-        },
-        {
-            name: 'Close Grip Pushup',
-            iconRoute: 'assets/exercisesThumbnails/Close-Grip-Pushup.jpg',
-            muscleGroups: 'Triceps, Chest, Shoulders',
-        },
-        {
-            name: 'Sumo Squat',
-            iconRoute: 'assets/exercisesThumbnails/Sumo-Squat.jpg',
-            muscleGroups: 'Glutes, Quads, Hamstrings',
-        },
-    ];
+export class ExercisesComponent implements OnInit {
+    dataService = inject(DataService);
 
-    muscleGroups = [
-        {
-            name: 'Upper Back',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Upper-Back.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Lower Back',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Lower-Back.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Lats',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Lats.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Chest',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Chest.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Abs',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Abs.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Biceps',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Biceps.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Triceps',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Triceps.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Shoulders',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Shoulders.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Forearms',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Forearms.jpg',
-            focusOn: 'center',
-        },
-        {
-            name: 'Traps',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Traps.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Neck',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Neck.jpg',
-            focusOn: 'top',
-        },
-        {
-            name: 'Quads',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Quads.jpg',
-            focusOn: 'bottom',
-        },
-        {
-            name: 'Hamstrings',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Hamstrings.jpg',
-            focusOn: 'bottom',
-        },
-        {
-            name: 'Glutes',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/Glutes.jpg',
-            focusOn: 'bottom',
-        },
-        {
-            name: 'Calves',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/calves_0.jpg',
-            focusOn: 'center',
-        },
-    ];
+    exercisesModalVisibility: boolean = false;
+    innerModalsVisibility: boolean = false;
 
-    equipment = [
-        {
-            name: 'Dumbells',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/calves_0.jpg',
-        },
-        {
-            name: 'Barbell',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/calves_0.jpg',
-        },
-        {
-            name: 'Bodyweight',
-            isSelected: false,
-            imageUrl: 'assets/images/muscleGroups/calves_0.jpg',
-        },
-    ];
+    exercises!: Exercise[];
+    exercisesFiltered: Exercise[] = [];
+    newlySelectedExercisesIds = new Set<number>();
 
-    constructor(
-        private renderer: Renderer2,
-        @Inject(DOCUMENT) private document: Document
-    ) {}
+    @ViewChild(MuscleGroupsModalComponent)
+    muscleGroupsModalComponent!: MuscleGroupsModalComponent;
 
-    bgBlurVisibility: boolean = false;
-    muscleGroupsModalVisibility: boolean = false;
-    equipementModalVisibility: boolean = false;
+    @ViewChild(EquipmentModalComponent)
+    equipmentModalComponent!: EquipmentModalComponent;
 
-    openModal(whichToOpen: 'equipement' | 'muscleGroups') {
-        whichToOpen === 'equipement'
-            ? (this.equipementModalVisibility = true)
-            : (this.muscleGroupsModalVisibility = true);
+    searchTerm: string = '';
 
-        this.bgBlurVisibility = true;
-        this.renderer.addClass(this.document.body, 'overflow-y-hidden');
+    selectedMuscleGroup: MuscleGroupName = 'all muscles';
+    selectedMuscleGroupId: number = 1;
+
+    selectedEquipment: EquipmentName = 'all equipment';
+    selectedEquipmentId: number = 1;
+
+    ngOnInit() {
+        this.dataService.getExercises().subscribe((data) => {
+            this.exercises = data;
+            this.exercisesFiltered = data;
+        });
     }
 
-    closeModal() {
-        this.equipementModalVisibility = false;
-        this.muscleGroupsModalVisibility = false;
-
-        this.bgBlurVisibility = false;
-        this.renderer.removeClass(this.document.body, 'overflow-y-hidden');
+    openExercisesModal() {
+        this.newlySelectedExercisesIds.clear();
+        this.exercisesModalVisibility = true;
     }
 
-    onOptionSelect(modalName: 'equipment' | 'muscleGroups', $index: number) {
-        this[modalName][$index].isSelected =
-            !this[modalName][$index].isSelected;
+    closeExercisesModal() {
+        this.exercisesModalVisibility = false;
     }
 
-    get checkedEquipementCount(): number {
-        return this.equipment.filter((item) => item.isSelected).length;
+    filterExercisesByMusclesNames(name: MuscleGroupName) {
+        this.selectedMuscleGroup = name;
+        this.applyFilters();
     }
 
-    get checkedMuscleGroupsCount(): number {
-        return this.muscleGroups.filter((muscleGroup) => muscleGroup.isSelected)
-            .length;
+    filterExercisesByEquipment(name: EquipmentName) {
+        this.selectedEquipment = name;
+        this.applyFilters();
+    }
+
+    applyFilters() {
+        let filtered = this.exercises;
+
+        if (this.searchTerm) {
+            filtered = filtered.filter((exercise) =>
+                exercise.name
+                    .toLowerCase()
+                    .startsWith(this.searchTerm.toLowerCase())
+            );
+        }
+
+        if (this.selectedMuscleGroup !== 'all muscles') {
+            filtered = filtered.filter((exercise) =>
+                exercise.muscleGroups.includes(this.selectedMuscleGroup)
+            );
+        }
+
+        if (this.selectedEquipment !== 'all equipment') {
+            filtered = filtered.filter(
+                (exercise) => exercise.equipment === this.selectedEquipment
+            );
+        }
+
+        this.exercisesFiltered = filtered;
+    }
+
+    clearFilters() {
+        this.muscleGroupsModalComponent.selectedMuscleGroupName = 'all muscles';
+        this.muscleGroupsModalComponent.selectedMuscleGroupId = 1;
+        this.selectedMuscleGroup = 'all muscles';
+        this.selectedMuscleGroupId = 1;
+
+        this.equipmentModalComponent.selectedEquipmentName = 'all equipment';
+        this.equipmentModalComponent.selectedEquipmentId = 1;
+        this.selectedEquipment = 'all equipment';
+        this.selectedEquipmentId = 1;
+
+        this.applyFilters();
     }
 }
