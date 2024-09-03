@@ -93,7 +93,7 @@ export const routes: Routes = [
                     ).then((component) => component.ExercisesComponent),
             },
             {
-                path: 'profile/exercises/:ecerciseName',
+                path: 'profile/exercises/:exerciseId',
                 loadComponent: () =>
                     import('./shared/exercise/exercise.component').then(
                         (component) => component.ExerciseComponent
