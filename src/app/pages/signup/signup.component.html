@@ -1,7 +1,10 @@
 <div
     class="relative z-10 flex flex-col items-center justify-center h-screen gap-8"
 >
+    <app-credentials-modal></app-credentials-modal>
+
     <div class="text-4xl font-semibold">Join Today!</div>
+
     <form
         [formGroup]="singupForm"
         (ngSubmit)="signupUser()"

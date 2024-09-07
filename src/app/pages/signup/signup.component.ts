@@ -13,13 +13,20 @@ import {
 import { UserService } from '../../services/user.service';
 import { RouterModule } from '@angular/router';
 import { catchError, debounceTime, map, Observable, of, switchMap } from 'rxjs';
+import { CredentialsModalComponent } from '../../shared/credentials-modal/credentials-modal.component';
 
 @Component({
     selector: 'app-signup',
     standalone: true,
     templateUrl: './signup.component.html',
     styleUrl: './signup.component.css',
-    imports: [InputComponent, ReactiveFormsModule, CommonModule, RouterModule],
+    imports: [
+        InputComponent,
+        ReactiveFormsModule,
+        CommonModule,
+        RouterModule,
+        CredentialsModalComponent,
+    ],
 })
 export class SignupComponent implements OnInit {
     userService = inject(UserService);
