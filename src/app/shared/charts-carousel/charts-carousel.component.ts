@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { OneOptionModalComponent } from '../one-option-modal/one-option-modal.component';
 import { CarouselComponent } from '../carousel/carousel.component';
 import { ButtonForModalComponent } from '../button-for-modal/button-for-modal.component';
+import { PeriodModalComponent } from '../period-modal/period-modal.component';
 
 @Component({
     selector: 'app-charts-carousel',
@@ -12,6 +13,7 @@ import { ButtonForModalComponent } from '../button-for-modal/button-for-modal.co
         OneOptionModalComponent,
         CarouselComponent,
         ButtonForModalComponent,
+        PeriodModalComponent,
     ],
 })
 export class ChartsCarouselComponent {

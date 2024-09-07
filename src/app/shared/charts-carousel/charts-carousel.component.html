@@ -12,19 +12,7 @@
             (activeOptionChange)="handle()"
         ></app-button-for-modal>
 
-        <app-button-for-modal
-            [name]="'Period'"
-            [modalName]="'Choose chart period to display'"
-            [modalOptions]="[
-                'Last Week',
-                'Last Month',
-                'Last 3 Months',
-                'Last 6 Months',
-                'Last Year',
-                'All time'
-            ]"
-            (activeOptionChange)="handle()"
-        ></app-button-for-modal>
+        <app-period-modal></app-period-modal>
     </div>
 
     <app-carousel></app-carousel>
