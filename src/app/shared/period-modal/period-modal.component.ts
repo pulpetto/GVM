@@ -53,7 +53,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class PeriodModalComponent {
-    modalVisibility: boolean = true;
+    modalVisibility: boolean = false;
 
     activePeriod!: string;
 
