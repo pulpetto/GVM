@@ -97,6 +97,7 @@ export class UserService {
                 const userObj = {
                     username: user.username,
                     email: user.email,
+                    role: 'user',
                 };
 
                 setDoc(
