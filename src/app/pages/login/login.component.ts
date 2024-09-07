@@ -12,13 +12,19 @@ import {
 import { UserService } from '../../services/user.service';
 import { RouterModule } from '@angular/router';
 import { Observable, of, debounceTime, switchMap, map, catchError } from 'rxjs';
+import { CredentialsModalComponent } from '../../shared/credentials-modal/credentials-modal.component';
 
 @Component({
     selector: 'app-login',
     standalone: true,
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
-    imports: [InputComponent, CommonModule, RouterModule],
+    imports: [
+        InputComponent,
+        CommonModule,
+        RouterModule,
+        CredentialsModalComponent,
+    ],
 })
 export class LoginComponent implements OnInit {
     userService = inject(UserService);
