@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
             if (user) {
                 this.userService.initializeUserAndProperties(user.uid);
             } else {
-                this.userService.currentUser.set(null);
+                this.userService.setUserValue(null);
                 this.router.navigate(['/home']);
             }
         });
