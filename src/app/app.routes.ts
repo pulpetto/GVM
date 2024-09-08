@@ -28,6 +28,13 @@ export const routes: Routes = [
             ),
         children: [
             {
+                path: 'admin',
+                loadComponent: () =>
+                    import(
+                        './pages/user/admin-panel/admin-panel.component'
+                    ).then((component) => component.AdminPanelComponent),
+            },
+            {
                 path: 'profile',
                 loadComponent: () =>
                     import('./pages/user/profile/profile.component').then(
