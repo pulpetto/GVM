@@ -35,6 +35,13 @@ export const routes: Routes = [
                     ).then((component) => component.AdminPanelComponent),
             },
             {
+                path: 'admin/exercises',
+                loadComponent: () =>
+                    import(
+                        './pages/user/admin-panel/exercise-manager/exercise-manager.component'
+                    ).then((component) => component.ExerciseManagerComponent),
+            },
+            {
                 path: 'profile',
                 loadComponent: () =>
                     import('./pages/user/profile/profile.component').then(
