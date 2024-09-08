@@ -57,6 +57,10 @@ export class UserService {
     user$ = user(this.authentication);
     private currentUser = signal<User | null | undefined>(undefined);
 
+    setUserValue(userVal: User | null | undefined) {
+        this.currentUser.set(userVal);
+    }
+
     get getUser(): Signal<User | null | undefined> {
         return this.currentUser;
     }
