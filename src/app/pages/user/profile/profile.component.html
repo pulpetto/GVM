@@ -37,7 +37,15 @@
         </div>
 
         <div class="flex flex-col items-center gap-1 scale-90">
-            <div class="text-xl font-semibold">User Name</div>
+            <div class="text-xl font-semibold">
+                User Name
+                <!--  -->
+                @if (userRole() !== 'user') {
+                <span class="text-emerald-500">
+                    ({{ userRole() | titlecase }})
+                </span>
+                }
+            </div>
             <div class="flex justify-between gap-3">
                 <div class="flex flex-col items-center">
                     <div class="opacity-50">Followers:</div>

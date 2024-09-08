@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { IconButtonComponent } from '../../../shared/icon-button/icon-button.component';
 import { CommonModule } from '@angular/common';
 import { OneOptionModalComponent } from '../../../shared/one-option-modal/one-option-modal.component';
@@ -23,4 +23,6 @@ import { RouterModule } from '@angular/router';
 })
 export class ProfileComponent {
     userService = inject(UserService);
+
+    userRole = computed(() => this.userService.getUser()?.role);
 }
