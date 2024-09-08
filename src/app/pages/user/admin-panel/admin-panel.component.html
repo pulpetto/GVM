@@ -1,1 +1,112 @@
-<p>admin-panel works!</p>
+<div class="flex flex-col items-center gap-4 p-4 text-lg">
+    <div class="flex items-center gap-0.5">
+        <svg
+            class="w-10 h-10 stroke-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M5 12V18C5 18 5 21 12 21C19 21 19 18 19 18V12"
+                stroke-width="1.5"
+            />
+            <path
+                d="M5 6V12C5 12 5 15 12 15C19 15 19 12 19 12V6"
+                stroke-width="1.5"
+            />
+            <path
+                d="M12 3C19 3 19 6 19 6C19 6 19 9 12 9C5 9 5 6 5 6C5 6 5 3 12 3Z"
+                stroke-width="1.5"
+            />
+        </svg>
+        <div class="text-2xl font-semibold">Edit Database</div>
+    </div>
+
+    <div class="flex flex-col w-full gap-1">
+        <a
+            routerLink=""
+            class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
+        >
+            <svg
+                class="w-5 h-5 mt-0.5 z-20 stroke-white group-hover:stroke-emerald-500 transition-colors"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M1 20V19C1 15.134 4.13401 12 8 12V12C11.866 12 15 15.134 15 19V20"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                />
+                <path
+                    d="M13 14V14C13 11.2386 15.2386 9 18 9V9C20.7614 9 23 11.2386 23 14V14.5"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                />
+                <path
+                    d="M8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12Z"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M18 9C19.6569 9 21 7.65685 21 6C21 4.34315 19.6569 3 18 3C16.3431 3 15 4.34315 15 6C15 7.65685 16.3431 9 18 9Z"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+            <div class="z-20">Users</div>
+            <div
+                class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
+            ></div>
+        </a>
+
+        <a
+            routerLink="explore"
+            class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
+        >
+            <svg
+                class="w-5 h-5 mt-0.5 z-20 stroke-white group-hover:stroke-emerald-500 transition-colors rotate-45"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M7.4 7H4.6C4.26863 7 4 7.26863 4 7.6V16.4C4 16.7314 4.26863 17 4.6 17H7.4C7.73137 17 8 16.7314 8 16.4V7.6C8 7.26863 7.73137 7 7.4 7Z"
+                    stroke-width="1.75"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M19.4 7H16.6C16.2686 7 16 7.26863 16 7.6V16.4C16 16.7314 16.2686 17 16.6 17H19.4C19.7314 17 20 16.7314 20 16.4V7.6C20 7.26863 19.7314 7 19.4 7Z"
+                    stroke-width="1.75"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M1 14.4V9.6C1 9.26863 1.26863 9 1.6 9H3.4C3.73137 9 4 9.26863 4 9.6V14.4C4 14.7314 3.73137 15 3.4 15H1.6C1.26863 15 1 14.7314 1 14.4Z"
+                    stroke-width="1.75"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M23 14.4V9.6C23 9.26863 22.7314 9 22.4 9H20.6C20.2686 9 20 9.26863 20 9.6V14.4C20 14.7314 20.2686 15 20.6 15H22.4C22.7314 15 23 14.7314 23 14.4Z"
+                    stroke-width="1.75"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M8 12H16"
+                    stroke-width="1.75"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+            <div class="z-20">Exercises</div>
+            <div
+                class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
+            ></div>
+        </a>
+    </div>
+</div>
