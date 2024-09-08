@@ -14,5 +14,5 @@ import { CommonModule } from '@angular/common';
 export class NavbarComponent {
     userService = inject(UserService);
 
-    userRole = computed(() => this.userService.currentUser()?.role);
+    userRole = computed(() => this.userService.getUser()?.role);
 }

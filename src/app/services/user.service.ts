@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { DestroyRef, inject, Injectable, Signal, signal } from '@angular/core';
 import {
     setDoc,
     doc,
@@ -55,7 +55,11 @@ export class UserService {
     dataService = inject(DataService);
 
     user$ = user(this.authentication);
-    currentUser = signal<User | null | undefined>(undefined);
+    private currentUser = signal<User | null | undefined>(undefined);
+
+    get getUser(): Signal<User | null | undefined> {
+        return this.currentUser;
+    }
 
     private users = collection(this.firestore, 'users');
 
