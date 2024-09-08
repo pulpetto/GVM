@@ -23,8 +23,4 @@ import { RouterModule } from '@angular/router';
 })
 export class ProfileComponent {
     userService = inject(UserService);
-
-    logout() {
-        this.userService.logoutUser();
-    }
 }
