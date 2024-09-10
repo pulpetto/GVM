@@ -116,6 +116,7 @@
     <div class="self-center">
         <input
             type="text"
+            [(ngModel)]="newMuscleGroupName"
             placeholder="Muscle group name..."
             class="p-2 font-semibold transition-all bg-opacity-50 rounded-md outline-none bg-neutral-900 focus:outline-emerald-500 outline-offset-0 placeholder-neutral-700"
         />
@@ -136,7 +137,7 @@
 >
     <button
         type="button"
-        [disabled]="0"
+        [disabled]="newMuscleGroupName === '' || selectedImage === null"
         class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
     >
         Add Muscle Group

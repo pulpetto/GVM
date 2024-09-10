@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -16,7 +17,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-muscle-groups-manager',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, FormsModule],
     templateUrl: './muscle-groups-manager.component.html',
     styleUrl: './muscle-groups-manager.component.css',
     animations: [
@@ -75,4 +76,6 @@ export class MuscleGroupsManagerComponent {
     onImageRemove() {
         this.selectedImage = null;
     }
+
+    newMuscleGroupName: string = '';
 }
