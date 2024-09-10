@@ -24,4 +24,8 @@ export class ExerciseCreatorComponent {
             reader.readAsDataURL(thumbnail);
         }
     }
+
+    removeThumbnail() {
+        this.selectedThumbnail = null;
+    }
 }
