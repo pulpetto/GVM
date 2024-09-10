@@ -49,6 +49,15 @@ export const routes: Routes = [
                     ).then((component) => component.ExerciseCreatorComponent),
             },
             {
+                path: 'admin/muscles',
+                loadComponent: () =>
+                    import(
+                        './pages/user/admin-panel/muscle-groups-manager/muscle-groups-manager.component'
+                    ).then(
+                        (component) => component.MuscleGroupsManagerComponent
+                    ),
+            },
+            {
                 path: 'profile',
                 loadComponent: () =>
                     import('./pages/user/profile/profile.component').then(
