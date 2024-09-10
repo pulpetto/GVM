@@ -78,4 +78,10 @@ export class MuscleGroupsManagerComponent {
     }
 
     newMuscleGroupName: string = '';
+
+    closenewMuscleGroupModal() {
+        this.selectedImage = null;
+        this.newMuscleGroupName = '';
+        this.newMuscleGroupModalVisibility = false;
+    }
 }
