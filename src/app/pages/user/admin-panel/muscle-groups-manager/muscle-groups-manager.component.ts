@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -54,4 +54,25 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class MuscleGroupsManagerComponent {
     newMuscleGroupModalVisibility: boolean = false;
+
+    @ViewChild('imageInput') imageInput!: ElementRef<HTMLInputElement>;
+
+    selectedImage: string | ArrayBuffer | null = null;
+
+    onImageSelect() {
+        if (this.imageInput.nativeElement.files) {
+            const thumbnail = this.imageInput.nativeElement.files[0];
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                this.selectedImage = reader.result;
+            };
+
+            reader.readAsDataURL(thumbnail);
+        }
+    }
+
+    onImageRemove() {
+        this.selectedImage = null;
+    }
 }
