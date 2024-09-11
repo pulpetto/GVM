@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AdminService } from '../../../../services/admin.service';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -54,6 +55,8 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class MuscleGroupsManagerComponent {
+    adminService = inject(AdminService);
+
     newMuscleGroupModalVisibility: boolean = false;
 
     @ViewChild('imageInput') imageInput!: ElementRef<HTMLInputElement>;
