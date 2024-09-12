@@ -65,14 +65,14 @@ export class MuscleGroupsManagerComponent {
 
     onImageSelect() {
         if (this.imageInput.nativeElement.files) {
-            const thumbnail = this.imageInput.nativeElement.files[0];
+            const image = this.imageInput.nativeElement.files[0];
             const reader = new FileReader();
 
             reader.onload = () => {
                 this.selectedImage = reader.result;
             };
 
-            reader.readAsDataURL(thumbnail);
+            reader.readAsDataURL(image);
         }
     }
 
