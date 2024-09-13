@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../../../services/admin.service';
+import { Observable, tap } from 'rxjs';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -55,6 +56,9 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class MuscleGroupsManagerComponent {
+    uploadProgress$!: Observable<number | null>;
+    isUploading: boolean = false;
+
     adminService = inject(AdminService);
 
     newMuscleGroupModalVisibility: boolean = false;
@@ -84,7 +88,8 @@ export class MuscleGroupsManagerComponent {
 
     newMuscleGroupName: string = '';
 
-    closenewMuscleGroupModal() {
+    closeNewMuscleGroupModal() {
+        this.isUploading = false;
         this.selectedImagePreview = null;
         this.selectedImageFile = null;
         this.newMuscleGroupName = '';
@@ -92,9 +97,19 @@ export class MuscleGroupsManagerComponent {
     }
 
     addNewMuscleGroup() {
-        this.adminService.addNewMuscleGroup(
-            this.newMuscleGroupName,
-            this.selectedImageFile!
-        );
+        this.isUploading = true;
+
+        this.uploadProgress$ = this.adminService
+            .addNewMuscleGroup(this.newMuscleGroupName, this.selectedImageFile!)
+            .pipe(
+                tap((progress) => {
+                    if (progress === 100) {
+                        this.closeNewMuscleGroupModal();
+                    }
+                    if (progress === null) {
+                        // this.progressError = true;
+                    }
+                })
+            );
     }
 }

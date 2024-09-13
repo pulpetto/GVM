@@ -24,7 +24,7 @@
 @if (newMuscleGroupModalVisibility) {
 <!-- eslint-disable-next-line -->
 <div
-    (click)="closenewMuscleGroupModal()"
+    (click)="closeNewMuscleGroupModal()"
     class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
     @openClose2
 ></div>
@@ -133,12 +133,34 @@
 @if (newMuscleGroupModalVisibility) {
 <div
     @openClose3
-    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
+    class="fixed left-0 z-50 flex flex-col w-full gap-2 p-4 shadow-md rounded-t-md bg-neutral-950"
     [ngClass]="{
         'bottom-0': newMuscleGroupModalVisibility,
         '-bottom-full': !newMuscleGroupModalVisibility,
     }"
 >
+    @if (isUploading) {
+    <div class="text-sm font-semibold text-center opacity-50">Uploading...</div>
+    }
+
+    <!--  -->
+
+    @if (uploadProgress$ | async; as uploadProgress) {
+    <div
+        class="py-1.5 text-center rounded-md w-full bg-neutral-900 transition-all relative font-semibold"
+    >
+        <div
+            class="absolute top-0 left-0 h-full transition-all rounded-md bg-emerald-500"
+            [style]="'width:' + uploadProgress + '%'"
+        ></div>
+
+        <div class="relative z-10 text-center">{{ uploadProgress }}%</div>
+    </div>
+    }
+
+    <!--  -->
+
+    @if (!isUploading) {
     <button
         type="button"
         (click)="addNewMuscleGroup()"
@@ -149,10 +171,11 @@
     </button>
     <button
         type="button"
-        (click)="closenewMuscleGroupModal()"
-        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
+        (click)="closeNewMuscleGroupModal()"
+        class="py-1.5 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
     >
         Cancel & Close
     </button>
+    }
 </div>
 }

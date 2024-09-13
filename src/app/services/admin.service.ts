@@ -6,6 +6,7 @@ import {
     ref,
     uploadBytesResumable,
 } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -14,29 +15,40 @@ export class AdminService {
     firestore = inject(Firestore);
     storage = getStorage();
 
-    addNewMuscleGroup(name: string, imageFile: File) {
+    addNewMuscleGroup(
+        name: string,
+        imageFile: File
+    ): Observable<number | null> {
         const filePath = `admin/muscleGroups/${Date.now()}_${name}`;
         const storageRef = ref(this.storage, filePath);
 
         const uploadTask = uploadBytesResumable(storageRef, imageFile);
 
-        uploadTask.on(
-            'state_changed',
-            (snapshot) => {
-                const progress =
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            },
-            (error) => {
-                console.error('Upload failed:', error);
-            },
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    addDoc(collection(this.firestore, 'muscleGroups'), {
-                        name: name,
-                        imageUrl: downloadURL,
-                    });
-                });
-            }
-        );
+        return new Observable<number | null>((observer) => {
+            uploadTask.on(
+                'state_changed',
+                (snapshot) => {
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+                    observer.next(progress);
+                },
+                (error) => {
+                    console.error('Upload failed:', error);
+                    observer.next(null);
+                    observer.complete();
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then(
+                        (downloadURL) => {
+                            addDoc(collection(this.firestore, 'muscleGroups'), {
+                                name: name,
+                                imageUrl: downloadURL,
+                            });
+                        }
+                    );
+                }
+            );
+        });
     }
 }
