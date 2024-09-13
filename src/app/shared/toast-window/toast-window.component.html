@@ -1,10 +1,10 @@
 <button
     (click)="closeEvent.emit()"
-    class="fixed flex items-center gap-2 p-3 font-semibold transition-all duration-300 -translate-x-1/2 rounded-md shadow-lg bg-neutral-950 left-1/2 shadow-black -bottom-full"
-    [ngClass]="{ 'bottom-12': visibility }"
+    class="fixed flex items-center gap-2 p-3 font-semibold transition-all duration-300 -translate-x-1/2 border-2 border-red-500 border-solid rounded-md h-min bg-neutral-950 left-1/2 -bottom-full"
+    [ngClass]="{ 'top-12': visibility }"
 >
     <div
-        class="w-6 h-6 scale-125 border-2 border-solid rounded-full"
+        class="w-5 h-5 scale-125 border-2 border-solid rounded-full"
         [ngClass]="{
             'stroke-emerald-500 border-emerald-500': !errorMessage,
             'stroke-red-500 border-red-500': errorMessage,
@@ -14,7 +14,7 @@
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M5 13L9 17L19 7"
-                stroke-width="2"
+                stroke-width="2.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
             />
@@ -23,7 +23,7 @@
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
-                stroke-width="1.5"
+                stroke-width="2.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
             />
@@ -37,5 +37,5 @@
             'bg-red-500': errorMessage
         }"
     ></div>
-    <div class="mb-0.5">{{ message }}</div>
+    <div class="mb-0.5 text-nowrap text-sm">{{ message }}</div>
 </button>
