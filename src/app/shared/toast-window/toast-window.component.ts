@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, computed, inject, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
     selector: 'app-toast-window',
@@ -9,9 +10,14 @@ import { CommonModule } from '@angular/common';
     styleUrl: './toast-window.component.css',
 })
 export class ToastWindowComponent {
-    @Input({ required: true }) message!: string;
-    @Input({ required: true }) errorMessage: boolean = false;
-    @Input({ required: true }) visibility: boolean = false;
+    toastService = inject(ToastService);
 
-    @Output() closeEvent = new EventEmitter<void>();
+    toast: Signal<{
+        message: string;
+        error: boolean;
+    } | null> = computed(() => this.toastService.toast());
+
+    close() {
+        this.toastService.hide();
+    }
 }

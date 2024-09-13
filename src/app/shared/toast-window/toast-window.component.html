@@ -1,16 +1,17 @@
+@if (toast()) {
 <button
-    (click)="closeEvent.emit()"
+    (click)="close()"
     class="fixed flex items-center gap-2 p-3 font-semibold transition-all duration-300 -translate-x-1/2 border-2 border-red-500 border-solid rounded-md h-min bg-neutral-950 left-1/2 -bottom-full"
-    [ngClass]="{ 'top-12': visibility }"
+    [ngClass]="{ 'top-12': toast() }"
 >
     <div
         class="w-5 h-5 scale-125 border-2 border-solid rounded-full"
         [ngClass]="{
-            'stroke-emerald-500 border-emerald-500': !errorMessage,
-            'stroke-red-500 border-red-500': errorMessage,
+            'stroke-emerald-500 border-emerald-500': !toast()?.error,
+            'stroke-red-500 border-red-500': toast()?.error
         }"
     >
-        @if (!errorMessage) {
+        @if (!toast()?.error) {
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M5 13L9 17L19 7"
@@ -33,9 +34,10 @@
     <div
         class="w-0.5 ml-1 h-7 rounded-md"
         [ngClass]="{
-            'bg-emerald-500': !errorMessage,
-            'bg-red-500': errorMessage
+            'bg-emerald-500': !toast()?.error,
+            'bg-red-500': toast()?.error
         }"
     ></div>
-    <div class="mb-0.5 text-nowrap text-sm">{{ message }}</div>
+    <div class="mb-0.5 text-nowrap text-sm">{{ toast()?.message }}</div>
 </button>
+}
