@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../../../services/admin.service';
 
@@ -61,30 +61,40 @@ export class MuscleGroupsManagerComponent {
 
     @ViewChild('imageInput') imageInput!: ElementRef<HTMLInputElement>;
 
-    selectedImage: string | ArrayBuffer | null = null;
+    selectedImagePreview: string | ArrayBuffer | null = null;
+    selectedImageFile: File | null = null;
 
     onImageSelect() {
         if (this.imageInput.nativeElement.files) {
-            const image = this.imageInput.nativeElement.files[0];
+            this.selectedImageFile = this.imageInput.nativeElement.files[0];
             const reader = new FileReader();
 
             reader.onload = () => {
-                this.selectedImage = reader.result;
+                this.selectedImagePreview = reader.result;
             };
 
-            reader.readAsDataURL(image);
+            reader.readAsDataURL(this.selectedImageFile);
         }
     }
 
     onImageRemove() {
-        this.selectedImage = null;
+        this.selectedImagePreview = null;
+        this.selectedImageFile = null;
     }
 
     newMuscleGroupName: string = '';
 
     closenewMuscleGroupModal() {
-        this.selectedImage = null;
+        this.selectedImagePreview = null;
+        this.selectedImageFile = null;
         this.newMuscleGroupName = '';
         this.newMuscleGroupModalVisibility = false;
+    }
+
+    addNewMuscleGroup() {
+        this.adminService.addNewMuscleGroup(
+            this.newMuscleGroupName,
+            this.selectedImageFile!
+        );
     }
 }

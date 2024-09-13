@@ -40,8 +40,12 @@
     <div class="text-lg font-semibold text-center">Add new muscle group:</div>
 
     <div class="relative flex flex-col self-center">
-        @if (selectedImage) {
-        <img [src]="selectedImage" class="w-24 h-24 rounded-full" alt="" />
+        @if (selectedImagePreview) {
+        <img
+            [src]="selectedImagePreview"
+            class="w-24 h-24 rounded-full"
+            alt=""
+        />
 
         <button
             type="button"
@@ -137,7 +141,8 @@
 >
     <button
         type="button"
-        [disabled]="newMuscleGroupName === '' || selectedImage === null"
+        (click)="addNewMuscleGroup()"
+        [disabled]="newMuscleGroupName === '' || selectedImagePreview === null"
         class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
     >
         Add Muscle Group
