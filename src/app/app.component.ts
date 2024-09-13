@@ -11,13 +11,19 @@ import { HeaderComponent } from './shared/header/header.component';
 import { ThemeService } from './services/theme.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserService } from './services/user.service';
+import { ToastWindowComponent } from './shared/toast-window/toast-window.component';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, HomeComponent, HeaderComponent],
+    imports: [
+        RouterOutlet,
+        HomeComponent,
+        HeaderComponent,
+        ToastWindowComponent,
+    ],
 })
 export class AppComponent implements OnInit {
     title = 'GVM';
