@@ -4,6 +4,7 @@ import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../../../services/admin.service';
 import { Observable, tap } from 'rxjs';
+import { ToastService } from '../../../../services/toast.service';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -60,6 +61,7 @@ export class MuscleGroupsManagerComponent {
     isUploading: boolean = false;
 
     adminService = inject(AdminService);
+    toastService = inject(ToastService);
 
     newMuscleGroupModalVisibility: boolean = false;
 
