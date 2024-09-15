@@ -1,4 +1,4 @@
-import { Component, computed, inject, Signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../services/toast.service';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -30,10 +30,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class ToastWindowComponent {
     toastService = inject(ToastService);
 
-    toast: Signal<{
-        message: string;
-        error: boolean;
-    } | null> = computed(() => this.toastService.toast());
+    toast = computed(() => this.toastService.toast());
 
     close() {
         this.toastService.hide();
