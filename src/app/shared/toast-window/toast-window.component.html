@@ -1,8 +1,17 @@
 @if (toast()) {
 <button
+    @openClose
     (click)="close()"
-    class="fixed flex items-center gap-2 p-3 font-semibold transition-all duration-300 -translate-x-1/2 border-2 border-red-500 border-solid rounded-md h-min bg-neutral-950 left-1/2 -bottom-full"
-    [ngClass]="{ 'top-12': toast() }"
+    class="fixed flex items-center gap-2 p-3 font-semibold transition-all border-2 border-solid rounded-md active:opacity-50 active:scale-95 h-min bg-neutral-950 top-12"
+    [ngClass]="{
+        'right-1/2': toast(),
+        'translate-x-1/2': toast(),
+        '-right-full': !toast(),
+        'opacity-100': toast(),
+        'opacity-0': !toast(),
+        'border-emerald-500': !toast()?.error,
+        'border-red-500': toast()?.error,
+    }"
 >
     <div
         class="w-5 h-5 scale-125 border-2 border-solid rounded-full"
