@@ -1,4 +1,74 @@
 <div class="flex flex-col gap-4 p-4">
+    @if (muscleGroups$ | async; as muscleGroups) {
+    <div class="flex flex-col gap-1">
+        @for (muscleGroup of muscleGroups; track $index) {
+        <button
+            type="button"
+            class="flex items-center justify-between p-1.5 transition-all rounded-md active:opacity-50 active:scale-95 group hover:bg-neutral-900"
+        >
+            <div class="flex items-center gap-1">
+                <div
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                >
+                    <img
+                        [src]="muscleGroup.imageUrl"
+                        class="object-cover w-10 h-10"
+                        [class]="'object-' + muscleGroup.focusOn"
+                        [alt]="muscleGroup.name + ' image'"
+                    />
+                </div>
+                <div class="p-2 font-semibold">
+                    {{ muscleGroup.name | titlecase }}
+                </div>
+            </div>
+
+            <svg
+                class="w-6 h-6 transition-colors stroke-transparent group-hover:stroke-white"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M13.0207 5.82839L15.8491 2.99996L20.7988 7.94971L17.9704 10.7781M13.0207 5.82839L3.41405 15.435C3.22652 15.6225 3.12116 15.8769 3.12116 16.1421V20.6776H7.65669C7.92191 20.6776 8.17626 20.5723 8.3638 20.3847L17.9704 10.7781M13.0207 5.82839L17.9704 10.7781"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+        }
+    </div>
+    }
+    <div
+        role="status"
+        class="flex flex-col items-start w-full gap-3 px-2 animate-pulse"
+    >
+        @for (width of [90, 70, 120, 100]; track $index) {
+        <div class="flex items-center justify-between w-full">
+            <div class="flex items-center gap-4">
+                <svg
+                    class="w-10 h-10 p-2 rounded-full text-neutral-600 bg-neutral-700"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 18"
+                >
+                    <path
+                        d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"
+                    />
+                </svg>
+
+                <div
+                    class="w-32 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
+                    [style]="'width:' + width + 'px;'"
+                ></div>
+            </div>
+        </div>
+        }
+
+        <span class="sr-only">Loading...</span>
+    </div>
+
     <button
         type="button"
         (click)="newMuscleGroupModalVisibility = true"

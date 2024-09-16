@@ -1,6 +1,12 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    inject,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../../../services/admin.service';
 import { Observable, tap } from 'rxjs';
@@ -56,7 +62,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         ]),
     ],
 })
-export class MuscleGroupsManagerComponent {
+export class MuscleGroupsManagerComponent implements OnInit {
     uploadProgress$!: Observable<number | null>;
     isUploading: boolean = false;
 
@@ -69,6 +75,19 @@ export class MuscleGroupsManagerComponent {
 
     selectedImagePreview: string | ArrayBuffer | null = null;
     selectedImageFile: File | null = null;
+
+    muscleGroups$!: Observable<
+        {
+            id: string;
+            name: string;
+            imageUrl: string;
+            focusOn: string;
+        }[]
+    >;
+
+    ngOnInit() {
+        this.muscleGroups$ = this.adminService.getMuscleGroups();
+    }
 
     onImageSelect() {
         if (this.imageInput.nativeElement.files) {
