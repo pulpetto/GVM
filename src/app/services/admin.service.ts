@@ -1,5 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import {
+    addDoc,
+    collection,
+    CollectionReference,
+    Firestore,
+    onSnapshot,
+    query,
+} from '@angular/fire/firestore';
 import {
     getDownloadURL,
     getStorage,
@@ -14,6 +21,57 @@ import { Observable } from 'rxjs';
 export class AdminService {
     firestore = inject(Firestore);
     storage = getStorage();
+
+    getMuscleGroups(): Observable<
+        {
+            id: string;
+            name: string;
+            imageUrl: string;
+            focusOn: string;
+        }[]
+    > {
+        const muscleGroupsRef: CollectionReference = collection(
+            this.firestore,
+            'muscleGroups'
+        );
+
+        const orderedMuscleGroupsQuery = query(muscleGroupsRef);
+
+        // prettier-ignore
+        return new Observable<{
+            id: string;
+            name: string;
+            imageUrl: string;
+            focusOn: string;
+        }[]>((observer) => {
+            const unsubscribe = onSnapshot(
+                orderedMuscleGroupsQuery,
+                (querySnapshot) => {
+                    const muscleGroups = querySnapshot.docs.map(
+                        (doc) =>
+                            ({
+                                id: doc.id,
+                                name: doc.data()['name'],
+                                imageUrl: doc.data()['imageUrl'],
+                                focusOn: doc.data()['focusOn'],
+                            } as {
+                                id: string;
+                                name: string;
+                                imageUrl: string;
+                                focusOn: string;
+                            })
+                    );
+
+                    observer.next(muscleGroups);
+                },
+                (error) => {
+                    observer.error(error);
+                }
+            );
+
+            return { unsubscribe };
+        });
+    }
 
     addNewMuscleGroup(
         name: string,
