@@ -11,6 +11,7 @@ import {
     getDownloadURL,
     getStorage,
     ref,
+    uploadBytes,
     uploadBytesResumable,
 } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
@@ -107,6 +108,20 @@ export class AdminService {
                     );
                 }
             );
+        });
+    }
+
+    async addNewMuscleGroup2(name: string, imageFile: File): Promise<void> {
+        const filePath = `admin/muscleGroups/${Date.now()}_${name}`;
+        const storageRef = ref(this.storage, filePath);
+
+        const snapshot = await uploadBytes(storageRef, imageFile);
+
+        const downloadURL = await getDownloadURL(snapshot.ref);
+
+        await addDoc(collection(this.firestore, 'muscleGroups'), {
+            name: name,
+            imageUrl: downloadURL,
         });
     }
 }
