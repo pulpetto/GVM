@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../../../services/admin.service';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ToastService } from '../../../../services/toast.service';
 
 const visibleModal = { top: '50%' };
@@ -117,20 +117,20 @@ export class MuscleGroupsManagerComponent implements OnInit {
         this.newMuscleGroupModalVisibility = false;
     }
 
-    addNewMuscleGroup() {
+    async addNewMuscleGroup() {
         this.isUploading = true;
 
-        this.uploadProgress$ = this.adminService
-            .addNewMuscleGroup(this.newMuscleGroupName, this.selectedImageFile!)
-            .pipe(
-                tap((progress) => {
-                    if (progress === 100) {
-                        this.closeNewMuscleGroupModal();
-                    }
-                    if (progress === null) {
-                        // this.progressError = true;
-                    }
-                })
+        try {
+            this.adminService.addNewMuscleGroup2(
+                this.newMuscleGroupName,
+                this.selectedImageFile!
             );
+
+            this.toastService.show('Uploaded successfully', false);
+            this.closeNewMuscleGroupModal();
+        } catch (error) {
+            this.toastService.show('Upload error', false);
+            this.closeNewMuscleGroupModal();
+        }
     }
 }

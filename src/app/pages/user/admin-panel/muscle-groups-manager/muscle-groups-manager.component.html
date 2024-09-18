@@ -216,21 +216,6 @@
 
     <!--  -->
 
-    @if (uploadProgress$ | async; as uploadProgress) {
-    <div
-        class="py-1.5 text-center rounded-md w-full bg-neutral-900 transition-all relative font-semibold"
-    >
-        <div
-            class="absolute top-0 left-0 h-full transition-all rounded-md bg-emerald-500"
-            [style]="'width:' + uploadProgress + '%'"
-        ></div>
-
-        <div class="relative z-10 text-center">{{ uploadProgress }}%</div>
-    </div>
-    }
-
-    <!--  -->
-
     @if (!isUploading) {
     <button
         type="button"
