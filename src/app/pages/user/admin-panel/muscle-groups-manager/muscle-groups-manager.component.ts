@@ -133,4 +133,49 @@ export class MuscleGroupsManagerComponent implements OnInit {
             this.closeNewMuscleGroupModal();
         }
     }
+
+    muscleGroupModifyModalVisibility: boolean = false;
+
+    @ViewChild('imageInputForModify')
+    imageInputForModify!: ElementRef<HTMLInputElement>;
+
+    selectedModifyImagePreview: string | ArrayBuffer | null = null;
+    selectedModifyImageFile: File | null = null;
+    modifyMuscleGroupName: string = '';
+
+    openMuscleGroupModifyModal(muscleGroup: {
+        id: string;
+        name: string;
+        imageUrl: string;
+        focusOn: string;
+    }) {
+        this.muscleGroupModifyModalVisibility = true;
+        this.selectedModifyImagePreview = muscleGroup.imageUrl;
+        this.modifyMuscleGroupName = muscleGroup.name;
+    }
+
+    onModifyImageSelect() {
+        if (this.imageInputForModify.nativeElement.files) {
+            this.selectedModifyImageFile =
+                this.imageInputForModify.nativeElement.files[0];
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                this.selectedModifyImagePreview = reader.result;
+            };
+
+            reader.readAsDataURL(this.selectedModifyImageFile!);
+        }
+    }
+
+    onModifyImageRemove() {
+        this.selectedModifyImagePreview = null;
+        this.selectedModifyImageFile = null;
+    }
+
+    closeMuscleGroupModifyModal() {
+        this.muscleGroupModifyModalVisibility = false;
+    }
+
+    async modifyMuscleGroup() {}
 }
