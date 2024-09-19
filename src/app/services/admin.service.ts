@@ -74,44 +74,7 @@ export class AdminService {
         });
     }
 
-    addNewMuscleGroup(
-        name: string,
-        imageFile: File
-    ): Observable<number | null> {
-        const filePath = `admin/muscleGroups/${Date.now()}_${name}`;
-        const storageRef = ref(this.storage, filePath);
-
-        const uploadTask = uploadBytesResumable(storageRef, imageFile);
-
-        return new Observable<number | null>((observer) => {
-            uploadTask.on(
-                'state_changed',
-                (snapshot) => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    observer.next(progress);
-                },
-                (error) => {
-                    console.error('Upload failed:', error);
-                    observer.next(null);
-                    observer.complete();
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then(
-                        (downloadURL) => {
-                            addDoc(collection(this.firestore, 'muscleGroups'), {
-                                name: name,
-                                imageUrl: downloadURL,
-                            });
-                        }
-                    );
-                }
-            );
-        });
-    }
-
-    async addNewMuscleGroup2(name: string, imageFile: File): Promise<void> {
+    async addNewMuscleGroup(name: string, imageFile: File): Promise<void> {
         const filePath = `admin/muscleGroups/${Date.now()}_${name}`;
         const storageRef = ref(this.storage, filePath);
 

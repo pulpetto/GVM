@@ -121,7 +121,7 @@ export class MuscleGroupsManagerComponent implements OnInit {
         this.isUploading = true;
 
         try {
-            this.adminService.addNewMuscleGroup2(
+            this.adminService.addNewMuscleGroup(
                 this.newMuscleGroupName,
                 this.selectedImageFile!
             );
