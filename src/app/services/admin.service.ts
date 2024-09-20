@@ -3,11 +3,14 @@ import {
     addDoc,
     collection,
     CollectionReference,
+    deleteDoc,
+    doc,
     Firestore,
     onSnapshot,
     query,
 } from '@angular/fire/firestore';
 import {
+    deleteObject,
     getDownloadURL,
     getStorage,
     ref,
@@ -86,5 +89,13 @@ export class AdminService {
             imageUrl: downloadURL,
             filePath: filePath,
         });
+    }
+
+    async deleteMuscleGroup(id: string, imagePath: string) {
+        const storageRef = ref(this.storage, imagePath);
+
+        await deleteObject(storageRef);
+
+        await deleteDoc(doc(this.firestore, 'muscleGroups', id));
     }
 }
