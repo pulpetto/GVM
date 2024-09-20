@@ -8,6 +8,7 @@ import {
     Firestore,
     onSnapshot,
     query,
+    updateDoc,
 } from '@angular/fire/firestore';
 import {
     deleteObject,
@@ -89,6 +90,41 @@ export class AdminService {
             imageUrl: downloadURL,
             filePath: filePath,
         });
+    }
+
+    async modifyMuscleGroup(
+        id: string,
+        oldImagePath: string,
+        newName: string,
+        newImageFile: File | null
+    ) {
+        if (newImageFile) {
+            // Delete old image
+            const oldImageStorageRef = ref(this.storage, oldImagePath);
+            await deleteObject(oldImageStorageRef);
+
+            // Add new image
+            const newImagePath = `admin/muscleGroups/${Date.now()}_${newName}`;
+            const newImageStorageRef = ref(this.storage, newImagePath);
+            const snapshot = await uploadBytes(
+                newImageStorageRef,
+                newImageFile
+            );
+
+            const downloadURL = await getDownloadURL(snapshot.ref);
+
+            // Update document
+            await updateDoc(doc(this.firestore, 'muscleGroups', id), {
+                name: newName,
+                imageUrl: downloadURL,
+                filePath: newImagePath,
+            });
+        } else {
+            // Update document
+            await updateDoc(doc(this.firestore, 'muscleGroups', id), {
+                name: newName,
+            });
+        }
     }
 
     async deleteMuscleGroup(id: string, imagePath: string) {

@@ -156,6 +156,7 @@ export class MuscleGroupsManagerComponent implements OnInit {
         this.modifyMuscleGroupName = muscleGroup.name;
         this.modifyMuscleGroupId = muscleGroup.id;
         this.modifyMuscleGroupImagePath = muscleGroup.filePath;
+        this.selectedModifyImageFile = null;
     }
 
     onModifyImageSelect() {
@@ -181,7 +182,22 @@ export class MuscleGroupsManagerComponent implements OnInit {
         this.muscleGroupModifyModalVisibility = false;
     }
 
-    async modifyMuscleGroup() {}
+    async modifyMuscleGroup() {
+        try {
+            this.adminService.modifyMuscleGroup(
+                this.modifyMuscleGroupId,
+                this.modifyMuscleGroupImagePath,
+                this.modifyMuscleGroupName,
+                this.selectedModifyImageFile
+            );
+
+            this.toastService.show('Modified successfully', false);
+            this.closeMuscleGroupModifyModal();
+        } catch (error) {
+            this.toastService.show('Modification error', true);
+            this.closeMuscleGroupModifyModal();
+        }
+    }
 
     async deleteMuscleGroup() {
         try {
