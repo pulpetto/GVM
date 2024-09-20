@@ -58,6 +58,13 @@ export const routes: Routes = [
                     ),
             },
             {
+                path: 'admin/equipment',
+                loadComponent: () =>
+                    import(
+                        './pages/user/admin-panel/equipment-manager/equipment-manager.component'
+                    ).then((component) => component.EquipmentManagerComponent),
+            },
+            {
                 path: 'profile',
                 loadComponent: () =>
                     import('./pages/user/profile/profile.component').then(
