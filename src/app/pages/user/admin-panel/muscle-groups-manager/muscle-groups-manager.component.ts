@@ -129,7 +129,7 @@ export class MuscleGroupsManagerComponent implements OnInit {
             this.toastService.show('Uploaded successfully', false);
             this.closeNewMuscleGroupModal();
         } catch (error) {
-            this.toastService.show('Upload error', false);
+            this.toastService.show('Upload error', true);
             this.closeNewMuscleGroupModal();
         }
     }
@@ -209,7 +209,7 @@ export class MuscleGroupsManagerComponent implements OnInit {
             this.toastService.show('Deleted successfully', false);
             this.closeMuscleGroupModifyModal();
         } catch (error) {
-            this.toastService.show('Deletion error', false);
+            this.toastService.show('Deletion error', true);
             this.closeMuscleGroupModifyModal();
         }
     }
