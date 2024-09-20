@@ -12,7 +12,6 @@ import {
     getStorage,
     ref,
     uploadBytes,
-    uploadBytesResumable,
 } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 
@@ -28,7 +27,7 @@ export class AdminService {
             id: string;
             name: string;
             imageUrl: string;
-            focusOn: string;
+            filePath: string;
         }[]
     > {
         const muscleGroupsRef: CollectionReference = collection(
@@ -43,7 +42,7 @@ export class AdminService {
             id: string;
             name: string;
             imageUrl: string;
-            focusOn: string;
+            filePath: string,
         }[]>((observer) => {
             const unsubscribe = onSnapshot(
                 orderedMuscleGroupsQuery,
@@ -54,12 +53,12 @@ export class AdminService {
                                 id: doc.id,
                                 name: doc.data()['name'],
                                 imageUrl: doc.data()['imageUrl'],
-                                focusOn: doc.data()['focusOn'],
+                                filePath: doc.data()['filePath'],
                             } as {
                                 id: string;
                                 name: string;
                                 imageUrl: string;
-                                focusOn: string;
+                                filePath: string,
                             })
                     );
 
@@ -85,6 +84,7 @@ export class AdminService {
         await addDoc(collection(this.firestore, 'muscleGroups'), {
             name: name,
             imageUrl: downloadURL,
+            filePath: filePath,
         });
     }
 }

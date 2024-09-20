@@ -81,7 +81,7 @@ export class MuscleGroupsManagerComponent implements OnInit {
             id: string;
             name: string;
             imageUrl: string;
-            focusOn: string;
+            filePath: string;
         }[]
     >;
 
@@ -142,16 +142,18 @@ export class MuscleGroupsManagerComponent implements OnInit {
     selectedModifyImagePreview: string | ArrayBuffer | null = null;
     selectedModifyImageFile: File | null = null;
     modifyMuscleGroupName: string = '';
+    modifyMuscleGroupId: string = '';
 
     openMuscleGroupModifyModal(muscleGroup: {
         id: string;
         name: string;
         imageUrl: string;
-        focusOn: string;
+        filePath: string;
     }) {
         this.muscleGroupModifyModalVisibility = true;
         this.selectedModifyImagePreview = muscleGroup.imageUrl;
         this.modifyMuscleGroupName = muscleGroup.name;
+        this.modifyMuscleGroupId = muscleGroup.id;
     }
 
     onModifyImageSelect() {
