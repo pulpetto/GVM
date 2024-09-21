@@ -1,1 +1,426 @@
-<p>equipment-manager works!</p>
+<div class="flex flex-col gap-4 p-4">
+    @if (equipment$ | async; as equipment) {
+    <div class="flex flex-col gap-1">
+        @for (equipmentItem of equipment; track $index) {
+        <button
+            type="button"
+            (click)="onModifyEquipmentModalOpen(equipmentItem)"
+            class="flex items-center justify-between p-1.5 transition-all rounded-md active:opacity-50 active:scale-95 group hover:bg-neutral-900"
+        >
+            <div class="flex items-center gap-1">
+                <div
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                >
+                    <img
+                        [src]="equipmentItem.imagePreviewUrl"
+                        class="object-cover w-10 h-10 p-1 bg-neutral-950"
+                        [alt]="equipmentItem.name + ' image'"
+                    />
+                </div>
+                <div class="p-2 font-semibold">
+                    {{ equipmentItem.name | titlecase }}
+                </div>
+            </div>
+
+            <svg
+                class="w-6 h-6 transition-colors stroke-transparent group-hover:stroke-white"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M13.0207 5.82839L15.8491 2.99996L20.7988 7.94971L17.9704 10.7781M13.0207 5.82839L3.41405 15.435C3.22652 15.6225 3.12116 15.8769 3.12116 16.1421V20.6776H7.65669C7.92191 20.6776 8.17626 20.5723 8.3638 20.3847L17.9704 10.7781M13.0207 5.82839L17.9704 10.7781"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+        }
+    </div>
+    } @else {
+    <div
+        role="status"
+        class="flex flex-col items-start w-full gap-3 px-2 animate-pulse"
+    >
+        @for (width of [90, 70, 120, 100]; track $index) {
+        <div class="flex items-center justify-between w-full">
+            <div class="flex items-center gap-4">
+                <svg
+                    class="w-10 h-10 p-1 rounded-full text-neutral-600 bg-neutral-700"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 18"
+                >
+                    <path
+                        d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"
+                    />
+                </svg>
+
+                <div
+                    class="w-32 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
+                    [style]="'width:' + width + 'px;'"
+                ></div>
+            </div>
+        </div>
+        }
+
+        <span class="sr-only">Loading...</span>
+    </div>
+    }
+
+    <button
+        type="button"
+        (click)="newEquipmentModalVisibility = true"
+        class="fixed z-20 flex items-center p-1 pr-3 transition-all -translate-x-1/2 rounded-full bg-opacity-20 left-1/2 bottom-24 bg-neutral-900 active:scale-95 active:opacity-50 group"
+    >
+        <svg
+            class="transition-transform w-7 h-7 stroke-emerald-500 group-hover:rotate-90"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M6 12H12M18 12H12M12 12V6M12 12V18"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+        <div class="font-semibold text-emerald-500">Add Equipment</div>
+    </button>
+</div>
+
+@if (newEquipmentModalVisibility) {
+<!-- eslint-disable-next-line -->
+<div
+    (click)="onNewEquipmentModalClose()"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+    @openClose2
+></div>
+
+<div
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-6 p-4 overflow-y-scroll transition-all duration-500 pb-96 bg-neutral-950 rounded-t-md"
+    @openClose
+    [ngClass]="{
+        'top-1/2': newEquipmentModalVisibility,
+        'top-full': !newEquipmentModalVisibility
+    }"
+>
+    <div class="text-lg font-semibold text-center">Add new equipment</div>
+
+    <div class="relative flex flex-col self-center">
+        @if (newEquipmentImagePreview) {
+        <img
+            [src]="newEquipmentImagePreview"
+            class="w-24 h-24 rounded-full"
+            alt=""
+        />
+
+        <button
+            type="button"
+            (click)="onNewEquipmentImageRemove()"
+            class="absolute bottom-0 transition-all bg-red-500 rounded-full group -right-1 active:opacity-50 active:scale-95"
+        >
+            <svg
+                class="transition-transform w-7 h-7 p-0.5 stroke-white group-hover:rotate-90"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+        } @else {
+        <label
+            for="newEquipmentImageInput"
+            class="relative self-center w-24 h-24 transition-all bg-opacity-50 rounded-full cursor-pointer bg-neutral-900 active:scale-95 active:opacity-50"
+        >
+            <svg
+                class="absolute w-10 h-10 -translate-x-1/2 -translate-y-1/2 stroke-neutral-700 top-1/2 left-1/2"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M2 19V9C2 7.89543 2.89543 7 4 7H4.5C5.12951 7 5.72229 6.70361 6.1 6.2L8.32 3.24C8.43331 3.08892 8.61115 3 8.8 3H15.2C15.3889 3 15.5667 3.08892 15.68 3.24L17.9 6.2C18.2777 6.70361 18.8705 7 19.5 7H20C21.1046 7 22 7.89543 22 9V19C22 20.1046 21.1046 21 20 21H4C2.89543 21 2 20.1046 2 19Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M12 17C14.2091 17 16 15.2091 16 13C16 10.7909 14.2091 9 12 9C9.79086 9 8 10.7909 8 13C8 15.2091 9.79086 17 12 17Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+
+            <svg
+                class="absolute bottom-0 transition-transform rounded-full w-7 h-7 -right-1 stroke-white bg-emerald-500 hover:rotate-90"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M6 12H12M18 12H12M12 12V6M12 12V18"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+
+            <input
+                type="file"
+                #newEquipmentImageInput
+                (change)="onNewEquipmentImageSelect()"
+                id="newEquipmentImageInput"
+                accept=".jpg, .jpeg, .png"
+                hidden
+            />
+        </label>
+        }
+    </div>
+
+    <div class="self-center">
+        <input
+            type="text"
+            [(ngModel)]="newEquipmentName"
+            placeholder="Equipment name..."
+            class="p-2 font-semibold transition-all bg-opacity-50 rounded-md outline-none bg-neutral-900 focus:outline-emerald-500 outline-offset-0 placeholder-neutral-700"
+        />
+    </div>
+</div>
+}
+
+<!-- indentation comment -->
+
+@if (newEquipmentModalVisibility) {
+<div
+    @openClose3
+    class="fixed left-0 z-50 flex flex-col w-full gap-2 p-4 shadow-md rounded-t-md bg-neutral-950"
+    [ngClass]="{
+        'bottom-0': newEquipmentModalVisibility,
+        '-bottom-full': !newEquipmentModalVisibility,
+    }"
+>
+    @if (isUploading) {
+    <div class="text-sm font-semibold text-center opacity-50">Uploading...</div>
+    }
+
+    <!--  -->
+
+    @if (!isUploading) {
+    <button
+        type="button"
+        (click)="onNewEquipmentAdd()"
+        [disabled]="
+            newEquipmentImagePreview === null || newEquipmentName === ''
+        "
+        class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
+    >
+        Add Equipment
+    </button>
+    <button
+        type="button"
+        (click)="onNewEquipmentModalClose()"
+        class="py-1.5 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
+    >
+        Cancel & Close
+    </button>
+    }
+</div>
+}
+
+<!--  -->
+
+@if (modifyEquipmentModalVisibility) {
+<!-- eslint-disable-next-line -->
+<div
+    (click)="onModifyEquipmentModalclose()"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+    @openClose2
+></div>
+
+<div
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-6 p-4 overflow-y-scroll transition-all duration-500 pb-96 bg-neutral-950 rounded-t-md"
+    @openClose
+    [ngClass]="{
+        'top-1/2': modifyEquipmentModalVisibility,
+        'top-full': !modifyEquipmentModalVisibility
+    }"
+>
+    <div class="relative text-lg font-semibold text-center">
+        <button
+            type="button"
+            (click)="onEquipmentDelete()"
+            class="absolute -top-0.5 left-0 p-1 transition-all rounded-md active:opacity-50 active:scale-95 hover:bg-neutral-900"
+        >
+            <svg
+                class="w-6 h-6 stroke-red-500"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M19 11V20.4C19 20.7314 18.7314 21 18.4 21H5.6C5.26863 21 5 20.7314 5 20.4V11"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M10 17V11"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M14 17V11"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M21 7L16 7M3 7L8 7M8 7V3.6C8 3.26863 8.26863 3 8.6 3L15.4 3C15.7314 3 16 3.26863 16 3.6V7M8 7L16 7"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+        Modify equipment properties:
+    </div>
+
+    <div class="relative flex flex-col self-center">
+        @if (modifyEquipmentImagePreview) {
+        <img
+            [src]="modifyEquipmentImagePreview"
+            class="w-24 h-24 rounded-full"
+            alt=""
+        />
+
+        <button
+            type="button"
+            (click)="onModifyEquipmentImageRemove()"
+            class="absolute bottom-0 transition-all bg-red-500 rounded-full group -right-1 active:opacity-50 active:scale-95"
+        >
+            <svg
+                class="transition-transform w-7 h-7 p-0.5 stroke-white group-hover:rotate-90"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+        } @else {
+        <label
+            for="modifyEquipmentImageInput"
+            class="relative self-center w-24 h-24 transition-all bg-opacity-50 rounded-full cursor-pointer bg-neutral-900 active:scale-95 active:opacity-50"
+        >
+            <svg
+                class="absolute w-10 h-10 -translate-x-1/2 -translate-y-1/2 stroke-neutral-700 top-1/2 left-1/2"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M2 19V9C2 7.89543 2.89543 7 4 7H4.5C5.12951 7 5.72229 6.70361 6.1 6.2L8.32 3.24C8.43331 3.08892 8.61115 3 8.8 3H15.2C15.3889 3 15.5667 3.08892 15.68 3.24L17.9 6.2C18.2777 6.70361 18.8705 7 19.5 7H20C21.1046 7 22 7.89543 22 9V19C22 20.1046 21.1046 21 20 21H4C2.89543 21 2 20.1046 2 19Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M12 17C14.2091 17 16 15.2091 16 13C16 10.7909 14.2091 9 12 9C9.79086 9 8 10.7909 8 13C8 15.2091 9.79086 17 12 17Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+
+            <svg
+                class="absolute bottom-0 transition-transform rounded-full w-7 h-7 -right-1 stroke-white bg-emerald-500 hover:rotate-90"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M6 12H12M18 12H12M12 12V6M12 12V18"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+
+            <input
+                type="file"
+                #modifyEquipmentImageInput
+                (change)="onModifyEquipmentImageSelect()"
+                id="modifyEquipmentImageInput"
+                accept=".jpg, .jpeg, .png"
+                hidden
+            />
+        </label>
+        }
+    </div>
+
+    <div class="self-center">
+        <input
+            type="text"
+            [(ngModel)]="modifyEquipmentName"
+            placeholder="Equipment name..."
+            class="p-2 font-semibold transition-all bg-opacity-50 rounded-md outline-none bg-neutral-900 focus:outline-emerald-500 outline-offset-0 placeholder-neutral-700"
+        />
+    </div>
+</div>
+}
+
+<!-- indentation comment -->
+
+@if (modifyEquipmentModalVisibility) {
+<div
+    @openClose3
+    class="fixed left-0 z-50 flex flex-col w-full gap-2 p-4 shadow-md rounded-t-md bg-neutral-950"
+    [ngClass]="{
+        'bottom-0': modifyEquipmentModalVisibility,
+        '-bottom-full': !modifyEquipmentModalVisibility,
+    }"
+>
+    @if (isUploading) {
+    <div class="text-sm font-semibold text-center opacity-50">Updating...</div>
+    }
+
+    <!--  -->
+
+    @if (!isUploading) {
+    <button
+        type="button"
+        (click)="onEquipmentModify()"
+        [disabled]="
+            modifyEquipmentImagePreview === null || modifyEquipmentName === ''
+        "
+        class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
+    >
+        Apply Changes
+    </button>
+    <button
+        type="button"
+        (click)="onModifyEquipmentModalclose()"
+        class="py-1.5 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
+    >
+        Cancel & Close
+    </button>
+    }
+</div>
+}
