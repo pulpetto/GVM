@@ -31,8 +31,8 @@ export class AdminService {
         {
             id: string;
             name: string;
-            imageUrl: string;
-            filePath: string;
+            imagePreviewUrl: string;
+            imageFilePath: string;
         }[]
     > {
         const muscleGroupsRef: CollectionReference = collection(
@@ -46,8 +46,8 @@ export class AdminService {
         return new Observable<{
             id: string;
             name: string;
-            imageUrl: string;
-            filePath: string,
+            imagePreviewUrl: string;
+            imageFilePath: string,
         }[]>((observer) => {
             const unsubscribe = onSnapshot(
                 orderedMuscleGroupsQuery,
@@ -57,13 +57,13 @@ export class AdminService {
                             ({
                                 id: doc.id,
                                 name: doc.data()['name'],
-                                imageUrl: doc.data()['imageUrl'],
-                                filePath: doc.data()['filePath'],
+                                imagePreviewUrl: doc.data()['imagePreviewUrl'],
+                                imageFilePath: doc.data()['imageFilePath'],
                             } as {
                                 id: string;
                                 name: string;
-                                imageUrl: string;
-                                filePath: string,
+                                imagePreviewUrl: string;
+                                imageFilePath: string,
                             })
                     );
 
@@ -79,46 +79,46 @@ export class AdminService {
     }
 
     async addNewMuscleGroup(name: string, imageFile: File): Promise<void> {
-        const filePath = `admin/muscleGroups/${Date.now()}_${name}`;
-        const storageRef = ref(this.storage, filePath);
+        const imageFilePath = `admin/muscleGroups/${Date.now()}_${name}`;
+        const storageRef = ref(this.storage, imageFilePath);
 
         const snapshot = await uploadBytes(storageRef, imageFile);
 
-        const downloadURL = await getDownloadURL(snapshot.ref);
+        const imagePreviewUrl = await getDownloadURL(snapshot.ref);
 
         await addDoc(collection(this.firestore, 'muscleGroups'), {
             name: name,
-            imageUrl: downloadURL,
-            filePath: filePath,
+            imagePreviewUrl: imagePreviewUrl,
+            imageFilePath: imageFilePath,
         });
     }
 
     async modifyMuscleGroup(
         id: string,
-        oldImagePath: string,
+        oldImageFilePath: string,
         newName: string,
         newImageFile: File | null
     ) {
         if (newImageFile) {
             // Delete old image
-            const oldImageStorageRef = ref(this.storage, oldImagePath);
+            const oldImageStorageRef = ref(this.storage, oldImageFilePath);
             await deleteObject(oldImageStorageRef);
 
             // Add new image
-            const newImagePath = `admin/muscleGroups/${Date.now()}_${newName}`;
-            const newImageStorageRef = ref(this.storage, newImagePath);
+            const newImageFilePath = `admin/muscleGroups/${Date.now()}_${newName}`;
+            const newImageStorageRef = ref(this.storage, newImageFilePath);
             const snapshot = await uploadBytes(
                 newImageStorageRef,
                 newImageFile
             );
 
-            const downloadURL = await getDownloadURL(snapshot.ref);
+            const imagePreviewUrl = await getDownloadURL(snapshot.ref);
 
             // Update document
             await updateDoc(doc(this.firestore, 'muscleGroups', id), {
                 name: newName,
-                imageUrl: downloadURL,
-                filePath: newImagePath,
+                imagePreviewUrl: imagePreviewUrl,
+                imageFilePath: newImageFilePath,
             });
         } else {
             // Update document
@@ -128,8 +128,8 @@ export class AdminService {
         }
     }
 
-    async deleteMuscleGroup(id: string, imagePath: string) {
-        const storageRef = ref(this.storage, imagePath);
+    async deleteMuscleGroup(id: string, imageFilePath: string) {
+        const storageRef = ref(this.storage, imageFilePath);
 
         await deleteObject(storageRef);
 
@@ -245,4 +245,6 @@ export class AdminService {
 
         await deleteDoc(doc(this.firestore, 'equipment', id));
     }
+
+    // ---------- Exercises ----------
 }

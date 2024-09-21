@@ -63,25 +63,17 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class MuscleGroupsManagerComponent implements OnInit {
-    uploadProgress$!: Observable<number | null>;
-    isUploading: boolean = false;
-
     adminService = inject(AdminService);
     toastService = inject(ToastService);
 
-    newMuscleGroupModalVisibility: boolean = false;
-
-    @ViewChild('imageInput') imageInput!: ElementRef<HTMLInputElement>;
-
-    selectedImagePreview: string | ArrayBuffer | null = null;
-    selectedImageFile: File | null = null;
+    isUploading: boolean = false;
 
     muscleGroups$!: Observable<
         {
             id: string;
             name: string;
-            imageUrl: string;
-            filePath: string;
+            imagePreviewUrl: string;
+            imageFilePath: string;
         }[]
     >;
 
@@ -89,128 +81,137 @@ export class MuscleGroupsManagerComponent implements OnInit {
         this.muscleGroups$ = this.adminService.getMuscleGroups();
     }
 
-    onImageSelect() {
-        if (this.imageInput.nativeElement.files) {
-            this.selectedImageFile = this.imageInput.nativeElement.files[0];
+    // ---------- Adding Muscle Group Logic ----------
+    @ViewChild('newMuscleGroupImageInput')
+    newMuscleGroupImageInput!: ElementRef<HTMLInputElement>;
+    newMuscleGroupModalVisibility: boolean = false;
+    newMuscleGroupImagePreview: string | ArrayBuffer | null = null;
+    newMuscleGroupImageFile: File | null = null;
+    newMuscleGroupName: string = '';
+
+    onNewMuscleGroupImageSelect() {
+        if (this.newMuscleGroupImageInput.nativeElement.files) {
+            this.newMuscleGroupImageFile =
+                this.newMuscleGroupImageInput.nativeElement.files[0];
+
             const reader = new FileReader();
 
             reader.onload = () => {
-                this.selectedImagePreview = reader.result;
+                this.newMuscleGroupImagePreview = reader.result;
             };
 
-            reader.readAsDataURL(this.selectedImageFile);
+            reader.readAsDataURL(this.newMuscleGroupImageFile);
         }
     }
 
-    onImageRemove() {
-        this.selectedImagePreview = null;
-        this.selectedImageFile = null;
+    onNewMuscleGroupImageRemove() {
+        this.newMuscleGroupImagePreview = null;
+        this.newMuscleGroupImageFile = null;
     }
 
-    newMuscleGroupName: string = '';
-
-    closeNewMuscleGroupModal() {
+    onNewMuscleGroupModalClose() {
         this.isUploading = false;
-        this.selectedImagePreview = null;
-        this.selectedImageFile = null;
+        this.newMuscleGroupImagePreview = null;
+        this.newMuscleGroupImageFile = null;
         this.newMuscleGroupName = '';
         this.newMuscleGroupModalVisibility = false;
     }
 
-    async addNewMuscleGroup() {
+    async onNewMuscleGroupAdd() {
         this.isUploading = true;
 
         try {
             this.adminService.addNewMuscleGroup(
                 this.newMuscleGroupName,
-                this.selectedImageFile!
+                this.newMuscleGroupImageFile!
             );
 
             this.toastService.show('Uploaded successfully', false);
-            this.closeNewMuscleGroupModal();
+            this.onNewMuscleGroupModalClose();
         } catch (error) {
             this.toastService.show('Upload error', true);
-            this.closeNewMuscleGroupModal();
+            this.onNewMuscleGroupModalClose();
         }
     }
 
-    muscleGroupModifyModalVisibility: boolean = false;
-
-    @ViewChild('imageInputForModify')
-    imageInputForModify!: ElementRef<HTMLInputElement>;
-
-    selectedModifyImagePreview: string | ArrayBuffer | null = null;
-    selectedModifyImageFile: File | null = null;
+    // ---------- Modifying Muscle Group Logic ----------
+    @ViewChild('modifyMuscleGroupImageInput')
+    modifyMuscleGroupImageInput!: ElementRef<HTMLInputElement>;
+    modifyMuscleGroupModalVisibility: boolean = false;
+    modifyMuscleGroupImagePreview: string | ArrayBuffer | null = null;
+    modifyMuscleGroupImageFile: File | null = null;
     modifyMuscleGroupName: string = '';
+    // backend
     modifyMuscleGroupId: string = '';
-    modifyMuscleGroupImagePath: string = '';
+    modifyMuscleGroupImageFilePath: string = '';
 
-    openMuscleGroupModifyModal(muscleGroup: {
+    onModifyMuscleGroupModalOpen(MuscleGroupItem: {
         id: string;
         name: string;
-        imageUrl: string;
-        filePath: string;
+        imagePreviewUrl: string;
+        imageFilePath: string;
     }) {
-        this.muscleGroupModifyModalVisibility = true;
-        this.selectedModifyImagePreview = muscleGroup.imageUrl;
-        this.modifyMuscleGroupName = muscleGroup.name;
-        this.modifyMuscleGroupId = muscleGroup.id;
-        this.modifyMuscleGroupImagePath = muscleGroup.filePath;
-        this.selectedModifyImageFile = null;
+        this.modifyMuscleGroupModalVisibility = true;
+        this.modifyMuscleGroupImagePreview = MuscleGroupItem.imagePreviewUrl;
+        this.modifyMuscleGroupImageFile = null;
+        this.modifyMuscleGroupName = MuscleGroupItem.name;
+        this.modifyMuscleGroupId = MuscleGroupItem.id;
+        this.modifyMuscleGroupImageFilePath = MuscleGroupItem.imageFilePath;
     }
 
-    onModifyImageSelect() {
-        if (this.imageInputForModify.nativeElement.files) {
-            this.selectedModifyImageFile =
-                this.imageInputForModify.nativeElement.files[0];
+    onModifyMuscleGroupImageSelect() {
+        if (this.modifyMuscleGroupImageInput.nativeElement.files) {
+            this.modifyMuscleGroupImageFile =
+                this.modifyMuscleGroupImageInput.nativeElement.files[0];
             const reader = new FileReader();
 
             reader.onload = () => {
-                this.selectedModifyImagePreview = reader.result;
+                this.modifyMuscleGroupImagePreview = reader.result;
             };
 
-            reader.readAsDataURL(this.selectedModifyImageFile!);
+            reader.readAsDataURL(this.modifyMuscleGroupImageFile!);
         }
     }
 
-    onModifyImageRemove() {
-        this.selectedModifyImagePreview = null;
-        this.selectedModifyImageFile = null;
+    onModifyMuscleGroupImageRemove() {
+        this.modifyMuscleGroupImagePreview = null;
+        this.modifyMuscleGroupImageFile = null;
     }
 
-    closeMuscleGroupModifyModal() {
-        this.muscleGroupModifyModalVisibility = false;
+    onModifyMuscleGroupModalclose() {
+        this.modifyMuscleGroupModalVisibility = false;
     }
 
-    async modifyMuscleGroup() {
+    async onMuscleGroupModify() {
         try {
             this.adminService.modifyMuscleGroup(
                 this.modifyMuscleGroupId,
-                this.modifyMuscleGroupImagePath,
+                this.modifyMuscleGroupImageFilePath,
                 this.modifyMuscleGroupName,
-                this.selectedModifyImageFile
+                this.modifyMuscleGroupImageFile
             );
 
             this.toastService.show('Modified successfully', false);
-            this.closeMuscleGroupModifyModal();
+            this.onModifyMuscleGroupModalclose();
         } catch (error) {
             this.toastService.show('Modification error', true);
-            this.closeMuscleGroupModifyModal();
+            this.onModifyMuscleGroupModalclose();
         }
     }
 
-    async deleteMuscleGroup() {
+    // ---------- Deleting Muscle Group Logic ----------
+    async onMuscleGroupDelete() {
         try {
             this.adminService.deleteMuscleGroup(
                 this.modifyMuscleGroupId,
-                this.modifyMuscleGroupImagePath
+                this.modifyMuscleGroupImageFilePath
             );
 
             this.toastService.show('Deleted successfully', false);
-            this.closeMuscleGroupModifyModal();
+            this.onModifyMuscleGroupModalclose();
         } catch (error) {
             this.toastService.show('Deletion error', true);
-            this.closeMuscleGroupModifyModal();
+            this.onModifyMuscleGroupModalclose();
         }
     }
 }
