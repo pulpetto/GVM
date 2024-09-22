@@ -1,33 +1,42 @@
 <div class="flex flex-col gap-">
     @for (step of steps; track $index) {
-    <div class="flex flex-col">
-        <div class="text-xl font-semibold">
-            {{ step.stepName }}
-        </div>
-        <div class="flex flex-col ml-6 text-sm">
-            @for (subStep of step.subSteps; track $index) {
-            <li>{{ subStep }}</li>
-            }
-            <button
-                type="button"
-                class="mt-1 font-semibold -translate-x-3 text-emerald-500"
-            >
-                Add Substep
-            </button>
-        </div>
-    </div>
+    <app-step [name]="step.stepName" [subSteps]="step.subSteps"></app-step>
     }
 
+    <!--  -->
+
+    @if (!newStepNameEditorVisibility) {
+    <button
+        type="button"
+        (click)="newStepNameEditorVisibility = true"
+        class="flex items-center mt-2 transition-all active:opacity-50 active:scale-95"
+    >
+        <svg
+            class="w-7 h-7 stroke-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M6 12H12M18 12H12M12 12V6M12 12V18"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+        <div class="self-start text-xl font-semibold">Add Step</div>
+    </button>
+    } @else {
     <div class="relative w-full mt-2">
         <input
             type="text"
+            class="text-xl font-semibold bg-transparent outline-none placeholder-neutral-700"
             placeholder="Step name..."
-            class="w-full p-2 font-semibold transition-all bg-opacity-50 rounded-md outline-none bg-neutral-900 focus:outline-emerald-500 outline-offset-0 placeholder-neutral-700"
         />
 
-        <button type="button">
+        <button type="button" (click)="addStep()">
             <svg
-                class="absolute w-8 h-8 transition-all -translate-y-1/2 right-10 top-1/2 stroke-neutral-700 hover:stroke-emerald-500 active:opacity-50 active:scale-95"
+                class="absolute w-8 h-8 transition-all -translate-y-1/2 right-8 top-1/2 stroke-neutral-700 hover:stroke-emerald-500 active:opacity-50 active:scale-95"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -41,9 +50,9 @@
             </svg>
         </button>
 
-        <button type="button">
+        <button type="button" (click)="newStepNameEditorVisibility = false">
             <svg
-                class="absolute w-8 h-8 transition-all -translate-y-1/2 right-2 top-1/2 stroke-neutral-700 hover:stroke-red-500 active:opacity-50 active:scale-95"
+                class="absolute right-0 w-8 h-8 transition-all -translate-y-1/2 top-1/2 stroke-neutral-700 hover:stroke-red-500 active:opacity-50 active:scale-95"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -57,4 +66,5 @@
             </svg>
         </button>
     </div>
+    }
 </div>

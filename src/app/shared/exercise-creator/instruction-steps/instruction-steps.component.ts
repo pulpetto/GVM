@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { StepComponent } from './step/step.component';
 
 @Component({
     selector: 'app-instruction-steps',
     standalone: true,
-    imports: [],
+    imports: [StepComponent],
     templateUrl: './instruction-steps.component.html',
     styleUrl: './instruction-steps.component.css',
 })
@@ -51,4 +52,15 @@ export class InstructionStepsComponent {
             ],
         },
     ];
+
+    newStepNameEditorVisibility: boolean = false;
+
+    addStep() {
+        this.steps.push({
+            stepName: 'Step name',
+            subSteps: [],
+        });
+
+        this.newStepNameEditorVisibility = false;
+    }
 }
