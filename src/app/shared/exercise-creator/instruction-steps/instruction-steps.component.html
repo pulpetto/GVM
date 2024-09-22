@@ -1,1 +1,60 @@
-<p>instruction-steps works!</p>
+<div class="flex flex-col gap-">
+    @for (step of steps; track $index) {
+    <div class="flex flex-col">
+        <div class="text-xl font-semibold">
+            {{ step.stepName }}
+        </div>
+        <div class="flex flex-col ml-6 text-sm">
+            @for (subStep of step.subSteps; track $index) {
+            <li>{{ subStep }}</li>
+            }
+            <button
+                type="button"
+                class="mt-1 font-semibold -translate-x-3 text-emerald-500"
+            >
+                Add Substep
+            </button>
+        </div>
+    </div>
+    }
+
+    <div class="relative w-full mt-2">
+        <input
+            type="text"
+            placeholder="Step name..."
+            class="w-full p-2 font-semibold transition-all bg-opacity-50 rounded-md outline-none bg-neutral-900 focus:outline-emerald-500 outline-offset-0 placeholder-neutral-700"
+        />
+
+        <button type="button">
+            <svg
+                class="absolute w-8 h-8 transition-all -translate-y-1/2 right-10 top-1/2 stroke-neutral-700 hover:stroke-emerald-500 active:opacity-50 active:scale-95"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M5 13L9 17L19 7"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+
+        <button type="button">
+            <svg
+                class="absolute w-8 h-8 transition-all -translate-y-1/2 right-2 top-1/2 stroke-neutral-700 hover:stroke-red-500 active:opacity-50 active:scale-95"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+    </div>
+</div>
