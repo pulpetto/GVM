@@ -1,4 +1,4 @@
-<div class="flex flex-col">
+<div class="flex flex-col bg-opacity-50">
     <div class="relative w-full mt-2">
         <input
             type="text"
@@ -43,11 +43,11 @@
 
     <div class="flex flex-col ml-6 text-sm">
         @for (subStep of subSteps; track $index) {
-        <li>{{ subStep }}</li>
+        <app-sub-step [subStep]="subStep"></app-sub-step>
         }
         <button
             type="button"
-            class="mt-1 font-semibold -translate-x-3 text-emerald-500"
+            class="mt-1 font-semibold -translate-x-3 opacity-50"
         >
             Add Substep
         </button>
