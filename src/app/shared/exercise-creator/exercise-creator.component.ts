@@ -1,9 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { InstructionStepsComponent } from './instruction-steps/instruction-steps.component';
 
 @Component({
     selector: 'app-exercise-creator',
     standalone: true,
-    imports: [],
+    imports: [InstructionStepsComponent],
     templateUrl: './exercise-creator.component.html',
     styleUrl: './exercise-creator.component.css',
 })
