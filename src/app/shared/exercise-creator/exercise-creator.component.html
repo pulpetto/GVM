@@ -73,81 +73,158 @@
         }
     </div>
 
-    <div class="self-center">
+    <div class="self-center w-full">
         <input
             type="text"
             placeholder="Exercise name..."
-            class="p-2 font-semibold transition-all bg-opacity-50 rounded-md outline-none bg-neutral-900 focus:outline-emerald-500 outline-offset-0 placeholder-neutral-700"
+            class="w-full p-3 font-semibold transition-all bg-opacity-50 rounded-md outline-none bg-neutral-900 focus:outline-emerald-500 outline-offset-0 placeholder-neutral-700"
         />
     </div>
 
-    <div class="text-3xl font-semibold text-center">Instruction</div>
-    <div class="relative flex flex-col self-center w-full">
-        @if (selectedVideo) {
-        <video
-            [src]="selectedVideo"
-            controls
-            class="w-full bg-opacity-50 rounded-md h-44 bg-neutral-900"
-        ></video>
-
+    <div class="flex flex-col gap-2">
+        <div class="text-xl font-semibold text-center">
+            Main muscle group(s):
+        </div>
+        <app-equipment-modal></app-equipment-modal>
         <button
             type="button"
-            (click)="removeVideo()"
-            class="absolute transition-all bg-red-500 rounded-full -top-2 -right-2 group active:opacity-50 active:scale-95"
+            class="py-3 font-semibold rounded-md w-full border-2 border-solid border-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717] flex items-center justify-center"
         >
             <svg
-                class="transition-transform w-7 h-7 p-0.5 stroke-white group-hover:rotate-90"
+                class="w-6 h-6 stroke-white mt-0.5"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <path
-                    d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                    d="M6 12H12M18 12H12M12 12V6M12 12V18"
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
                 />
             </svg>
+
+            <div>Add muscle group</div>
         </button>
-        } @else {
-        <label
-            for="videoInput"
-            class="relative self-center w-full transition-all bg-opacity-50 rounded-md cursor-pointer h-44 bg-neutral-900 active:scale-95 active:opacity-50"
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <div class="text-xl font-semibold text-center">
+            Secondary muscle group(s):
+        </div>
+        <app-equipment-modal></app-equipment-modal>
+        <app-equipment-modal></app-equipment-modal>
+        <button
+            type="button"
+            class="py-3 font-semibold rounded-md w-full border-2 border-solid border-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717] flex items-center justify-center"
         >
-            <div
-                class="absolute flex flex-col items-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            <svg
+                class="w-6 h-6 stroke-white mt-0.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M6 12H12M18 12H12M12 12V6M12 12V18"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+
+            <div>Add muscle group</div>
+        </button>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <div class="text-xl font-semibold text-center">Required equipment:</div>
+        <app-equipment-modal></app-equipment-modal>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <div class="text-xl font-semibold text-center">Instruction:</div>
+        <div class="relative flex flex-col self-center w-full">
+            @if (selectedVideo) {
+            <video
+                [src]="selectedVideo"
+                controls
+                class="w-full bg-opacity-50 rounded-md h-44 bg-neutral-900"
+            ></video>
+
+            <button
+                type="button"
+                (click)="removeVideo()"
+                class="absolute transition-all bg-red-500 rounded-full -top-2 -right-2 group active:opacity-50 active:scale-95"
             >
                 <svg
-                    class="w-12 h-12 stroke-neutral-700"
+                    class="transition-transform w-7 h-7 p-0.5 stroke-white group-hover:rotate-90"
                     viewBox="0 0 24 24"
                     fill="none"
-                    xmlns="http://www.w3.org/  2000/svg"
+                    xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
-                        d="M15 12V16.4C15 16.7314 14.7314 17 14.4 17H3.6C3.26863 17 3 16.7314 3 16.4V7.6C3 7.26863 3.26863 7 3.6 7H14.4C14.7314 7 15 7.26863 15 7.6V12ZM15 12L20.0159 7.82009C20.4067 7.49443 21 7.77232 21 8.28103V15.719C21 16.2277 20.4067 16.5056 20.0159 16.1799L15 12Z"
-                        stroke-width="1.5"
+                        d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                        stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     />
                 </svg>
+            </button>
+            } @else {
+            <label
+                for="videoInput"
+                class="relative self-center w-full transition-all bg-opacity-50 rounded-md cursor-pointer h-44 bg-neutral-900 active:scale-95 active:opacity-50"
+            >
                 <div
-                    class="-mt-1 text-sm font-semibold text-center text-neutral-700"
+                    class="absolute flex flex-col items-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                 >
-                    Click to add intruction video!
+                    <svg
+                        class="w-12 h-12 stroke-neutral-700"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/  2000/svg"
+                    >
+                        <path
+                            d="M15 12V16.4C15 16.7314 14.7314 17 14.4 17H3.6C3.26863 17 3 16.7314 3 16.4V7.6C3 7.26863 3.26863 7 3.6 7H14.4C14.7314 7 15 7.26863 15 7.6V12ZM15 12L20.0159 7.82009C20.4067 7.49443 21 7.77232 21 8.28103V15.719C21 16.2277 20.4067 16.5056 20.0159 16.1799L15 12Z"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                    <div
+                        class="-mt-1 text-sm font-semibold text-center text-neutral-700"
+                    >
+                        Click to add intruction video!
+                    </div>
                 </div>
-            </div>
 
-            <input
-                type="file"
-                #video
-                (change)="onVideoSelect()"
-                id="videoInput"
-                accept="video/mp4, video/webm, video/ogg, video/*"
-                hidden
-            />
-        </label>
-        }
+                <input
+                    type="file"
+                    #video
+                    (change)="onVideoSelect()"
+                    id="videoInput"
+                    accept="video/mp4, video/webm, video/ogg, video/*"
+                    hidden
+                />
+            </label>
+            }
+        </div>
+
+        <app-instruction-steps></app-instruction-steps>
     </div>
 
-    <app-instruction-steps></app-instruction-steps>
+    <div class="flex flex-col gap-2 mt-10">
+        <button
+            type="button"
+            class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
+        >
+            Add Exercise
+        </button>
+        <button
+            type="button"
+            class="py-1.5 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
+        >
+            Cancel & Go Back
+        </button>
+    </div>
 </div>
