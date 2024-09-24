@@ -12,4 +12,6 @@ import { SubStepComponent } from './sub-step/sub-step.component';
 export class StepComponent {
     @Input({ required: true }) name!: string;
     @Input({ required: true }) subSteps!: string[];
+
+    newSubstepNameEditorVisibility: boolean = false;
 }

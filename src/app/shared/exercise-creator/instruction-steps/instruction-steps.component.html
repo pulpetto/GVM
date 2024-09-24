@@ -9,10 +9,10 @@
     <button
         type="button"
         (click)="newStepNameEditorVisibility = true"
-        class="flex items-center mt-2 transition-all active:opacity-50 active:scale-95"
+        class="flex items-center mt-2 group"
     >
         <svg
-            class="w-7 h-7 stroke-white"
+            class="transition-colors w-7 h-7 stroke-white group-hover:stroke-emerald-500"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +24,11 @@
                 stroke-linejoin="round"
             />
         </svg>
-        <div class="self-start text-xl font-semibold">Add Step</div>
+        <div
+            class="self-start text-xl font-semibold transition-colors group-hover:text-emerald-500"
+        >
+            Add Step
+        </div>
     </button>
     } @else {
     <div class="relative w-full mt-2">
