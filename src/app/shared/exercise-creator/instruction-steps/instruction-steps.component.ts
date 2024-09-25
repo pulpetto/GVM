@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { StepComponent } from './step/step.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-instruction-steps',
     standalone: true,
-    imports: [StepComponent],
+    imports: [StepComponent, FormsModule],
     templateUrl: './instruction-steps.component.html',
     styleUrl: './instruction-steps.component.css',
 })
@@ -58,10 +59,11 @@ export class InstructionStepsComponent {
 
     addStep() {
         this.steps.push({
-            stepName: 'Step name',
+            stepName: this.newStepName,
             subSteps: [],
         });
 
+        this.newStepName = '';
         this.newStepNameEditorVisibility = false;
     }
 }
