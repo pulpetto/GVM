@@ -1,11 +1,16 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { InstructionStepsComponent } from './instruction-steps/instruction-steps.component';
 import { EquipmentSelectorComponent } from './equipment-selector/equipment-selector.component';
+import { MuscleGroupSelectorComponent } from './muscle-group-selector/muscle-group-selector.component';
 
 @Component({
     selector: 'app-exercise-creator',
     standalone: true,
-    imports: [InstructionStepsComponent, EquipmentSelectorComponent],
+    imports: [
+        InstructionStepsComponent,
+        EquipmentSelectorComponent,
+        MuscleGroupSelectorComponent,
+    ],
     templateUrl: './exercise-creator.component.html',
     styleUrl: './exercise-creator.component.css',
 })
