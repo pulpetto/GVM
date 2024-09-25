@@ -145,12 +145,12 @@ export class AdminService {
             imageFilePath: string;
         }[]
     > {
-        const muscleGroupsRef: CollectionReference = collection(
+        const equipmentRef: CollectionReference = collection(
             this.firestore,
             'equipment'
         );
 
-        const orderedMuscleGroupsQuery = query(muscleGroupsRef);
+        const orderedEquipmentQuery = query(equipmentRef);
 
         // prettier-ignore
         return new Observable<{
@@ -160,9 +160,9 @@ export class AdminService {
             imageFilePath: string,
         }[]>((observer) => {
             const unsubscribe = onSnapshot(
-                orderedMuscleGroupsQuery,
+                orderedEquipmentQuery,
                 (querySnapshot) => {
-                    const muscleGroups = querySnapshot.docs.map(
+                    const equipment = querySnapshot.docs.map(
                         (doc) =>
                             ({
                                 id: doc.id,
@@ -177,7 +177,7 @@ export class AdminService {
                             })
                     );
 
-                    observer.next(muscleGroups);
+                    observer.next(equipment);
                 },
                 (error) => {
                     observer.error(error);
