@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { MuscleGroup } from '../interfaces/muscle-group';
 import { map, Observable } from 'rxjs';
 import { Equipment } from '../interfaces/equipment';
 import { Exercise } from '../interfaces/exercise';
@@ -13,6 +12,7 @@ import {
     onSnapshot,
     query,
 } from '@angular/fire/firestore';
+import { MuscleGroupName } from '../types/muscle-group-type';
 
 @Injectable({
     providedIn: 'root',
@@ -38,8 +38,22 @@ export class DataService {
         );
     }
 
-    getMuscleGroups(): Observable<MuscleGroup[]> {
-        return this.http.get<MuscleGroup[]>('assets/data/muscle-groups.json');
+    getMuscleGroups(): Observable<
+        {
+            id: number;
+            name: MuscleGroupName;
+            imageUrl: string;
+            focusOn: string;
+        }[]
+    > {
+        return this.http.get<
+            {
+                id: number;
+                name: MuscleGroupName;
+                imageUrl: string;
+                focusOn: string;
+            }[]
+        >('assets/data/muscle-groups.json');
     }
 
     getEquipment(): Observable<

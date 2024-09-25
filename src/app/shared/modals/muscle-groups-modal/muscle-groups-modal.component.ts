@@ -1,6 +1,5 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MuscleGroup } from '../../../interfaces/muscle-group';
 import { DataService } from '../../../services/data.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { MuscleGroupName } from '../../../types/muscle-group-type';
@@ -60,7 +59,12 @@ export class MuscleGroupsModalComponent implements OnInit {
     @Output() muscleGroupChangeEvent = new EventEmitter<MuscleGroupName>();
 
     visibility: boolean = false;
-    muscleGroups!: MuscleGroup[];
+    muscleGroups!: {
+        id: number;
+        name: MuscleGroupName;
+        imageUrl: string;
+        focusOn: string;
+    }[];
     selectedMuscleGroupName: MuscleGroupName = 'all muscles';
     selectedMuscleGroupId: number = 1;
 
