@@ -38,9 +38,14 @@
             placeholder="Step name..."
         />
 
-        <button type="button" (click)="addStep()">
+        <button
+            type="button"
+            class="transition-opacity disabled:opacity-25 group"
+            [disabled]="newStepName === ''"
+            (click)="addStep()"
+        >
             <svg
-                class="absolute w-8 h-8 transition-all -translate-y-1/2 right-8 top-1/2 stroke-neutral-700 hover:stroke-emerald-500 active:opacity-50 active:scale-95"
+                class="absolute w-8 h-8 transition-all -translate-y-1/2 group-disabled:hover:stroke-neutral-700 group-disabled:active:opacity-100 group-disabled:active:scale-100 right-8 top-1/2 stroke-neutral-700 hover:stroke-emerald-500 active:opacity-50 active:scale-95 group-disabled:hover:cursor-not-allowed"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

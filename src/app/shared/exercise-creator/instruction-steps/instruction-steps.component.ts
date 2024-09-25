@@ -54,6 +54,7 @@ export class InstructionStepsComponent {
     ];
 
     newStepNameEditorVisibility: boolean = false;
+    newStepName: string = '';
 
     addStep() {
         this.steps.push({
