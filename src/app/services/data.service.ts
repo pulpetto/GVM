@@ -13,6 +13,7 @@ import {
     query,
 } from '@angular/fire/firestore';
 import { MuscleGroupName } from '../types/muscle-group-type';
+import { MuscleGroup } from '../interfaces/muscle-group';
 
 @Injectable({
     providedIn: 'root',
@@ -54,6 +55,47 @@ export class DataService {
                 focusOn: string;
             }[]
         >('assets/data/muscle-groups.json');
+    }
+
+    getMuscleGroups2(): Observable<MuscleGroup[]> {
+        const muscleGroupsRef: CollectionReference = collection(
+            this.firestore,
+            'muscleGroups'
+        );
+
+        const orderedMuscleGroupsQuery = query(muscleGroupsRef);
+
+        // prettier-ignore
+        return new Observable<{
+            id: string;
+            name: string;
+            imageUrl: string;
+        }[]>((observer) => {
+            const unsubscribe = onSnapshot(
+                orderedMuscleGroupsQuery,
+                (querySnapshot) => {
+                    const muscleGroup = querySnapshot.docs.map(
+                        (doc) =>
+                            ({
+                                id: doc.id,
+                                name: doc.data()['name'],
+                                imageUrl: doc.data()['imagePreviewUrl'],
+                            } as {
+                                id: string;
+                                name: string;
+                                imageUrl: string;
+                            })
+                    );
+
+                    observer.next(muscleGroup);
+                },
+                (error) => {
+                    observer.error(error);
+                }
+            );
+
+            return { unsubscribe };
+        });
     }
 
     getEquipment(): Observable<
