@@ -1,6 +1,5 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { DataService } from '../../../services/data.service';
-import { Equipment } from '../../../interfaces/equipment';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { EquipmentName } from '../../../types/equipment-type';
@@ -60,7 +59,11 @@ export class EquipmentModalComponent implements OnInit {
     @Output() equipmentChangeEvent = new EventEmitter<EquipmentName>();
 
     visibility: boolean = false;
-    equipment!: Equipment[];
+    equipment!: {
+        id: number;
+        name: EquipmentName;
+        imageUrl: string;
+    }[];
     selectedEquipmentName: EquipmentName = 'all equipment';
     selectedEquipmentId: number = 1;
 
