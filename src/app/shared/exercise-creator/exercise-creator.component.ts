@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { InstructionStepsComponent } from './instruction-steps/instruction-steps.component';
 import { EquipmentSelectorComponent } from './equipment-selector/equipment-selector.component';
 import { MuscleGroupSelectorComponent } from './muscle-group-selector/muscle-group-selector.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-exercise-creator',
@@ -10,6 +11,7 @@ import { MuscleGroupSelectorComponent } from './muscle-group-selector/muscle-gro
         InstructionStepsComponent,
         EquipmentSelectorComponent,
         MuscleGroupSelectorComponent,
+        RouterModule,
     ],
     templateUrl: './exercise-creator.component.html',
     styleUrl: './exercise-creator.component.css',
