@@ -118,7 +118,5 @@ export class ExerciseCreatorComponent {
         this.exerciseForm.patchValue({
             equipmentId: $event,
         });
-
-        console.log(this.exerciseForm.value);
     }
 }
