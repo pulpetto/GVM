@@ -54,6 +54,16 @@ export class ExerciseCreatorComponent {
         this.exerciseMainMuscleGroups.push(this.fb.control(null));
     }
 
+    get exerciseSecondaryMuscleGroups(): FormArray<FormControl<string | null>> {
+        return this.exerciseForm.get('secondaryMuscleGroupsIds') as FormArray<
+            FormControl<string | null>
+        >;
+    }
+
+    addSecondaryMuscleGroup() {
+        this.exerciseSecondaryMuscleGroups.push(this.fb.control(null));
+    }
+
     onThumbnailSelect() {
         if (this.thumbnailInput.nativeElement.files) {
             const thumbnail = this.thumbnailInput.nativeElement.files[0];
