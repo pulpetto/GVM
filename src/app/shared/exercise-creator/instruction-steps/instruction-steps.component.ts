@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { StepComponent } from './step/step.component';
 import { FormsModule } from '@angular/forms';
+import { Step } from '../../../interfaces/step';
 
 @Component({
     selector: 'app-instruction-steps',
@@ -10,12 +11,9 @@ import { FormsModule } from '@angular/forms';
     styleUrl: './instruction-steps.component.css',
 })
 export class InstructionStepsComponent {
-    steps: {
-        stepName: string;
-        subSteps: string[];
-    }[] = [
+    steps: Step[] = [
         {
-            stepName: 'Setup',
+            name: 'Setup',
             subSteps: [
                 'Stand with your feet hip-width apart and the bar over your mid-foot.',
                 'Bend down and grip the bar just outside your knees.',
@@ -23,7 +21,7 @@ export class InstructionStepsComponent {
             ],
         },
         {
-            stepName: 'Lift',
+            name: 'Lift',
             subSteps: [
                 'Push through your heels and stand up, lifting the bar.',
                 'Keep the bar close to your body.',
@@ -31,14 +29,14 @@ export class InstructionStepsComponent {
             ],
         },
         {
-            stepName: 'Lockout',
+            name: 'Lockout',
             subSteps: [
                 'Stand tall with your hips and knees fully extended.',
                 'Keep your shoulders back.',
             ],
         },
         {
-            stepName: 'Descent',
+            name: 'Descent',
             subSteps: [
                 'Push your hips back and bend your knees to lower the bar.',
                 'Keep the bar close to your body.',
@@ -46,7 +44,7 @@ export class InstructionStepsComponent {
             ],
         },
         {
-            stepName: 'Reset',
+            name: 'Reset',
             subSteps: [
                 'Ensure your setup is correct before lifting again.',
                 'Repeat the steps for additional repetitions.',
@@ -59,7 +57,7 @@ export class InstructionStepsComponent {
 
     addStep() {
         this.steps.push({
-            stepName: this.newStepName,
+            name: this.newStepName,
             subSteps: [],
         });
 
