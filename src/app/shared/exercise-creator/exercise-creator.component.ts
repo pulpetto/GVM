@@ -4,7 +4,9 @@ import { EquipmentSelectorComponent } from './equipment-selector/equipment-selec
 import { MuscleGroupSelectorComponent } from './muscle-group-selector/muscle-group-selector.component';
 import { RouterModule } from '@angular/router';
 import {
+    FormArray,
     FormBuilder,
+    FormControl,
     FormsModule,
     ReactiveFormsModule,
     Validators,
@@ -41,6 +43,16 @@ export class ExerciseCreatorComponent {
         equipmentId: this.fb.control<string | null>(null),
         videoFile: this.fb.control<File | null>(null),
     });
+
+    get exerciseMainMuscleGroups(): FormArray<FormControl<string | null>> {
+        return this.exerciseForm.get('mainMuscleGroupsIds') as FormArray<
+            FormControl<string | null>
+        >;
+    }
+
+    addMainMuscleGroup() {
+        this.exerciseMainMuscleGroups.push(this.fb.control(null));
+    }
 
     onThumbnailSelect() {
         if (this.thumbnailInput.nativeElement.files) {

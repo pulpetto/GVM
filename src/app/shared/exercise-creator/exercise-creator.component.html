@@ -92,10 +92,14 @@
                 Main muscle group(s):
             </div>
 
+            <!-- prettier-ignore -->
+            @for (mainMuscleGroup of exerciseMainMuscleGroups.controls; track $index) {
             <app-muscle-group-selector></app-muscle-group-selector>
+            }
 
             <button
                 type="button"
+                (click)="addMainMuscleGroup()"
                 class="py-1.5 font-semibold rounded-md w-full border-2 border-solid border-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717] flex items-center justify-center"
             >
                 <svg
