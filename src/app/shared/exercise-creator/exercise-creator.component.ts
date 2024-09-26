@@ -42,7 +42,12 @@ export class ExerciseCreatorComponent {
         secondaryMuscleGroupsIds: this.fb.array<string>([]),
         equipmentId: this.fb.control<string | null>(null),
         videoFile: this.fb.control<File | null>(null),
+        instruction: this.fb.array([]),
     });
+
+    get exerciseInstruction(): FormArray {
+        return this.exerciseForm.get('instruction') as FormArray;
+    }
 
     get exerciseMainMuscleGroups(): FormArray<FormControl<string | null>> {
         return this.exerciseForm.get('mainMuscleGroupsIds') as FormArray<

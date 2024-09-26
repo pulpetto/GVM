@@ -1,12 +1,12 @@
 <div class="flex flex-col">
-    <div class="relative w-full mt-2">
+    <div [formGroup]="step" class="relative w-full mt-2">
         <input
             type="text"
             class="text-xl font-semibold bg-transparent outline-none"
-            [(ngModel)]="name"
+            formControlName="name"
         />
 
-        <button type="button">
+        <button type="button" (click)="removeStep()">
             <svg
                 class="absolute right-0 w-6 h-6 transition-all -translate-y-1/2 top-1/2 stroke-neutral-700 hover:stroke-red-500 active:opacity-50 active:scale-95"
                 viewBox="0 0 24 24"
@@ -42,8 +42,12 @@
     </div>
 
     <div class="flex flex-col ml-6 text-sm">
-        @for (subStep of subSteps; track $index) {
-        <app-sub-step [subStep]="subStep"></app-sub-step>
+        @for (subStep of subSteps.controls; track $index) {
+        <app-sub-step
+            (substepRemoveEvent)="removeSubstep($event)"
+            [index]="$index"
+            [subStep]="subStep"
+        ></app-sub-step>
         } @if (!newSubstepNameEditorVisibility) {
         <button
             type="button"
@@ -75,9 +79,10 @@
                 type="text"
                 class="font-semibold bg-transparent outline-none placeholder-neutral-700"
                 placeholder="Step name..."
+                [(ngModel)]="newSubstepName"
             />
 
-            <button type="button">
+            <button type="button" (click)="addSubstep()">
                 <svg
                     class="absolute w-5 h-5 transition-all -translate-y-1/2 right-12 top-1/2 stroke-neutral-700 hover:stroke-emerald-500 active:opacity-50 active:scale-95"
                     viewBox="0 0 24 24"
@@ -95,7 +100,9 @@
 
             <button
                 type="button"
-                (click)="newSubstepNameEditorVisibility = false"
+                (click)="
+                    newSubstepNameEditorVisibility = false; newSubstepName = ''
+                "
             >
                 <svg
                     class="absolute w-5 h-5 transition-all -translate-y-1/2 right-6 top-1/2 stroke-neutral-700 hover:stroke-red-500 active:opacity-50 active:scale-95"

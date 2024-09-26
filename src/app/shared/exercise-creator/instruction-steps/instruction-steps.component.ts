@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { StepComponent } from './step/step.component';
-import { FormsModule } from '@angular/forms';
-import { Step } from '../../../interfaces/step';
+import { FormArray, FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-instruction-steps',
@@ -11,18 +10,26 @@ import { Step } from '../../../interfaces/step';
     styleUrl: './instruction-steps.component.css',
 })
 export class InstructionStepsComponent {
-    steps: Step[] = [];
+    fb = inject(FormBuilder);
+
+    @Input({ required: true }) steps!: FormArray<FormGroup>;
 
     newStepNameEditorVisibility: boolean = false;
     newStepName: string = '';
 
     addStep() {
-        this.steps.push({
+        const step = this.fb.group({
             name: this.newStepName,
-            subSteps: [],
+            subSteps: this.fb.array([]),
         });
+
+        this.steps.push(step);
 
         this.newStepName = '';
         this.newStepNameEditorVisibility = false;
+    }
+
+    removeStep(index: number) {
+        this.steps.removeAt(index);
     }
 }
