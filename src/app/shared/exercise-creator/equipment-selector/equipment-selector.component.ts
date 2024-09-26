@@ -56,7 +56,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class EquipmentSelectorComponent implements OnInit {
-    @Output() equipmentChangeEvent = new EventEmitter<Equipment | null>();
+    @Output() equipmentChangeEvent = new EventEmitter<string | null>();
 
     modalVisibility: boolean = false;
     equipment$!: Observable<Equipment[]>;
@@ -75,7 +75,7 @@ export class EquipmentSelectorComponent implements OnInit {
             this.selectedEquipmentItem = clickedEquipmentItem;
         }
 
-        this.equipmentChangeEvent.emit(this.selectedEquipmentItem);
+        this.equipmentChangeEvent.emit(this.selectedEquipmentItem?.id);
 
         this.closeModal();
     }
