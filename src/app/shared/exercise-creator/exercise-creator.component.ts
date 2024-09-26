@@ -119,4 +119,16 @@ export class ExerciseCreatorComponent {
             equipmentId: $event,
         });
     }
+
+    setMuscleGroupId(
+        $event: string | null,
+        type: 'main' | 'secondary',
+        $index: number
+    ) {
+        if (type === 'main') {
+            this.exerciseMainMuscleGroups.at($index).setValue($event);
+        } else {
+            this.exerciseSecondaryMuscleGroups.at($index).setValue($event);
+        }
+    }
 }

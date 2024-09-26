@@ -94,7 +94,11 @@
 
             <!-- prettier-ignore -->
             @for (mainMuscleGroup of exerciseMainMuscleGroups.controls; track $index) {
-            <app-muscle-group-selector></app-muscle-group-selector>
+            <app-muscle-group-selector
+                (muscleGroupChangeEvent)="
+                    setMuscleGroupId($event, 'main', $index)
+                "
+            ></app-muscle-group-selector>
             }
 
             <button
@@ -127,7 +131,11 @@
 
             <!-- prettier-ignore -->
             @for (secondaryMuscleGroup of exerciseSecondaryMuscleGroups.controls; track $index) {
-            <app-muscle-group-selector></app-muscle-group-selector>
+            <app-muscle-group-selector
+                (muscleGroupChangeEvent)="
+                    setMuscleGroupId($event, 'secondary', $index)
+                "
+            ></app-muscle-group-selector>
             }
 
             <button
