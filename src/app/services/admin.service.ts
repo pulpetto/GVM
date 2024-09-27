@@ -18,6 +18,7 @@ import {
     uploadBytes,
 } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
+import { Step } from '../interfaces/step';
 
 @Injectable({
     providedIn: 'root',
@@ -247,4 +248,45 @@ export class AdminService {
     }
 
     // ---------- Exercises ----------
+
+    async addExercise(
+        name: string,
+        imageFile: File,
+        mainMuscleGroupsIds: string[],
+        secondaryMuscleGroupsIds: string[],
+        equipmentId: string,
+        instructionVideoFile: File,
+        instructionSteps: Step[],
+        variationsIds: string[],
+        alternativesIds: string[]
+    ) {
+        // Image upload
+        const imageFilePath = `admin/exercises/${Date.now()}_${name}`;
+        const storageRef = ref(this.storage, imageFilePath);
+        const snapshot = await uploadBytes(storageRef, imageFile);
+        const imagePreviewUrl = await getDownloadURL(snapshot.ref);
+
+        // Video upload
+        const videoFilePath = `admin/exercises/${Date.now()}_${name}_video`;
+        const videoStorageRef = ref(this.storage, videoFilePath);
+        const videoSnapshot = await uploadBytes(
+            videoStorageRef,
+            instructionVideoFile
+        );
+        const videoPreviewUrl = await getDownloadURL(videoSnapshot.ref);
+
+        await addDoc(collection(this.firestore, 'exercises'), {
+            name: name,
+            imagePreviewUrl: imagePreviewUrl,
+            imageFilePath: imageFilePath,
+            mainMuscleGroupsIds: mainMuscleGroupsIds,
+            secondaryMuscleGroupsIds: secondaryMuscleGroupsIds,
+            equipmentId: equipmentId,
+            instructionVideoPreviewUrl: videoPreviewUrl,
+            instructionVideoFilePath: videoFilePath,
+            instructionSteps: instructionSteps,
+            variationsIds: variationsIds,
+            alternativesIds: alternativesIds,
+        });
+    }
 }

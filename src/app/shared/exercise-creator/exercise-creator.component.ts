@@ -11,6 +11,8 @@ import {
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
+import { AdminService } from '../../services/admin.service';
+import { Step } from '../../interfaces/step';
 
 @Component({
     selector: 'app-exercise-creator',
@@ -27,6 +29,7 @@ import {
     styleUrl: './exercise-creator.component.css',
 })
 export class ExerciseCreatorComponent {
+    adminService = inject(AdminService);
     fb = inject(FormBuilder);
 
     @ViewChild('thumbnail') thumbnailInput!: ElementRef<HTMLInputElement>;
@@ -36,7 +39,7 @@ export class ExerciseCreatorComponent {
     selectedVideo: string | ArrayBuffer | null = null;
 
     exerciseForm = this.fb.group({
-        name: ['', Validators.required],
+        name: this.fb.nonNullable.control<string>('', Validators.required),
         thumbnailFile: this.fb.control<File | null>(null, Validators.required),
         mainMuscleGroupsIds: this.fb.nonNullable.array<string>(
             [],
@@ -152,5 +155,21 @@ export class ExerciseCreatorComponent {
         } else {
             this.exerciseSecondaryMuscleGroups.removeAt($index);
         }
+    }
+
+    addExercise() {
+        const formData = this.exerciseForm.value;
+
+        this.adminService.addExercise(
+            formData.name!,
+            formData.thumbnailFile!,
+            formData.mainMuscleGroupsIds!,
+            formData.secondaryMuscleGroupsIds!,
+            formData.equipmentId!,
+            formData.videoFile!,
+            formData.instruction as Step[],
+            [],
+            []
+        );
     }
 }
