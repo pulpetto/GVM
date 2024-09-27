@@ -11,7 +11,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MuscleGroupsModalComponent } from '../../../modals/muscle-groups-modal/muscle-groups-modal.component';
 import { EquipmentModalComponent } from '../../../modals/equipment-modal/equipment-modal.component';
-import { Exercise } from '../../../../interfaces/exercise';
 import { DataService } from '../../../../services/data.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { MuscleGroupName } from '../../../../types/muscle-group-type';
@@ -81,8 +80,20 @@ export class ExercisesSelectorComponent implements OnInit {
     exercisesModalVisibility: boolean = false;
     innerModalsVisibility: boolean = false;
 
-    exercises!: Exercise[];
-    exercisesFiltered: Exercise[] = [];
+    exercises!: {
+        id: number;
+        name: string;
+        imageUrl: string;
+        muscleGroups: MuscleGroupName[];
+        equipment: EquipmentName;
+    }[];
+    exercisesFiltered: {
+        id: number;
+        name: string;
+        imageUrl: string;
+        muscleGroups: MuscleGroupName[];
+        equipment: EquipmentName;
+    }[] = [];
     newlySelectedExercisesIds = new Set<number>();
 
     @ViewChild(MuscleGroupsModalComponent)

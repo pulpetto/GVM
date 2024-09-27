@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Equipment } from '../interfaces/equipment';
-import { Exercise } from '../interfaces/exercise';
 import { Achievement } from '../interfaces/achievement';
 import { EquipmentName } from '../types/equipment-type';
 import {
@@ -23,19 +22,51 @@ export class DataService {
 
     constructor(private http: HttpClient) {}
 
-    getExercises(): Observable<Exercise[]> {
-        return this.http.get<Exercise[]>('assets/data/exercises.json');
+    getExercises(): Observable<
+        {
+            id: number;
+            name: string;
+            imageUrl: string;
+            muscleGroups: MuscleGroupName[];
+            equipment: EquipmentName;
+        }[]
+    > {
+        return this.http.get<
+            {
+                id: number;
+                name: string;
+                imageUrl: string;
+                muscleGroups: MuscleGroupName[];
+                equipment: EquipmentName;
+            }[]
+        >('assets/data/exercises.json');
     }
 
-    getExerciseById(id: number): Observable<Exercise | null> {
+    getExerciseById(id: number): Observable<{
+        id: number;
+        name: string;
+        imageUrl: string;
+        muscleGroups: MuscleGroupName[];
+        equipment: EquipmentName;
+    } | null> {
         return this.getExercises().pipe(
-            map((exercises: Exercise[]) => {
-                const exercise = exercises.find(
-                    (exercise) => exercise.id === id
-                );
+            map(
+                (
+                    exercises: {
+                        id: number;
+                        name: string;
+                        imageUrl: string;
+                        muscleGroups: MuscleGroupName[];
+                        equipment: EquipmentName;
+                    }[]
+                ) => {
+                    const exercise = exercises.find(
+                        (exercise) => exercise.id === id
+                    );
 
-                return exercise ? exercise : null;
-            })
+                    return exercise ? exercise : null;
+                }
+            )
         );
     }
 

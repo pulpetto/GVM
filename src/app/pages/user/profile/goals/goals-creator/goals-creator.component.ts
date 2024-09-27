@@ -1,8 +1,9 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Exercise } from '../../../../../interfaces/exercise';
 import { ExerciseSelectorComponent } from '../goalsCreator/exercise-selector/exercise-selector.component';
+import { MuscleGroupName } from '../../../../../types/muscle-group-type';
+import { EquipmentName } from '../../../../../types/equipment-type';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -58,14 +59,26 @@ export class GoalsCreatorComponent {
     newGoalModalVisibility: boolean = false;
     exerciseSelectorModalVisibility: boolean = false;
 
-    selectedExercise: Exercise | null = null;
+    selectedExercise: {
+        id: number;
+        name: string;
+        imageUrl: string;
+        muscleGroups: MuscleGroupName[];
+        equipment: EquipmentName;
+    } | null = null;
 
     closeNewGoalModal() {
         this.selectedExercise = null;
         this.newGoalModalVisibility = false;
     }
 
-    selectExercise($event: Exercise) {
+    selectExercise($event: {
+        id: number;
+        name: string;
+        imageUrl: string;
+        muscleGroups: MuscleGroupName[];
+        equipment: EquipmentName;
+    }) {
         this.selectedExercise = $event;
         this.newGoalModalVisibility = true;
     }

@@ -11,7 +11,6 @@ import { CommonModule } from '@angular/common';
 import { MuscleGroupsModalComponent } from '../../../../../../shared/modals/muscle-groups-modal/muscle-groups-modal.component';
 import { EquipmentModalComponent } from '../../../../../../shared/modals/equipment-modal/equipment-modal.component';
 import { FormsModule } from '@angular/forms';
-import { Exercise } from '../../../../../../interfaces/exercise';
 import { DataService } from '../../../../../../services/data.service';
 import { EquipmentName } from '../../../../../../types/equipment-type';
 import { MuscleGroupName } from '../../../../../../types/muscle-group-type';
@@ -75,7 +74,13 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class ExerciseSelectorComponent implements OnInit {
     dataService = inject(DataService);
 
-    @Output() exerciseChangeEvent = new EventEmitter<Exercise>();
+    @Output() exerciseChangeEvent = new EventEmitter<{
+        id: number;
+        name: string;
+        imageUrl: string;
+        muscleGroups: MuscleGroupName[];
+        equipment: EquipmentName;
+    }>();
     @Output() exercisesModalCloseEvent = new EventEmitter<void>();
 
     @ViewChild(MuscleGroupsModalComponent)
@@ -87,8 +92,20 @@ export class ExerciseSelectorComponent implements OnInit {
     @Input({ required: true }) exercisesModalVisibility!: boolean;
     innerModalsVisibility: boolean = false;
 
-    exercises!: Exercise[];
-    exercisesFiltered: Exercise[] = [];
+    exercises!: {
+        id: number;
+        name: string;
+        imageUrl: string;
+        muscleGroups: MuscleGroupName[];
+        equipment: EquipmentName;
+    }[];
+    exercisesFiltered: {
+        id: number;
+        name: string;
+        imageUrl: string;
+        muscleGroups: MuscleGroupName[];
+        equipment: EquipmentName;
+    }[] = [];
 
     searchTerm: string = '';
 
