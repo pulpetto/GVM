@@ -19,6 +19,7 @@ import {
 } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 import { Step } from '../interfaces/step';
+import { Exercise } from '../interfaces/exercise';
 
 @Injectable({
     providedIn: 'root',
@@ -288,5 +289,45 @@ export class AdminService {
             variationsIds: variationsIds,
             alternativesIds: alternativesIds,
         });
+    }
+
+    getExercises(): Observable<Exercise[]> {
+        const exercisesRef: CollectionReference = collection(
+            this.firestore,
+            'exercises'
+        );
+
+        const orderedExercisesQuery = query(exercisesRef);
+
+        // prettier-ignore
+        return new Observable<Exercise[]>((observer) => {
+        const unsubscribe = onSnapshot(
+            orderedExercisesQuery,
+            (querySnapshot) => {
+                const exercises = querySnapshot.docs.map(
+                    (doc) =>
+                        ({
+                            id: doc.id,
+                            name: doc.data()['name'],
+                            imagePreviewUrl: doc.data()['imagePreviewUrl'],
+                            mainMuscleGroupsIds: doc.data()['mainMuscleGroupsIds'],
+                            secondaryMuscleGroupsIds: doc.data()['secondaryMuscleGroupsIds'],
+                            equipmentId: doc.data()['equipmentId'],
+                            instructionVideoUrl: doc.data()['instructionVideoPreviewUrl'],
+                            instructionSteps: doc.data()['instructionSteps'],
+                            variationsIds: doc.data()['variationsIds'],
+                            alternativesIds: doc.data()['alternativesIds'],
+                        } as Exercise)
+                );
+
+                observer.next(exercises);
+            },
+            (error) => {
+                observer.error(error);
+            }
+        );
+
+        return { unsubscribe };
+    });
     }
 }
