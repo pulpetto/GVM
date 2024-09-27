@@ -6,7 +6,7 @@ export interface Exercise {
     imagePreviewUrl: string;
     mainMuscleGroupsIds: string[];
     secondaryMuscleGroupsIds: string[];
-    equipmentId: string[];
+    equipmentId: string;
     instructionVideoUrl: string;
     instructionSteps: Step[];
     variationsIds: string[];
