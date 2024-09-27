@@ -37,12 +37,21 @@ export class ExerciseCreatorComponent {
 
     exerciseForm = this.fb.group({
         name: ['', Validators.required],
-        thumbnailFile: this.fb.control<File | null>(null),
-        mainMuscleGroupsIds: this.fb.array<string>([]),
-        secondaryMuscleGroupsIds: this.fb.array<string>([]),
-        equipmentId: this.fb.control<string | null>(null),
-        videoFile: this.fb.control<File | null>(null),
-        instruction: this.fb.array([]),
+        thumbnailFile: this.fb.control<File | null>(null, Validators.required),
+        mainMuscleGroupsIds: this.fb.nonNullable.array<string>(
+            [],
+            [Validators.required, Validators.minLength(3)]
+        ),
+        secondaryMuscleGroupsIds: this.fb.nonNullable.array<string>(
+            [],
+            [Validators.required, Validators.minLength(3)]
+        ),
+        equipmentId: this.fb.control<string | null>(null, Validators.required),
+        videoFile: this.fb.control<File | null>(null, Validators.required),
+        instruction: this.fb.nonNullable.array(
+            [],
+            [Validators.required, Validators.minLength(3)]
+        ),
     });
 
     get exerciseInstruction(): FormArray {
