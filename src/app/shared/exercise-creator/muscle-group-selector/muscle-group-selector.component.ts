@@ -56,7 +56,8 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class MuscleGroupSelectorComponent implements OnInit {
-    @Output() muscleGroupChangeEvent = new EventEmitter<string | null>();
+    @Output() muscleGroupChangeEvent = new EventEmitter<string>();
+    @Output() muscleGroupRemoveEvent = new EventEmitter<void>();
 
     modalVisibility: boolean = false;
     muscleGroups$!: Observable<MuscleGroup[]>;
@@ -71,11 +72,11 @@ export class MuscleGroupSelectorComponent implements OnInit {
     onOptionSelect(clickedmuscleGroupItem: MuscleGroup) {
         if (clickedmuscleGroupItem.id === this.selectedMuscleGroup?.id) {
             this.selectedMuscleGroup = null;
+            this.muscleGroupRemoveEvent.emit();
         } else {
             this.selectedMuscleGroup = clickedmuscleGroupItem;
+            this.muscleGroupChangeEvent.emit(this.selectedMuscleGroup?.id);
         }
-
-        this.muscleGroupChangeEvent.emit(this.selectedMuscleGroup?.id);
 
         this.closeModal();
     }

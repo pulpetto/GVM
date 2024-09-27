@@ -145,4 +145,12 @@ export class ExerciseCreatorComponent {
             this.exerciseSecondaryMuscleGroups.at($index).setValue($event);
         }
     }
+
+    removeMuscleGroup(type: 'main' | 'secondary', $index: number) {
+        if (type === 'main') {
+            this.exerciseMainMuscleGroups.removeAt($index);
+        } else {
+            this.exerciseSecondaryMuscleGroups.removeAt($index);
+        }
+    }
 }

@@ -98,6 +98,7 @@
                 (muscleGroupChangeEvent)="
                     setMuscleGroupId($event, 'main', $index)
                 "
+                (muscleGroupRemoveEvent)="removeMuscleGroup('main', $index)"
             ></app-muscle-group-selector>
             }
 
@@ -134,6 +135,9 @@
             <app-muscle-group-selector
                 (muscleGroupChangeEvent)="
                     setMuscleGroupId($event, 'secondary', $index)
+                "
+                (muscleGroupRemoveEvent)="
+                    removeMuscleGroup('secondary', $index)
                 "
             ></app-muscle-group-selector>
             }
