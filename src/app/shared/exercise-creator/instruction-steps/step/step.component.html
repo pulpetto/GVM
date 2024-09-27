@@ -44,8 +44,7 @@
     <div class="flex flex-col ml-6 text-sm">
         @for (subStep of subSteps.controls; track $index) {
         <app-sub-step
-            (substepRemoveEvent)="removeSubstep($event)"
-            [index]="$index"
+            (substepRemoveEvent)="removeSubstep($index)"
             [subStep]="subStep"
         ></app-sub-step>
         } @if (!newSubstepNameEditorVisibility) {

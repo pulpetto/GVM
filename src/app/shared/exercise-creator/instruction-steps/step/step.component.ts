@@ -19,9 +19,8 @@ import { SubStepComponent } from './sub-step/sub-step.component';
 export class StepComponent {
     fb = inject(FormBuilder);
 
-    @Output() stepRemoveEvent = new EventEmitter<number>();
+    @Output() stepRemoveEvent = new EventEmitter<void>();
 
-    @Input({ required: true }) index!: number;
     @Input({ required: true }) step!: FormGroup<{
         name: FormControl<string>;
         subSteps: FormArray<FormControl<string>>;
@@ -41,11 +40,11 @@ export class StepComponent {
     }
 
     removeStep() {
-        this.stepRemoveEvent.emit(this.index);
+        this.stepRemoveEvent.emit();
     }
 
-    removeSubstep($event: number) {
-        this.subSteps.removeAt($event);
+    removeSubstep(index: number) {
+        this.subSteps.removeAt(index);
     }
 
     newSubstepNameEditorVisibility: boolean = false;

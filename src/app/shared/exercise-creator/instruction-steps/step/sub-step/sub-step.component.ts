@@ -9,12 +9,11 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
     styleUrl: './sub-step.component.css',
 })
 export class SubStepComponent {
-    @Input({ required: true }) index!: number;
     @Input({ required: true }) subStep!: FormControl<string>;
 
-    @Output() substepRemoveEvent = new EventEmitter<number>();
+    @Output() substepRemoveEvent = new EventEmitter<void>();
 
     removeSubstep() {
-        this.substepRemoveEvent.emit(this.index);
+        this.substepRemoveEvent.emit();
     }
 }
