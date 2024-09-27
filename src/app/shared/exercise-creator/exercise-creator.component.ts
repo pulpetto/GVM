@@ -40,11 +40,11 @@ export class ExerciseCreatorComponent {
         thumbnailFile: this.fb.control<File | null>(null, Validators.required),
         mainMuscleGroupsIds: this.fb.nonNullable.array<string>(
             [],
-            [Validators.required, Validators.minLength(3)]
+            [Validators.required, Validators.minLength(1)]
         ),
         secondaryMuscleGroupsIds: this.fb.nonNullable.array<string>(
             [],
-            [Validators.required, Validators.minLength(3)]
+            [Validators.required, Validators.minLength(1)]
         ),
         equipmentId: this.fb.control<string | null>(null, Validators.required),
         videoFile: this.fb.control<File | null>(null, Validators.required),
