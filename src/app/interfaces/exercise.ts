@@ -1,10 +1,14 @@
-import { EquipmentName } from '../types/equipment-type';
-import { MuscleGroupName } from '../types/muscle-group-type';
+import { Step } from './step';
 
 export interface Exercise {
-    id: number;
+    id: string;
     name: string;
-    imageUrl: string;
-    muscleGroups: MuscleGroupName[];
-    equipment: EquipmentName;
+    imagePreviewUrl: string;
+    mainMuscleGroupsIds: string[];
+    secondaryMuscleGroupsIds: string[];
+    equipmentId: string[];
+    instructionVideoUrl: string;
+    instructionSteps: Step[];
+    variationsIds: string[];
+    alternativesIds: string[];
 }
