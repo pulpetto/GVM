@@ -3,18 +3,18 @@
     (click)="openModal()"
     class="flex items-center justify-center w-full gap-2 p-1.5 transition-all border-2 border-solid rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 focus:border-emerald-500"
     [ngClass]="{
-        'bg-emerald-500': selectedMuscleGroup,
-        'border-emerald-500': selectedMuscleGroup,
-        'border-neutral-900': !selectedMuscleGroup,
-        'hover:border-emerald-500': selectedMuscleGroup,
+        'bg-emerald-500': muscleGroupId.value,
+        'border-emerald-500': muscleGroupId.value,
+        'border-neutral-900': !muscleGroupId.value,
+        'hover:border-emerald-500': muscleGroupId.value,
     }"
 >
     <div>
         <svg
             class="w-5 h-5 fill-black dark:fill-white mt-0.5 transition-colors"
             [ngClass]="{
-                'group-hover:fill-emerald-500': !selectedMuscleGroup,
-                'group-focus:fill-emerald-500': !selectedMuscleGroup,
+                'group-hover:fill-emerald-500': !muscleGroupId.value,
+                'group-focus:fill-emerald-500': !muscleGroupId.value,
             }"
             version="1.1"
             id="Capa_1"
@@ -56,14 +56,14 @@
     <div
         class="transition-colors"
         [ngClass]="{
-            'group-hover:text-emerald-500': !selectedMuscleGroup,
-            'group-focus:text-emerald-500': !selectedMuscleGroup,
-            'font-semibold': selectedMuscleGroup,
+            'group-hover:text-emerald-500': !muscleGroupId.value,
+            'group-focus:text-emerald-500': !muscleGroupId.value,
+            'font-semibold': muscleGroupId.value,
         }"
     >
         {{
-            selectedMuscleGroup
-                ? (selectedMuscleGroup.name | titlecase)
+            muscleGroupId.value
+                ? (selectedMuscleGroupName | titlecase)
                 : "Select muscle group"
         }}
     </div>
@@ -87,7 +87,7 @@
 >
     <div class="self-center text-lg font-semibold">Choose muscle group:</div>
 
-    @if (muscleGroups$ | async; as muscleGroups) {
+    @if (muscleGroups) {
     <div class="flex flex-col gap-1">
         @for (muscleGroup of muscleGroups; track $index) {
         <button
@@ -95,7 +95,7 @@
             (click)="onOptionSelect(muscleGroup)"
             class="flex items-center justify-between p-1 transition-all rounded-md active:opacity-50 active:scale-95 group"
             [ngClass]="{
-                'bg-neutral-900': muscleGroup.id === selectedMuscleGroup?.id
+                'bg-neutral-900': muscleGroup.id === muscleGroupId.value
             }"
         >
             <div class="flex items-center gap-1">
@@ -112,16 +112,15 @@
                     class="p-2 transition-colors group-hover:text-emerald-500"
                     [ngClass]="{
                         'text-emerald-500':
-                            muscleGroup.id === selectedMuscleGroup?.id,
-                        'font-semibold':
-                            muscleGroup.id === selectedMuscleGroup?.id
+                            muscleGroup.id === muscleGroupId.value,
+                        'font-semibold': muscleGroup.id === muscleGroupId.value
                     }"
                 >
                     {{ muscleGroup.name | titlecase }}
                 </div>
             </div>
 
-            @if (muscleGroup.id === selectedMuscleGroup?.id) {
+            @if (muscleGroup.id === muscleGroupId.value) {
             <div>
                 <svg
                     class="w-8 h-8 stroke-emerald-500"

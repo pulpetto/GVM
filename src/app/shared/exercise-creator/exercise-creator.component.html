@@ -95,9 +95,7 @@
             <!-- prettier-ignore -->
             @for (mainMuscleGroup of exerciseMainMuscleGroups.controls; track $index) {
             <app-muscle-group-selector
-                (muscleGroupChangeEvent)="
-                    setMuscleGroupId($event, 'main', $index)
-                "
+                [muscleGroupId]="mainMuscleGroup"
                 (muscleGroupRemoveEvent)="removeMuscleGroup('main', $index)"
             ></app-muscle-group-selector>
             }
@@ -133,9 +131,7 @@
             <!-- prettier-ignore -->
             @for (secondaryMuscleGroup of exerciseSecondaryMuscleGroups.controls; track $index) {
             <app-muscle-group-selector
-                (muscleGroupChangeEvent)="
-                    setMuscleGroupId($event, 'secondary', $index)
-                "
+                [muscleGroupId]="secondaryMuscleGroup"
                 (muscleGroupRemoveEvent)="
                     removeMuscleGroup('secondary', $index)
                 "
@@ -182,7 +178,7 @@
                 <video
                     [src]="selectedVideo"
                     controls
-                    class="w-full bg-opacity-50 rounded-md h-44 bg-neutral-900"
+                    class="object-cover w-full bg-opacity-50 rounded-md h-44 bg-neutral-900"
                 ></video>
 
                 <button
@@ -250,6 +246,7 @@
         </div>
 
         <div class="flex flex-col gap-2 mt-10">
+            @if (view === 'new') {
             <button
                 type="submit"
                 [disabled]="exerciseForm.invalid"
@@ -258,6 +255,14 @@
             >
                 Add Exercise
             </button>
+            } @else {
+            <button
+                type="submit"
+                class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
+            >
+                Save Changes
+            </button>
+            }
             <a
                 routerLink="../"
                 class="py-1.5 font-semibold rounded-md w-full text-center bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"

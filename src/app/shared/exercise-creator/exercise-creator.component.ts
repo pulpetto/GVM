@@ -1,8 +1,14 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    inject,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { InstructionStepsComponent } from './instruction-steps/instruction-steps.component';
 import { EquipmentSelectorComponent } from './equipment-selector/equipment-selector.component';
 import { MuscleGroupSelectorComponent } from './muscle-group-selector/muscle-group-selector.component';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import {
     FormArray,
     FormBuilder,
@@ -28,8 +34,11 @@ import { Step } from '../../interfaces/step';
     templateUrl: './exercise-creator.component.html',
     styleUrl: './exercise-creator.component.css',
 })
-export class ExerciseCreatorComponent {
+export class ExerciseCreatorComponent implements OnInit {
+    view!: 'new' | 'existing';
+
     adminService = inject(AdminService);
+    route = inject(ActivatedRoute);
     fb = inject(FormBuilder);
 
     @ViewChild('thumbnail') thumbnailInput!: ElementRef<HTMLInputElement>;
@@ -56,6 +65,65 @@ export class ExerciseCreatorComponent {
             [Validators.required, Validators.minLength(3)]
         ),
     });
+
+    ngOnInit() {
+        const hasIdParam = this.route.snapshot.paramMap.has('id');
+
+        if (hasIdParam) {
+            const exerciseId = this.route.snapshot.paramMap.get('id');
+
+            this.view = 'existing';
+
+            this.adminService.getExerciseById(exerciseId!).subscribe((data) => {
+                this.exerciseForm.get('name')?.setValue(data.name);
+
+                this.selectedThumbnail = data.imagePreviewUrl;
+
+                const mainMuscleGroupsIds = this.exerciseForm.get(
+                    'mainMuscleGroupsIds'
+                ) as FormArray;
+
+                data.mainMuscleGroupsIds.forEach((id) => {
+                    mainMuscleGroupsIds.push(this.fb.control(id));
+                });
+
+                const secondaryMuscleGroupsIds = this.exerciseForm.get(
+                    'secondaryMuscleGroupsIds'
+                ) as FormArray;
+
+                data.secondaryMuscleGroupsIds.forEach((id) => {
+                    secondaryMuscleGroupsIds.push(this.fb.control(id));
+                });
+
+                this.exerciseForm
+                    .get('equipmentId')
+                    ?.setValue(data.equipmentId);
+
+                this.selectedVideo = data.instructionVideoPreviewUrl;
+
+                const instruction = this.exerciseForm.get(
+                    'instruction'
+                ) as FormArray;
+
+                data.instructionSteps.forEach((step) => {
+                    const localStep = this.fb.group({
+                        name: step.name,
+                        subSteps: this.fb.array([]),
+                    });
+
+                    step.subSteps.forEach((subStep) => {
+                        localStep.controls.subSteps.push(
+                            this.fb.control(subStep)
+                        );
+                    });
+
+                    instruction.push(localStep);
+                });
+            });
+        } else {
+            this.view = 'new';
+        }
+    }
 
     get exerciseInstruction(): FormArray {
         return this.exerciseForm.get('instruction') as FormArray;
@@ -129,18 +197,6 @@ export class ExerciseCreatorComponent {
         });
 
         this.selectedVideo = null;
-    }
-
-    setMuscleGroupId(
-        $event: string | null,
-        type: 'main' | 'secondary',
-        $index: number
-    ) {
-        if (type === 'main') {
-            this.exerciseMainMuscleGroups.at($index).setValue($event);
-        } else {
-            this.exerciseSecondaryMuscleGroups.at($index).setValue($event);
-        }
     }
 
     removeMuscleGroup(type: 'main' | 'secondary', $index: number) {

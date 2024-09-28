@@ -1,9 +1,18 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { DataService } from '../../../services/data.service';
-import { CommonModule } from '@angular/common';
-import { MuscleGroup } from '../../../interfaces/muscle-group';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { CommonModule } from '@angular/common';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnInit,
+    Output,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl } from '@angular/forms';
+import { MuscleGroup } from '../../../interfaces/muscle-group';
+import { DataService } from '../../../services/data.service';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -56,26 +65,39 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class MuscleGroupSelectorComponent implements OnInit {
-    @Output() muscleGroupChangeEvent = new EventEmitter<string>();
+    dataService = inject(DataService);
+    destroyRef = inject(DestroyRef);
+
+    @Input({ required: true }) muscleGroupId!: FormControl<string | null>;
+
     @Output() muscleGroupRemoveEvent = new EventEmitter<void>();
 
     modalVisibility: boolean = false;
-    muscleGroups$!: Observable<MuscleGroup[]>;
-    selectedMuscleGroup: MuscleGroup | null = null;
-
-    dataService = inject(DataService);
+    muscleGroups!: MuscleGroup[];
+    selectedMuscleGroupName: string | null = null;
 
     ngOnInit() {
-        this.muscleGroups$ = this.dataService.getMuscleGroups2();
+        this.dataService
+            .getMuscleGroups2()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((muscleGroups) => {
+                this.muscleGroups = muscleGroups;
+
+                this.selectedMuscleGroupName = muscleGroups.filter(
+                    (muscleGroup) => {
+                        return muscleGroup.id === this.muscleGroupId.value;
+                    }
+                )[0]?.name;
+            });
     }
 
     onOptionSelect(clickedmuscleGroupItem: MuscleGroup) {
-        if (clickedmuscleGroupItem.id === this.selectedMuscleGroup?.id) {
-            this.selectedMuscleGroup = null;
+        if (clickedmuscleGroupItem.id === this.muscleGroupId.value) {
+            this.selectedMuscleGroupName = null;
             this.muscleGroupRemoveEvent.emit();
         } else {
-            this.selectedMuscleGroup = clickedmuscleGroupItem;
-            this.muscleGroupChangeEvent.emit(this.selectedMuscleGroup?.id);
+            this.selectedMuscleGroupName = clickedmuscleGroupItem.name;
+            this.muscleGroupId.setValue(clickedmuscleGroupItem.id);
         }
 
         this.closeModal();
