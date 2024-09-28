@@ -3,18 +3,18 @@
     (click)="openModal()"
     class="flex items-center justify-center w-full gap-2 p-1.5 transition-all border-2 border-solid rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 focus:border-emerald-500"
     [ngClass]="{
-        'bg-emerald-500': selectedEquipmentItem,
-        'border-emerald-500': selectedEquipmentItem,
-        'border-neutral-900': !selectedEquipmentItem,
-        'hover:border-emerald-500': selectedEquipmentItem,
+        'bg-emerald-500': equipmentId.value,
+        'border-emerald-500': equipmentId.value,
+        'border-neutral-900': !equipmentId.value,
+        'hover:border-emerald-500': equipmentId.value,
     }"
 >
     <div>
         <svg
             class="rotate-45 w-5 h-5 stroke-black dark:stroke-white mt-0.5 transition-colors"
             [ngClass]="{
-                'group-hover:stroke-emerald-500': !selectedEquipmentItem,
-                'group-focus:stroke-emerald-500': !selectedEquipmentItem,
+                'group-hover:stroke-emerald-500': !equipmentId.value,
+                'group-focus:stroke-emerald-500': !equipmentId.value,
             }"
             viewBox="0 0 24 24"
             fill="none"
@@ -55,14 +55,14 @@
     <div
         class="transition-colors"
         [ngClass]="{
-            'group-hover:text-emerald-500': !selectedEquipmentItem,
-            'group-focus:text-emerald-500': !selectedEquipmentItem,
-            'font-semibold': selectedEquipmentItem,
+            'group-hover:text-emerald-500': !equipmentId.value,
+            'group-focus:text-emerald-500': !equipmentId.value,
+            'font-semibold': equipmentId.value,
         }"
     >
         {{
-            selectedEquipmentItem
-                ? (selectedEquipmentItem.name | titlecase)
+            equipmentId.value
+                ? (selectedEquipmentName | titlecase)
                 : "Select required equipment"
         }}
     </div>
@@ -84,9 +84,9 @@
         'top-full': !modalVisibility
     }"
 >
-    <div class="self-center text-lg font-semibold">Choose muscle groups:</div>
+    <div class="self-center text-lg font-semibold">Select muscle group:</div>
 
-    @if (equipment$ | async; as equipment) {
+    @if (equipment) {
     <div class="flex flex-col gap-1">
         @for (item of equipment; track $index) {
         <button
@@ -94,7 +94,7 @@
             (click)="onOptionSelect(item)"
             class="flex items-center justify-between p-1 transition-all rounded-md active:opacity-50 active:scale-95 group"
             [ngClass]="{
-                'bg-neutral-900': item.id === selectedEquipmentItem?.id
+                'bg-neutral-900': item.id === equipmentId.value
             }"
         >
             <div class="flex items-center gap-1">
@@ -110,16 +110,15 @@
                 <div
                     class="p-2 transition-colors group-hover:text-emerald-500"
                     [ngClass]="{
-                        'text-emerald-500':
-                            item.id === selectedEquipmentItem?.id,
-                        'font-semibold': item.id === selectedEquipmentItem?.id
+                        'text-emerald-500': item.id === equipmentId.value,
+                        'font-semibold': item.id === equipmentId.value
                     }"
                 >
                     {{ item.name | titlecase }}
                 </div>
             </div>
 
-            @if (item.id === selectedEquipmentItem?.id) {
+            @if (item.id === equipmentId.value) {
             <div>
                 <svg
                     class="w-8 h-8 stroke-emerald-500"

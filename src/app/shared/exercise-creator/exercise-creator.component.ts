@@ -131,12 +131,6 @@ export class ExerciseCreatorComponent {
         this.selectedVideo = null;
     }
 
-    setEquipmentId($event: string | null) {
-        this.exerciseForm.patchValue({
-            equipmentId: $event,
-        });
-    }
-
     setMuscleGroupId(
         $event: string | null,
         type: 'main' | 'secondary',

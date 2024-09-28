@@ -171,7 +171,7 @@
             </div>
 
             <app-equipment-selector
-                (equipmentChangeEvent)="setEquipmentId($event)"
+                [equipmentId]="exerciseForm.controls.equipmentId"
             ></app-equipment-selector>
         </div>
 
