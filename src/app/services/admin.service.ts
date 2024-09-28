@@ -313,7 +313,7 @@ export class AdminService {
                             mainMuscleGroupsIds: doc.data()['mainMuscleGroupsIds'],
                             secondaryMuscleGroupsIds: doc.data()['secondaryMuscleGroupsIds'],
                             equipmentId: doc.data()['equipmentId'],
-                            instructionVideoUrl: doc.data()['instructionVideoPreviewUrl'],
+                            instructionVideoPreviewUrl: doc.data()['instructionVideoPreviewUrl'],
                             instructionSteps: doc.data()['instructionSteps'],
                             variationsIds: doc.data()['variationsIds'],
                             alternativesIds: doc.data()['alternativesIds'],

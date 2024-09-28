@@ -7,7 +7,7 @@ export interface Exercise {
     mainMuscleGroupsIds: string[];
     secondaryMuscleGroupsIds: string[];
     equipmentId: string;
-    instructionVideoUrl: string;
+    instructionVideoPreviewUrl: string;
     instructionSteps: Step[];
     variationsIds: string[];
     alternativesIds: string[];
