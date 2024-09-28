@@ -49,6 +49,13 @@ export const routes: Routes = [
                     ).then((component) => component.ExerciseCreatorComponent),
             },
             {
+                path: 'admin/exercises/:id',
+                loadComponent: () =>
+                    import(
+                        './shared/exercise-creator/exercise-creator.component'
+                    ).then((component) => component.ExerciseCreatorComponent),
+            },
+            {
                 path: 'admin/muscles',
                 loadComponent: () =>
                     import(
