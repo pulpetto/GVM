@@ -1,4 +1,43 @@
 <div class="flex flex-col gap-4 p-4">
+    @if (exercises$ | async; as exercises) {
+    <!--  -->
+    @for (exercise of exercises; track $index) {
+    <a
+        [routerLink]="exercise.id + ''"
+        class="flex items-center justify-between w-full p-1 transition-all rounded-md cursor-pointer active:opacity-50 active:scale-95 hover:bg-neutral-900"
+    >
+        <div class="flex items-center gap-2">
+            <div
+                class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+            >
+                <img
+                    [src]="exercise.imagePreviewUrl"
+                    class="w-12 h-12"
+                    [alt]="exercise.name + ' icon'"
+                />
+            </div>
+            <div class="text-xl font-semibold">
+                {{ exercise.name | titlecase }}
+            </div>
+        </div>
+    </a>
+    }
+    <!--  -->
+    } @else {
+    <div class="flex flex-col gap-2">
+        @for (x of [1,2,3,4]; track $index) {
+        <div class="flex items-center gap-3 mx-2 animate-pulse">
+            <div class="w-12 h-12 rounded-full bg-neutral-700"></div>
+
+            <div class="flex flex-col gap-2">
+                <div class="w-24 h-2 rounded-full bg-neutral-700"></div>
+                <div class="h-2 rounded-full w-44 bg-neutral-700"></div>
+            </div>
+        </div>
+        }
+    </div>
+    }
+
     <a
         routerLink="new"
         class="fixed z-20 flex items-center p-1 pr-3 transition-all -translate-x-1/2 rounded-full bg-opacity-20 left-1/2 bottom-24 bg-neutral-900 active:scale-95 active:opacity-50 group"
