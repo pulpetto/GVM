@@ -6,6 +6,7 @@ import {
     deleteDoc,
     doc,
     Firestore,
+    getDoc,
     onSnapshot,
     query,
     updateDoc,
@@ -17,7 +18,7 @@ import {
     ref,
     uploadBytes,
 } from '@angular/fire/storage';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { Step } from '../interfaces/step';
 import { Exercise } from '../interfaces/exercise';
 
@@ -289,6 +290,20 @@ export class AdminService {
             variationsIds: variationsIds,
             alternativesIds: alternativesIds,
         });
+    }
+
+    getExerciseById(id: string): Observable<Exercise> {
+        const exerciseDocRef = doc(this.firestore, 'exercises', id);
+
+        return from(
+            getDoc(exerciseDocRef).then((workoutDoc) => {
+                const exercise = workoutDoc.data() as Exercise;
+
+                exercise.id = workoutDoc.id;
+
+                return exercise;
+            })
+        );
     }
 
     getExercises(): Observable<Exercise[]> {
