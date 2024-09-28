@@ -35,6 +35,13 @@ export const routes: Routes = [
                     ).then((component) => component.AdminPanelComponent),
             },
             {
+                path: 'admin/users',
+                loadComponent: () =>
+                    import(
+                        './pages/user/admin-panel/users-manager/users-manager.component'
+                    ).then((component) => component.UsersManagerComponent),
+            },
+            {
                 path: 'admin/exercises',
                 loadComponent: () =>
                     import(
