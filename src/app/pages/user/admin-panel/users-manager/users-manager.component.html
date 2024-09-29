@@ -1,1 +1,68 @@
-<p>users-manager works!</p>
+<div class="flex flex-col gap-2 p-4">
+    @if (users$ | async; as users) {
+    <div class="flex flex-col gap-1">
+        @for (user of users; track $index) {
+        <button
+            type="button"
+            class="flex items-center justify-between p-1.5 transition-all rounded-md active:opacity-50 active:scale-95 group hover:bg-neutral-900"
+        >
+            <div class="flex items-center gap-1">
+                <div
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                >
+                    <svg
+                        class="w-10 h-10 p-1 stroke-emerald-500"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M5 20V19C5 15.134 8.13401 12 12 12V12C15.866 12 19 15.134 19 19V20"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                        <path
+                            d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </div>
+                <div class="p-2 font-semibold">
+                    {{ user.username | titlecase }}
+                </div>
+            </div>
+
+            <svg
+                class="w-6 h-6 transition-colors stroke-transparent group-hover:stroke-white"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M13.0207 5.82839L15.8491 2.99996L20.7988 7.94971L17.9704 10.7781M13.0207 5.82839L3.41405 15.435C3.22652 15.6225 3.12116 15.8769 3.12116 16.1421V20.6776H7.65669C7.92191 20.6776 8.17626 20.5723 8.3638 20.3847L17.9704 10.7781M13.0207 5.82839L17.9704 10.7781"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+        }
+    </div>
+    } @else {
+    <div class="flex flex-col gap-2">
+        @for (x of [1,2,3,4]; track $index) {
+        <div class="flex items-center gap-3 mx-2 animate-pulse">
+            <div class="w-12 h-12 rounded-full bg-neutral-700"></div>
+
+            <div class="flex flex-col gap-2">
+                <div class="w-24 h-2 rounded-full bg-neutral-700"></div>
+                <div class="h-2 rounded-full w-44 bg-neutral-700"></div>
+            </div>
+        </div>
+        }
+    </div>
+    }
+</div>
