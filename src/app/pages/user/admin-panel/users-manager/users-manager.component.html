@@ -15,6 +15,7 @@
         @for (user of users; track $index) {
         <button
             type="button"
+            (click)="userDetailsModalVisibility = true"
             class="flex items-center justify-between p-1.5 transition-all rounded-md active:opacity-50 active:scale-95 group hover:bg-neutral-900"
         >
             <div class="flex items-center gap-1">
@@ -80,6 +81,8 @@
     </div>
     }
 </div>
+
+<!-- ---------- Role switcher ---------- -->
 
 @if (roleSelectorModalVisibility) {
 <!-- eslint-disable-next-line -->
@@ -204,6 +207,86 @@
     <button
         type="button"
         (click)="roleSelectorModalVisibility = false"
+        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
+    >
+        Close
+    </button>
+</div>
+}
+
+<!-- ---------- User details ---------- -->
+
+@if (userDetailsModalVisibility) {
+<!-- eslint-disable-next-line -->
+<div
+    (click)="userDetailsModalVisibility = false"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+    @openClose2
+></div>
+
+<div
+    class="fixed left-0 z-50 flex items-start justify-center w-full h-full gap-3 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md"
+    @openClose4
+    [ngClass]="{
+        'top-3/4': userDetailsModalVisibility,
+        'top-full': !userDetailsModalVisibility
+    }"
+>
+    <div
+        class="overflow-hidden border-2 border-white border-solid rounded-full"
+    >
+        <svg
+            class="w-20 h-20 p-1 stroke-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M5 20V19C5 15.134 8.13401 12 12 12V12C15.866 12 19 15.134 19 19V20"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+    </div>
+
+    <div class="flex flex-col gap-1">
+        <div>
+            <span class="text-neutral-700">Username:</span>
+            <span class="ml-1 font-semibol">x x x x x</span>
+        </div>
+        <div>
+            <span class="text-neutral-700">Email:</span>
+            <span class="ml-1 font-semibol">x x x x x</span>
+        </div>
+        <div>
+            <span class="text-neutral-700">Role:</span>
+            <span class="ml-1 font-semibol">x x x x x</span>
+        </div>
+    </div>
+</div>
+}
+
+<!--  -->
+
+@if (userDetailsModalVisibility) {
+<div
+    @openClose3
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
+    [ngClass]="{
+        'bottom-0': userDetailsModalVisibility,
+        '-bottom-full': !userDetailsModalVisibility,
+    }"
+>
+    <button
+        type="button"
+        (click)="userDetailsModalVisibility = false"
         class="py-1.5 mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
     >
         Close

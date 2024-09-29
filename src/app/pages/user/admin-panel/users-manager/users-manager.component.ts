@@ -6,6 +6,7 @@ import { User } from '../../../../interfaces/user';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 const visibleModal = { top: '50%' };
+const visibleModal75 = { top: '75%' };
 const hiddenModal = { top: '100%' };
 
 const visibleBg = { opacity: '100%' };
@@ -51,6 +52,16 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
             transition(':leave', [
                 style(visibleBtnFixed),
                 animate(timing, style(hiddenBtnFixed)),
+            ]),
+        ]),
+        trigger('openClose4', [
+            transition(':enter', [
+                style(hiddenModal),
+                animate(timing, style(visibleModal75)),
+            ]),
+            transition(':leave', [
+                style(visibleModal75),
+                animate(timing, style(hiddenModal)),
             ]),
         ]),
     ],
