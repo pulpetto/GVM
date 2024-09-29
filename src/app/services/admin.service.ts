@@ -7,6 +7,7 @@ import {
     doc,
     Firestore,
     getDoc,
+    getDocs,
     onSnapshot,
     query,
     updateDoc,
@@ -21,6 +22,7 @@ import {
 import { from, Observable } from 'rxjs';
 import { Step } from '../interfaces/step';
 import { Exercise } from '../interfaces/exercise';
+import { User } from '../interfaces/user';
 
 @Injectable({
     providedIn: 'root',
@@ -28,6 +30,27 @@ import { Exercise } from '../interfaces/exercise';
 export class AdminService {
     firestore = inject(Firestore);
     storage = getStorage();
+
+    // ---------- Users ----------
+
+    getUsers$(): Observable<User[]> {
+        const usersCollectionRef: CollectionReference = collection(
+            this.firestore,
+            'users'
+        );
+
+        return from(
+            getDocs(usersCollectionRef).then((usersSnapshot) => {
+                const users: User[] = [];
+
+                usersSnapshot.forEach((user) => {
+                    users.push(user.data() as User);
+                });
+
+                return users;
+            })
+        );
+    }
 
     // ---------- Muscle Groups ----------
     getMuscleGroups(): Observable<
