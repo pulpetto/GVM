@@ -73,6 +73,7 @@ export class UsersManagerComponent implements OnInit {
     activeRole: 'regular user' | 'trainer' | 'admin' = 'regular user';
 
     userDetailsModalVisibility: boolean = false;
+    currentUserDetails!: User;
 
     users$!: Observable<User[]>;
 
@@ -83,5 +84,10 @@ export class UsersManagerComponent implements OnInit {
     changeActiveRole(activeRole: string) {
         this.activeRole = activeRole as 'regular user' | 'trainer' | 'admin';
         this.roleSelectorModalVisibility = false;
+    }
+
+    openUserDetailsModal(user: User) {
+        this.currentUserDetails = user;
+        this.userDetailsModalVisibility = true;
     }
 }
