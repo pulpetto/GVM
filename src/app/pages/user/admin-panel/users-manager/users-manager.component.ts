@@ -58,7 +58,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class UsersManagerComponent implements OnInit {
     adminService = inject(AdminService);
 
-    roleSelectorModalVisibility: boolean = true;
+    roleSelectorModalVisibility: boolean = false;
     activeRole: 'regular user' | 'trainer' | 'admin' = 'regular user';
 
     userDetailsModalVisibility: boolean = false;
