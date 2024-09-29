@@ -31,7 +31,10 @@
                     </svg>
                 </div>
                 <div class="p-2 font-semibold">
-                    {{ user.username | titlecase }}
+                    {{ user.username | titlecase }} -
+                    <span class="font-normal text-neutral-700">{{
+                        user.email
+                    }}</span>
                 </div>
             </div>
 
