@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { from, map, Observable } from 'rxjs';
 import { Equipment } from '../interfaces/equipment';
 import { Achievement } from '../interfaces/achievement';
 import { EquipmentName } from '../types/equipment-type';
@@ -8,6 +8,7 @@ import {
     collection,
     CollectionReference,
     Firestore,
+    getDocs,
     onSnapshot,
     query,
 } from '@angular/fire/firestore';
@@ -188,5 +189,29 @@ export class DataService {
 
     getAchievements(): Observable<Achievement[]> {
         return this.http.get<Achievement[]>('assets/data/achievements.json');
+    }
+
+    getMuscleGroups$(): Observable<MuscleGroup[]> {
+        const muscleGroupsCollectionRef: CollectionReference = collection(
+            this.firestore,
+            'muscleGroups'
+        );
+
+        return from(
+            getDocs(muscleGroupsCollectionRef).then((muscleGroupsSnapshot) => {
+                const muscleGroups: MuscleGroup[] = [];
+
+                muscleGroupsSnapshot.forEach((muscleGroupDoc) => {
+                    const muscleGroup: MuscleGroup =
+                        muscleGroupDoc.data() as MuscleGroup;
+
+                    muscleGroup.id = muscleGroupDoc.id;
+
+                    muscleGroups.push(muscleGroup);
+                });
+
+                return muscleGroups;
+            })
+        );
     }
 }
