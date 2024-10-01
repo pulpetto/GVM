@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AdminService } from '../../../../services/admin.service';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { Exercise } from '../../../../interfaces/exercise';
+import { ExercisePreview } from '../../../../interfaces/exercise-preview';
 
 @Component({
     selector: 'app-exercise-manager',
@@ -14,10 +14,19 @@ import { Exercise } from '../../../../interfaces/exercise';
 })
 export class ExerciseManagerComponent implements OnInit {
     adminService = inject(AdminService);
+    router = inject(Router);
+    activatedRoute = inject(ActivatedRoute);
 
-    exercises$!: Observable<Exercise[]>;
+    exercises$!: Observable<ExercisePreview[]>;
 
     ngOnInit() {
-        this.exercises$ = this.adminService.getExercises();
+        this.exercises$ = this.adminService.getExercisesPreviews$();
+    }
+
+    redirectToExerciseRoute(data: ExercisePreview) {
+        this.router.navigate([data.id], {
+            relativeTo: this.activatedRoute,
+            state: { previewData: data },
+        });
     }
 }

@@ -2,8 +2,9 @@
     @if (exercises$ | async; as exercises) {
     <!--  -->
     @for (exercise of exercises; track $index) {
-    <a
-        [routerLink]="exercise.id + ''"
+    <button
+        type="button"
+        (click)="redirectToExerciseRoute(exercise)"
         class="flex items-center justify-between w-full p-1 transition-all rounded-md cursor-pointer active:opacity-50 active:scale-95 hover:bg-neutral-900"
     >
         <div class="flex items-center gap-2">
@@ -20,7 +21,7 @@
                 {{ exercise.name | titlecase }}
             </div>
         </div>
-    </a>
+    </button>
     }
     <!--  -->
     } @else {
