@@ -7,13 +7,17 @@ import { EquipmentName } from '../types/equipment-type';
 import {
     collection,
     CollectionReference,
+    doc,
     Firestore,
+    getDoc,
     getDocs,
     onSnapshot,
     query,
 } from '@angular/fire/firestore';
 import { MuscleGroupName } from '../types/muscle-group-type';
 import { MuscleGroup } from '../interfaces/muscle-group';
+import { ExercisePreview } from '../interfaces/exercise-preview';
+import { ExerciseDetails } from '../interfaces/exercise-details';
 
 @Injectable({
     providedIn: 'root',
@@ -211,6 +215,32 @@ export class DataService {
                 });
 
                 return muscleGroups;
+            })
+        );
+    }
+
+    getExercisePreview$(id: string): Observable<ExercisePreview> {
+        const exerciseDocRef = doc(this.firestore, 'exercisePreviews', id);
+
+        return from(
+            getDoc(exerciseDocRef).then((exerciseDoc) => {
+                const exercisePreview = exerciseDoc.data() as ExercisePreview;
+
+                exercisePreview.id = exerciseDoc.id;
+
+                return exercisePreview;
+            })
+        );
+    }
+
+    getExerciseDetails$(id: string): Observable<ExerciseDetails> {
+        const exerciseDocRef = doc(this.firestore, 'exerciseDetails', id);
+
+        return from(
+            getDoc(exerciseDocRef).then((exerciseDoc) => {
+                const exerciseDetails = exerciseDoc.data() as ExerciseDetails;
+
+                return exerciseDetails;
             })
         );
     }

@@ -6,10 +6,10 @@ import {
     deleteDoc,
     doc,
     Firestore,
-    getDoc,
     getDocs,
     onSnapshot,
     query,
+    setDoc,
     updateDoc,
 } from '@angular/fire/firestore';
 import {
@@ -21,8 +21,8 @@ import {
 } from '@angular/fire/storage';
 import { from, Observable } from 'rxjs';
 import { Step } from '../interfaces/step';
-import { Exercise } from '../interfaces/exercise';
 import { User } from '../interfaces/user';
+import { ExercisePreview } from '../interfaces/exercise-preview';
 
 @Injectable({
     providedIn: 'root',
@@ -300,13 +300,20 @@ export class AdminService {
         );
         const videoPreviewUrl = await getDownloadURL(videoSnapshot.ref);
 
-        await addDoc(collection(this.firestore, 'exercises'), {
+        const newExerciseId = doc(
+            collection(this.firestore, 'exercisePreviews')
+        ).id;
+
+        await setDoc(doc(this.firestore, 'exercisePreviews', newExerciseId), {
             name: name,
             imagePreviewUrl: imagePreviewUrl,
-            imageFilePath: imageFilePath,
             mainMuscleGroupsIds: mainMuscleGroupsIds,
             secondaryMuscleGroupsIds: secondaryMuscleGroupsIds,
             equipmentId: equipmentId,
+        });
+
+        await setDoc(doc(this.firestore, 'exerciseDetails', newExerciseId), {
+            imageFilePath: imageFilePath,
             instructionVideoPreviewUrl: videoPreviewUrl,
             instructionVideoFilePath: videoFilePath,
             instructionSteps: instructionSteps,
@@ -315,57 +322,40 @@ export class AdminService {
         });
     }
 
-    getExerciseById(id: string): Observable<Exercise> {
-        const exerciseDocRef = doc(this.firestore, 'exercises', id);
-
-        return from(
-            getDoc(exerciseDocRef).then((workoutDoc) => {
-                const exercise = workoutDoc.data() as Exercise;
-
-                exercise.id = workoutDoc.id;
-
-                return exercise;
-            })
-        );
-    }
-
-    getExercises(): Observable<Exercise[]> {
+    getExercisesPreviews$(): Observable<ExercisePreview[]> {
         const exercisesRef: CollectionReference = collection(
             this.firestore,
-            'exercises'
+            'exercisePreviews'
         );
 
         const orderedExercisesQuery = query(exercisesRef);
 
-        // prettier-ignore
-        return new Observable<Exercise[]>((observer) => {
-        const unsubscribe = onSnapshot(
-            orderedExercisesQuery,
-            (querySnapshot) => {
-                const exercises = querySnapshot.docs.map(
-                    (doc) =>
-                        ({
-                            id: doc.id,
-                            name: doc.data()['name'],
-                            imagePreviewUrl: doc.data()['imagePreviewUrl'],
-                            mainMuscleGroupsIds: doc.data()['mainMuscleGroupsIds'],
-                            secondaryMuscleGroupsIds: doc.data()['secondaryMuscleGroupsIds'],
-                            equipmentId: doc.data()['equipmentId'],
-                            instructionVideoPreviewUrl: doc.data()['instructionVideoPreviewUrl'],
-                            instructionSteps: doc.data()['instructionSteps'],
-                            variationsIds: doc.data()['variationsIds'],
-                            alternativesIds: doc.data()['alternativesIds'],
-                        } as Exercise)
-                );
+        return new Observable<ExercisePreview[]>((observer) => {
+            const unsubscribe = onSnapshot(
+                orderedExercisesQuery,
+                (querySnapshot) => {
+                    const exercises = querySnapshot.docs.map(
+                        (doc) =>
+                            ({
+                                id: doc.id,
+                                name: doc.data()['name'],
+                                imagePreviewUrl: doc.data()['imagePreviewUrl'],
+                                mainMuscleGroupsIds:
+                                    doc.data()['mainMuscleGroupsIds'],
+                                secondaryMuscleGroupsIds:
+                                    doc.data()['secondaryMuscleGroupsIds'],
+                                equipmentId: doc.data()['equipmentId'],
+                            } as ExercisePreview)
+                    );
 
-                observer.next(exercises);
-            },
-            (error) => {
-                observer.error(error);
-            }
-        );
+                    observer.next(exercises);
+                },
+                (error) => {
+                    observer.error(error);
+                }
+            );
 
-        return { unsubscribe };
-    });
+            return { unsubscribe };
+        });
     }
 }

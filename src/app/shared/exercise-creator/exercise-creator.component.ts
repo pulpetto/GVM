@@ -1,5 +1,6 @@
 import {
     Component,
+    DestroyRef,
     ElementRef,
     inject,
     OnInit,
@@ -8,7 +9,7 @@ import {
 import { InstructionStepsComponent } from './instruction-steps/instruction-steps.component';
 import { EquipmentSelectorComponent } from './equipment-selector/equipment-selector.component';
 import { MuscleGroupSelectorComponent } from './muscle-group-selector/muscle-group-selector.component';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {
     FormArray,
     FormBuilder,
@@ -19,6 +20,9 @@ import {
 } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { Step } from '../../interfaces/step';
+import { ExercisePreview } from '../../interfaces/exercise-preview';
+import { DataService } from '../../services/data.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-exercise-creator',
@@ -38,8 +42,11 @@ export class ExerciseCreatorComponent implements OnInit {
     view!: 'new' | 'existing';
 
     adminService = inject(AdminService);
+    dataService = inject(DataService);
     route = inject(ActivatedRoute);
+    router = inject(Router);
     fb = inject(FormBuilder);
+    destroyRef = inject(DestroyRef);
 
     @ViewChild('thumbnail') thumbnailInput!: ElementRef<HTMLInputElement>;
     @ViewChild('video') videoInput!: ElementRef<HTMLInputElement>;
@@ -74,16 +81,20 @@ export class ExerciseCreatorComponent implements OnInit {
 
             this.view = 'existing';
 
-            this.adminService.getExerciseById(exerciseId!).subscribe((data) => {
-                this.exerciseForm.get('name')?.setValue(data.name);
+            if (history.state.previewData) {
+                // prettier-ignore
+                const exercisePreviewData = history.state.previewData as ExercisePreview;
 
-                this.selectedThumbnail = data.imagePreviewUrl;
+                this.exerciseForm
+                    .get('name')
+                    ?.setValue(exercisePreviewData.name);
+                this.selectedThumbnail = exercisePreviewData.imagePreviewUrl;
 
                 const mainMuscleGroupsIds = this.exerciseForm.get(
                     'mainMuscleGroupsIds'
                 ) as FormArray;
 
-                data.mainMuscleGroupsIds.forEach((id) => {
+                exercisePreviewData.mainMuscleGroupsIds.forEach((id) => {
                     mainMuscleGroupsIds.push(this.fb.control(id));
                 });
 
@@ -91,35 +102,69 @@ export class ExerciseCreatorComponent implements OnInit {
                     'secondaryMuscleGroupsIds'
                 ) as FormArray;
 
-                data.secondaryMuscleGroupsIds.forEach((id) => {
+                exercisePreviewData.secondaryMuscleGroupsIds.forEach((id) => {
                     secondaryMuscleGroupsIds.push(this.fb.control(id));
                 });
 
                 this.exerciseForm
                     .get('equipmentId')
-                    ?.setValue(data.equipmentId);
+                    ?.setValue(exercisePreviewData.equipmentId);
+            } else {
+                this.dataService
+                    .getExercisePreview$(exerciseId!)
+                    .pipe(takeUntilDestroyed(this.destroyRef))
+                    .subscribe((data) => {
+                        this.exerciseForm.get('name')?.setValue(data.name);
+                        this.selectedThumbnail = data.imagePreviewUrl;
 
-                this.selectedVideo = data.instructionVideoPreviewUrl;
+                        const mainMuscleGroupsIds = this.exerciseForm.get(
+                            'mainMuscleGroupsIds'
+                        ) as FormArray;
 
-                const instruction = this.exerciseForm.get(
-                    'instruction'
-                ) as FormArray;
+                        data.mainMuscleGroupsIds.forEach((id) => {
+                            mainMuscleGroupsIds.push(this.fb.control(id));
+                        });
 
-                data.instructionSteps.forEach((step) => {
-                    const localStep = this.fb.group({
-                        name: step.name,
-                        subSteps: this.fb.array([]),
+                        const secondaryMuscleGroupsIds = this.exerciseForm.get(
+                            'secondaryMuscleGroupsIds'
+                        ) as FormArray;
+
+                        data.secondaryMuscleGroupsIds.forEach((id) => {
+                            secondaryMuscleGroupsIds.push(this.fb.control(id));
+                        });
+
+                        this.exerciseForm
+                            .get('equipmentId')
+                            ?.setValue(data.equipmentId);
                     });
+            }
 
-                    step.subSteps.forEach((subStep) => {
-                        localStep.controls.subSteps.push(
-                            this.fb.control(subStep)
-                        );
+            this.dataService
+                .getExerciseDetails$(exerciseId!)
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe((data) => {
+                    // jeszcze path image'a i video
+                    this.selectedVideo = data.instructionVideoPreviewUrl;
+
+                    const instruction = this.exerciseForm.get(
+                        'instruction'
+                    ) as FormArray;
+
+                    data.instructionSteps.forEach((step) => {
+                        const localStep = this.fb.group({
+                            name: step.name,
+                            subSteps: this.fb.array([]),
+                        });
+
+                        step.subSteps.forEach((subStep) => {
+                            localStep.controls.subSteps.push(
+                                this.fb.control(subStep)
+                            );
+                        });
+
+                        instruction.push(localStep);
                     });
-
-                    instruction.push(localStep);
                 });
-            });
         } else {
             this.view = 'new';
         }
