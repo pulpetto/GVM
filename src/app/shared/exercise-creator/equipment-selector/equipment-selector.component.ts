@@ -68,7 +68,7 @@ export class EquipmentSelectorComponent implements OnInit {
 
     ngOnInit() {
         this.dataService
-            .getEquipment2()
+            .getEquipment$()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((equipment) => {
                 this.equipment = equipment;

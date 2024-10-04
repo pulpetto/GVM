@@ -78,7 +78,7 @@ export class MuscleGroupSelectorComponent implements OnInit {
 
     ngOnInit() {
         this.dataService
-            .getMuscleGroups2()
+            .getMuscleGroups$()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((muscleGroups) => {
                 this.muscleGroups = muscleGroups;
