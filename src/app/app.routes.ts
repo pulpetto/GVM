@@ -144,7 +144,7 @@ export const routes: Routes = [
                     ).then((component) => component.ExercisesComponent),
             },
             {
-                path: 'profile/exercises/:exerciseId',
+                path: 'profile/exercises/:id',
                 loadComponent: () =>
                     import('./shared/exercise/exercise.component').then(
                         (component) => component.ExerciseComponent
