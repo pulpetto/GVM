@@ -139,6 +139,30 @@ export class DataService {
         );
     }
 
+    getExercisesPreviews$(): Observable<ExercisePreview[]> {
+        const exerciseCollectionRef = collection(
+            this.firestore,
+            'exercisePreviews'
+        );
+
+        return from(
+            getDocs(exerciseCollectionRef).then((exercisesSnapshot) => {
+                const exercises: ExercisePreview[] = [];
+
+                exercisesSnapshot.forEach((exerciseDoc) => {
+                    const exercise: ExercisePreview =
+                        exerciseDoc.data() as ExercisePreview;
+
+                    exercise.id = exerciseDoc.id;
+
+                    exercises.push(exercise);
+                });
+
+                return exercises;
+            })
+        );
+    }
+
     getExerciseDetails$(id: string): Observable<ExerciseDetails> {
         const exerciseDocRef = doc(this.firestore, 'exerciseDetails', id);
 
