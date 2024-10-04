@@ -3,18 +3,18 @@
     (click)="openModal()"
     class="flex items-center w-full gap-2 p-3 transition-all border-2 border-solid rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 focus:border-emerald-500"
     [ngClass]="{
-        'bg-emerald-500': selectedEquipmentId !== 1,
-        'border-emerald-500': selectedEquipmentId !== 1,
-        'border-neutral-900': selectedEquipmentId === 1,
-        'hover:border-emerald-500': selectedEquipmentId === 1,
+        'bg-emerald-500': selectedEquipmentId,
+        'border-emerald-500': selectedEquipmentId,
+        'border-neutral-900': !selectedEquipmentId,
+        'hover:border-emerald-500': !selectedEquipmentId,
     }"
 >
     <div>
         <svg
             class="rotate-45 w-5 h-5 stroke-black dark:stroke-white mt-0.5 transition-colors"
             [ngClass]="{
-                'group-hover:stroke-emerald-500': selectedEquipmentId === 1,
-                'group-focus:stroke-emerald-500': selectedEquipmentId === 1,
+                'group-hover:stroke-emerald-500': !selectedEquipmentId,
+                'group-focus:stroke-emerald-500': !selectedEquipmentId,
             }"
             viewBox="0 0 24 24"
             fill="none"
@@ -55,12 +55,16 @@
     <div
         class="transition-colors"
         [ngClass]="{
-            'group-hover:text-emerald-500': selectedEquipmentId === 1,
-            'group-focus:text-emerald-500': selectedEquipmentId === 1,
-            'font-semibold': selectedEquipmentId !== 1,
+            'group-hover:text-emerald-500': !selectedEquipmentId,
+            'group-focus:text-emerald-500': !selectedEquipmentId,
+            'font-semibold': selectedEquipmentId,
         }"
     >
-        {{ selectedEquipmentName | titlecase }}
+        {{
+            selectedEquipmentName
+                ? (selectedEquipmentName | titlecase)
+                : "All equipment"
+        }}
     </div>
 </button>
 
@@ -81,6 +85,7 @@
     }"
 >
     <div class="self-center text-lg font-semibold">Choose muscle groups:</div>
+    @if (equipment$ | async; as equipment) {
     <div class="flex flex-col gap-1">
         @for (item of equipment; track $index) {
         <button
@@ -96,8 +101,8 @@
                     class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
                 >
                     <img
-                        [src]="item.imageUrl"
-                        class="object-cover w-12 h-12"
+                        [src]="item.imagePreviewUrl"
+                        class="object-cover w-12 h-12 p-1"
                         [alt]="item.name + ' image'"
                     />
                 </div>
@@ -132,6 +137,7 @@
         </button>
         }
     </div>
+    }
 </div>
 }
 
@@ -145,6 +151,15 @@
         '-bottom-full': !visibility,
     }"
 >
+    @if (selectedEquipmentId) {
+    <button
+        type="button"
+        (click)="reset()"
+        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-red-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#ef4444]"
+    >
+        Clear Filters
+    </button>
+    }
     <button
         type="button"
         (click)="closeModal()"

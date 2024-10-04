@@ -59,7 +59,7 @@
             (exercisesRemoveEvent)="removeExercise($event)"
             (exercisesReorderEvent)="exercisesReorderModalVisibility = true"
             [exerciseName]="exercisesPresentionalData[$index].name"
-            [exerciseImgUrl]="exercisesPresentionalData[$index].imageUrl"
+            [exerciseImgUrl]="exercisesPresentionalData[$index].imagePreviewUrl"
             [exerciseId]="exercise.value.exerciseId"
             [exerciseIndex]="$index"
         ></app-exercise-edit-mode>
@@ -180,7 +180,7 @@
                     class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
                 >
                     <img
-                        [src]="exercise.imageUrl"
+                        [src]="exercise.imagePreviewUrl"
                         class="w-10 h-10"
                         [alt]="exercise.name + 'photo'"
                     />
@@ -279,7 +279,7 @@
                     class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
                 >
                     <img
-                        [src]="exercise.imageUrl"
+                        [src]="exercise.imagePreviewUrl"
                         class="w-10 h-10"
                         [alt]="exercise.name + 'photo'"
                     />

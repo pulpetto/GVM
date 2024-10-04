@@ -2,7 +2,8 @@ import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../../services/data.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { MuscleGroupName } from '../../../types/muscle-group-type';
+import { Observable } from 'rxjs';
+import { MuscleGroup } from '../../../interfaces/muscle-group';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -56,37 +57,38 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class MuscleGroupsModalComponent implements OnInit {
     @Output() visibilityChangeEvent = new EventEmitter<boolean>();
-    @Output() muscleGroupChangeEvent = new EventEmitter<MuscleGroupName>();
-
-    visibility: boolean = false;
-    muscleGroups!: {
-        id: number;
-        name: MuscleGroupName;
-        imageUrl: string;
-        focusOn: string;
-    }[];
-    selectedMuscleGroupName: MuscleGroupName = 'all muscles';
-    selectedMuscleGroupId: number = 1;
+    @Output() muscleGroupIdChangeEvent = new EventEmitter<string | null>();
 
     dataService = inject(DataService);
 
+    visibility: boolean = false;
+    selectedMuscleGroupName: string | null = null;
+    selectedMuscleGroupId: string | null = null;
+
+    muscleGroups$!: Observable<MuscleGroup[]>;
+
     ngOnInit() {
-        this.dataService.getMuscleGroups().subscribe((data) => {
-            this.muscleGroups = data;
-        });
+        this.muscleGroups$ = this.dataService.getMuscleGroups$();
     }
 
-    onOptionSelect(id: number, name: MuscleGroupName) {
-        if (id === this.selectedMuscleGroupId) {
-            this.selectedMuscleGroupName = 'all muscles';
-            this.selectedMuscleGroupId = 1;
+    onOptionSelect(id: string, name: string) {
+        if (name === this.selectedMuscleGroupName) {
+            this.selectedMuscleGroupId = null;
+            this.selectedMuscleGroupName = null;
         } else {
-            this.selectedMuscleGroupName = name;
             this.selectedMuscleGroupId = id;
+            this.selectedMuscleGroupName = name;
         }
 
-        this.muscleGroupChangeEvent.emit(this.selectedMuscleGroupName);
+        this.muscleGroupIdChangeEvent.emit(this.selectedMuscleGroupId);
 
+        this.closeModal();
+    }
+
+    reset() {
+        this.selectedMuscleGroupId = null;
+        this.selectedMuscleGroupName = null;
+        this.muscleGroupIdChangeEvent.emit(null);
         this.closeModal();
     }
 

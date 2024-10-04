@@ -105,7 +105,7 @@ export class WorkoutFullViewComponent implements OnInit {
     workoutData$!: Observable<{
         name: string;
         exercises: {
-            exerciseId: number;
+            exerciseId: string;
             sets: Set[];
             name: string;
             imageUrl: string;
@@ -144,7 +144,7 @@ export class WorkoutFullViewComponent implements OnInit {
                                 forkJoin(
                                     workout.exercises.map((exercise) =>
                                         this.dataService
-                                            .getExerciseById(
+                                            .getExercisePreview$(
                                                 exercise.exerciseId
                                             )
                                             .pipe(
@@ -153,7 +153,7 @@ export class WorkoutFullViewComponent implements OnInit {
                                                     name: exerciseDetails!.name,
                                                     imageUrl:
                                                         exerciseDetails!
-                                                            .imageUrl,
+                                                            .imagePreviewUrl,
                                                 }))
                                             )
                                     )

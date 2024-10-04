@@ -13,8 +13,7 @@ import { MuscleGroupsModalComponent } from '../../../modals/muscle-groups-modal/
 import { EquipmentModalComponent } from '../../../modals/equipment-modal/equipment-modal.component';
 import { DataService } from '../../../../services/data.service';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { MuscleGroupName } from '../../../../types/muscle-group-type';
-import { EquipmentName } from '../../../../types/equipment-type';
+import { ExercisePreview } from '../../../../interfaces/exercise-preview';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -72,29 +71,17 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class ExercisesSelectorComponent implements OnInit {
-    @Input({ required: true }) selectedExercisesIds!: Set<number>;
-    @Output() exercisesSelectEvent = new EventEmitter<Set<number>>();
+    @Input({ required: true }) selectedExercisesIds!: Set<string>;
+    @Output() exercisesSelectEvent = new EventEmitter<Set<string>>();
 
     dataService = inject(DataService);
 
     exercisesModalVisibility: boolean = false;
     innerModalsVisibility: boolean = false;
 
-    exercises!: {
-        id: number;
-        name: string;
-        imageUrl: string;
-        muscleGroups: MuscleGroupName[];
-        equipment: EquipmentName;
-    }[];
-    exercisesFiltered: {
-        id: number;
-        name: string;
-        imageUrl: string;
-        muscleGroups: MuscleGroupName[];
-        equipment: EquipmentName;
-    }[] = [];
-    newlySelectedExercisesIds = new Set<number>();
+    exercises: ExercisePreview[] | null = null;
+    exercisesFiltered: ExercisePreview[] = [];
+    newlySelectedExercisesIds = new Set<string>();
 
     @ViewChild(MuscleGroupsModalComponent)
     muscleGroupsModalComponent!: MuscleGroupsModalComponent;
@@ -104,24 +91,22 @@ export class ExercisesSelectorComponent implements OnInit {
 
     searchTerm: string = '';
 
-    selectedMuscleGroup: MuscleGroupName = 'all muscles';
-    selectedMuscleGroupId: number = 1;
+    selectedMuscleGroupId: string | null = null;
 
-    selectedEquipment: EquipmentName = 'all equipment';
-    selectedEquipmentId: number = 1;
+    selectedEquipmentId: string | null = null;
 
     ngOnInit() {
-        this.dataService.getExercises().subscribe((data) => {
+        this.dataService.getExercisesPreviews$().subscribe((data) => {
             this.exercises = data;
             this.exercisesFiltered = data;
         });
     }
 
-    onExerciseSelect($index: number) {
-        if (this.newlySelectedExercisesIds.has($index + 1)) {
-            this.newlySelectedExercisesIds.delete($index + 1);
+    onExerciseSelect(id: string) {
+        if (this.newlySelectedExercisesIds.has(id)) {
+            this.newlySelectedExercisesIds.delete(id);
         } else {
-            this.newlySelectedExercisesIds.add($index + 1);
+            this.newlySelectedExercisesIds.add(id);
         }
     }
 
@@ -146,13 +131,13 @@ export class ExercisesSelectorComponent implements OnInit {
         this.exercisesModalVisibility = false;
     }
 
-    filterExercisesByMusclesNames(name: MuscleGroupName) {
-        this.selectedMuscleGroup = name;
+    filterExercisesByMusclesNames(id: string | null) {
+        this.selectedMuscleGroupId = id;
         this.applyFilters();
     }
 
-    filterExercisesByEquipment(name: EquipmentName) {
-        this.selectedEquipment = name;
+    filterExercisesByEquipment(id: string | null) {
+        this.selectedEquipmentId = id;
         this.applyFilters();
     }
 
@@ -160,38 +145,36 @@ export class ExercisesSelectorComponent implements OnInit {
         let filtered = this.exercises;
 
         if (this.searchTerm) {
-            filtered = filtered.filter((exercise) =>
+            filtered = filtered!.filter((exercise) =>
                 exercise.name
                     .toLowerCase()
                     .startsWith(this.searchTerm.toLowerCase())
             );
         }
 
-        if (this.selectedMuscleGroup !== 'all muscles') {
-            filtered = filtered.filter((exercise) =>
-                exercise.muscleGroups.includes(this.selectedMuscleGroup)
+        if (this.selectedMuscleGroupId) {
+            filtered = filtered!.filter((exercise) =>
+                exercise.mainMuscleGroupsIds.includes(
+                    this.selectedMuscleGroupId!
+                )
             );
         }
 
-        if (this.selectedEquipment !== 'all equipment') {
-            filtered = filtered.filter(
-                (exercise) => exercise.equipment === this.selectedEquipment
+        if (this.selectedEquipmentId) {
+            filtered = filtered!.filter(
+                (exercise) => exercise.equipmentId === this.selectedEquipmentId
             );
         }
 
-        this.exercisesFiltered = filtered;
+        this.exercisesFiltered = filtered!;
     }
 
     clearFilters() {
-        this.muscleGroupsModalComponent.selectedMuscleGroupName = 'all muscles';
-        this.muscleGroupsModalComponent.selectedMuscleGroupId = 1;
-        this.selectedMuscleGroup = 'all muscles';
-        this.selectedMuscleGroupId = 1;
+        this.muscleGroupsModalComponent.reset();
+        this.selectedMuscleGroupId = null;
 
-        this.equipmentModalComponent.selectedEquipmentName = 'all equipment';
-        this.equipmentModalComponent.selectedEquipmentId = 1;
-        this.selectedEquipment = 'all equipment';
-        this.selectedEquipmentId = 1;
+        this.equipmentModalComponent.reset();
+        this.selectedEquipmentId = null;
 
         this.applyFilters();
     }

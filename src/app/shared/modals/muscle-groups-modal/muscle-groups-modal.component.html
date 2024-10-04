@@ -3,18 +3,18 @@
     (click)="openModal()"
     class="flex items-center w-full gap-2 p-3 transition-all border-2 border-solid rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 focus:border-emerald-500"
     [ngClass]="{
-        'bg-emerald-500': selectedMuscleGroupId !== 1,
-        'border-emerald-500': selectedMuscleGroupId !== 1,
-        'border-neutral-900': selectedMuscleGroupId === 1,
-        'hover:border-emerald-500': selectedMuscleGroupId === 1,
+        'bg-emerald-500': selectedMuscleGroupId,
+        'border-emerald-500': selectedMuscleGroupId,
+        'border-neutral-900': !selectedMuscleGroupId,
+        'hover:border-emerald-500': !selectedMuscleGroupId,
     }"
 >
     <div>
         <svg
             class="w-5 h-5 fill-black dark:fill-white mt-0.5 transition-colors"
             [ngClass]="{
-                'group-hover:fill-emerald-500': selectedMuscleGroupId === 1,
-                'group-focus:fill-emerald-500': selectedMuscleGroupId === 1,
+                'group-hover:fill-emerald-500': !selectedMuscleGroupId,
+                'group-focus:fill-emerald-500': !selectedMuscleGroupId,
             }"
             version="1.1"
             id="Capa_1"
@@ -55,17 +55,21 @@
     <div
         class="transition-colors"
         [ngClass]="{
-            'group-hover:text-emerald-500': selectedMuscleGroupId === 1,
-            'group-focus:text-emerald-500': selectedMuscleGroupId === 1,
-            'font-semibold': selectedMuscleGroupId !== 1,
+            'group-hover:text-emerald-500': !selectedMuscleGroupId,
+            'group-focus:text-emerald-500': !selectedMuscleGroupId,
+            'font-semibold': selectedMuscleGroupId,
         }"
     >
-        {{ selectedMuscleGroupName | titlecase }}
+        {{
+            selectedMuscleGroupName
+                ? (selectedMuscleGroupName | titlecase)
+                : "All muscles"
+        }}
     </div>
 </button>
 
 @if (visibility) {
-<!-- eslint-disable-next-line    -->
+<!-- eslint-disable-next-line -->
 <div
     @openClose2
     (click)="closeModal()"
@@ -83,6 +87,7 @@
     <div class="self-center text-lg font-semibold">
         Choose muscle group to filter exercises:
     </div>
+    @if (muscleGroups$ | async; as muscleGroups) {
     <div class="flex flex-col gap-1">
         @for (muscleGroup of muscleGroups; track $index) {
         <button
@@ -98,9 +103,8 @@
                     class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
                 >
                     <img
-                        [src]="muscleGroup.imageUrl"
+                        [src]="muscleGroup.imagePreviewUrl"
                         class="object-cover w-12 h-12"
-                        [class]="'object-' + muscleGroup.focusOn"
                         [alt]="muscleGroup.name + ' image'"
                     />
                 </div>
@@ -137,6 +141,7 @@
         </button>
         }
     </div>
+    }
 </div>
 }
 
@@ -151,6 +156,15 @@
         '-bottom-full': !visibility,
     }"
 >
+    @if (selectedMuscleGroupId) {
+    <button
+        type="button"
+        (click)="reset()"
+        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-red-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#ef4444]"
+    >
+        Clear Filters
+    </button>
+    }
     <button
         type="button"
         (click)="closeModal()"

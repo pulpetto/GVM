@@ -1,7 +1,7 @@
 import { Set } from './set';
 
 export interface WorkoutExercise {
-    exerciseId: number;
+    exerciseId: string;
     superSetColor: string | null;
     sets: Set[];
 }

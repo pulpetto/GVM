@@ -10,19 +10,21 @@
 
         <div class="flex items-center justify-between w-full gap-1.5">
             <app-muscle-groups-modal
-                (muscleGroupChangeEvent)="filterExercisesByMusclesNames($event)"
+                (muscleGroupIdChangeEvent)="
+                    filterExercisesByMusclesNames($event!)
+                "
                 (visibilityChangeEvent)="innerModalsVisibility = $event"
                 class="w-1/2"
             ></app-muscle-groups-modal>
             <app-equipment-modal
-                (equipmentChangeEvent)="filterExercisesByEquipment($event)"
+                (equipmentIdChangeEvent)="filterExercisesByEquipment($event)"
                 (visibilityChangeEvent)="innerModalsVisibility = $event"
                 class="w-1/2"
             ></app-equipment-modal>
         </div>
 
         <!-- prettier-ignore -->
-        @if (selectedMuscleGroup !== 'all muscles' || selectedEquipment !== 'all equipment') {
+        @if (selectedMuscleGroupId || selectedEquipmentId) {
         <button
             type="button"
             (click)="clearFilters()"
@@ -58,6 +60,20 @@
         }
     </div>
 
+    @if (!exercises) {
+    <div class="flex flex-col w-full gap-2">
+        @for (x of [1,2,3,4]; track $index) {
+        <div class="flex items-center gap-3 mx-2 animate-pulse">
+            <div class="w-12 h-12 rounded-full bg-neutral-700"></div>
+
+            <div class="flex flex-col gap-2">
+                <div class="w-24 h-2 rounded-full bg-neutral-700"></div>
+                <div class="h-2 rounded-full w-44 bg-neutral-700"></div>
+            </div>
+        </div>
+        }
+    </div>
+    } @else {
     <div class="flex flex-col self-start w-full gap-1">
         @for (exercise of exercisesFiltered; track $index) {
         <a
@@ -69,7 +85,7 @@
                     class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
                 >
                     <img
-                        [src]="exercise.imageUrl"
+                        [src]="exercise.imagePreviewUrl"
                         class="w-12 h-12"
                         [alt]="exercise.name + ' icon'"
                     />
@@ -79,19 +95,19 @@
                         {{ exercise.name | titlecase }}
                     </div>
 
-                    <div class="flex gap-1">
-                        @for (muscleGroup of exercise.muscleGroups; track
-                        $index) {
-                        <div class="flex text-sm opacity-50">
-                            <span>
-                                {{ muscleGroup | titlecase }}
-                            </span>
-                            @if ($index + 1 !== exercise.muscleGroups.length) {
-                            <span>,</span>
+                    <!-- <div class="flex gap-1">
+                            @for (muscleGroup of exercise.muscleGroups; track
+                            $index) {
+                            <div class="flex text-sm opacity-50">
+                                <span>
+                                    {{ muscleGroup | titlecase }}
+                                </span>
+                                @if ($index + 1 !== exercise.muscleGroups.length) {
+                                <span>,</span>
+                                }
+                            </div>
                             }
-                        </div>
-                        }
-                    </div>
+                        </div> -->
                 </div>
             </div>
         </a>
@@ -146,4 +162,5 @@
         </div>
         }
     </div>
+    }
 </div>

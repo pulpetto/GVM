@@ -38,19 +38,21 @@
 
         <div class="flex items-center justify-between w-full gap-1.5">
             <app-muscle-groups-modal
-                (muscleGroupChangeEvent)="filterExercisesByMusclesNames($event)"
+                (muscleGroupIdChangeEvent)="
+                    filterExercisesByMusclesNames($event)
+                "
                 (visibilityChangeEvent)="innerModalsVisibility = $event"
                 class="w-1/2"
             ></app-muscle-groups-modal>
             <app-equipment-modal
-                (equipmentChangeEvent)="filterExercisesByEquipment($event)"
+                (equipmentIdChangeEvent)="filterExercisesByEquipment($event)"
                 (visibilityChangeEvent)="innerModalsVisibility = $event"
                 class="w-1/2"
             ></app-equipment-modal>
         </div>
 
         <!-- prettier-ignore -->
-        @if (selectedMuscleGroup !== 'all muscles' || selectedEquipment !== 'all equipment') {
+        @if (selectedMuscleGroupId || selectedEquipmentId) {
         <button
             type="button"
             (click)="clearFilters()"
@@ -90,7 +92,7 @@
         @for (exercise of exercisesFiltered; track $index) {
         <button
             type="button"
-            (click)="onExerciseSelect($index)"
+            (click)="onExerciseSelect(exercise.id)"
             class="flex items-center justify-between w-full p-1 transition-all rounded-md cursor-pointer active:opacity-50 active:scale-95"
             [ngClass]="{
                 'bg-neutral-900': newlySelectedExercisesIds.has(exercise.id),
@@ -101,7 +103,7 @@
                     class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
                 >
                     <img
-                        [src]="exercise.imageUrl"
+                        [src]="exercise.imagePreviewUrl"
                         class="w-12 h-12"
                         [alt]="exercise.name + ' icon'"
                     />
@@ -111,7 +113,7 @@
                         {{ exercise.name | titlecase }}
                     </div>
 
-                    <div class="flex gap-1">
+                    <!-- <div class="flex gap-1">
                         @for (muscleGroup of exercise.muscleGroups; track
                         $index) {
                         <div class="flex text-sm opacity-50">
@@ -123,7 +125,7 @@
                             }
                         </div>
                         }
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

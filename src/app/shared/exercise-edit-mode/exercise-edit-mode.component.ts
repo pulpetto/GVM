@@ -66,7 +66,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class ExerciseEditModeComponent {
     fb = inject(FormBuilder);
 
-    @Output() exercisesRemoveEvent = new EventEmitter<number[]>();
+    @Output() exercisesRemoveEvent = new EventEmitter<(string | number)[]>();
     @Output() exercisesReorderEvent = new EventEmitter<void>();
     @Output() addSupersetEvent = new EventEmitter<(string | number)[]>();
     @Output() removeSupersetEvent = new EventEmitter<(string | number)[]>();

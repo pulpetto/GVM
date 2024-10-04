@@ -2,7 +2,8 @@ import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { DataService } from '../../../services/data.service';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { EquipmentName } from '../../../types/equipment-type';
+import { Equipment } from '../../../interfaces/equipment';
+import { Observable } from 'rxjs';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -55,37 +56,39 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class EquipmentModalComponent implements OnInit {
-    @Output() visibilityChangeEvent = new EventEmitter<boolean>();
-    @Output() equipmentChangeEvent = new EventEmitter<EquipmentName>();
-
-    visibility: boolean = false;
-    equipment!: {
-        id: number;
-        name: EquipmentName;
-        imageUrl: string;
-    }[];
-    selectedEquipmentName: EquipmentName = 'all equipment';
-    selectedEquipmentId: number = 1;
-
     dataService = inject(DataService);
 
+    @Output() visibilityChangeEvent = new EventEmitter<boolean>();
+    @Output() equipmentIdChangeEvent = new EventEmitter<string | null>();
+
+    visibility: boolean = false;
+    selectedEquipmentName: string | null = null;
+    selectedEquipmentId: string | null = null;
+
+    equipment$!: Observable<Equipment[]>;
+
     ngOnInit() {
-        this.dataService.getEquipment().subscribe((data) => {
-            this.equipment = data;
-        });
+        this.equipment$ = this.dataService.getEquipment$();
     }
 
-    onOptionSelect(id: number, name: EquipmentName) {
+    onOptionSelect(id: string, name: string) {
         if (id === this.selectedEquipmentId) {
-            this.selectedEquipmentName = 'all equipment';
-            this.selectedEquipmentId = 1;
+            this.selectedEquipmentId = null;
+            this.selectedEquipmentName = null;
         } else {
-            this.selectedEquipmentName = name;
             this.selectedEquipmentId = id;
+            this.selectedEquipmentName = name;
         }
 
-        this.equipmentChangeEvent.emit(this.selectedEquipmentName);
+        this.equipmentIdChangeEvent.emit(this.selectedEquipmentId);
 
+        this.closeModal();
+    }
+
+    reset() {
+        this.selectedEquipmentId = null;
+        this.selectedEquipmentName = null;
+        this.equipmentIdChangeEvent.emit(null);
         this.closeModal();
     }
 

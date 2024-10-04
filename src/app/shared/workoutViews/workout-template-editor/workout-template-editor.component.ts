@@ -25,6 +25,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { TimeFormatterPipe } from '../../../pipes/time-formatter.pipe';
 import { WorkoutDone } from '../../../interfaces/workout/workout-done';
+import { ExercisePreview } from '../../../interfaces/exercise-preview';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop50 = { top: '50%' };
@@ -110,12 +111,8 @@ export class WorkoutTemplateEditorComponent implements OnInit {
     editView!: 'new' | 'existing' | 'current' | 'done';
     isNew!: string;
     workoutId!: string;
-    exercisesPresentionalData: {
-        id: number;
-        name: string;
-        imageUrl: string;
-    }[] = [];
-    selectedExercisesIds = new Set<number>();
+    exercisesPresentionalData: ExercisePreview[] = [];
+    selectedExercisesIds = new Set<string>();
     exercisesReorderModalVisibility: boolean = false;
     workoutForm = this.fb.group({
         name: 'My Workout 1',
@@ -294,19 +291,23 @@ export class WorkoutTemplateEditorComponent implements OnInit {
             });
     }
 
-    addExercises(selectedExercisesIds: Set<number>) {
+    addExercises(selectedExercisesIds: Set<string>) {
         this.loading = true;
 
-        selectedExercisesIds.forEach((selectedExerciseId: number) => {
+        selectedExercisesIds.forEach((selectedExerciseId: string) => {
             this.dataService
-                .getExerciseById(selectedExerciseId)
+                .getExercisePreview$(selectedExerciseId)
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((exercise) => {
                     if (exercise) {
                         this.exercisesPresentionalData.push({
                             id: exercise.id,
                             name: exercise.name,
-                            imageUrl: exercise.imageUrl,
+                            imagePreviewUrl: exercise.imagePreviewUrl,
+                            mainMuscleGroupsIds: exercise.mainMuscleGroupsIds,
+                            secondaryMuscleGroupsIds:
+                                exercise.secondaryMuscleGroupsIds,
+                            equipmentId: exercise.equipmentId,
                         });
 
                         const exerciseGroup = this.fb.group({
@@ -336,7 +337,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
 
         initialExercises.forEach((initialExercise) => {
             this.dataService
-                .getExerciseById(initialExercise.exerciseId)
+                .getExercisePreview$(initialExercise.exerciseId)
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((exercise) => {
                     if (exercise) {
@@ -345,7 +346,11 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                         this.exercisesPresentionalData.push({
                             id: exercise.id,
                             name: exercise.name,
-                            imageUrl: exercise.imageUrl,
+                            imagePreviewUrl: exercise.imagePreviewUrl,
+                            mainMuscleGroupsIds: exercise.mainMuscleGroupsIds,
+                            secondaryMuscleGroupsIds:
+                                exercise.secondaryMuscleGroupsIds,
+                            equipmentId: exercise.equipmentId,
                         });
 
                         const exerciseGroup = this.fb.group({
@@ -458,10 +463,10 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         this.loading = false;
     }
 
-    removeExercise($event: number[]) {
-        this.selectedExercisesIds.delete($event[0]);
-        this.exercisesPresentionalData.splice($event[1], 1);
-        this.workoutExercises.removeAt($event[1]);
+    removeExercise($event: (number | string)[]) {
+        this.selectedExercisesIds.delete($event[0] + '');
+        this.exercisesPresentionalData.splice(+$event[1], 1);
+        this.workoutExercises.removeAt(+$event[1]);
     }
 
     saveWorkout() {
@@ -516,15 +521,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         this.location.back();
     }
 
-    changeExercisesOrder(
-        event: CdkDragDrop<
-            {
-                id: number;
-                name: string;
-                imageUrl: string;
-            }[]
-        >
-    ) {
+    changeExercisesOrder(event: CdkDragDrop<ExercisePreview[]>) {
         moveItemInArray(
             event.container.data,
             event.previousIndex,
