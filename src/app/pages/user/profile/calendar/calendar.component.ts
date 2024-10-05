@@ -1,13 +1,18 @@
 import {
     Component,
+    computed,
     ElementRef,
     HostListener,
     Inject,
     Renderer2,
+    Signal,
+    signal,
+    WritableSignal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DOCUMENT } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { DateTime, Info, Interval } from 'luxon';
 
 @Component({
     selector: 'app-calendar',
@@ -17,12 +22,50 @@ import { RouterModule } from '@angular/router';
     imports: [CommonModule, RouterModule],
 })
 export class CalendarComponent {
-    isOpen: boolean = false;
-    currentActiveMonth: string = 'November';
-    currentActiveYear: number = 2022;
-    daysNames: string[] = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    today: Signal<DateTime> = signal(
+        DateTime.local().setZone('America/New_York')
+    );
+    firstDayOfActiveMonth: WritableSignal<DateTime> = signal(
+        this.today().startOf('month')
+    );
 
-    onMonthChange() {}
+    activeDay: WritableSignal<DateTime | null> = signal(null);
+
+    weekDays: Signal<string[]> = signal(Info.weekdays('short'));
+    daysOfMonth: Signal<DateTime[]> = computed(() => {
+        return Interval.fromDateTimes(
+            this.firstDayOfActiveMonth().startOf('week'),
+            this.firstDayOfActiveMonth().endOf('month').endOf('week')
+        )
+            .splitBy({ day: 1 })
+            .map((d) => {
+                if (d.start === null) {
+                    throw new Error('Wrong dates');
+                }
+                return d.start;
+            });
+    });
+
+    DATE_MED = DateTime.DATE_MED;
+
+    goToNextMonth() {
+        this.firstDayOfActiveMonth.set(
+            this.firstDayOfActiveMonth().plus({ month: 1 })
+        );
+    }
+
+    goToPreviousMonth() {
+        this.firstDayOfActiveMonth.set(
+            this.firstDayOfActiveMonth().minus({ month: 1 })
+        );
+    }
+
+    goToCurrentMonth() {
+        this.firstDayOfActiveMonth.set(this.today().startOf('month'));
+    }
+    // ---------- ---------- ---------- ---------- ----------
+
+    isOpen: boolean = false;
 
     constructor(
         private elementRef: ElementRef,
@@ -36,14 +79,6 @@ export class CalendarComponent {
             this.renderer.removeClass(this.document.body, 'overflow-y-hidden');
             this.isOpen = false;
         }
-    }
-
-    changeFirstDayToLeft() {
-        this.daysNames.push(this.daysNames.shift()!);
-    }
-
-    changeFirstDayToRight() {
-        this.daysNames.unshift(this.daysNames.pop()!);
     }
 
     toggleModalVisibility() {

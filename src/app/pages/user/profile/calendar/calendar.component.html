@@ -1,36 +1,27 @@
-<div
-    class="fixed top-0 left-0 flex flex-col items-center w-full gap-2 px-8 pt-2 bg-opacity-50 backdrop-blur-md rounded-b-md"
->
-    <button
-        type="button"
-        (click)="toggleModalVisibility()"
-        class="text-sm font-semibold"
-    >
-        - November 2024 -
-    </button>
-
-    <div class="relative flex justify-center gap-1 text-emerald-5">
-        @for (day of daysNames; track $index) {
-        <div
-            class="flex items-start justify-center w-10 h-10 font-semibold text-center"
-        >
-            {{ day }}
-        </div>
-        }
+<div class="flex flex-col items-center gap-4 p-4">
+    <div class="relative">
         <button
             type="button"
-            (click)="changeFirstDayToLeft()"
-            class="absolute -left-6 top-0.5 group"
+            (click)="toggleModalVisibility()"
+            class="text-xl font-semibold"
+        >
+            {{ firstDayOfActiveMonth().monthLong | titlecase }}
+            {{ firstDayOfActiveMonth().year }}
+        </button>
+        <button
+            type="button"
+            (click)="goToPreviousMonth()"
+            class="absolute top-[1px] -left-7 group"
         >
             <svg
-                class="w-6 h-6 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500"
+                class="transition-colors w-7 h-7 stroke-black dark:stroke-white group-hover:stroke-emerald-500"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <path
                     d="M15 6L9 12L15 18"
-                    stroke-width="1.5"
+                    stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
                 />
@@ -38,50 +29,101 @@
         </button>
         <button
             type="button"
-            (click)="changeFirstDayToRight()"
-            class="absolute -right-6 top-0.5 group"
+            (click)="goToNextMonth()"
+            class="absolute top-[1px] -right-7 group"
         >
             <svg
-                class="w-6 h-6 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500"
+                class="transition-colors w-7 h-7 stroke-black dark:stroke-white group-hover:stroke-emerald-500"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <path
                     d="M9 6L15 12L9 18"
-                    stroke-width="1.5"
+                    stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
                 />
             </svg>
         </button>
     </div>
-</div>
 
-<div class="flex flex-col gap-4 pt-20 mx-auto max-w-max">
-    @for (mnth of [1,2,3,4,5]; track $index) {
-    <div class="flex flex-col items-center gap-2">
-        <div class="text-xl font-semibold">November 2024</div>
-        <div class="grid grid-cols-7 gap-1">
-            @for (x of [].constructor(30); track $index) {
-            <a
-                [routerLink]="'day' + x"
-                [ngClass]="{
+    <div class="grid grid-cols-7 gap-1">
+        @for (dayOfMonth of daysOfMonth(); track $index) {
+        <button
+            type="button"
+            (click)="activeDay.set(dayOfMonth)"
+            [ngClass]="{
                     'border-emerald-500': $index <= 10,
-                    'focus:border-white': $index >= 0,
                     'text-emerald-500': $index <= 10,
                     'border-transparent': $index > 10,
                     'text-neutral-700': $index > 10,
+                    'border-white':
+                        activeDay()?.toISODate() === dayOfMonth.toISODate(),
+                    'text-white':
+                        activeDay()?.toISODate() === dayOfMonth.toISODate(),
+                    'opacity-25':
+                        dayOfMonth.month !== firstDayOfActiveMonth().month,
                 }"
-                class="flex items-center justify-center w-10 h-10 font-semibold text-center transition-all border-2 border-solid rounded-md outline-none cursor-pointer hover:bg-emerald-500 active:scale-95 active:opacity-50 focus:text-white focus:border-white bg-neutral-900"
-            >
-                <div>{{ $index + 1 }}</div>
-            </a>
-            }
-        </div>
+            class="flex items-center justify-center w-10 h-10 font-semibold text-center transition-all border-2 border-solid rounded-md cursor-pointer active:scale-95 active:opacity-50 bg-neutral-900"
+        >
+            <div>{{ dayOfMonth.day }}</div>
+        </button>
+        }
     </div>
+
+    @if (activeDay(); as activeDay) {
+    <div class="font-semibold">{{ activeDay.toLocaleString(DATE_MED) }}</div>
+    <button type="button" (click)="goToCurrentMonth()">huj</button>
     }
+
+    <div
+        class="absolute left-0 z-20 w-full px-8 py-20 text-sm font-semibold text-center opacity-50 top-1/2 backdrop-blur-lg"
+    >
+        You haven't worked out that day.
+    </div>
+    <div>
+        <svg
+            class="absolute z-10 rotate-45 -translate-x-1/2 opacity-50 w-44 h-44 stroke-black top-1/2 dark:stroke-neutral-700 left-1/2"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M7.4 7H4.6C4.26863 7 4 7.26863 4 7.6V16.4C4 16.7314 4.26863 17 4.6 17H7.4C7.73137 17 8 16.7314 8 16.4V7.6C8 7.26863 7.73137 7 7.4 7Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M19.4 7H16.6C16.2686 7 16 7.26863 16 7.6V16.4C16 16.7314 16.2686 17 16.6 17H19.4C19.7314 17 20 16.7314 20 16.4V7.6C20 7.26863 19.7314 7 19.4 7Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M1 14.4V9.6C1 9.26863 1.26863 9 1.6 9H3.4C3.73137 9 4 9.26863 4 9.6V14.4C4 14.7314 3.73137 15 3.4 15H1.6C1.26863 15 1 14.7314 1 14.4Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M23 14.4V9.6C23 9.26863 22.7314 9 22.4 9H20.6C20.2686 9 20 9.26863 20 9.6V14.4C20 14.7314 20.2686 15 20.6 15H22.4C22.7314 15 23 14.7314 23 14.4Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M8 12H16"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+    </div>
 </div>
+
+<!--  -->
 
 @if (isOpen) {
 <!-- eslint-disable-next-line    -->
@@ -103,7 +145,6 @@
         @for (option of [].constructor(10); track $index) {
         <button
             type="button"
-            (click)="onMonthChange()"
             class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
         >
             <div class="p-2 transition-colors group-hover:text-emerald-500">
@@ -111,7 +152,7 @@
                     'text-emerald-500': option.active,
                     'font-semibold': option.active
                 }" -->
-                November 2022
+                Month 0000
             </div>
 
             <!-- @if (option.active) {
