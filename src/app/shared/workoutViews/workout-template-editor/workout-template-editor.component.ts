@@ -29,7 +29,7 @@ import { ExercisePreview } from '../../../interfaces/exercise-preview';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop50 = { top: '50%' };
-const visibleModalTop75 = { top: '75%' };
+const visibleModalTop75 = { top: '66.666667%' };
 const hiddenModal = { top: '100%' };
 
 const visibleBg = { opacity: '100%' };
