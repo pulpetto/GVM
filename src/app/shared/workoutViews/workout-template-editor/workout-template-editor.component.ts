@@ -29,6 +29,7 @@ import { ExercisePreview } from '../../../interfaces/exercise-preview';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop50 = { top: '50%' };
+const visibleModalTop75 = { top: '75%' };
 const hiddenModal = { top: '100%' };
 
 const visibleBg = { opacity: '100%' };
@@ -97,6 +98,16 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
                 animate(timing, style(hiddenModal)),
             ]),
         ]),
+        trigger('openClose5', [
+            transition(':enter', [
+                style(hiddenModal),
+                animate(timing, style(visibleModalTop75)),
+            ]),
+            transition(':leave', [
+                style(visibleModalTop75),
+                animate(timing, style(hiddenModal)),
+            ]),
+        ]),
     ],
 })
 export class WorkoutTemplateEditorComponent implements OnInit {
@@ -127,7 +138,9 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         setsDone: 0,
     });
 
+    workoutTimingModalVisibility: boolean = true;
     workoutDurationModalVisibility: boolean = false;
+    workoutStartDateModalVisibility: boolean = false;
 
     supersetModalVisibility: boolean = false;
     supersetColorPickerModalVisibility: boolean = false;
