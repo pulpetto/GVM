@@ -28,6 +28,7 @@ import { WorkoutDone } from '../../../interfaces/workout/workout-done';
 import { ExercisePreview } from '../../../interfaces/exercise-preview';
 
 const visibleModal = { top: '0%' };
+const visibleModalTop25 = { top: '25%' };
 const visibleModalTop50 = { top: '50%' };
 const visibleModalTop75 = { top: '66.666667%' };
 const hiddenModal = { top: '100%' };
@@ -105,6 +106,16 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
             ]),
             transition(':leave', [
                 style(visibleModalTop75),
+                animate(timing, style(hiddenModal)),
+            ]),
+        ]),
+        trigger('openClose6', [
+            transition(':enter', [
+                style(hiddenModal),
+                animate(timing, style(visibleModalTop25)),
+            ]),
+            transition(':leave', [
+                style(visibleModalTop25),
                 animate(timing, style(hiddenModal)),
             ]),
         ]),
