@@ -390,65 +390,11 @@
     [workoutDuration]="workoutDuration"
 ></app-timing-modal>
 
-<!-- indent -->
-
-@if (workoutDurationModalVisibility) {
-<!-- eslint-disable-next-line    -->
-<div
-    @openClose2
-    (click)="workoutDurationModalVisibility = false"
-    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
-></div>
-
-<div
-    @openClose5
-    class="fixed left-0 z-50 flex flex-col items-center w-full h-full gap-4 p-4 text-lg rounded-t-md bg-neutral-950"
-    [ngClass]="{
-        'top-2/3': workoutDurationModalVisibility,
-        'top-full': !workoutDurationModalVisibility
-    }"
->
-    <div class="font-semibold">Adjust workout duration:</div>
-
-    <div
-        class="flex flex-col w-1/2 h-12 overflow-y-scroll font-semibold rounded-md bg-neutral-900 snap-y"
-    >
-        @for (timeVal of
-        [300,600,900,1200,1500,1800,2100,2400,2700,3000,3300,3600,3900,4200,4500,4800,5100,5400,5700,6000,6300,6600,6900,7200]
-        ; track $index) {
-        <div
-            class="p-2 text-center h-14 snap-center"
-            [ngClass]="{
-                'mt-0.5': $index === 0,
-            }"
-        >
-            {{ timeVal | timeFormatter }}
-        </div>
-        }
-    </div>
-</div>
-}
-
-<!-- indent -->
-
-@if (workoutDurationModalVisibility) {
-<div
-    @openClose3
-    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
-    [ngClass]="{
-        'bottom-0': workoutDurationModalVisibility,
-        '-bottom-full': !workoutDurationModalVisibility,
-    }"
->
-    <button
-        type="button"
-        (click)="workoutDurationModalVisibility = false"
-        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
-    >
-        Ok
-    </button>
-</div>
-}
+<app-duration-modal
+    (closeEvent)="workoutDurationModalVisibility = false"
+    (durationChangeEvent)="($event)"
+    [visibility]="workoutDurationModalVisibility"
+></app-duration-modal>
 
 <!-- indent -->
 

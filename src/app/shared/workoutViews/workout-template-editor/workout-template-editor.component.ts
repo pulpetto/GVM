@@ -27,6 +27,7 @@ import { TimeFormatterPipe } from '../../../pipes/time-formatter.pipe';
 import { WorkoutDone } from '../../../interfaces/workout/workout-done';
 import { ExercisePreview } from '../../../interfaces/exercise-preview';
 import { TimingModalComponent } from './timing-modal/timing-modal.component';
+import { DurationModalComponent } from './duration-modal/duration-modal.component';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop25 = { top: '25%' };
@@ -59,6 +60,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         CdkDrag,
         TimeFormatterPipe,
         TimingModalComponent,
+        DurationModalComponent,
     ],
     animations: [
         trigger('openClose', [
