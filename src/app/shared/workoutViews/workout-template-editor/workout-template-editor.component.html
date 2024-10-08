@@ -17,7 +17,7 @@
         <div class="flex self-start justify-around w-full gap-0.5">
             <button
                 type="button"
-                (click)="workoutDurationModalVisibility = true"
+                (click)="workoutTimingModalVisibility = true"
                 class="flex flex-col items-center transition-all group active:opacity-50 active:scale-95"
             >
                 <div class="transition-colors group-hover:text-emerald-500">
@@ -382,63 +382,13 @@
 
 <!-- indent -->
 
-@if (workoutTimingModalVisibility) {
-<!-- eslint-disable-next-line    -->
-<div
-    @openClose2
-    (click)="workoutTimingModalVisibility = false"
-    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
-></div>
-
-<div
-    @openClose5
-    class="fixed left-0 z-50 flex flex-col items-center w-full h-full gap-1 p-4 text-lg rounded-t-md bg-neutral-950"
-    [ngClass]="{
-        'top-3/4': workoutTimingModalVisibility,
-        'top-full': !workoutTimingModalVisibility
-    }"
->
-    <button
-        type="button"
-        (click)="workoutDurationModalVisibility = true"
-        class="transition-all active:opacity-50 active:scale-95"
-    >
-        Workout duration:
-        <span class="font-semibold text-emerald-500">{{
-            workoutDuration | timeFormatter
-        }}</span>
-    </button>
-    <button
-        type="button"
-        (click)="workoutStartDateModalVisibility = true"
-        class="transition-all active:opacity-50 active:scale-95"
-    >
-        Workout date:
-        <span class="font-semibold text-emerald-500">04 Nov 2022</span>
-    </button>
-</div>
-}
-
-<!-- indent -->
-
-@if (workoutTimingModalVisibility) {
-<div
-    @openClose3
-    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
-    [ngClass]="{
-        'bottom-0': workoutTimingModalVisibility,
-        '-bottom-full': !workoutTimingModalVisibility,
-    }"
->
-    <button
-        type="button"
-        (click)="workoutTimingModalVisibility = false"
-        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
-    >
-        Ok
-    </button>
-</div>
-}
+<app-timing-modal
+    (closeEvent)="workoutTimingModalVisibility = false"
+    (openDurationModalEvent)="workoutDurationModalVisibility = true"
+    (openStartDateModalEvent)="workoutStartDateModalVisibility = true"
+    [visibility]="workoutTimingModalVisibility"
+    [workoutDuration]="workoutDuration"
+></app-timing-modal>
 
 <!-- indent -->
 

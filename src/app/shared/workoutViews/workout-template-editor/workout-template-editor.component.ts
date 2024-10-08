@@ -26,6 +26,7 @@ import {
 import { TimeFormatterPipe } from '../../../pipes/time-formatter.pipe';
 import { WorkoutDone } from '../../../interfaces/workout/workout-done';
 import { ExercisePreview } from '../../../interfaces/exercise-preview';
+import { TimingModalComponent } from './timing-modal/timing-modal.component';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop25 = { top: '25%' };
@@ -57,6 +58,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         CdkDropList,
         CdkDrag,
         TimeFormatterPipe,
+        TimingModalComponent,
     ],
     animations: [
         trigger('openClose', [
@@ -149,7 +151,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         setsDone: 0,
     });
 
-    workoutTimingModalVisibility: boolean = true;
+    workoutTimingModalVisibility: boolean = false;
     workoutDurationModalVisibility: boolean = false;
     workoutStartDateModalVisibility: boolean = false;
 
