@@ -397,5 +397,6 @@
 ></app-duration-modal>
 
 <app-start-date-modal
+    (closeEvent)="workoutStartDateModalVisibility = false"
     [visibility]="workoutStartDateModalVisibility"
 ></app-start-date-modal>

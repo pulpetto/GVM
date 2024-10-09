@@ -2,7 +2,7 @@
 <!-- eslint-disable-next-line    -->
 <div
     @openClose2
-    (click)="visibility = false"
+    (click)="close()"
     class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
 ></div>
 
@@ -98,7 +98,7 @@
 >
     <button
         type="button"
-        (click)="visibility = false"
+        (click)="close()"
         class="py-1.5 mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
     >
         Ok

@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ScrollSnapSelectorComponent } from '../../../scroll-snap-selector/scroll-snap-selector.component';
 
 const visibleModal = { top: '25%' };
@@ -55,4 +55,10 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class StartDateModalComponent {
     @Input({ required: true }) visibility: boolean = false;
+
+    @Output() closeEvent = new EventEmitter<void>();
+
+    close() {
+        this.closeEvent.emit();
+    }
 }
