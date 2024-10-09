@@ -20,22 +20,8 @@ export class ScrollSnapSelectorComponent {
     @Input({ required: true }) list: number[] = [];
     @Input({ required: true }) valueType!: 'time' | 'duration';
 
-    dateStart: {
-        minute: number;
-        hour: number;
-        day: number;
-        month: number;
-        year: number;
-    } = {
-        minute: 0,
-        hour: 0,
-        day: 0,
-        month: 0,
-        year: 0,
-    };
-
-    @ViewChildren('hourDivs') hourDivs!: QueryList<ElementRef>;
-    @ViewChild('hourContainer') hoursContainer!: ElementRef;
+    @ViewChild('generalContainer') generalContainer!: ElementRef;
+    @ViewChildren('valuesContainers') valuesContainers!: QueryList<ElementRef>;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private scrollTimeout: any;
@@ -50,39 +36,35 @@ export class ScrollSnapSelectorComponent {
         }, 100);
     }
 
-    // more reusable
-    checkIntersectingElements(): void {
+    checkIntersectingElements() {
         const containerRect =
-            this.hoursContainer.nativeElement.getBoundingClientRect();
+            this.generalContainer.nativeElement.getBoundingClientRect();
 
         let maxIntersectionArea = 0;
         let mostIntersectingElement: ElementRef | null = null;
 
-        this.hourDivs.forEach((hourDiv) => {
-            const hourRect = hourDiv.nativeElement.getBoundingClientRect();
+        this.valuesContainers.forEach((container) => {
+            const rect = container.nativeElement.getBoundingClientRect();
 
             if (
-                hourRect.bottom < containerRect.top ||
-                hourRect.top > containerRect.bottom
+                rect.bottom < containerRect.top ||
+                rect.top > containerRect.bottom
             )
                 return;
 
             const intersectionArea = this.calculateIntersectionArea(
                 containerRect,
-                hourRect
+                rect
             );
 
             if (intersectionArea > maxIntersectionArea) {
                 maxIntersectionArea = intersectionArea;
-                mostIntersectingElement = hourDiv;
+                mostIntersectingElement = container;
             }
         });
 
         if (mostIntersectingElement) {
             mostIntersectingElement = mostIntersectingElement as ElementRef;
-
-            this.dateStart.hour =
-                mostIntersectingElement.nativeElement.innerText;
 
             console.log(
                 `Element with the most intersection: ${mostIntersectingElement.nativeElement.innerText} with area: ${maxIntersectionArea}`

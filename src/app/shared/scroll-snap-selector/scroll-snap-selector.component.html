@@ -1,8 +1,10 @@
 <div
+    #generalContainer
     class="flex flex-col w-24 h-12 overflow-y-scroll font-semibold rounded-md bg-neutral-900 snap-y"
 >
     @for (listItem of list; track $index) {
     <div
+        #valuesContainers
         class="p-2 text-center select-none h-14 snap-center"
         [ngClass]="{
             'mt-0.5': $index === 0,
