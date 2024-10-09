@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ScrollSnapSelectorComponent } from '../../../scroll-snap-selector/scroll-snap-selector.component';
+import { CalendarDatePickerComponent } from './calendar-date-picker/calendar-date-picker.component';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -17,7 +18,11 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-start-date-modal',
     standalone: true,
-    imports: [CommonModule, ScrollSnapSelectorComponent],
+    imports: [
+        CommonModule,
+        ScrollSnapSelectorComponent,
+        CalendarDatePickerComponent,
+    ],
     templateUrl: './start-date-modal.component.html',
     styleUrl: './start-date-modal.component.css',
     animations: [
