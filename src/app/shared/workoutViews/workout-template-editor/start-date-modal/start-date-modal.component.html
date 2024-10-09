@@ -66,9 +66,21 @@
     </div>
 
     <div class="flex items-center justify-center w-full gap-4 mt-4">
-        <app-scroll-snap-selector></app-scroll-snap-selector>
+        <div class="flex flex-col items-center gap-1">
+            <div class="font-semibold">Hour:</div>
+            <app-scroll-snap-selector
+                [list]="[].constructor(24)"
+                [valueType]="'time'"
+            ></app-scroll-snap-selector>
+        </div>
         <div class="self-end text-3xl font-semibold mb-2.5">:</div>
-        <app-scroll-snap-selector></app-scroll-snap-selector>
+        <div class="flex flex-col items-center gap-1">
+            <div class="font-semibold">Minute:</div>
+            <app-scroll-snap-selector
+                [list]="[].constructor(60)"
+                [valueType]="'time'"
+            ></app-scroll-snap-selector>
+        </div>
     </div>
 </div>
 }
