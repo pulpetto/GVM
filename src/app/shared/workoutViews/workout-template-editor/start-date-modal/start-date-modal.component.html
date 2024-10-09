@@ -1,5 +1,3 @@
-<!-- indent -->
-
 @if (visibility) {
 <!-- eslint-disable-next-line    -->
 <div
@@ -68,44 +66,9 @@
     </div>
 
     <div class="flex items-center justify-center w-full gap-4 mt-4">
-        <div class="flex flex-col items-center gap-1">
-            <div class="font-semibold">Hour:</div>
-            <div
-                class="flex flex-col w-24 h-12 overflow-y-scroll font-semibold rounded-md bg-neutral-900 snap-y"
-                (scroll)="onScroll()"
-                #hourContainer
-            >
-                @for (timeVal of [].constructor(24) ; track $index;) {
-                <div
-                    class="p-2 text-center select-none h-14 snap-center"
-                    #hourDivs
-                    [ngClass]="{
-                        'mt-0.5': $index === 0,
-                    }"
-                >
-                    {{ $index | number : "2.0" }}
-                </div>
-                }
-            </div>
-        </div>
+        <app-scroll-snap-selector></app-scroll-snap-selector>
         <div class="self-end text-3xl font-semibold mb-2.5">:</div>
-        <div class="flex flex-col items-center gap-1">
-            <div class="font-semibold">Minute:</div>
-            <div
-                class="flex flex-col w-24 h-12 overflow-y-scroll font-semibold rounded-md bg-neutral-900 snap-y"
-            >
-                @for (timeVal of [].constructor(60) ; track $index) {
-                <div
-                    class="p-2 text-center select-none h-14 snap-center"
-                    [ngClass]="{
-                        'mt-0.5': $index === 0,
-                    }"
-                >
-                    {{ $index | number : "2.0" }}
-                </div>
-                }
-            </div>
-        </div>
+        <app-scroll-snap-selector></app-scroll-snap-selector>
     </div>
 </div>
 }
