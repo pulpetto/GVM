@@ -1,5 +1,6 @@
 <div
     #generalContainer
+    (scroll)="onScroll()"
     class="flex flex-col w-24 h-12 overflow-y-scroll font-semibold rounded-md bg-neutral-900 snap-y"
 >
     @for (listItem of list; track $index) {
