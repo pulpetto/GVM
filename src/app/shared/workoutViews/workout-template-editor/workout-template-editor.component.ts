@@ -492,6 +492,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         }
 
         if (this.editView === 'current') {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const workoutFormObjExtended: any =
                 this.workoutForm.getRawValue() as Workout;
 
