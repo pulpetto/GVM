@@ -130,7 +130,12 @@ export class WorkoutTemplateEditorComponent implements OnInit {
             hour: '',
             minute: '',
         }),
+        duration: '',
     });
+
+    get workoutDurationFormControl(): FormControl {
+        return this.workoutForm.get('duration') as FormControl;
+    }
 
     workoutComputedValues: FormGroup<{
         volume: FormControl<number | null>;
