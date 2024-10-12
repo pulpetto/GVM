@@ -16,20 +16,10 @@
 >
     <div class="font-semibold">Adjust workout duration:</div>
 
-    <div
-        class="flex flex-col w-1/2 h-12 overflow-y-scroll font-semibold rounded-md bg-neutral-900 snap-y"
-    >
-        @for (timeVal of timeValues ; track $index) {
-        <div
-            class="p-2 text-center h-14 snap-center"
-            [ngClass]="{
-                'mt-0.5': $index === 0,
-            }"
-        >
-            {{ timeVal | timeFormatter }}
-        </div>
-        }
-    </div>
+    <app-scroll-snap-selector
+        [list]="timeValues"
+        [valueType]="'duration'"
+    ></app-scroll-snap-selector>
 </div>
 }
 

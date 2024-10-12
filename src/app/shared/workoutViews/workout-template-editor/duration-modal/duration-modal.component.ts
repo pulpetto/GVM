@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TimeFormatterPipe } from '../../../../pipes/time-formatter.pipe';
+import { ScrollSnapSelectorComponent } from '../../../scroll-snap-selector/scroll-snap-selector.component';
 
 const visibleModal = { top: '66.666667%' };
 const hiddenModal = { top: '100%' };
@@ -17,7 +18,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-duration-modal',
     standalone: true,
-    imports: [CommonModule, TimeFormatterPipe],
+    imports: [CommonModule, TimeFormatterPipe, ScrollSnapSelectorComponent],
     templateUrl: './duration-modal.component.html',
     styleUrl: './duration-modal.component.css',
     animations: [
