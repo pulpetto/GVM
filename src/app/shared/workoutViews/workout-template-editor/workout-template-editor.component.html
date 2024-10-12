@@ -393,6 +393,7 @@
 <app-duration-modal
     (closeEvent)="workoutDurationModalVisibility = false"
     (durationChangeEvent)="($event)"
+    [duration]="workoutDurationFormControl"
     [visibility]="workoutDurationModalVisibility"
 ></app-duration-modal>
 

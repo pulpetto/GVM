@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TimeFormatterPipe } from '../../../../pipes/time-formatter.pipe';
 import { ScrollSnapSelectorComponent } from '../../../scroll-snap-selector/scroll-snap-selector.component';
+import { FormControl } from '@angular/forms';
 
 const visibleModal = { top: '66.666667%' };
 const hiddenModal = { top: '100%' };
@@ -55,6 +56,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class DurationModalComponent {
+    @Input({ required: true }) duration!: FormControl;
     @Input({ required: true }) visibility: boolean = false;
 
     @Output() durationChangeEvent = new EventEmitter<number>();
