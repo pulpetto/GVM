@@ -4,6 +4,7 @@ import {
     ElementRef,
     EventEmitter,
     Input,
+    OnInit,
     Output,
     QueryList,
     ViewChild,
@@ -18,7 +19,7 @@ import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
     templateUrl: './scroll-snap-selector.component.html',
     styleUrl: './scroll-snap-selector.component.css',
 })
-export class ScrollSnapSelectorComponent {
+export class ScrollSnapSelectorComponent implements OnInit {
     @Input({ required: true }) list: number[] = [];
     @Input({ required: true }) valueType!: 'time' | 'duration';
 
@@ -29,6 +30,12 @@ export class ScrollSnapSelectorComponent {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private scrollTimeout: any;
+
+    ngOnInit() {
+        setTimeout(() => {
+            this.generalContainer.nativeElement.scrollTop = 0;
+        });
+    }
 
     onScroll() {
         if (this.scrollTimeout) {
