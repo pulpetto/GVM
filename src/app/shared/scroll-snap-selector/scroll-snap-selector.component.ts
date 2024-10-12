@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import {
     Component,
     ElementRef,
+    EventEmitter,
     Input,
+    Output,
     QueryList,
     ViewChild,
     ViewChildren,
@@ -19,6 +21,8 @@ import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
 export class ScrollSnapSelectorComponent {
     @Input({ required: true }) list: number[] = [];
     @Input({ required: true }) valueType!: 'time' | 'duration';
+
+    @Output() newElementSelectEvent = new EventEmitter<number>();
 
     @ViewChild('generalContainer') generalContainer!: ElementRef;
     @ViewChildren('valuesContainers') valuesContainers!: QueryList<ElementRef>;
@@ -42,8 +46,9 @@ export class ScrollSnapSelectorComponent {
 
         let maxIntersectionArea = 0;
         let mostIntersectingElement: ElementRef | null = null;
+        let mostIntersectingElementIndex: number | null = null;
 
-        this.valuesContainers.forEach((container) => {
+        this.valuesContainers.forEach((container, i) => {
             const rect = container.nativeElement.getBoundingClientRect();
 
             if (
@@ -60,14 +65,21 @@ export class ScrollSnapSelectorComponent {
             if (intersectionArea > maxIntersectionArea) {
                 maxIntersectionArea = intersectionArea;
                 mostIntersectingElement = container;
+                mostIntersectingElementIndex = i;
             }
         });
 
-        if (mostIntersectingElement) {
+        if (mostIntersectingElement && mostIntersectingElementIndex) {
             mostIntersectingElement = mostIntersectingElement as ElementRef;
+            mostIntersectingElementIndex =
+                mostIntersectingElementIndex as number;
 
             console.log(
                 `Element with the most intersection: ${mostIntersectingElement.nativeElement.innerText} with area: ${maxIntersectionArea}`
+            );
+
+            this.newElementSelectEvent.emit(
+                this.list[mostIntersectingElementIndex]
             );
         }
     }
