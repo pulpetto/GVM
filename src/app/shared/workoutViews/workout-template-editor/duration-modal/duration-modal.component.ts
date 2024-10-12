@@ -60,6 +60,7 @@ export class DurationModalComponent {
     @Input({ required: true }) visibility: boolean = false;
 
     @Output() closeEvent = new EventEmitter<void>();
+    @Output() durationChangeEvent = new EventEmitter<number>();
 
     timeValues: number[] = [
         300, 600, 900, 1200, 1500, 1800, 2100, 2400, 2700, 3000, 3300, 3600,
@@ -68,6 +69,7 @@ export class DurationModalComponent {
 
     changeDuration(timeValue: number) {
         this.duration.setValue(timeValue);
+        this.durationChangeEvent.emit(timeValue);
     }
 
     close() {
