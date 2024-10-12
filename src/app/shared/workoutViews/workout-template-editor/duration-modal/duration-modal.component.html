@@ -1,5 +1,5 @@
 @if (visibility) {
-<!-- eslint-disable-next-line    -->
+<!-- eslint-disable-next-line -->
 <div
     @openClose2
     (click)="close()"
@@ -17,6 +17,7 @@
     <div class="font-semibold">Adjust workout duration:</div>
 
     <app-scroll-snap-selector
+        (newElementSelectEvent)="changeDuration($event)"
         [list]="timeValues"
         [valueType]="'duration'"
     ></app-scroll-snap-selector>

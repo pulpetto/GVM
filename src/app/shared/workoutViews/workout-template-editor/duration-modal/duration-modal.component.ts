@@ -59,7 +59,6 @@ export class DurationModalComponent {
     @Input({ required: true }) duration!: FormControl;
     @Input({ required: true }) visibility: boolean = false;
 
-    @Output() durationChangeEvent = new EventEmitter<number>();
     @Output() closeEvent = new EventEmitter<void>();
 
     timeValues: number[] = [
@@ -67,8 +66,8 @@ export class DurationModalComponent {
         3900, 4200, 4500, 4800, 5100, 5400, 5700, 6000, 6300, 6600, 6900, 7200,
     ];
 
-    changeDuration(duration: number) {
-        this.durationChangeEvent.emit(duration);
+    changeDuration(timeValue: number) {
+        this.duration.setValue(timeValue);
     }
 
     close() {
