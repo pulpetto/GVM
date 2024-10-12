@@ -123,6 +123,13 @@ export class WorkoutTemplateEditorComponent implements OnInit {
     workoutForm = this.fb.group({
         name: 'My Workout 1',
         exercises: this.fb.array([]),
+        dateStart: this.fb.group({
+            year: '',
+            month: '',
+            day: '',
+            hour: '',
+            minute: '',
+        }),
     });
 
     workoutComputedValues: FormGroup<{
