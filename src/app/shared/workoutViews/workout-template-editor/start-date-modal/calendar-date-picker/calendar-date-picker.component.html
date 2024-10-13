@@ -1,44 +1,48 @@
-<div class="relative">
-    <button type="button" class="text-xl font-semibold">November 2024</button>
-    <button type="button" class="absolute top-[1px] -left-7 group">
-        <svg
-            class="transition-colors w-7 h-7 stroke-black dark:stroke-white group-hover:stroke-emerald-500"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <path
-                d="M15 6L9 12L15 18"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-        </svg>
-    </button>
-    <button type="button" class="absolute top-[1px] -right-7 group">
-        <svg
-            class="transition-colors w-7 h-7 stroke-black dark:stroke-white group-hover:stroke-emerald-500"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <path
-                d="M9 6L15 12L9 18"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-        </svg>
-    </button>
-</div>
+<div class="flex flex-col gap-3">
+    <div class="relative self-center">
+        <button type="button" class="text-xl font-semibold">
+            November 2024
+        </button>
+        <button type="button" class="absolute top-[1px] -left-7 group">
+            <svg
+                class="transition-colors w-7 h-7 stroke-black dark:stroke-white group-hover:stroke-emerald-500"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M15 6L9 12L15 18"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+        <button type="button" class="absolute top-[1px] -right-7 group">
+            <svg
+                class="transition-colors w-7 h-7 stroke-black dark:stroke-white group-hover:stroke-emerald-500"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M9 6L15 12L9 18"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+    </div>
 
-<div class="grid grid-cols-7 gap-1">
-    @for (dayOfMonth of [].constructor(30); track $index) {
-    <button
-        type="button"
-        class="flex items-center justify-center w-10 h-10 font-semibold text-center transition-all rounded-md cursor-pointer active:scale-95 active:opacity-50 bg-neutral-900 text-neutral-700"
-    >
-        <div>{{ $index + 1 }}</div>
-    </button>
-    }
+    <div class="grid grid-cols-7 gap-1">
+        @for (dayOfMonth of [].constructor(30); track $index) {
+        <button
+            type="button"
+            class="flex items-center justify-center w-10 h-10 font-semibold text-center transition-all rounded-md cursor-pointer active:scale-95 active:opacity-50 bg-neutral-900 text-neutral-700"
+        >
+            <div>{{ $index + 1 }}</div>
+        </button>
+        }
+    </div>
 </div>
