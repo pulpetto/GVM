@@ -11,6 +11,7 @@ import {
     ViewChildren,
 } from '@angular/core';
 import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-scroll-snap-selector',
@@ -20,6 +21,7 @@ import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
     styleUrl: './scroll-snap-selector.component.css',
 })
 export class ScrollSnapSelectorComponent implements OnInit {
+    @Input({ required: true }) formControl!: FormControl | null;
     @Input({ required: true }) list: number[] = [];
     @Input({ required: true }) valueType!: 'time' | 'duration';
 
@@ -33,7 +35,12 @@ export class ScrollSnapSelectorComponent implements OnInit {
 
     ngOnInit() {
         setTimeout(() => {
-            this.generalContainer.nativeElement.scrollTop = 0;
+            if (this.formControl) {
+                this.generalContainer.nativeElement.scrollTop =
+                    this.formControl.value * 44;
+            } else {
+                this.generalContainer.nativeElement.scrollTop = 0;
+            }
         });
     }
 
@@ -85,9 +92,15 @@ export class ScrollSnapSelectorComponent implements OnInit {
                 `Element with the most intersection: ${mostIntersectingElement.nativeElement.innerText} with area: ${maxIntersectionArea}`
             );
 
-            this.newElementSelectEvent.emit(
-                this.list[mostIntersectingElementIndex]
-            );
+            if (this.formControl) {
+                this.formControl.setValue(
+                    this.list[mostIntersectingElementIndex]
+                );
+            } else {
+                this.newElementSelectEvent.emit(
+                    this.list[mostIntersectingElementIndex]
+                );
+            }
         }
     }
 

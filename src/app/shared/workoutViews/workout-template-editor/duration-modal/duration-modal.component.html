@@ -18,6 +18,7 @@
 
     <app-scroll-snap-selector
         (newElementSelectEvent)="changeDuration($event)"
+        [formControl]="null"
         [list]="timeValues"
         [valueType]="'duration'"
     ></app-scroll-snap-selector>

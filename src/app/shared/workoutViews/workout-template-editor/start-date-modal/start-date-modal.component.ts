@@ -89,12 +89,12 @@ export class StartDateModalComponent {
         return this.workoutDateStart.get('day') as FormControl;
     }
 
-    changeHour(hour: number) {
-        this.workoutDateStart.get('hour')!.setValue(hour);
+    get workoutDateStartHour(): FormControl {
+        return this.workoutDateStart.get('hour') as FormControl;
     }
 
-    changeMinute(minute: number) {
-        this.workoutDateStart.get('minute')!.setValue(minute);
+    get workoutDateStartMinute(): FormControl {
+        return this.workoutDateStart.get('minute') as FormControl;
     }
 
     close() {
