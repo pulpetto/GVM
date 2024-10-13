@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TimeFormatterPipe } from '../../../../pipes/time-formatter.pipe';
+import { MonthNamePipe } from '../../../../pipes/month-name.pipe';
 
 const visibleModal = { top: '75%' };
 const hiddenModal = { top: '100%' };
@@ -17,7 +18,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-timing-modal',
     standalone: true,
-    imports: [CommonModule, TimeFormatterPipe],
+    imports: [CommonModule, TimeFormatterPipe, MonthNamePipe],
     templateUrl: './timing-modal.component.html',
     styleUrl: './timing-modal.component.css',
     animations: [
@@ -56,6 +57,13 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class TimingModalComponent {
     @Input({ required: true }) visibility: boolean = false;
     @Input({ required: true }) workoutDuration!: number;
+    @Input({ required: true }) workoutDateStart!: {
+        year: string | null;
+        month: string | null;
+        day: string | null;
+        hour: string | null;
+        minute: string | null;
+    };
 
     @Output() openDurationModalEvent = new EventEmitter<void>();
     @Output() openStartDateModalEvent = new EventEmitter<void>();

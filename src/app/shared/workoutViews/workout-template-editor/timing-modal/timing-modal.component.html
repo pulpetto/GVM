@@ -29,8 +29,14 @@
         (click)="openStartDateModal()"
         class="transition-all active:opacity-50 active:scale-95"
     >
-        Workout date:
-        <span class="font-semibold text-emerald-500">04 Nov 2022</span>
+        Started on:
+        <!-- prettier-ignore -->
+        <span class="font-semibold text-emerald-500">
+            {{ workoutDateStart.day | number : "2.0" }}
+            {{ workoutDateStart.month! | monthName }}
+            {{ workoutDateStart.year }},
+            {{ workoutDateStart.hour | number : "2.0" }}:{{ workoutDateStart.minute | number : "2.0" }}
+        </span>
     </button>
 </div>
 }
