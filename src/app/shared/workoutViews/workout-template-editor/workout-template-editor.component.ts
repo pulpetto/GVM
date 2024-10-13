@@ -284,7 +284,6 @@ export class WorkoutTemplateEditorComponent implements OnInit {
     workoutDurationInterval!: any;
     workoutDuration: number = 0;
     totalSets: number = 0;
-    dateStartUnix: number = 0;
 
     ngOnInit() {
         this.userService.user$
@@ -304,7 +303,29 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                             })
                         );
                     } else if (this.editView === 'current') {
-                        this.dateStartUnix = Math.floor(Date.now() / 1000);
+                        const dateStartUnix = Math.floor(Date.now() / 1000);
+
+                        const date = new Date(dateStartUnix * 1000);
+
+                        this.workoutForm.controls.dateStart.controls.year.setValue(
+                            date.getFullYear() + ''
+                        );
+
+                        this.workoutForm.controls.dateStart.controls.month.setValue(
+                            date.getMonth() + 1 + ''
+                        );
+
+                        this.workoutForm.controls.dateStart.controls.day.setValue(
+                            date.getDate() + ''
+                        );
+
+                        this.workoutForm.controls.dateStart.controls.hour.setValue(
+                            date.getHours() + ''
+                        );
+
+                        this.workoutForm.controls.dateStart.controls.minute.setValue(
+                            date.getMinutes() + ''
+                        );
 
                         this.workoutDurationInterval = setInterval(() => {
                             this.workoutDuration++;
