@@ -133,6 +133,26 @@ export class WorkoutTemplateEditorComponent implements OnInit {
         duration: '',
     });
 
+    get workoutDateStartValue(): {
+        year: string | null;
+        month: string | null;
+        day: string | null;
+        hour: string | null;
+        minute: string | null;
+    } {
+        return this.workoutForm.get('dateStart')?.value as {
+            year: string | null;
+            month: string | null;
+            day: string | null;
+            hour: string | null;
+            minute: string | null;
+        };
+    }
+
+    get workoutDateStart(): FormGroup {
+        return this.workoutForm.get('dateStart') as FormGroup;
+    }
+
     get workoutDurationFormControl(): FormControl {
         return this.workoutForm.get('duration') as FormControl;
     }
