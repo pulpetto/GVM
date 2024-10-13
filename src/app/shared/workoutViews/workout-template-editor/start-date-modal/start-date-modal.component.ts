@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ScrollSnapSelectorComponent } from '../../../scroll-snap-selector/scroll-snap-selector.component';
 import { CalendarDatePickerComponent } from './calendar-date-picker/calendar-date-picker.component';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -76,6 +76,18 @@ export class StartDateModalComponent {
         38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55,
         56, 57, 58, 59, 60,
     ];
+
+    get workoutDateStartYear(): FormControl {
+        return this.workoutDateStart.get('year') as FormControl;
+    }
+
+    get workoutDateStartMonth(): FormControl {
+        return this.workoutDateStart.get('month') as FormControl;
+    }
+
+    get workoutDateStartDay(): FormControl {
+        return this.workoutDateStart.get('day') as FormControl;
+    }
 
     changeHour(hour: number) {
         this.workoutDateStart.get('hour')!.setValue(hour);
