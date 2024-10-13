@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ScrollSnapSelectorComponent } from '../../../scroll-snap-selector/scroll-snap-selector.component';
 import { CalendarDatePickerComponent } from './calendar-date-picker/calendar-date-picker.component';
+import { FormGroup } from '@angular/forms';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -59,6 +60,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class StartDateModalComponent {
+    @Input({ required: true }) workoutDateStart!: FormGroup;
     @Input({ required: true }) visibility: boolean = false;
 
     @Output() closeEvent = new EventEmitter<void>();
@@ -74,6 +76,14 @@ export class StartDateModalComponent {
         38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55,
         56, 57, 58, 59, 60,
     ];
+
+    changeHour(hour: number) {
+        this.workoutDateStart.get('hour')!.setValue(hour);
+    }
+
+    changeMinute(minute: number) {
+        this.workoutDateStart.get('minute')!.setValue(minute);
+    }
 
     close() {
         this.closeEvent.emit();
