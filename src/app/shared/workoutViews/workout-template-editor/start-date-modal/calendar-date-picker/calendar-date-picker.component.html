@@ -1,9 +1,15 @@
 <div class="flex flex-col gap-3">
     <div class="relative self-center">
-        <button type="button" class="text-xl font-semibold">
-            November 2024
-        </button>
-        <button type="button" class="absolute top-[1px] -left-7 group">
+        <div class="text-xl font-semibold">
+            {{ firstDayOfActiveMonth().monthLong | titlecase }}
+            {{ firstDayOfActiveMonth().year }}
+        </div>
+
+        <button
+            type="button"
+            (click)="goToPreviousMonth()"
+            class="absolute top-[1px] -left-7 group"
+        >
             <svg
                 class="transition-colors w-7 h-7 stroke-black dark:stroke-white group-hover:stroke-emerald-500"
                 viewBox="0 0 24 24"
@@ -18,7 +24,12 @@
                 />
             </svg>
         </button>
-        <button type="button" class="absolute top-[1px] -right-7 group">
+
+        <button
+            type="button"
+            (click)="goToNextMonth()"
+            class="absolute top-[1px] -right-7 group"
+        >
             <svg
                 class="transition-colors w-7 h-7 stroke-black dark:stroke-white group-hover:stroke-emerald-500"
                 viewBox="0 0 24 24"
@@ -36,12 +47,25 @@
     </div>
 
     <div class="grid grid-cols-7 gap-1">
-        @for (dayOfMonth of [].constructor(30); track $index) {
+        @for (dayOfMonth of daysOfMonth(); track $index) {
         <button
             type="button"
-            class="flex items-center justify-center w-10 h-10 font-semibold text-center transition-all rounded-md cursor-pointer active:scale-95 active:opacity-50 bg-neutral-900 text-neutral-700"
+            (click)="changeActiveDay(dayOfMonth)"
+            [ngClass]="{
+                'border-emerald-500':
+                    activeDay()?.toISODate() === dayOfMonth.toISODate(),
+                'text-emerald-500':
+                    activeDay()?.toISODate() === dayOfMonth.toISODate(),
+                'border-transparent':
+                    activeDay()?.toISODate() !== dayOfMonth.toISODate(),
+                'text-neutral-700':
+                    activeDay()?.toISODate() !== dayOfMonth.toISODate(),
+                'opacity-25':
+                    dayOfMonth.month !== firstDayOfActiveMonth().month,
+            }"
+            class="flex items-center justify-center w-10 h-10 font-semibold text-center transition-colors border-2 border-solid rounded-md cursor-pointer bg-neutral-900"
         >
-            <div>{{ $index + 1 }}</div>
+            <div>{{ dayOfMonth.day }}</div>
         </button>
         }
     </div>

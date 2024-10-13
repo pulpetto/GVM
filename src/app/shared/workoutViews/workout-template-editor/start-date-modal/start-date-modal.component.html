@@ -18,7 +18,11 @@
         Adjust workout start time:
     </div>
 
-    <app-calendar-date-picker></app-calendar-date-picker>
+    <app-calendar-date-picker
+        [workoutDateStartYear]="workoutDateStartYear"
+        [workoutDateStartMonth]="workoutDateStartMonth"
+        [workoutDateStartDay]="workoutDateStartDay"
+    ></app-calendar-date-picker>
 
     <div class="flex items-center justify-center w-full gap-4 mt-4">
         <div class="flex flex-col items-center gap-1">
