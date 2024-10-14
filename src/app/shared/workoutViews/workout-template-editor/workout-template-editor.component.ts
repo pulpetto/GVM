@@ -563,7 +563,28 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                 this.workoutForm.getRawValue() as Workout;
 
             workoutFormObjExtended.duration = this.workoutDuration;
-            // workoutFormObjExtended.dateStart = this.dateStart;
+
+            const dateStartObj =
+                this.workoutForm.controls.dateStart.getRawValue() as {
+                    year: string;
+                    month: string;
+                    day: string;
+                    hour: string;
+                    minute: string;
+                };
+
+            const dateStart = new Date(
+                +dateStartObj.year,
+                +dateStartObj.month - 1,
+                +dateStartObj.day,
+                +dateStartObj.hour,
+                +dateStartObj.minute
+            );
+
+            workoutFormObjExtended.dateStart = Math.floor(
+                dateStart.getTime() / 1000
+            );
+
             workoutFormObjExtended.dateFinish = Math.floor(Date.now() / 1000);
             workoutFormObjExtended.volume =
                 this.workoutComputedValues.controls.volume.value;
