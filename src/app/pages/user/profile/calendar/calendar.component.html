@@ -54,17 +54,17 @@
             type="button"
             (click)="activeDay.set(dayOfMonth)"
             [ngClass]="{
-                    'border-emerald-500': $index <= 10,
-                    'text-emerald-500': $index <= 10,
-                    'border-transparent': $index > 10,
-                    'text-neutral-700': $index > 10,
-                    'border-white':
-                        activeDay()?.toISODate() === dayOfMonth.toISODate(),
-                    'text-white':
-                        activeDay()?.toISODate() === dayOfMonth.toISODate(),
-                    'opacity-25':
-                        dayOfMonth.month !== firstDayOfActiveMonth().month,
-                }"
+                'border-emerald-500': false,
+                'text-emerald-500': false,
+                'border-transparent': true,
+                'text-neutral-700': true,
+                'border-white':
+                    activeDay()?.toISODate() === dayOfMonth.toISODate(),
+                'text-white':
+                    activeDay()?.toISODate() === dayOfMonth.toISODate(),
+                'opacity-25':
+                    dayOfMonth.month !== firstDayOfActiveMonth().month,
+            }"
             class="flex items-center justify-center w-10 h-10 font-semibold text-center transition-all border-2 border-solid rounded-md cursor-pointer active:scale-95 active:opacity-50 bg-neutral-900"
         >
             <div>{{ dayOfMonth.day }}</div>
@@ -74,8 +74,6 @@
 
     @if (activeDay(); as activeDay) {
     <div class="font-semibold">{{ activeDay.toLocaleString(DATE_MED) }}</div>
-    <button type="button" (click)="goToCurrentMonth()">huj</button>
-    }
 
     <div
         class="absolute left-0 z-20 w-full px-8 py-20 text-sm font-semibold text-center opacity-50 top-1/2 backdrop-blur-lg"
@@ -121,6 +119,7 @@
             />
         </svg>
     </div>
+    }
 </div>
 
 <!--  -->
