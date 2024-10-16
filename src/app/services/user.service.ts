@@ -422,6 +422,16 @@ export class UserService {
                 exercises: workoutValues.exercises,
             });
 
+            const workoutsUnixTimestampRef: DocumentReference = doc(
+                this.userDocRef!,
+                'workoutsUnixTimestamps',
+                docRef.id
+            );
+
+            setDoc(workoutsUnixTimestampRef, {
+                unixTimestamp: workoutDoneObj.dateStart,
+            });
+
             this.router.navigate([
                 `/user/profile/history/${docRef.id}/summary`,
             ]);
