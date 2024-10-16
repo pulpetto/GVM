@@ -585,7 +585,6 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                 dateStart.getTime() / 1000
             );
 
-            workoutFormObjExtended.dateFinish = Math.floor(Date.now() / 1000);
             workoutFormObjExtended.volume =
                 this.workoutComputedValues.controls.volume.value;
             workoutFormObjExtended.setsDone =

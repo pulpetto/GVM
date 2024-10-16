@@ -8,7 +8,6 @@ export interface WorkoutDone {
     name: string;
     duration: number;
     dateStart: number;
-    dateFinish: number;
     volume: number;
     totalSets: number;
     doneSets: number;
