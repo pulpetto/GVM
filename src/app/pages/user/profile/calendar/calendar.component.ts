@@ -90,6 +90,7 @@ export class CalendarComponent {
 
     DATE_MED = DateTime.DATE_MED;
 
+    loading: boolean = true;
     goToNextMonth() {
         this.firstDayOfActiveMonth.set(
             this.firstDayOfActiveMonth().plus({ month: 1 })
