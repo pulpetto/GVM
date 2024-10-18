@@ -97,20 +97,22 @@
         @for (dayOfMonth of daysOfMonth(); track $index) {
         <button
             type="button"
-            (click)="activeDay.set(dayOfMonth)"
+            (click)="setActiveDay(dayOfMonth, $index)"
             [ngClass]="{
-                'border-emerald-500': false,
-                'text-emerald-500': false,
-                'border-transparent': true,
-                'text-neutral-700': true,
-                'border-white':
-                    activeDay()?.toISODate() === dayOfMonth.toISODate(),
-                'text-white':
-                    activeDay()?.toISODate() === dayOfMonth.toISODate(),
-                'opacity-25':
-                    dayOfMonth.month !== firstDayOfActiveMonth().month,
-            }"
-            class="flex items-center justify-center w-10 h-10 font-semibold text-center transition-all border-2 border-solid rounded-md cursor-pointer active:scale-95 active:opacity-50 bg-neutral-900"
+                    'border-emerald-500': daysActivity[$index] !== null,
+                    'text-emerald-500': daysActivity[$index] !== null,
+                    'border-transparent': daysActivity[$index] === null,
+                    'text-neutral-700': daysActivity[$index] === null,
+                    'border-white':
+                        activeDay()?.toISODate() === dayOfMonth.toISODate(),
+                    'text-white':
+                        activeDay()?.toISODate() === dayOfMonth.toISODate(),
+                    'shadow-[0_0_10px_1px_#fff]':
+                        activeDay()?.toISODate() === dayOfMonth.toISODate(),
+                    'opacity-25':
+                        dayOfMonth.month !== firstDayOfActiveMonth().month,
+                }"
+            class="flex items-center justify-center w-10 h-10 font-semibold text-center transition-all border-2 border-solid rounded-md cursor-pointer bg-neutral-900"
         >
             <div>{{ dayOfMonth.day }}</div>
         </button>
@@ -118,6 +120,18 @@
     </div>
 
     @if (activeDay(); as activeDay) {
+    <!--  -->
+    @if (displayedWorkouts$ | async; as displayedWorkouts) {
+    <!--  -->
+    @if (displayedWorkouts.length > 0) {
+    <!--  -->
+    @for (workout of displayedWorkouts; track $index) {
+    <app-workout-done-preview
+        [workoutData]="workout"
+    ></app-workout-done-preview>
+    }
+    <!--  -->
+    } @else {
     <div
         class="absolute left-0 z-20 w-full px-8 py-20 text-sm font-semibold text-center opacity-50 top-1/2 backdrop-blur-lg"
     >
@@ -160,6 +174,48 @@
             stroke-linejoin="round"
         />
     </svg>
+    }
+    <!--  -->
+    } @else {
+    <div
+        data-placeholder
+        class="relative flex flex-col gap-4 p-2 overflow-hidden border-2 border-solid rounded-md w-72 border-neutral-900"
+    >
+        <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-1">
+                <div class="w-12 h-2 rounded-full bg-neutral-900"></div>
+                <div class="w-20 h-2 rounded-full bg-neutral-900"></div>
+            </div>
+            <div class="flex flex-col items-end gap-1">
+                <div class="w-16 h-2 rounded-full bg-neutral-900"></div>
+                <div class="w-12 h-2 rounded-full bg-neutral-900"></div>
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center gap-1">
+            <div class="h-2 rounded-full bg-neutral-900 w-52"></div>
+            <div class="w-40 h-2 rounded-full bg-neutral-900"></div>
+        </div>
+
+        @for (x of [1,2,3,4]; track $index) {
+        <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-1.5">
+                <div class="w-10 h-10 rounded-full bg-neutral-900"></div>
+                <div class="flex flex-col gap-1">
+                    <div class="w-12 h-2 rounded-full bg-neutral-900"></div>
+                    <div class="w-32 h-2 rounded-full bg-neutral-900"></div>
+                </div>
+            </div>
+        </div>
+        }
+
+        <div class="flex flex-col items-center gap-1">
+            <div class="self-center w-24 h-2 rounded-full bg-neutral-900"></div>
+            <div class="self-center h-2 rounded-full bg-neutral-900 w-44"></div>
+        </div>
+    </div>
+    }
+    <!--  -->
     } @else {
     <div
         class="absolute left-0 z-20 w-full px-8 py-20 text-sm font-semibold text-center opacity-50 top-1/2 backdrop-blur-lg"
@@ -203,7 +259,9 @@
             stroke-linejoin="round"
         />
     </svg>
-    } }
+    }
+    <!--  -->
+    }
 </div>
 
 <!--  -->

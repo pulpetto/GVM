@@ -1,7 +1,10 @@
 import {
     Component,
     computed,
+    DestroyRef,
+    inject,
     Inject,
+    OnInit,
     Renderer2,
     Signal,
     signal,
@@ -12,6 +15,11 @@ import { DOCUMENT } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DateTime, Info, Interval } from 'luxon';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { UserService } from '../../../../services/user.service';
+import { forkJoin, Observable, of } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { WorkoutDonePreviewComponent } from '../../../../shared/workoutViews/workout-done-preview/workout-done-preview.component';
+import { WorkoutDoneFull } from '../../../../interfaces/workout/workout-done-full';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -29,7 +37,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     standalone: true,
     templateUrl: './calendar.component.html',
     styleUrl: './calendar.component.css',
-    imports: [CommonModule, RouterModule],
+    imports: [CommonModule, RouterModule, WorkoutDonePreviewComponent],
     animations: [
         trigger('openClose', [
             transition(':enter', [
@@ -63,7 +71,10 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         ]),
     ],
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
+    destroyRef = inject(DestroyRef);
+    userService = inject(UserService);
+
     today: Signal<DateTime> = signal(
         DateTime.local().setZone('America/New_York')
     );
@@ -91,6 +102,87 @@ export class CalendarComponent {
     DATE_MED = DateTime.DATE_MED;
 
     loading: boolean = true;
+
+    daysActivity: (
+        | {
+              unixTimestamp: number;
+              workoutId: string;
+          }[]
+        | null
+    )[] = [];
+
+    ngOnInit() {
+        const lastDayOfActiveMonth: DateTime = this.firstDayOfActiveMonth()
+            .endOf('month')
+            .set({
+                hour: 23,
+                minute: 59,
+                second: 59,
+            });
+
+        this.userService.user$.subscribe((user) => {
+            if (user) {
+                this.userService
+                    .getWorkoutsByUnixRange(
+                        this.firstDayOfActiveMonth().toSeconds(),
+                        lastDayOfActiveMonth.toSeconds()
+                    )
+                    .pipe(takeUntilDestroyed(this.destroyRef))
+                    .subscribe((data) => {
+                        if (data) {
+                            this.daysOfMonth().forEach((day) => {
+                                const startOfDay = day.toSeconds();
+                                const endOfDay = day
+                                    .set({
+                                        hour: 23,
+                                        minute: 59,
+                                        second: 59,
+                                    })
+                                    .toSeconds();
+
+                                const workoutsInDay = data.filter(
+                                    (workout) =>
+                                        workout.unixTimestamp >= startOfDay &&
+                                        workout.unixTimestamp <= endOfDay
+                                );
+
+                                if (workoutsInDay.length > 0) {
+                                    this.daysActivity.push(workoutsInDay);
+                                } else {
+                                    this.daysActivity.push(null);
+                                }
+                            });
+
+                            this.loading = false;
+                        }
+                    });
+            }
+        });
+    }
+
+    displayedWorkouts$!: Observable<WorkoutDoneFull[] | null>;
+
+    setActiveDay(dayOfMonth: DateTime<boolean>, i: number) {
+        if (this.activeDay() === dayOfMonth) {
+            this.activeDay.set(null);
+        } else {
+            this.activeDay.set(dayOfMonth);
+
+            if (this.daysActivity[i]) {
+                const workoutObservables: Observable<WorkoutDoneFull>[] =
+                    this.daysActivity[i]!.map((day) =>
+                        this.userService.getDoneWorkoutByIdWithExercises(
+                            day.workoutId
+                        )
+                    );
+
+                this.displayedWorkouts$ = forkJoin(workoutObservables);
+            } else {
+                this.displayedWorkouts$ = of([]);
+            }
+        }
+    }
+
     goToNextMonth() {
         this.firstDayOfActiveMonth.set(
             this.firstDayOfActiveMonth().plus({ month: 1 })
