@@ -668,4 +668,18 @@ export class UserService {
             })
         );
     }
+
+    getDoneWorkoutById(workoutId: string): Observable<WorkoutDone> {
+        const workoutDocRef: DocumentReference = doc(
+            this.userDocRef!,
+            'workoutsDone',
+            workoutId
+        );
+
+        return from(
+            getDoc(workoutDocRef).then((workoutDoc) => {
+                return workoutDoc.data() as WorkoutDone;
+            })
+        );
+    }
 }
