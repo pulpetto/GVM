@@ -29,7 +29,14 @@ import {
     signOut,
     user,
 } from '@angular/fire/auth';
-import { BehaviorSubject, forkJoin, from, map, Observable } from 'rxjs';
+import {
+    BehaviorSubject,
+    forkJoin,
+    from,
+    map,
+    Observable,
+    switchMap,
+} from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../interfaces/user';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -679,6 +686,37 @@ export class UserService {
         return from(
             getDoc(workoutDocRef).then((workoutDoc) => {
                 return workoutDoc.data() as WorkoutDone;
+            })
+        );
+    }
+
+    getDoneWorkoutByIdWithExercises(
+        workoutId: string
+    ): Observable<WorkoutDoneFull> {
+        const workoutDocRef: DocumentReference = doc(
+            this.userDocRef!,
+            'workoutsDone',
+            workoutId
+        );
+
+        return from(getDoc(workoutDocRef)).pipe(
+            switchMap((workoutDoc) => {
+                const workout = workoutDoc.data() as WorkoutDoneFull;
+
+                workout.id = workoutDoc.id;
+
+                const exerciseObservables = workout.exercises.map((exercise) =>
+                    this.dataService
+                        .getExercisePreview$(exercise.exerciseId)
+                        .pipe(
+                            map((exerciseData) => {
+                                exercise.staticData = exerciseData;
+                                return exercise;
+                            })
+                        )
+                );
+
+                return forkJoin(exerciseObservables).pipe(map(() => workout));
             })
         );
     }
