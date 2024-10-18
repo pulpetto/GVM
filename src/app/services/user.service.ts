@@ -477,7 +477,7 @@ export class UserService {
 
                         workoutObj.exercises.forEach((exercise) => {
                             const exercise$ = this.dataService
-                                .getExerciseById(exercise.exerciseId)
+                                .getExercisePreview$(exercise.exerciseId)
                                 .pipe(
                                     map((exerciseData) => {
                                         exercise.staticData = exerciseData!;

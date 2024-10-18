@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { from, map, Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { Equipment } from '../interfaces/equipment';
 import { Achievement } from '../interfaces/achievement';
 import { EquipmentName } from '../types/equipment-type';
@@ -43,34 +43,6 @@ export class DataService {
                 equipment: EquipmentName;
             }[]
         >('assets/data/exercises.json');
-    }
-
-    getExerciseById(id: number): Observable<{
-        id: number;
-        name: string;
-        imageUrl: string;
-        muscleGroups: MuscleGroupName[];
-        equipment: EquipmentName;
-    } | null> {
-        return this.getExercises().pipe(
-            map(
-                (
-                    exercises: {
-                        id: number;
-                        name: string;
-                        imageUrl: string;
-                        muscleGroups: MuscleGroupName[];
-                        equipment: EquipmentName;
-                    }[]
-                ) => {
-                    const exercise = exercises.find(
-                        (exercise) => exercise.id === id
-                    );
-
-                    return exercise ? exercise : null;
-                }
-            )
-        );
     }
 
     getAchievements(): Observable<Achievement[]> {

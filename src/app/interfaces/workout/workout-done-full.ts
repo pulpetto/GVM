@@ -1,7 +1,6 @@
-import { EquipmentName } from '../../types/equipment-type';
-import { MuscleGroupName } from '../../types/muscle-group-type';
 import { RpeType } from '../../types/rpe-type';
 import { SetType } from '../../types/set-type';
+import { ExercisePreview } from '../exercise-preview';
 import { ClusterSet } from '../set-types/cluster-set';
 import { DropSet } from '../set-types/drop-set';
 import { TempoSet } from '../set-types/tempo-set';
@@ -16,14 +15,8 @@ export interface WorkoutDoneFull {
     totalSets: number;
     doneSets: number;
     exercises: {
-        exerciseId: number;
-        staticData: {
-            id: number;
-            name: string;
-            imageUrl: string;
-            muscleGroups: MuscleGroupName[];
-            equipment: EquipmentName;
-        };
+        exerciseId: string;
+        staticData: ExercisePreview;
         superSetColor: string | null;
         sets: {
             isDone: boolean;
