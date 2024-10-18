@@ -627,4 +627,45 @@ export class UserService {
                 });
         }
     }
+
+    getWorkoutsByUnixRange(
+        unixFrom: number,
+        unixTo: number
+    ): Observable<
+        {
+            unixTimestamp: number;
+            workoutId: string;
+        }[]
+    > {
+        const workoutsUnixTimestampsRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workoutsUnixTimestamps'
+        );
+
+        const q = query(
+            workoutsUnixTimestampsRef,
+            where('unixTimestamp', '>=', unixFrom),
+            where('unixTimestamp', '<=', unixTo)
+        );
+
+        return from(
+            getDocs(q).then((querySnapshot) => {
+                const workoutIds: {
+                    unixTimestamp: number;
+                    workoutId: string;
+                }[] = [];
+
+                querySnapshot.docs.forEach((doc) => {
+                    const timestamp = doc.data()['unixTimestamp'] as number;
+
+                    workoutIds.push({
+                        unixTimestamp: timestamp,
+                        workoutId: doc.id,
+                    });
+                });
+
+                return workoutIds;
+            })
+        );
+    }
 }
