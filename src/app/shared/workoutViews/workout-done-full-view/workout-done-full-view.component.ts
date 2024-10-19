@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { WorkoutDoneFull } from '../../../interfaces/workout/workout-done-full';
+import { TimeFormatterPipe } from '../../../pipes/time-formatter.pipe';
 
 const visibleModal = { top: '50%' };
 const visibleModalLow = { top: '75%' };
@@ -19,7 +20,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-workout-done-full-view',
     standalone: true,
-    imports: [CommonModule, RouterModule],
+    imports: [CommonModule, RouterModule, TimeFormatterPipe],
     templateUrl: './workout-done-full-view.component.html',
     styleUrl: './workout-done-full-view.component.css',
     animations: [
