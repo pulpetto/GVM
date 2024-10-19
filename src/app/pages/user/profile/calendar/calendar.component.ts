@@ -20,6 +20,7 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WorkoutDonePreviewComponent } from '../../../../shared/workoutViews/workout-done-preview/workout-done-preview.component';
 import { WorkoutDoneFull } from '../../../../interfaces/workout/workout-done-full';
+import { MonthNamePipe } from '../../../../pipes/month-name.pipe';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -42,7 +43,12 @@ export interface WorkoutUnixWithId {
     standalone: true,
     templateUrl: './calendar.component.html',
     styleUrl: './calendar.component.css',
-    imports: [CommonModule, RouterModule, WorkoutDonePreviewComponent],
+    imports: [
+        CommonModule,
+        RouterModule,
+        WorkoutDonePreviewComponent,
+        MonthNamePipe,
+    ],
     animations: [
         trigger('openClose', [
             transition(':enter', [
@@ -115,6 +121,8 @@ export class CalendarComponent implements OnInit {
 
     daysActivity: (WorkoutUnixWithId[] | null)[] = [];
 
+    allActiveMonths: { year: number; month: number }[] = [];
+
     ngOnInit() {
         this.userService.user$.subscribe((user) => {
             if (user) {
@@ -125,6 +133,22 @@ export class CalendarComponent implements OnInit {
                         this.oldestActiveMonth =
                             DateTime.fromSeconds(data).month;
                         this.oldestActiveYear = DateTime.fromSeconds(data).year;
+
+                        let currentDate = DateTime.local(
+                            this.oldestActiveYear,
+                            this.oldestActiveMonth
+                        );
+
+                        const now = DateTime.now();
+
+                        while (currentDate <= now) {
+                            this.allActiveMonths.push({
+                                year: currentDate.year,
+                                month: currentDate.month,
+                            });
+
+                            currentDate = currentDate.plus({ months: 1 });
+                        }
                     });
 
                 this.getActivityForMonth();

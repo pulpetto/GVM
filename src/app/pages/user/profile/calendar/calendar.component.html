@@ -296,38 +296,18 @@
         'top-full': !monthChangeModalVisibility
     }"
 >
-    <div class="self-center font-semibold">Choose month:</div>
-    <div class="flex flex-col gap-1">
-        @for (option of [].constructor(10); track $index) {
+    <div class="font-semibold">Choose month:</div>
+    <div class="flex flex-col gap-2">
+        @for (monthObj of allActiveMonths; track $index) {
         <button
             type="button"
-            class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
+            class="text-center transition-all active:opacity-50 active:scale-95 group"
+            [ngClass]="{
+                'text-emerald-500': monthObj.month === firstDayOfActiveMonth().month && monthObj.year === firstDayOfActiveMonth().year,
+                'font-semibold': monthObj.month === firstDayOfActiveMonth().month && monthObj.year === firstDayOfActiveMonth().year,
+            }"
         >
-            <div class="p-2 transition-colors group-hover:text-emerald-500">
-                <!-- [ngClass]="{
-                    'text-emerald-500': option.active,
-                    'font-semibold': option.active
-                }" -->
-                Month 0000
-            </div>
-
-            <!-- @if (option.active) {
-            <div>
-                <svg
-                    class="w-6 h-6 stroke-emerald-500"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M5 13L9 17L19 7"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            </div>
-            } -->
+            {{ monthObj.month | monthName }} {{ monthObj.year }}
         </button>
         }
     </div>
