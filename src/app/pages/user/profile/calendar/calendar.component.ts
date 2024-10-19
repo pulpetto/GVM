@@ -270,6 +270,29 @@ export class CalendarComponent implements OnInit {
         this.firstDayOfActiveMonth.set(this.today().startOf('month'));
     }
 
+    changeMonth(year: number, month: number) {
+        this.firstDayOfActiveMonth.set(DateTime.local(year, month, 1));
+
+        if (
+            !this.monthCache[
+                `${this.firstDayOfActiveMonth().month}${
+                    this.firstDayOfActiveMonth().year
+                }`
+            ]
+        ) {
+            this.getActivityForMonth();
+        } else {
+            this.daysActivity =
+                this.monthCache[
+                    `${this.firstDayOfActiveMonth().month}${
+                        this.firstDayOfActiveMonth().year
+                    }`
+                ];
+        }
+
+        this.monthChangeModalVisibility = false;
+    }
+
     // ---------- ---------- ---------- ---------- ----------
 
     monthChangeModalVisibility: boolean = false;

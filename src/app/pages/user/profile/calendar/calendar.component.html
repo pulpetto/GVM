@@ -301,6 +301,7 @@
         @for (monthObj of allActiveMonths; track $index) {
         <button
             type="button"
+            (click)="changeMonth(monthObj.year, monthObj.month)"
             class="text-center transition-all active:opacity-50 active:scale-95 group"
             [ngClass]="{
                 'text-emerald-500': monthObj.month === firstDayOfActiveMonth().month && monthObj.year === firstDayOfActiveMonth().year,
