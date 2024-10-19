@@ -111,17 +111,11 @@ export class CalendarComponent implements OnInit {
 
     loading: boolean = true;
 
+    monthCache: { [key: string]: (WorkoutUnixWithId[] | null)[] } = {};
+
     daysActivity: (WorkoutUnixWithId[] | null)[] = [];
 
     ngOnInit() {
-        const lastDayOfActiveMonth: DateTime = this.firstDayOfActiveMonth()
-            .endOf('month')
-            .set({
-                hour: 23,
-                minute: 59,
-                second: 59,
-            });
-
         this.userService.user$.subscribe((user) => {
             if (user) {
                 this.userService
@@ -133,42 +127,65 @@ export class CalendarComponent implements OnInit {
                         this.oldestActiveYear = DateTime.fromSeconds(data).year;
                     });
 
-                this.userService
-                    .getWorkoutsByUnixRange(
-                        this.firstDayOfActiveMonth().toSeconds(),
-                        lastDayOfActiveMonth.toSeconds()
-                    )
-                    .pipe(takeUntilDestroyed(this.destroyRef))
-                    .subscribe((data) => {
-                        if (data) {
-                            this.daysOfMonth().forEach((day) => {
-                                const startOfDay = day.toSeconds();
-                                const endOfDay = day
-                                    .set({
-                                        hour: 23,
-                                        minute: 59,
-                                        second: 59,
-                                    })
-                                    .toSeconds();
-
-                                const workoutsInDay = data.filter(
-                                    (workout) =>
-                                        workout.unixTimestamp >= startOfDay &&
-                                        workout.unixTimestamp <= endOfDay
-                                );
-
-                                if (workoutsInDay.length > 0) {
-                                    this.daysActivity.push(workoutsInDay);
-                                } else {
-                                    this.daysActivity.push(null);
-                                }
-                            });
-
-                            this.loading = false;
-                        }
-                    });
+                this.getActivityForMonth();
             }
         });
+    }
+
+    getActivityForMonth() {
+        this.loading = true;
+        this.daysActivity = [];
+
+        const lastDayOfActiveMonth: DateTime = this.firstDayOfActiveMonth()
+            .endOf('month')
+            .set({
+                hour: 23,
+                minute: 59,
+                second: 59,
+            });
+
+        this.userService
+            .getWorkoutsByUnixRange(
+                this.firstDayOfActiveMonth().toSeconds(),
+                lastDayOfActiveMonth.toSeconds()
+            )
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((data) => {
+                if (data) {
+                    this.daysOfMonth().forEach((day) => {
+                        const startOfDay = day.toSeconds();
+                        const endOfDay = day
+                            .set({
+                                hour: 23,
+                                minute: 59,
+                                second: 59,
+                            })
+                            .toSeconds();
+
+                        const workoutsInDay = data.filter(
+                            (workout) =>
+                                workout.unixTimestamp >= startOfDay &&
+                                workout.unixTimestamp <= endOfDay
+                        );
+
+                        if (workoutsInDay.length > 0) {
+                            this.daysActivity.push(workoutsInDay);
+                        } else {
+                            this.daysActivity.push(null);
+                        }
+                    });
+
+                    this.monthCache[
+                        `${this.firstDayOfActiveMonth().month}${
+                            this.firstDayOfActiveMonth().year
+                        }`
+                    ] = this.daysActivity;
+
+                    setTimeout(() => {
+                        this.loading = false;
+                    }, 500);
+                }
+            });
     }
 
     displayedWorkouts$!: Observable<WorkoutDoneFull[] | null>;
@@ -198,12 +215,50 @@ export class CalendarComponent implements OnInit {
         this.firstDayOfActiveMonth.set(
             this.firstDayOfActiveMonth().plus({ month: 1 })
         );
+
+        this.activeDay.set(null);
+
+        if (
+            !this.monthCache[
+                `${this.firstDayOfActiveMonth().month}${
+                    this.firstDayOfActiveMonth().year
+                }`
+            ]
+        ) {
+            this.getActivityForMonth();
+        } else {
+            this.daysActivity =
+                this.monthCache[
+                    `${this.firstDayOfActiveMonth().month}${
+                        this.firstDayOfActiveMonth().year
+                    }`
+                ];
+        }
     }
 
     goToPreviousMonth() {
         this.firstDayOfActiveMonth.set(
             this.firstDayOfActiveMonth().minus({ month: 1 })
         );
+
+        this.activeDay.set(null);
+
+        if (
+            !this.monthCache[
+                `${this.firstDayOfActiveMonth().month}${
+                    this.firstDayOfActiveMonth().year
+                }`
+            ]
+        ) {
+            this.getActivityForMonth();
+        } else {
+            this.daysActivity =
+                this.monthCache[
+                    `${this.firstDayOfActiveMonth().month}${
+                        this.firstDayOfActiveMonth().year
+                    }`
+                ];
+        }
     }
 
     goToCurrentMonth() {
