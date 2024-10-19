@@ -143,6 +143,8 @@
 
     <div class="flex flex-col self-start w-full gap-4">
         @for (exercise of workoutData.exercises; track $index) {
+        <!--  -->
+        @if (!noSetsDoneExercisesIndexes.has($index)) {
         <div class="flex flex-col gap-1">
             <a class="flex items-center gap-2">
                 <div
@@ -169,12 +171,13 @@
             </div>
             <div class="flex flex-col gap-1 text-lg">
                 @for (set of exercise.sets; track $index) {
+                <!--  -->
+                @if (set.isDone) {
                 <div
                     class="grid grid-cols-5 py-2 font-semibold rounded-md justify-items-center gap-y-3"
                     [ngClass]="{
-                        'bg-neutral-900': $index % 2 === 0 && !set.isDone,
-                        'bg-emerald-500': set.isDone,
-                        'bg-opacity-50': $index % 2 === 0 && !set.isDone
+                        'bg-neutral-900': $index % 2 === 0,
+                        'bg-opacity-50': $index % 2 === 0
                     }"
                 >
                     <div>{{ set.setNumber }}</div>
@@ -222,7 +225,7 @@
                     <!-- DROPSET(s) -->
                     <!-- prettier-ignore -->
                     @if (set.setTypeName === 'drop') {
-                        @for (dropset of set.dropsets; track $index) {
+                                        @for (dropset of set.dropsets; track $index) {
                     <div class="grid w-full grid-cols-5 col-span-5 py-1">
                         <div class="col-span-2 text-nowrap place-self-center">
                             Drop {{ $index + 1 }}:
@@ -242,7 +245,7 @@
                     <!-- CLUSTERSET(s) -->
                     <!-- prettier-ignore -->
                     @if (set.setTypeName === 'cluster') {
-                        @for (clusterset of set.clustersets; track $index) {
+                                        @for (clusterset of set.clustersets; track $index) {
                     <div class="grid w-full grid-cols-5 col-span-5 py-1">
                         <div class="col-span-2 text-nowrap place-self-center">
                             Rest Time:
@@ -260,8 +263,12 @@
                     } }
                 </div>
                 }
+                <!--  -->
+                }
             </div>
         </div>
+        }
+        <!--  -->
         }
     </div>
 </div>

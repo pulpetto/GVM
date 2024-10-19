@@ -93,8 +93,15 @@ export class WorkoutDoneFullViewComponent implements OnInit {
     router = inject(Router);
     activatedRoute = inject(ActivatedRoute);
 
+    noSetsDoneExercisesIndexes: Set<number> = new Set();
+
     ngOnInit() {
         this.workoutData = history.state;
+
+        this.workoutData.exercises.forEach((exercise, i) => {
+            if (exercise.sets.every((set) => set.isDone === false))
+                this.noSetsDoneExercisesIndexes.add(i);
+        });
     }
 
     navigateToSummary() {
