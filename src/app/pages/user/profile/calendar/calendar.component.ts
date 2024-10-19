@@ -32,6 +32,11 @@ const hiddenBtnFixed = { bottom: '-100%' };
 
 const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 
+export interface WorkoutUnixWithId {
+    unixTimestamp: number;
+    workoutId: string;
+}
+
 @Component({
     selector: 'app-calendar',
     standalone: true,
@@ -106,13 +111,7 @@ export class CalendarComponent implements OnInit {
 
     loading: boolean = true;
 
-    daysActivity: (
-        | {
-              unixTimestamp: number;
-              workoutId: string;
-          }[]
-        | null
-    )[] = [];
+    daysActivity: (WorkoutUnixWithId[] | null)[] = [];
 
     ngOnInit() {
         const lastDayOfActiveMonth: DateTime = this.firstDayOfActiveMonth()
