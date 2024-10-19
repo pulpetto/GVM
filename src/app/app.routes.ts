@@ -109,6 +109,13 @@ export const routes: Routes = [
                     ),
             },
             {
+                path: 'profile/calendar/:workoutId/summary',
+                loadComponent: () =>
+                    import(
+                        './shared/workout-summary/workout-summary.component'
+                    ).then((component) => component.WorkoutSummaryComponent),
+            },
+            {
                 path: 'profile/goals',
                 loadComponent: () =>
                     import('./pages/user/profile/goals/goals.component').then(
