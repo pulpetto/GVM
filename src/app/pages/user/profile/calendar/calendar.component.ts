@@ -101,6 +101,9 @@ export class CalendarComponent implements OnInit {
 
     DATE_MED = DateTime.DATE_MED;
 
+    oldestActiveMonth!: number;
+    oldestActiveYear!: number;
+
     loading: boolean = true;
 
     daysActivity: (
@@ -122,6 +125,15 @@ export class CalendarComponent implements OnInit {
 
         this.userService.user$.subscribe((user) => {
             if (user) {
+                this.userService
+                    .getOldestDoneWorkoutsUnix()
+                    .pipe(takeUntilDestroyed(this.destroyRef))
+                    .subscribe((data) => {
+                        this.oldestActiveMonth =
+                            DateTime.fromSeconds(data).month;
+                        this.oldestActiveYear = DateTime.fromSeconds(data).year;
+                    });
+
                 this.userService
                     .getWorkoutsByUnixRange(
                         this.firstDayOfActiveMonth().toSeconds(),

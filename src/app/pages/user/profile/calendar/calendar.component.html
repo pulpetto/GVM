@@ -43,14 +43,11 @@
     </div>
     } @else {
     <div class="relative">
-        <button
-            type="button"
-            (click)="toggleModalVisibility()"
-            class="text-xl font-semibold"
-        >
-            {{ firstDayOfActiveMonth().monthLong | titlecase }}
-            {{ firstDayOfActiveMonth().year }}
-        </button>
+        <!-- prettier-ignore -->
+        @if (
+            oldestActiveMonth !== firstDayOfActiveMonth().month ||
+            oldestActiveYear !== firstDayOfActiveMonth().year
+        ) {
         <button
             type="button"
             (click)="goToPreviousMonth()"
@@ -70,6 +67,17 @@
                 />
             </svg>
         </button>
+        }
+
+        <button
+            type="button"
+            (click)="toggleModalVisibility()"
+            class="text-xl font-semibold"
+        >
+            {{ firstDayOfActiveMonth().monthLong | titlecase }}
+            {{ firstDayOfActiveMonth().year }}
+        </button>
+
         @if (this.today().month !== firstDayOfActiveMonth().month) {
         <button
             type="button"
