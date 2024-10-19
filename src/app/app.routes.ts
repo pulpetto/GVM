@@ -100,6 +100,15 @@ export const routes: Routes = [
                     ).then((component) => component.CalendarComponent),
             },
             {
+                path: 'profile/calendar/:workoutId',
+                loadComponent: () =>
+                    import(
+                        './shared/workoutViews/workout-done-full-view/workout-done-full-view.component'
+                    ).then(
+                        (component) => component.WorkoutDoneFullViewComponent
+                    ),
+            },
+            {
                 path: 'profile/goals',
                 loadComponent: () =>
                     import('./pages/user/profile/goals/goals.component').then(
