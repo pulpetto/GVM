@@ -211,35 +211,16 @@ export class CalendarComponent implements OnInit {
         }
     }
 
-    goToNextMonth() {
-        this.firstDayOfActiveMonth.set(
-            this.firstDayOfActiveMonth().plus({ month: 1 })
-        );
-
-        this.activeDay.set(null);
-
-        if (
-            !this.monthCache[
-                `${this.firstDayOfActiveMonth().month}${
-                    this.firstDayOfActiveMonth().year
-                }`
-            ]
-        ) {
-            this.getActivityForMonth();
+    goToAdjacentMonth(side: 'next' | 'prev') {
+        if (side === 'next') {
+            this.firstDayOfActiveMonth.set(
+                this.firstDayOfActiveMonth().plus({ month: 1 })
+            );
         } else {
-            this.daysActivity =
-                this.monthCache[
-                    `${this.firstDayOfActiveMonth().month}${
-                        this.firstDayOfActiveMonth().year
-                    }`
-                ];
+            this.firstDayOfActiveMonth.set(
+                this.firstDayOfActiveMonth().minus({ month: 1 })
+            );
         }
-    }
-
-    goToPreviousMonth() {
-        this.firstDayOfActiveMonth.set(
-            this.firstDayOfActiveMonth().minus({ month: 1 })
-        );
 
         this.activeDay.set(null);
 
