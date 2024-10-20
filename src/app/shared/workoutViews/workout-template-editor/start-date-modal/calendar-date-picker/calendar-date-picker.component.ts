@@ -19,6 +19,11 @@ import { DateTime, Info, Interval } from 'luxon';
     styleUrl: './calendar-date-picker.component.css',
 })
 export class CalendarDatePickerComponent implements OnInit {
+    @Input({ required: true }) editView!:
+        | 'new'
+        | 'existing'
+        | 'current'
+        | 'done';
     @Input({ required: true }) workoutDateStartYear!: FormControl;
     @Input({ required: true }) workoutDateStartMonth!: FormControl;
     @Input({ required: true }) workoutDateStartDay!: FormControl;
@@ -48,7 +53,17 @@ export class CalendarDatePickerComponent implements OnInit {
     DATE_MED = DateTime.DATE_MED;
 
     ngOnInit() {
-        this.activeDay.set(this.today());
+        if (this.editView === 'done') {
+            const dateTime = DateTime.fromObject({
+                year: this.workoutDateStartYear.value,
+                month: this.workoutDateStartMonth.value,
+                day: this.workoutDateStartDay.value,
+            });
+            this.activeDay.set(dateTime);
+            this.firstDayOfActiveMonth.set(this.activeDay()!.startOf('month'));
+        } else {
+            this.activeDay.set(this.today());
+        }
     }
 
     changeActiveDay(dayOfMonth: DateTime) {

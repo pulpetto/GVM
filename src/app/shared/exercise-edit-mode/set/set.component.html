@@ -5,11 +5,11 @@
     [ngClass]="{
         'bg-neutral-900': lighterBg,
         'bg-opacity-25': lighterBg,
-        'grid-cols-6': editView === 'current',
-        'grid-cols-5': editView !== 'current',
+        'grid-cols-6': editView === 'current' || editView === 'done',
+        'grid-cols-5': editView !== 'current' && editView !== 'done',
     }"
 >
-    @if (editView === 'current') {
+    @if (editView === 'current' || editView === 'done') {
     <div
         class="absolute top-0 z-10 w-full h-full transition-all duration-300 rounded-md bg-emerald-600"
         [ngClass]="{
@@ -54,7 +54,7 @@
         class="self-center place-self-center"
     ></app-button-for-rpe-modal>
 
-    @if (editView === 'current') {
+    @if (editView === 'current' || editView === 'done') {
     <button
         type="button"
         (click)="toggleSetCompletion()"
@@ -128,8 +128,8 @@
         [tempo]="tempo"
         class="w-full"
         [ngClass]="{
-            'col-span-6': editView === 'current',
-            'col-span-5': editView !== 'current',
+            'col-span-6': editView === 'current' || editView === 'done',
+            'col-span-5': editView !== 'current' && editView !== 'done',
         }"
     ></app-tempo-set>
     }

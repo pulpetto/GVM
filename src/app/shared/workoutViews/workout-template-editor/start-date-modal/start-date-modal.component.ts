@@ -60,6 +60,11 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class StartDateModalComponent {
+    @Input({ required: true }) editView!:
+        | 'new'
+        | 'existing'
+        | 'current'
+        | 'done';
     @Input({ required: true }) workoutDateStart!: FormGroup;
     @Input({ required: true }) visibility: boolean = false;
 

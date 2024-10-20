@@ -5,6 +5,7 @@ import { DropSet } from '../set-types/drop-set';
 import { TempoSet } from '../set-types/tempo-set';
 
 export interface Set {
+    isDone?: boolean;
     setNumber: number;
     setTypeName: SetType;
     weight: number;

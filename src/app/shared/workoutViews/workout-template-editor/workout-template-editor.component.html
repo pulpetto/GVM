@@ -400,6 +400,7 @@
 
 <app-start-date-modal
     (closeEvent)="workoutStartDateModalVisibility = false"
+    [editView]="editView"
     [workoutDateStart]="workoutDateStart"
     [visibility]="workoutStartDateModalVisibility"
 ></app-start-date-modal>

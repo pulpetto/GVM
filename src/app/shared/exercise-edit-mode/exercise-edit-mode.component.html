@@ -69,8 +69,8 @@
     <div
         class="grid font-semibold justify-items-center"
         [ngClass]="{
-            'grid-cols-6': editView === 'current',
-            'grid-cols-5': editView !== 'current'
+            'grid-cols-6': editView === 'current' || editView === 'done',
+            'grid-cols-5': editView !== 'current' && editView !== 'done'
         }"
     >
         <app-info-modal-button
@@ -97,7 +97,7 @@
                 'Rate of perceived exertion (RPE) is used to measure how hard your body works during physical activity. 10 for example, means maximal effort and no reps in reserve. (muscular failure)'
             "
         ></app-info-modal-button>
-        @if (editView === 'current') {
+        @if (editView === 'current' || editView === 'done') {
         <app-info-modal-button
             [name]="'Done'"
             [infoContent]="

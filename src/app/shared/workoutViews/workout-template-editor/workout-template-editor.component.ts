@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { WorkoutExercise } from '../../../interfaces/workout/workout-exercise';
 import { DropSet } from '../../../interfaces/set-types/drop-set';
 import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
-import { EMPTY, filter, switchMap } from 'rxjs';
+import { EMPTY, filter, Observable, switchMap } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
 import {
     CdkDropListGroup,
@@ -299,7 +299,7 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                                 this.workoutId = params.get('workoutId')!;
                                 return this.userService.getWorkoutById(
                                     this.workoutId
-                                );
+                                ) as Observable<WorkoutDone>;
                             })
                         );
                     } else if (this.editView === 'current') {
@@ -336,7 +336,16 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                                 this.workoutId = params.get('workoutId')!;
                                 return this.userService.getWorkoutById(
                                     this.workoutId
-                                );
+                                ) as Observable<WorkoutDone>;
+                            })
+                        );
+                    } else if (this.editView === 'done') {
+                        return this.route.paramMap.pipe(
+                            switchMap((params) => {
+                                this.workoutId = params.get('workoutId')!;
+                                return this.userService.getDoneWorkoutById(
+                                    this.workoutId
+                                ) as Observable<WorkoutDone>;
                             })
                         );
                     } else {
@@ -348,6 +357,38 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                 if (data) {
                     this.workoutForm.get('name')!.setValue(data.name);
                     this.addInitialExercises(data.exercises);
+
+                    if (this.editView === 'done') {
+                        this.workoutDuration = data.duration;
+
+                        const dateStartUnix = Math.floor(data.dateStart);
+
+                        const date = new Date(dateStartUnix * 1000);
+
+                        this.workoutForm.controls.dateStart.controls.year.setValue(
+                            date.getFullYear() + ''
+                        );
+
+                        this.workoutForm.controls.dateStart.controls.month.setValue(
+                            date.getMonth() + 1 + ''
+                        );
+
+                        this.workoutForm.controls.dateStart.controls.day.setValue(
+                            date.getDate() + ''
+                        );
+
+                        this.workoutForm.controls.dateStart.controls.hour.setValue(
+                            date.getHours() + ''
+                        );
+
+                        this.workoutForm.controls.dateStart.controls.minute.setValue(
+                            date.getMinutes() + ''
+                        );
+
+                        this.workoutDurationInterval = setInterval(() => {
+                            this.workoutDuration++;
+                        }, 1000);
+                    }
                 }
             });
     }
@@ -420,8 +461,9 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                             sets: this.fb.array([]),
                         });
 
-                        initialExercise.sets.forEach((set) => {
+                        initialExercise.sets.forEach((set, i) => {
                             if (
+                                this.editView === 'done' ||
                                 this.editView === 'current' ||
                                 this.editView === 'new'
                             )
@@ -462,6 +504,37 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                                     'isDone',
                                     this.fb.control<boolean>(false)
                                 );
+
+                            if (this.editView === 'done') {
+                                const isDoneControl = setFormGroup.get(
+                                    'isDone'
+                                ) as unknown as FormControl<boolean>;
+
+                                isDoneControl.setValue(
+                                    initialExercise.sets[i].isDone!
+                                );
+
+                                const doneSetsFormControl =
+                                    this.workoutComputedValues.get(
+                                        'setsDone'
+                                    ) as FormControl<number>;
+
+                                const volumeFormControl =
+                                    this.workoutComputedValues.get(
+                                        'volume'
+                                    ) as FormControl<number>;
+
+                                if (initialExercise.sets[i].isDone) {
+                                    doneSetsFormControl!.setValue(
+                                        doneSetsFormControl.value! + 1
+                                    );
+
+                                    volumeFormControl!.setValue(
+                                        volumeFormControl.value +
+                                            set.weight * set.reps
+                                    );
+                                }
+                            }
 
                             if (set.dropsets) {
                                 setFormGroup.addControl(
