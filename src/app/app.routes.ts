@@ -167,6 +167,13 @@ export const routes: Routes = [
                     ),
             },
             {
+                path: 'profile/statistics',
+                loadComponent: () =>
+                    import(
+                        './pages/user/profile/statistics/statistics.component'
+                    ).then((component) => component.StatisticsComponent),
+            },
+            {
                 path: 'workout',
                 loadComponent: () =>
                     import('./pages/user/workout/workout.component').then(
