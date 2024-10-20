@@ -1,7 +1,7 @@
 export interface Goal {
     isDone: boolean;
     targetWeight: number;
-    exerciseId: number;
+    exerciseId: string;
     dateStartUnix: number;
     dateFinishUnix: number;
 }
