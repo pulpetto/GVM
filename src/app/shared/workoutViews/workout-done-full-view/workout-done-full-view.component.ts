@@ -112,5 +112,12 @@ export class WorkoutDoneFullViewComponent implements OnInit {
         });
     }
 
+    navigateToEditView() {
+        this.router.navigate([`user/workout/${this.workoutData.id}/edit`], {
+            queryParams: { editView: 'done' },
+            state: this.workoutData,
+        });
+    }
+
     deleteWorkout() {}
 }
