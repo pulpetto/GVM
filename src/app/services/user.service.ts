@@ -676,6 +676,26 @@ export class UserService {
         );
     }
 
+    getOldestDoneWorkoutsUnix(): Observable<number> {
+        const workoutsUnixTimestampsRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workoutsUnixTimestamps'
+        );
+
+        const q = query(
+            workoutsUnixTimestampsRef,
+            orderBy('unixTimestamp', 'asc'),
+            limit(1)
+        );
+
+        return from(
+            getDocs(q).then(
+                (querySnapshot) =>
+                    querySnapshot.docs[0].data()['unixTimestamp'] as number
+            )
+        );
+    }
+
     getDoneWorkoutById(workoutId: string): Observable<WorkoutDone> {
         const workoutDocRef: DocumentReference = doc(
             this.userDocRef!,
