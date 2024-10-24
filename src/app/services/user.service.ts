@@ -50,6 +50,7 @@ import {
 import { WorkoutDone } from '../interfaces/workout/workout-done';
 import { WorkoutDoneFull } from '../interfaces/workout/workout-done-full';
 import { DataService } from './data.service';
+import { WorkoutDoneWithId } from '../interfaces/workout/workout-done-with-id';
 
 @Injectable({
     providedIn: 'root',
@@ -741,7 +742,9 @@ export class UserService {
         );
     }
 
-    getDoneWorkoutsByExerciseId(exerciseId: string): Observable<WorkoutDone[]> {
+    getDoneWorkoutsByExerciseId(
+        exerciseId: string
+    ): Observable<WorkoutDoneWithId[]> {
         const workoutsDoneRef: CollectionReference = collection(
             this.userDocRef!,
             'workoutsDone'
@@ -754,11 +757,14 @@ export class UserService {
 
         return from(
             getDocs(q).then((querySnapshot) => {
-                const arrToReturn: WorkoutDone[] = [];
+                const arrToReturn: WorkoutDoneWithId[] = [];
 
-                querySnapshot.forEach((el) =>
-                    arrToReturn.push(el.data() as WorkoutDone)
-                );
+                querySnapshot.forEach((el) => {
+                    const workoutObj = el.data() as WorkoutDoneWithId;
+                    workoutObj.id = el.id;
+
+                    return arrToReturn.push(workoutObj);
+                });
 
                 return arrToReturn;
             })

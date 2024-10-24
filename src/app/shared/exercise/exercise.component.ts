@@ -9,7 +9,7 @@ import { combineLatest, filter, map, Observable, switchMap } from 'rxjs';
 import { ExercisePreview } from '../../interfaces/exercise-preview';
 import { ExerciseDetails } from '../../interfaces/exercise-details';
 import { UserService } from '../../services/user.service';
-import { WorkoutDone } from '../../interfaces/workout/workout-done';
+import { WorkoutDoneWithId } from '../../interfaces/workout/workout-done-with-id';
 
 @Component({
     selector: 'app-exercise',
@@ -32,7 +32,7 @@ export class ExerciseComponent implements OnInit {
     combinedExerciseData$!: Observable<{
         baseData: ExercisePreview;
         detailsData: ExerciseDetails;
-        workoutsWithExercise: WorkoutDone[];
+        workoutsWithExercise: WorkoutDoneWithId[];
     }>;
 
     exerciseId!: string | null;
