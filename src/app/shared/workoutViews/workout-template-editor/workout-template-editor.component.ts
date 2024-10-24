@@ -663,6 +663,9 @@ export class WorkoutTemplateEditorComponent implements OnInit {
             workoutFormObjExtended.setsDone =
                 this.workoutComputedValues.controls.setsDone.value;
             workoutFormObjExtended.totalSets = this.totalSets;
+            workoutFormObjExtended.exercisesIds = Array.from(
+                this.selectedExercisesIds
+            );
 
             this.userService.finishWorkout(
                 this.workoutId,
