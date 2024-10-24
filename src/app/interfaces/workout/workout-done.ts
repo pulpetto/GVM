@@ -26,4 +26,5 @@ export interface WorkoutDone {
             clustersets?: ClusterSet[];
         }[];
     }[];
+    exercisesIds: string[];
 }
