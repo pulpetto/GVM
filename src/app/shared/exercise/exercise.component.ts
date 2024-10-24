@@ -35,16 +35,20 @@ export class ExerciseComponent implements OnInit {
         workoutsWithExercise: WorkoutDone[];
     }>;
 
+    exerciseId!: string | null;
+
     ngOnInit() {
-        const exerciseId = this.activatedRoute.snapshot.paramMap.get('id');
+        this.exerciseId = this.activatedRoute.snapshot.paramMap.get('id');
 
         this.combinedExerciseData$ = this.userService.user$.pipe(
             filter((user) => !!user),
             switchMap(() =>
                 combineLatest([
-                    this.dataService.getExercisePreview$(exerciseId!),
-                    this.dataService.getExerciseDetails$(exerciseId!),
-                    this.userService.getDoneWorkoutsByExerciseId(exerciseId!),
+                    this.dataService.getExercisePreview$(this.exerciseId!),
+                    this.dataService.getExerciseDetails$(this.exerciseId!),
+                    this.userService.getDoneWorkoutsByExerciseId(
+                        this.exerciseId!
+                    ),
                 ]).pipe(
                     map(([baseData, detailsData, workoutsWithExercise]) => ({
                         baseData,
