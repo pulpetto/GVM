@@ -14,7 +14,7 @@ export interface WorkoutDoneWithId {
     totalSets: number;
     doneSets: number;
     exercises: {
-        exerciseId: number;
+        exerciseId: string;
         superSetColor: string | null;
         sets: {
             isDone: boolean;
