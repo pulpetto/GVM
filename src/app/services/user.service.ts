@@ -740,4 +740,28 @@ export class UserService {
             })
         );
     }
+
+    getDoneWorkoutsByExerciseId(exerciseId: string): Observable<WorkoutDone[]> {
+        const workoutsDoneRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workoutsDone'
+        );
+
+        const q = query(
+            workoutsDoneRef,
+            where('exercisesIds', 'array-contains', exerciseId)
+        );
+
+        return from(
+            getDocs(q).then((querySnapshot) => {
+                const arrToReturn: WorkoutDone[] = [];
+
+                querySnapshot.forEach((el) =>
+                    arrToReturn.push(el.data() as WorkoutDone)
+                );
+
+                return arrToReturn;
+            })
+        );
+    }
 }
