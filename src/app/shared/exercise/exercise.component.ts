@@ -5,9 +5,11 @@ import { InstructionComponent } from './instruction/instruction.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../services/data.service';
-import { Observable } from 'rxjs';
+import { combineLatest, filter, map, Observable, switchMap } from 'rxjs';
 import { ExercisePreview } from '../../interfaces/exercise-preview';
 import { ExerciseDetails } from '../../interfaces/exercise-details';
+import { UserService } from '../../services/user.service';
+import { WorkoutDone } from '../../interfaces/workout/workout-done';
 
 @Component({
     selector: 'app-exercise',
@@ -24,20 +26,33 @@ import { ExerciseDetails } from '../../interfaces/exercise-details';
 })
 export class ExerciseComponent implements OnInit {
     dataService = inject(DataService);
+    userService = inject(UserService);
     activatedRoute = inject(ActivatedRoute);
 
-    exerciseBaseData$!: Observable<ExercisePreview>;
-    exerciseDetails$!: Observable<ExerciseDetails>;
+    combinedExerciseData$!: Observable<{
+        baseData: ExercisePreview;
+        detailsData: ExerciseDetails;
+        workoutsWithExercise: WorkoutDone[];
+    }>;
 
     ngOnInit() {
         const exerciseId = this.activatedRoute.snapshot.paramMap.get('id');
 
-        this.exerciseBaseData$ = this.dataService.getExercisePreview$(
-            exerciseId!
-        );
-
-        this.exerciseDetails$ = this.dataService.getExerciseDetails$(
-            exerciseId!
+        this.combinedExerciseData$ = this.userService.user$.pipe(
+            filter((user) => !!user),
+            switchMap(() =>
+                combineLatest([
+                    this.dataService.getExercisePreview$(exerciseId!),
+                    this.dataService.getExerciseDetails$(exerciseId!),
+                    this.userService.getDoneWorkoutsByExerciseId(exerciseId!),
+                ]).pipe(
+                    map(([baseData, detailsData, workoutsWithExercise]) => ({
+                        baseData,
+                        detailsData,
+                        workoutsWithExercise,
+                    }))
+                )
+            )
         );
     }
 }
