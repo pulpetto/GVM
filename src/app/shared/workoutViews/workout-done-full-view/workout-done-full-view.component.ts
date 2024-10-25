@@ -4,6 +4,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { WorkoutDoneFull } from '../../../interfaces/workout/workout-done-full';
 import { TimeFormatterPipe } from '../../../pipes/time-formatter.pipe';
+import { UserService } from '../../../services/user.service';
+import { filter, map, Observable, of, switchMap } from 'rxjs';
 
 const visibleModal = { top: '50%' };
 const visibleModalLow = { top: '75%' };
@@ -87,35 +89,60 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class WorkoutDoneFullViewComponent implements OnInit {
-    optionsModalVisibility: boolean = false;
-    confirmDeleteModalVisibility: boolean = false;
-    workoutData!: WorkoutDoneFull;
-
     router = inject(Router);
     activatedRoute = inject(ActivatedRoute);
+    userService = inject(UserService);
 
+    optionsModalVisibility: boolean = false;
+    confirmDeleteModalVisibility: boolean = false;
     noSetsDoneExercisesIndexes: Set<number> = new Set();
+    workoutData$!: Observable<WorkoutDoneFull>;
 
     ngOnInit() {
-        this.workoutData = history.state;
+        if (history.state.name) {
+            this.workoutData$ = of(history.state);
 
-        this.workoutData.exercises.forEach((exercise, i) => {
-            if (exercise.sets.every((set) => set.isDone === false))
-                this.noSetsDoneExercisesIndexes.add(i);
-        });
+            this.workoutData$.pipe(
+                map((workout) => this.checkForEmptyExercises(workout))
+            );
+        } else {
+            const exerciseId = this.activatedRoute.snapshot.paramMap.get('id');
+
+            this.workoutData$ = this.userService.user$.pipe(
+                filter((user) => !!user),
+                switchMap(() =>
+                    this.userService
+                        .getDoneWorkoutByIdWithExercises(exerciseId!)
+                        .pipe(
+                            map((workout) =>
+                                this.checkForEmptyExercises(workout)
+                            )
+                        )
+                )
+            );
+        }
     }
 
-    navigateToSummary() {
+    checkForEmptyExercises(workout: WorkoutDoneFull): WorkoutDoneFull {
+        workout.exercises.forEach((exercise, i) => {
+            if (exercise.sets.every((set) => set.isDone === false)) {
+                this.noSetsDoneExercisesIndexes.add(i);
+            }
+        });
+        return workout;
+    }
+
+    navigateToSummary(workoutData: WorkoutDoneFull) {
         this.router.navigate(['summary'], {
             relativeTo: this.activatedRoute,
-            state: this.workoutData,
+            state: workoutData,
         });
     }
 
-    navigateToEditView() {
-        this.router.navigate([`user/workout/${this.workoutData.id}/edit`], {
+    navigateToEditView(workoutData: WorkoutDoneFull) {
+        this.router.navigate([`user/workout/${workoutData.id}/edit`], {
             queryParams: { editView: 'done' },
-            state: this.workoutData,
+            state: workoutData,
         });
     }
 
