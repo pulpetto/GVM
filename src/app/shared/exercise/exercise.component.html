@@ -40,19 +40,17 @@
         </ng-template> -->
         <ng-template #tabContent2>
             <div class="flex flex-col gap-8">
-                <div
-                    *ngFor="
-                        let workoutWithExercise of exerciseData.workoutsWithExercise
-                    "
-                    class="flex flex-col gap-1"
-                >
-                    <div class="flex items-start justify-between mb-1">
-                        <a
-                            [routerLink]="
-                                '/user/profile/history/' +
-                                workoutWithExercise.id
-                            "
-                            class="flex items-center text-2xl font-semibold transition-all text-emerald-500 group active:opacity-50 active:scale-95"
+                <!-- prettier-ignore -->
+                @for (workoutWithExercise of exerciseData.workoutsWithExercise; track $index) {
+                <div class="flex flex-col gap-1">
+                    <a
+                        [routerLink]="
+                            '/user/profile/history/' + workoutWithExercise.id
+                        "
+                        class="flex flex-col items-center self-center mb-3 transition-opacity group active:opacity-50"
+                    >
+                        <div
+                            class="flex items-center text-2xl font-semibold text-emerald-500"
                         >
                             {{ workoutWithExercise.name }}
 
@@ -69,11 +67,11 @@
                                     stroke-linejoin="round"
                                 />
                             </svg>
-                        </a>
-                        <div class="mt-1 text-sm font-semibold opacity-50">
-                            00.00.0000 - 00:00
                         </div>
-                    </div>
+                        <div class="text-sm font-semibold text-neutral-700">
+                            {{ workoutWithExercise.dateStart | fullDate }}
+                        </div>
+                    </a>
                     <div
                         class="grid grid-cols-5 font-semibold opacity-50 justify-items-center"
                     >
@@ -110,6 +108,7 @@
                         }
                     </div>
                 </div>
+                }
             </div>
         </ng-template>
         <ng-template #tabContent3>

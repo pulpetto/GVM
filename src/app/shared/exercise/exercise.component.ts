@@ -10,6 +10,7 @@ import { ExercisePreview } from '../../interfaces/exercise-preview';
 import { ExerciseDetails } from '../../interfaces/exercise-details';
 import { UserService } from '../../services/user.service';
 import { WorkoutDoneWithId } from '../../interfaces/workout/workout-done-with-id';
+import { FullDatePipe } from '../../pipes/full-date.pipe';
 
 @Component({
     selector: 'app-exercise',
@@ -22,6 +23,7 @@ import { WorkoutDoneWithId } from '../../interfaces/workout/workout-done-with-id
         InstructionComponent,
         RouterModule,
         CommonModule,
+        FullDatePipe,
     ],
 })
 export class ExerciseComponent implements OnInit {
