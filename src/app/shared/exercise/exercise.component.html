@@ -48,9 +48,27 @@
                 >
                     <div class="flex items-start justify-between mb-1">
                         <a
-                            class="flex items-center gap-2 text-2xl font-semibold"
+                            [routerLink]="
+                                '/user/profile/history/' +
+                                workoutWithExercise.id
+                            "
+                            class="flex items-center text-2xl font-semibold transition-all text-emerald-500 group active:opacity-50 active:scale-95"
                         >
                             {{ workoutWithExercise.name }}
+
+                            <svg
+                                class="w-8 h-8 stroke-emerald-500 mt-0.5 group-hover:translate-x-0.5 transition-transform"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M9 6L15 12L9 18"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
                         </a>
                         <div class="mt-1 text-sm font-semibold opacity-50">
                             00.00.0000 - 00:00
