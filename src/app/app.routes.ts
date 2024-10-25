@@ -100,7 +100,7 @@ export const routes: Routes = [
                     ).then((component) => component.CalendarComponent),
             },
             {
-                path: 'profile/calendar/:workoutId',
+                path: 'profile/calendar/:id',
                 loadComponent: () =>
                     import(
                         './shared/workoutViews/workout-done-full-view/workout-done-full-view.component'
@@ -109,7 +109,7 @@ export const routes: Routes = [
                     ),
             },
             {
-                path: 'profile/calendar/:workoutId/summary',
+                path: 'profile/calendar/:id/summary',
                 loadComponent: () =>
                     import(
                         './shared/workout-summary/workout-summary.component'
@@ -137,7 +137,7 @@ export const routes: Routes = [
                     ).then((component) => component.AchievementsComponent),
             },
             {
-                path: 'profile/history/:workoutId',
+                path: 'profile/history/:id',
                 loadComponent: () =>
                     import(
                         './shared/workoutViews/workout-done-full-view/workout-done-full-view.component'
@@ -146,7 +146,7 @@ export const routes: Routes = [
                     ),
             },
             {
-                path: 'profile/history/:workoutId/summary',
+                path: 'profile/history/:id/summary',
                 loadComponent: () =>
                     import(
                         './shared/workout-summary/workout-summary.component'
