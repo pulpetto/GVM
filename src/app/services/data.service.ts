@@ -93,6 +93,25 @@ export class DataService {
         );
     }
 
+    getEquipmentById$(id: string): Observable<Equipment> {
+        const equipmentDocRef: DocumentReference = doc(
+            this.firestore,
+            'equipment',
+            id
+        );
+
+        return from(
+            getDoc(equipmentDocRef).then((equipmentSnapshot) => {
+                const equipment: Equipment =
+                    equipmentSnapshot.data() as Equipment;
+
+                equipment.id = id;
+
+                return equipment;
+            })
+        );
+    }
+
     getEquipment$(): Observable<Equipment[]> {
         const equipmentCollectionRef: CollectionReference = collection(
             this.firestore,
