@@ -8,6 +8,7 @@ import {
     collection,
     CollectionReference,
     doc,
+    DocumentReference,
     Firestore,
     getDoc,
     getDocs,
@@ -47,6 +48,25 @@ export class DataService {
 
     getAchievements(): Observable<Achievement[]> {
         return this.http.get<Achievement[]>('assets/data/achievements.json');
+    }
+
+    getMuscleGroup$(id: string): Observable<MuscleGroup> {
+        const muscleGroupDocRef: DocumentReference = doc(
+            this.firestore,
+            'muscleGroups',
+            id
+        );
+
+        return from(
+            getDoc(muscleGroupDocRef).then((muscleGroupSnapshot) => {
+                const muscleGroup: MuscleGroup =
+                    muscleGroupSnapshot.data() as MuscleGroup;
+
+                muscleGroup.id = id;
+
+                return muscleGroup;
+            })
+        );
     }
 
     getMuscleGroups$(): Observable<MuscleGroup[]> {
