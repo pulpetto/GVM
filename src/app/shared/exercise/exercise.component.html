@@ -11,26 +11,76 @@
             [src]="exerciseData.detailsData.instructionVideoPreviewUrl"
         ></video>
     </div>
-    <div class="flex flex-col text-sm opacity-50">
-        <div>
-            <span class="mr-1 font-semibold">Main muscles:</span>
-            <!-- prettier-ignore -->
-            @for (mainMuscleGroupId of exerciseData.baseData.mainMuscleGroupsIds; track $index) {
-            <a [routerLink]="mainMuscleGroupId">
-                {{ mainMuscleGroupId }}
-            </a>
-            }
+    <div class="flex flex-col gap-4">
+        <div class="flex flex-col items-center gap-2">
+            <div class="font-semibold">
+                Main muscle group{{
+                    exerciseData.baseData.mainMuscleGroups.length === 1
+                        ? ""
+                        : "s"
+                }}:
+            </div>
+
+            <div class="flex items-center gap-2">
+                @for (mainMuscleGroup of exerciseData.baseData.mainMuscleGroups;
+                track $index) {
+                <a
+                    class="flex flex-col items-center gap-0.5"
+                    [routerLink]="mainMuscleGroup.id"
+                >
+                    <div
+                        class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                    >
+                        <img
+                            [src]="mainMuscleGroup.imagePreviewUrl"
+                            class="w-12 h-12 bg-neutral-950"
+                            [alt]="mainMuscleGroup.name + ' graphic'"
+                        />
+                    </div>
+
+                    <div class="text-sm font-semibold text-emerald-500">
+                        {{ mainMuscleGroup.name }}
+                    </div>
+                </a>
+                }
+            </div>
         </div>
-        <div>
-            <span class="mr-1 font-semibold">Secondary muscles:</span>
-            <!-- prettier-ignore -->
-            @for (secondaryMuscleGroupId of exerciseData.baseData.secondaryMuscleGroupsIds; track $index) {
-            <a [routerLink]="secondaryMuscleGroupId">
-                {{ secondaryMuscleGroupId }}
-            </a>
-            }
+
+        <div class="flex flex-col items-center gap-2">
+            <div class="font-semibold">
+                Secondary muscle group{{
+                    exerciseData.baseData.secondaryMuscleGroups.length === 1
+                        ? ""
+                        : "s"
+                }}:
+            </div>
+
+            <div class="flex items-center gap-2">
+                @for (secondaryMuscleGroup of
+                exerciseData.baseData.secondaryMuscleGroups; track $index) {
+                <a
+                    class="flex flex-col items-center gap-0.5"
+                    [routerLink]="secondaryMuscleGroup.id"
+                >
+                    <div
+                        class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                    >
+                        <img
+                            [src]="secondaryMuscleGroup.imagePreviewUrl"
+                            class="w-12 h-12 bg-neutral-950"
+                            [alt]="secondaryMuscleGroup.name + ' graphic'"
+                        />
+                    </div>
+
+                    <div class="text-sm font-semibold text-emerald-500">
+                        {{ secondaryMuscleGroup.name }}
+                    </div>
+                </a>
+                }
+            </div>
         </div>
     </div>
+
     <app-charts-carousel class="w-full"></app-charts-carousel>
     <app-tabs [tabNames]="['How to', 'History', 'Variations', 'Records']">
         <ng-template #tabContent1>

@@ -5,12 +5,19 @@ import { InstructionComponent } from './instruction/instruction.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../services/data.service';
-import { combineLatest, filter, map, Observable, switchMap } from 'rxjs';
-import { ExercisePreview } from '../../interfaces/exercise-preview';
+import {
+    combineLatest,
+    filter,
+    forkJoin,
+    map,
+    Observable,
+    switchMap,
+} from 'rxjs';
 import { ExerciseDetails } from '../../interfaces/exercise-details';
 import { UserService } from '../../services/user.service';
 import { WorkoutDoneWithId } from '../../interfaces/workout/workout-done-with-id';
 import { FullDatePipe } from '../../pipes/full-date.pipe';
+import { ExercisePreviewFull } from '../../interfaces/exercise-preview-full';
 
 @Component({
     selector: 'app-exercise',
@@ -32,7 +39,7 @@ export class ExerciseComponent implements OnInit {
     activatedRoute = inject(ActivatedRoute);
 
     combinedExerciseData$!: Observable<{
-        baseData: ExercisePreview;
+        baseData: ExercisePreviewFull;
         detailsData: ExerciseDetails;
         workoutsWithExercise: WorkoutDoneWithId[];
     }>;
@@ -46,7 +53,46 @@ export class ExerciseComponent implements OnInit {
             filter((user) => !!user),
             switchMap(() =>
                 combineLatest([
-                    this.dataService.getExercisePreview$(this.exerciseId!),
+                    this.dataService.getExercisePreview$(this.exerciseId!).pipe(
+                        switchMap((exerciseObj) => {
+                            const mainMuscleGroups$ = forkJoin(
+                                exerciseObj.mainMuscleGroupsIds.map((id) =>
+                                    this.dataService.getMuscleGroup$(id)
+                                )
+                            );
+
+                            const secondaryMuscleGroups$ = forkJoin(
+                                exerciseObj.secondaryMuscleGroupsIds.map((id) =>
+                                    this.dataService.getMuscleGroup$(id)
+                                )
+                            );
+
+                            const equipment$ =
+                                this.dataService.getEquipmentById$(
+                                    exerciseObj.equipmentId
+                                );
+
+                            return forkJoin([
+                                mainMuscleGroups$,
+                                secondaryMuscleGroups$,
+                                equipment$,
+                            ]).pipe(
+                                map(
+                                    ([
+                                        mainMuscleGroups,
+                                        secondaryMuscleGroups,
+                                        equipment,
+                                    ]) => ({
+                                        ...exerciseObj,
+                                        mainMuscleGroups: mainMuscleGroups,
+                                        secondaryMuscleGroups:
+                                            secondaryMuscleGroups,
+                                        equipment: equipment,
+                                    })
+                                )
+                            );
+                        })
+                    ),
                     this.dataService.getExerciseDetails$(this.exerciseId!),
                     this.userService.getDoneWorkoutsByExerciseId(
                         this.exerciseId!
