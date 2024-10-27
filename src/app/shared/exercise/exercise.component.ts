@@ -18,7 +18,7 @@ import { UserService } from '../../services/user.service';
 import { WorkoutDoneWithId } from '../../interfaces/workout/workout-done-with-id';
 import { FullDatePipe } from '../../pipes/full-date.pipe';
 import { ExercisePreviewFull } from '../../interfaces/exercise-preview-full';
-import { LineChartComponent } from '../line-chart/line-chart.component';
+import { ExerciseChartsComponent } from './exercise-charts/exercise-charts.component';
 
 @Component({
     selector: 'app-exercise',
@@ -32,7 +32,7 @@ import { LineChartComponent } from '../line-chart/line-chart.component';
         RouterModule,
         CommonModule,
         FullDatePipe,
-        LineChartComponent,
+        ExerciseChartsComponent,
     ],
 })
 export class ExerciseComponent implements OnInit {

@@ -1,0 +1,133 @@
+<div class="flex flex-col w-full gap-1">
+    <div class="flex items-center justify-between">
+        <button
+            type="button"
+            class="flex items-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 active:scale-95 transition-all"
+        >
+            <div class="transition-colors group-hover:text-emerald-500">
+                Data
+            </div>
+            <div>
+                <svg
+                    class="w-5 h-5 mt-1 transition-all stroke-black dark:stroke-white group-hover:stroke-emerald-500 group-hover:rotate-180"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6 9L12 15L18 9"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+        </button>
+        <button
+            type="button"
+            (click)="periodModalVisibility = true"
+            class="flex items-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 active:scale-95 transition-all"
+        >
+            <div class="transition-colors group-hover:text-emerald-500">
+                Period
+            </div>
+            <div>
+                <svg
+                    class="w-5 h-5 mt-1 transition-all stroke-black dark:stroke-white group-hover:stroke-emerald-500 group-hover:rotate-180"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6 9L12 15L18 9"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+        </button>
+    </div>
+
+    <app-line-chart></app-line-chart>
+</div>
+
+@if (periodModalVisibility) {
+<!-- eslint-disable-next-line    -->
+<div
+    @openClose2
+    (click)="periodModalVisibility = false"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+></div>
+
+<div
+    @openClose
+    class="fixed left-0 z-50 flex flex-col items-center w-full h-full gap-2 p-4 rounded-t-md bg-neutral-950"
+    [ngClass]="{
+        'top-1/4': periodModalVisibility,
+        'top-full': !periodModalVisibility
+    }"
+>
+    <div class="self-center font-semibold text-center">
+        Choose period to display data:
+    </div>
+
+    <div class="flex flex-col w-full gap-1">
+        @for (period of periods; track $index) {
+        <button
+            type="button"
+            (click)="activePeriod = period"
+            class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
+        >
+            <div
+                class="p-2 transition-colors group-hover:text-emerald-500"
+                [ngClass]="{
+                    'text-emerald-500': activePeriod === period,
+                    'font-semibold': activePeriod === period
+                }"
+            >
+                {{ period }}
+            </div>
+
+            @if (activePeriod === period) {
+            <div>
+                <svg
+                    class="w-7 h-7 stroke-emerald-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M5 13L9 17L19 7"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+            }
+        </button>
+        }
+    </div>
+</div>
+}
+
+<!--  -->
+@if (periodModalVisibility) {
+<div
+    @openClose3
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
+    [ngClass]="{
+        'bottom-0': periodModalVisibility,
+        '-bottom-full': !periodModalVisibility,
+    }"
+>
+    <button
+        type="button"
+        (click)="periodModalVisibility = false"
+        class="py-1.5 text-lg mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none"
+    >
+        Close
+    </button>
+</div>
+}
