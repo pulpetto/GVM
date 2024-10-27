@@ -4,6 +4,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 
 const visibleModal = { top: '25%' };
+const visibleModalTop50 = { top: '50%' };
 const hiddenModal = { top: '100%' };
 
 const visibleBg = { opacity: '100%' };
@@ -51,6 +52,16 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
                 animate(timing, style(hiddenBtnFixed)),
             ]),
         ]),
+        trigger('openClose4', [
+            transition(':enter', [
+                style(hiddenModal),
+                animate(timing, style(visibleModalTop50)),
+            ]),
+            transition(':leave', [
+                style(visibleModalTop50),
+                animate(timing, style(hiddenModal)),
+            ]),
+        ]),
     ],
 })
 export class ExerciseChartsComponent {
@@ -66,4 +77,14 @@ export class ExerciseChartsComponent {
         'All time',
     ];
     activePeriod: string = '';
+
+    dataTypeModalVisibility: boolean = false;
+    dataTypes = [
+        'Estimated 1rm',
+        'Heaviest weight used',
+        'Reps per workout',
+        'Sets per workout',
+        'Volume per workout',
+    ];
+    activeDataType: string = this.dataTypes[0];
 }
