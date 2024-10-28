@@ -1,3 +1,5 @@
-<div class="pt-1 border-2 border-solid rounded-md h-44 border-neutral-900">
-    <canvas #chart> </canvas>
-</div>
+<canvas class="ml-3" #chart></canvas>
+
+@if (hoveredData) {
+<div class="font-semibold">{{ hoveredData }}</div>
+}
