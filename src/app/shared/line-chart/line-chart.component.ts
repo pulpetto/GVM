@@ -19,6 +19,7 @@ export class LineChartComponent implements AfterViewInit {
     clickedData!: number;
     clickedX: number | null = null;
 
+    hoveredLabel: string | null = null;
     hoveredData: number | null = null;
     hoveredX: number | null = null;
 
@@ -85,7 +86,7 @@ export class LineChartComponent implements AfterViewInit {
                             display: false,
                         },
                         tooltip: {
-                            enabled: true,
+                            enabled: false,
                             mode: 'index',
                             intersect: false,
                         },
@@ -104,9 +105,13 @@ export class LineChartComponent implements AfterViewInit {
                                 firstPoint.datasetIndex!
                             ].data[firstPoint.index!] as number;
 
+                            this.hoveredLabel = this.chart.data.labels![
+                                firstPoint.index!
+                            ] as string;
                             this.hoveredData = value;
                             this.hoveredX = firstPoint.element.x;
                         } else {
+                            this.hoveredLabel = null;
                             this.hoveredData = null;
                             this.hoveredX = null;
                         }

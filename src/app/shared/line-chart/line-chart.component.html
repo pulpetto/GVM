@@ -1,5 +1,8 @@
 <canvas class="ml-3" #chart></canvas>
 
 @if (hoveredData) {
-<div class="font-semibold">{{ hoveredData }}</div>
+<div class="mt-2 text-xl font-semibold text-center">
+    {{ hoveredLabel }} -
+    <span class="text-emerald-500">{{ hoveredData }}kg</span>
+</div>
 }
