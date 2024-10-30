@@ -54,7 +54,7 @@ export class LineChartComponent implements AfterViewInit {
                         ctx.moveTo(x, yAxis.top);
                         ctx.lineTo(x, yAxis.bottom);
                         ctx.lineWidth = 2;
-                        ctx.strokeStyle = 'rgba(16, 185, 129, 0.5)';
+                        ctx.strokeStyle = 'rgba(16, 185, 129, 1)';
                         ctx.stroke();
                         ctx.restore();
                     }
