@@ -141,7 +141,12 @@ export class LineChartComponent implements AfterViewInit, OnChanges {
                     },
                     scales: {
                         x: {
+                            ticks: { autoSkip: true, maxTicksLimit: 5 },
                             grid: {
+                                tickLength: 6,
+                                tickWidth: 1.5,
+                                tickBorderDash: [4, 4],
+                                tickColor: 'rgb(23, 23, 23, 1)',
                                 color: 'rgb(23, 23, 23, 0)',
                             },
                         },
