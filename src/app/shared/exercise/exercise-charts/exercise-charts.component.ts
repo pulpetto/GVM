@@ -3,6 +3,7 @@ import { LineChartComponent } from '../../line-chart/line-chart.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { WorkoutDoneWithId } from '../../../interfaces/workout/workout-done-with-id';
+import { DateTime } from 'luxon';
 
 const visibleModal = { top: '25%' };
 const visibleModalTop50 = { top: '50%' };
@@ -69,13 +70,14 @@ export class ExerciseChartsComponent implements OnInit {
     @Input({ required: true }) workouts!: WorkoutDoneWithId[];
     @Input({ required: true }) exerciseId!: string;
 
+    maxLabelsLimit!: number;
     labels: string[] = [];
     periodModalVisibility: boolean = false;
     periods = [
         'Last month',
         'Last 3 months',
         'Last 6 months',
-        'Last 12 months',
+        'Last year',
         'Last 5 workouts',
         'Last 10 workouts',
         'Last 20 workouts',
@@ -96,6 +98,7 @@ export class ExerciseChartsComponent implements OnInit {
     activeDataType: string = this.dataTypes[0];
 
     ngOnInit() {
+        this.activePeriod = 'Last month';
         this.changeDataType('Estimated 1rm');
     }
 
@@ -106,6 +109,7 @@ export class ExerciseChartsComponent implements OnInit {
 
     changeDataType(dataType: string) {
         this.data = [];
+        this.labels = [];
         this.activeDataType = dataType;
 
         this.workouts.forEach((workout) => {
@@ -181,6 +185,47 @@ export class ExerciseChartsComponent implements OnInit {
                 this.suffix = 'kg';
 
                 this.data.push(volumeInWorkout);
+            }
+
+            if (this.activePeriod === 'Last month') {
+                this.maxLabelsLimit = 5;
+
+                this.labels.push(
+                    DateTime.fromMillis(workout.dateStart * 1000).toFormat(
+                        'MMM d'
+                    )
+                );
+            }
+
+            if (this.activePeriod === 'Last 3 months') {
+                this.maxLabelsLimit = 3;
+
+                this.labels.push(
+                    DateTime.fromMillis(workout.dateStart * 1000).setLocale(
+                        'en'
+                    ).monthLong!
+                );
+            }
+
+            if (
+                this.activePeriod === 'Last 6 months' ||
+                this.activePeriod === 'Last year'
+            ) {
+                this.maxLabelsLimit = 6;
+
+                this.labels.push(
+                    DateTime.fromMillis(workout.dateStart * 1000).setLocale(
+                        'en'
+                    ).monthShort!
+                );
+            }
+
+            if (this.activePeriod === 'All time') {
+                this.maxLabelsLimit = 3;
+
+                this.labels.push(
+                    DateTime.fromMillis(workout.dateStart * 1000).year + ''
+                );
             }
         });
 

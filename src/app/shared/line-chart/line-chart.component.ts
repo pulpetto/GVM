@@ -24,6 +24,7 @@ export class LineChartComponent implements AfterViewInit, OnChanges {
 
     @Input({ required: true }) data!: number[];
     @Input({ required: true }) labels!: string[];
+    @Input({ required: true }) maxLabelsLimit!: number;
     @Input({ required: true }) hoveredValueSuffix!: string | null;
 
     clickedData!: number;
@@ -38,9 +39,12 @@ export class LineChartComponent implements AfterViewInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['data']) {
+        if (changes['data'] || changes['labels'] || changes['maxLabelsLimit']) {
             if (this.chart) {
                 this.chart.data.datasets[0].data = this.data;
+                this.chart.data.labels = this.labels;
+                this.chart.options.scales!['x']!.ticks!.maxTicksLimit =
+                    this.maxLabelsLimit;
                 this.hoveredLabel = null;
                 this.hoveredData = null;
                 this.hoveredX = null;
@@ -142,7 +146,10 @@ export class LineChartComponent implements AfterViewInit, OnChanges {
                     },
                     scales: {
                         x: {
-                            ticks: { autoSkip: true, maxTicksLimit: 5 },
+                            ticks: {
+                                autoSkip: true,
+                                maxTicksLimit: this.maxLabelsLimit,
+                            },
                             grid: {
                                 tickLength: 6,
                                 tickWidth: 1.5,
