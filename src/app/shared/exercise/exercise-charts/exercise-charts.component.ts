@@ -154,6 +154,8 @@ export class ExerciseChartsComponent implements OnInit {
 
                 this.suffix = null;
 
+                this.suffix = ' reps';
+
                 this.data.push(repsInWorkout);
             }
 
@@ -163,6 +165,8 @@ export class ExerciseChartsComponent implements OnInit {
                 setsInWorkout = exercise!.sets.length;
 
                 this.suffix = null;
+
+                this.suffix = ' sets';
 
                 this.data.push(setsInWorkout);
             }
