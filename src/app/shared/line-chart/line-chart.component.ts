@@ -40,6 +40,9 @@ export class LineChartComponent implements AfterViewInit, OnChanges {
         if (changes['data']) {
             if (this.chart) {
                 this.chart.data.datasets[0].data = this.data;
+                this.hoveredLabel = null;
+                this.hoveredData = null;
+                this.hoveredX = null;
                 this.chart.update();
             }
         }
