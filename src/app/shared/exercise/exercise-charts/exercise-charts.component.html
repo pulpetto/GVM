@@ -50,7 +50,11 @@
         </button>
     </div>
 
-    <app-line-chart [data]="data" [labels]="labels"></app-line-chart>
+    <app-line-chart
+        [data]="data"
+        [labels]="labels"
+        [hoveredValueSuffix]="suffix"
+    ></app-line-chart>
 </div>
 
 @if (dataTypeModalVisibility) {

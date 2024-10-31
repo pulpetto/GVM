@@ -3,6 +3,9 @@
 @if (hoveredData) {
 <div class="mt-2 text-xl font-semibold text-center">
     {{ hoveredLabel }} -
-    <span class="text-emerald-500">{{ hoveredData }}kg</span>
+    <!-- prettier-ignore -->
+    <span class="text-emerald-500">
+        {{ hoveredData }}{{ hoveredValueSuffix ? hoveredValueSuffix : "" }}
+    </span>
 </div>
 }

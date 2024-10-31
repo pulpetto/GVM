@@ -24,6 +24,7 @@ export class LineChartComponent implements AfterViewInit, OnChanges {
 
     @Input({ required: true }) data!: number[];
     @Input({ required: true }) labels!: string[];
+    @Input({ required: true }) hoveredValueSuffix!: string | null;
 
     clickedData!: number;
     clickedX: number | null = null;
