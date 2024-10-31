@@ -50,7 +50,7 @@
         </button>
     </div>
 
-    <app-line-chart></app-line-chart>
+    <app-line-chart [data]="data" [labels]="labels"></app-line-chart>
 </div>
 
 @if (dataTypeModalVisibility) {
@@ -77,7 +77,7 @@
         @for (dataType of dataTypes; track $index) {
         <button
             type="button"
-            (click)="activeDataType = dataType"
+            (click)="changeDataType(dataType)"
             class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
         >
             <div
@@ -159,7 +159,7 @@
         @for (period of periods; track $index) {
         <button
             type="button"
-            (click)="activePeriod = period"
+            (click)="changePeriod(period)"
             class="flex items-center justify-between transition-all active:opacity-50 active:scale-95 group"
         >
             <div

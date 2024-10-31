@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { LineChartComponent } from '../../line-chart/line-chart.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { WorkoutDoneWithId } from '../../../interfaces/workout/workout-done-with-id';
 
 const visibleModal = { top: '25%' };
 const visibleModalTop50 = { top: '50%' };
@@ -64,7 +65,11 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         ]),
     ],
 })
-export class ExerciseChartsComponent {
+export class ExerciseChartsComponent implements OnInit {
+    @Input({ required: true }) workouts!: WorkoutDoneWithId[];
+    @Input({ required: true }) exerciseId!: string;
+
+    labels: string[] = [];
     periodModalVisibility: boolean = false;
     periods = [
         'Last month',
@@ -78,6 +83,8 @@ export class ExerciseChartsComponent {
     ];
     activePeriod: string = '';
 
+    data: number[] = [];
+    suffix: string | null = null;
     dataTypeModalVisibility: boolean = false;
     dataTypes = [
         'Estimated 1rm',
@@ -87,4 +94,92 @@ export class ExerciseChartsComponent {
         'Volume per workout',
     ];
     activeDataType: string = this.dataTypes[0];
+
+    ngOnInit() {
+        this.changeDataType('Estimated 1rm');
+    }
+
+    changePeriod(period: string) {
+        this.activePeriod = period;
+        this.periodModalVisibility = false;
+    }
+
+    changeDataType(dataType: string) {
+        this.data = [];
+        this.activeDataType = dataType;
+
+        this.workouts.forEach((workout) => {
+            const exercise = workout.exercises.find(
+                (exercise) => exercise.exerciseId === this.exerciseId
+            );
+
+            if (this.activeDataType === 'Estimated 1rm') {
+                let heaviestWeight = 0;
+                let reps = 0;
+
+                exercise!.sets.forEach((set) => {
+                    if (+set.weight > heaviestWeight) {
+                        heaviestWeight = +set.weight;
+                        reps = +set.reps;
+                    }
+                });
+
+                const estimated1rm = heaviestWeight * (1 + 0.0333 * reps);
+
+                this.suffix = 'kg';
+
+                this.data.push(estimated1rm);
+            }
+
+            if (this.activeDataType === 'Heaviest weight used') {
+                let heaviestWeight = 0;
+
+                exercise!.sets.forEach((set) => {
+                    if (+set.weight > heaviestWeight) {
+                        heaviestWeight = +set.weight;
+                    }
+                });
+
+                this.suffix = 'kg';
+
+                this.data.push(heaviestWeight);
+            }
+
+            if (this.activeDataType === 'Reps per workout') {
+                let repsInWorkout = 0;
+
+                exercise!.sets.forEach((set) => {
+                    repsInWorkout += +set.reps;
+                });
+
+                this.suffix = null;
+
+                this.data.push(repsInWorkout);
+            }
+
+            if (this.activeDataType === 'Sets per workout') {
+                let setsInWorkout = 0;
+
+                setsInWorkout = exercise!.sets.length;
+
+                this.suffix = null;
+
+                this.data.push(setsInWorkout);
+            }
+
+            if (this.activeDataType === 'Volume per workout') {
+                let volumeInWorkout = 0;
+
+                exercise!.sets.forEach((set) => {
+                    volumeInWorkout += +set.weight;
+                });
+
+                this.suffix = 'kg';
+
+                this.data.push(volumeInWorkout);
+            }
+        });
+
+        this.dataTypeModalVisibility = false;
+    }
 }

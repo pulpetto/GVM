@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Input,
+    OnChanges,
+    SimpleChanges,
+    ViewChild,
+} from '@angular/core';
 import { Chart, ChartEvent, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -10,11 +18,12 @@ Chart.register(...registerables);
     templateUrl: './line-chart.component.html',
     styleUrl: './line-chart.component.css',
 })
-export class LineChartComponent implements AfterViewInit {
+export class LineChartComponent implements AfterViewInit, OnChanges {
     @ViewChild('chart') myChart!: ElementRef<HTMLCanvasElement>;
     chart!: Chart;
 
-    data: number[] = [10, 15, 20, 25, 15];
+    @Input({ required: true }) data!: number[];
+    @Input({ required: true }) labels!: string[];
 
     clickedData!: number;
     clickedX: number | null = null;
@@ -25,6 +34,15 @@ export class LineChartComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.initChart();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['data']) {
+            if (this.chart) {
+                this.chart.data.datasets[0].data = this.data;
+                this.chart.update();
+            }
+        }
     }
 
     private initChart(): void {
@@ -64,11 +82,11 @@ export class LineChartComponent implements AfterViewInit {
             this.chart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Nov 1', 'Nov 8', 'Nov 15', 'Nov 22', 'Nov 29'],
+                    labels: this.labels,
                     datasets: [
                         {
                             label: 'Reps',
-                            data: [30, 20, 40, 50, 35],
+                            data: this.data,
                             borderColor: '#10b981',
                             backgroundColor: gradient,
                             fill: true,

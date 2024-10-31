@@ -81,7 +81,10 @@
         </div>
     </div>
 
-    <app-exercise-charts></app-exercise-charts>
+    <app-exercise-charts
+        [exerciseId]="exerciseId!"
+        [workouts]="exerciseData.workoutsWithExercise"
+    ></app-exercise-charts>
 
     <app-tabs [tabNames]="['How to', 'History', 'Variations', 'Records']">
         <ng-template #tabContent1>
