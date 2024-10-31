@@ -128,7 +128,7 @@ export class ExerciseChartsComponent implements OnInit {
 
                 this.suffix = 'kg';
 
-                this.data.push(estimated1rm);
+                this.data.push(Math.round(estimated1rm));
             }
 
             if (this.activeDataType === 'Heaviest weight used') {
