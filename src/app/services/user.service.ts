@@ -752,7 +752,8 @@ export class UserService {
 
         const q = query(
             workoutsDoneRef,
-            where('exercisesIds', 'array-contains', exerciseId)
+            where('exercisesIds', 'array-contains', exerciseId),
+            orderBy('dateStart', 'asc')
         );
 
         return from(
