@@ -102,11 +102,6 @@ export class ExerciseChartsComponent implements OnInit {
         this.changeDataType('Estimated 1rm');
     }
 
-    changePeriod(period: string) {
-        this.activePeriod = period;
-        this.periodModalVisibility = false;
-    }
-
     changeDataType(dataType: string) {
         this.data = [];
         this.labels = [];
@@ -186,49 +181,78 @@ export class ExerciseChartsComponent implements OnInit {
 
                 this.data.push(volumeInWorkout);
             }
-
-            if (this.activePeriod === 'Last month') {
-                this.maxLabelsLimit = 5;
-
-                this.labels.push(
-                    DateTime.fromMillis(workout.dateStart * 1000).toFormat(
-                        'MMM d'
-                    )
-                );
-            }
-
-            if (this.activePeriod === 'Last 3 months') {
-                this.maxLabelsLimit = 3;
-
-                this.labels.push(
-                    DateTime.fromMillis(workout.dateStart * 1000).setLocale(
-                        'en'
-                    ).monthLong!
-                );
-            }
-
-            if (
-                this.activePeriod === 'Last 6 months' ||
-                this.activePeriod === 'Last year'
-            ) {
-                this.maxLabelsLimit = 6;
-
-                this.labels.push(
-                    DateTime.fromMillis(workout.dateStart * 1000).setLocale(
-                        'en'
-                    ).monthShort!
-                );
-            }
-
-            if (this.activePeriod === 'All time') {
-                this.maxLabelsLimit = 3;
-
-                this.labels.push(
-                    DateTime.fromMillis(workout.dateStart * 1000).year + ''
-                );
-            }
         });
 
+        this.changePeriod('Last month');
+
         this.dataTypeModalVisibility = false;
+    }
+
+    changePeriod(period: string) {
+        this.labels = [];
+
+        this.activePeriod = period;
+
+        const now = DateTime.now();
+        let startDate: DateTime;
+
+        if (period === 'Last month') startDate = now.minus({ months: 1 });
+
+        if (period === 'Last 3 months') startDate = now.minus({ months: 3 });
+
+        if (period === 'Last 6 months') startDate = now.minus({ months: 6 });
+
+        if (period === 'Last year') startDate = now.minus({ years: 1 });
+
+        this.workouts
+            .filter(
+                (workout) =>
+                    DateTime.fromMillis(workout.dateStart * 1000).toMillis() >=
+                    startDate.toMillis()
+            )
+            .forEach((workout) => {
+                if (this.activePeriod === 'Last month') {
+                    this.maxLabelsLimit = 5;
+
+                    this.labels.push(
+                        DateTime.fromMillis(workout.dateStart * 1000).toFormat(
+                            'MMM d'
+                        )
+                    );
+                }
+
+                if (this.activePeriod === 'Last 3 months') {
+                    this.maxLabelsLimit = 3;
+
+                    this.labels.push(
+                        DateTime.fromMillis(workout.dateStart * 1000).setLocale(
+                            'en'
+                        ).monthLong!
+                    );
+                }
+
+                if (
+                    this.activePeriod === 'Last 6 months' ||
+                    this.activePeriod === 'Last year'
+                ) {
+                    this.maxLabelsLimit = 6;
+
+                    this.labels.push(
+                        DateTime.fromMillis(workout.dateStart * 1000).setLocale(
+                            'en'
+                        ).monthShort!
+                    );
+                }
+
+                if (this.activePeriod === 'All time') {
+                    this.maxLabelsLimit = 3;
+
+                    this.labels.push(
+                        DateTime.fromMillis(workout.dateStart * 1000).year + ''
+                    );
+                }
+            });
+
+        this.periodModalVisibility = false;
     }
 }
