@@ -267,6 +267,12 @@
                 </div>
             </div>
         </ng-template>
+        <ng-template #tabContent4>
+            <app-records
+                [workouts]="exerciseData.workoutsWithExercise"
+                [exerciseId]="exerciseId!"
+            ></app-records>
+        </ng-template>
     </app-tabs>
 </div>
 } @else {

@@ -19,6 +19,7 @@ import { WorkoutDoneWithId } from '../../interfaces/workout/workout-done-with-id
 import { FullDatePipe } from '../../pipes/full-date.pipe';
 import { ExercisePreviewFull } from '../../interfaces/exercise-preview-full';
 import { ExerciseChartsComponent } from './exercise-charts/exercise-charts.component';
+import { RecordsComponent } from './records/records.component';
 
 @Component({
     selector: 'app-exercise',
@@ -33,6 +34,7 @@ import { ExerciseChartsComponent } from './exercise-charts/exercise-charts.compo
         CommonModule,
         FullDatePipe,
         ExerciseChartsComponent,
+        RecordsComponent,
     ],
 })
 export class ExerciseComponent implements OnInit {
