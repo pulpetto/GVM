@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ChartsCarouselComponent } from '../charts-carousel/charts-carousel.component';
 import { TabsComponent } from '../tabs/tabs.component';
 import { InstructionComponent } from './instruction/instruction.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -27,7 +26,6 @@ import { RecordsComponent } from './records/records.component';
     templateUrl: './exercise.component.html',
     styleUrl: './exercise.component.css',
     imports: [
-        ChartsCarouselComponent,
         TabsComponent,
         InstructionComponent,
         RouterModule,

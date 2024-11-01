@@ -3,7 +3,6 @@ import { IconButtonComponent } from '../../../shared/icon-button/icon-button.com
 import { CommonModule } from '@angular/common';
 import { OneOptionModalComponent } from '../../../shared/one-option-modal/one-option-modal.component';
 import { RecentComponent } from './recent/recent.component';
-import { ChartsCarouselComponent } from '../../../shared/charts-carousel/charts-carousel.component';
 import { UserService } from '../../../services/user.service';
 import { RouterModule } from '@angular/router';
 
@@ -17,7 +16,6 @@ import { RouterModule } from '@angular/router';
         CommonModule,
         OneOptionModalComponent,
         RecentComponent,
-        ChartsCarouselComponent,
         RouterModule,
     ],
 })

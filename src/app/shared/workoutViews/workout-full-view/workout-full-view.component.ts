@@ -1,5 +1,4 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { ChartsCarouselComponent } from '../../charts-carousel/charts-carousel.component';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../services/user.service';
@@ -28,12 +27,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     standalone: true,
     templateUrl: './workout-full-view.component.html',
     styleUrl: './workout-full-view.component.css',
-    imports: [
-        ChartsCarouselComponent,
-        CommonModule,
-        RouterModule,
-        LoadingSpinnerComponent,
-    ],
+    imports: [CommonModule, RouterModule, LoadingSpinnerComponent],
     animations: [
         trigger('openClose', [
             transition(':enter', [
