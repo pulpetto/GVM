@@ -2,32 +2,53 @@
     <button
         type="button"
         (click)="dataTypeModalVisibility = true"
-        class="flex items-center transition-all cursor-pointer group max-w-min text-nowrap active:opacity-50"
+        class="w-full p-2 font-semibold transition-all border-2 border-solid rounded-md cursor-pointer group max-w-min text-nowrap active:opacity-50 border-neutral-900 hover:text-emerald-500 min-w-72"
     >
-        <div
-            class="text-2xl font-semibold transition-colors group-hover:text-emerald-500"
-        >
-            Workout intensity
-        </div>
-        <div>
-            <svg
-                class="w-8 h-8 mt-1 transition-all stroke-black dark:stroke-white group-hover:stroke-emerald-500 group-hover:rotate-180"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M6 9L12 15L18 9"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-            </svg>
-        </div>
+        {{ activeDataType }}
     </button>
 
-    <!-- <app-line-chart></app-line-chart> -->
-    <!-- <app-radar-chart></app-radar-chart> -->
+    <div class="flex items-center justify-between mt-4">
+        @for (period of periods; track $index) {
+        <button
+            type="button"
+            (click)="activePeriod = period"
+            class="px-2 py-0.5 font-semibold transition-colors rounded-md hover:bg-opacity-50 hover:bg-neutral-900"
+            [ngClass]="{
+                'text-emerald-500': period === activePeriod,
+                'text-neutral-800': period !== activePeriod,
+            }"
+        >
+            {{ period }}
+        </button>
+
+        @if ($index !== 5) {
+        <div class="w-0.5 h-6 bg-neutral-800 rounded-full mx-1"></div>
+        } }
+    </div>
+
+    <!-- prettier-ignore -->
+    @if (
+        activeDataType === 'Muscle groups distribution' ||
+        activeDataType === 'Training intensity' ||
+        activeDataType === 'Rep ranges types'
+    ) {
+    <app-radar-chart></app-radar-chart>
+    }
+
+    <!-- prettier-ignore -->
+    @if (
+        activeDataType === 'Workouts duration' ||
+        activeDataType === 'Workouts volume' ||
+        activeDataType === 'Workouts reps'
+    ) {
+    <app-line-chart
+        class="w-full mt-4"
+        [data]="[100, 110, 120, 105, 130]"
+        [labels]="['Nov 1', 'Nov 1', 'Nov 1', 'Nov 1', 'Nov 1']"
+        [maxLabelsLimit]="5"
+        [hoveredValueSuffix]="' kg'"
+    ></app-line-chart>
+    }
 </div>
 
 @if (dataTypeModalVisibility) {

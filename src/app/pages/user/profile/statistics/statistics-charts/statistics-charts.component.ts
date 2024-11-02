@@ -66,8 +66,12 @@ export class StatisticsChartsComponent implements OnInit {
     ];
     activeDataType!: string;
 
+    periods = ['1M', '3M', '6M', 'YTD', '1Y', 'ALL'];
+    activePeriod!: string;
+
     ngOnInit() {
         this.changeDataType(this.dataTypes[0]);
+        this.activePeriod = this.periods[0];
     }
 
     changeDataType(dataType: string) {
