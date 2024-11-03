@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Input,
+    ViewChild,
+} from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -14,10 +20,8 @@ export class RadarChartComponent implements AfterViewInit {
     @ViewChild('chart') myChart!: ElementRef<HTMLCanvasElement>;
     chart!: Chart;
 
-    data: number[] = [12, 9, 12, 10, 8];
-    labels: string[] = ['Chest', 'Back', 'Legs', 'Arms', 'Core'];
-    // @Input({ required: true }) data!: number[];
-    // @Input({ required: true }) labels!: string[];
+    @Input({ required: true }) data!: number[];
+    @Input({ required: true }) labels!: string[];
 
     ngAfterViewInit() {
         this.initChart();
@@ -30,29 +34,15 @@ export class RadarChartComponent implements AfterViewInit {
             this.chart = new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: [
-                        'Strength',
-                        'Endurance',
-                        'Speed',
-                        'Flexibility',
-                        'Agility',
-                    ],
+                    labels: this.labels,
                     datasets: [
                         {
                             label: 'Athlete A',
-                            data: [85, 70, 90, 60, 75],
+                            data: this.data,
                             backgroundColor: 'rgba(16, 185, 129, 0.2)',
                             borderColor: 'rgba(16, 185, 129, 1)',
                             borderWidth: 2,
                             pointBackgroundColor: 'rgba(16, 185, 129, 1)',
-                            pointRadius: 0,
-                        },
-                        {
-                            label: 'Athlete B',
-                            data: [65, 80, 55, 80, 90],
-                            backgroundColor: 'rgba(38, 38, 38, 0.2)',
-                            borderColor: 'rgba(38, 38, 38, 1)',
-                            borderWidth: 2,
                             pointRadius: 0,
                         },
                     ],

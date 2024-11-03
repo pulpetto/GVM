@@ -32,7 +32,10 @@
         activeDataType === 'Training intensity' ||
         activeDataType === 'Rep ranges types'
     ) {
-    <app-radar-chart></app-radar-chart>
+    <app-radar-chart
+        [data]="chartData"
+        [labels]="chartLabels"
+    ></app-radar-chart>
     }
 
     <!-- prettier-ignore -->
