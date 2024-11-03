@@ -29,10 +29,10 @@
 
     <!-- prettier-ignore -->
     @if (
-            activeDataType === 'Muscle groups distribution' ||
-            activeDataType === 'Training intensity' ||
-            activeDataType === 'Rep ranges types'
-        ) {
+        activeDataType === 'Muscle groups distribution' ||
+        activeDataType === 'Training intensity' ||
+        activeDataType === 'Rep ranges types'
+    ) {
     <app-radar-chart
         [data]="chartData"
         [labels]="chartLabels"
@@ -41,10 +41,10 @@
 
     <!-- prettier-ignore -->
     @if (
-            activeDataType === 'Workouts duration' ||
-            activeDataType === 'Workouts volume' ||
-            activeDataType === 'Workouts reps'
-        ) {
+        activeDataType === 'Workouts duration' ||
+        activeDataType === 'Workouts volume' ||
+        activeDataType === 'Workouts reps'
+    ) {
     <app-line-chart
         class="w-full mt-4"
         [data]="chartData"
@@ -132,9 +132,9 @@
     @openClose3
     class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
     [ngClass]="{
-                'bottom-0': dataTypeModalVisibility,
-                '-bottom-full': !dataTypeModalVisibility,
-            }"
+        'bottom-0': dataTypeModalVisibility,
+        '-bottom-full': !dataTypeModalVisibility,
+    }"
 >
     <button
         type="button"
