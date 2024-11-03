@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { StatisticsChartsComponent } from './statistics-charts/statistics-charts.component';
 import { NumericStatisticsComponent } from './numeric-statistics/numeric-statistics.component';
 import { UserService } from '../../../../services/user.service';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -21,7 +20,6 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     standalone: true,
     imports: [
         CommonModule,
-        StatisticsChartsComponent,
         NumericStatisticsComponent,
     ],
     templateUrl: './statistics.component.html',
