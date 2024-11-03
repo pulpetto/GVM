@@ -86,6 +86,11 @@ export class StatisticsComponent implements OnInit {
     chartData!: number[];
     chartLabels!: string[];
 
+    setsAmount: number = 0;
+    repsAmount: number = 0;
+    timeSpentUnix: number = 0;
+    volume: number = 0;
+
     ngOnInit() {
         const now = DateTime.now();
         const startDate = now.minus({ months: 1 });
@@ -101,6 +106,20 @@ export class StatisticsComponent implements OnInit {
             )
             .subscribe((data) => {
                 this.workouts = data;
+
+                this.workouts.forEach((workout) => {
+                    this.timeSpentUnix += workout.duration;
+
+                    workout.exercises.forEach((exercise) =>
+                        exercise.sets.forEach((set) => {
+                            if (set.isDone) {
+                                this.setsAmount++;
+                                this.repsAmount += +set.reps;
+                                this.volume += +set.reps * +set.weight;
+                            }
+                        })
+                    );
+                });
             });
 
         this.activeDataType = this.dataTypes[0];
