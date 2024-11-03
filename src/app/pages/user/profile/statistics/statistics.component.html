@@ -12,7 +12,7 @@
         @for (period of periods; track $index) {
         <button
             type="button"
-            (click)="activePeriod = period"
+            (click)="changePeriod(period)"
             class="px-2 py-0.5 font-semibold transition-colors rounded-md hover:bg-opacity-50 hover:bg-neutral-900"
             [ngClass]="{
                 'text-emerald-500': period === activePeriod,

@@ -126,6 +126,10 @@ export class StatisticsComponent implements OnInit {
         this.activePeriod = this.periods[0];
     }
 
+    changePeriod(period: string) {
+        this.activePeriod = period;
+    }
+
     changeDataType(dataType: string) {
         this.activeDataType = dataType;
 
