@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { NumberSeparatorPipe } from '../../../../../pipes/number-separator.pipe';
+import { TimeFormatterPipe } from '../../../../../pipes/time-formatter.pipe';
 
 @Component({
     selector: 'app-numeric-statistics',
     standalone: true,
-    imports: [],
+    imports: [NumberSeparatorPipe, TimeFormatterPipe],
     templateUrl: './numeric-statistics.component.html',
     styleUrl: './numeric-statistics.component.css',
 })

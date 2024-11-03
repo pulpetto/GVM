@@ -1,26 +1,36 @@
 <div class="flex flex-col items-center gap-4">
     <div class="flex flex-col items-center gap-0.5 font-semibold">
         <div class="text-xl">Workouts</div>
-        <div class="text-3xl text-emerald-500">{{ workoutsAmount }}</div>
+        <div class="text-3xl text-emerald-500">
+            {{ workoutsAmount | numberSeparator }}
+        </div>
     </div>
 
     <div class="flex flex-col items-center gap-0.5 font-semibold">
         <div class="text-xl">Sets</div>
-        <div class="text-3xl text-emerald-500">{{ setsAmount }}</div>
+        <div class="text-3xl text-emerald-500">
+            {{ setsAmount | numberSeparator }}
+        </div>
     </div>
 
     <div class="flex flex-col items-center gap-0.5 font-semibold">
         <div class="text-xl">Reps</div>
-        <div class="text-3xl text-emerald-500">{{ repsAmount }}</div>
+        <div class="text-3xl text-emerald-500">
+            {{ repsAmount | numberSeparator }}
+        </div>
     </div>
 
     <div class="flex flex-col items-center gap-0.5 font-semibold">
         <div class="text-xl">Time Spent</div>
-        <div class="text-3xl text-emerald-500">{{ timeSpentUnix }}</div>
+        <div class="text-3xl text-emerald-500">
+            {{ timeSpentUnix | timeFormatter }}
+        </div>
     </div>
 
     <div class="flex flex-col items-center gap-0.5 font-semibold">
         <div class="text-xl">Volume</div>
-        <div class="text-3xl text-emerald-500">{{ volume }}</div>
+        <div class="text-3xl text-emerald-500">
+            {{ volume | numberSeparator }}kg
+        </div>
     </div>
 </div>
