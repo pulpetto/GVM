@@ -69,9 +69,9 @@ export class StatisticsComponent implements OnInit {
 
     dataTypeModalVisibility: boolean = false;
     dataTypes = [
-        'Muscle groups distribution',
-        'Training intensity',
         'Rep ranges types',
+        'Training intensity',
+        'Muscle groups distribution',
         'Workouts duration',
         'Workouts volume',
         'Workouts reps',
