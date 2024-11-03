@@ -1,3 +1,4 @@
+@if (workouts) {
 <div class="flex flex-col items-center gap-4 p-4">
     <button
         type="button"
@@ -14,9 +15,9 @@
             (click)="activePeriod = period"
             class="px-2 py-0.5 font-semibold transition-colors rounded-md hover:bg-opacity-50 hover:bg-neutral-900"
             [ngClass]="{
-            'text-emerald-500': period === activePeriod,
-            'text-neutral-800': period !== activePeriod,
-        }"
+                'text-emerald-500': period === activePeriod,
+                'text-neutral-800': period !== activePeriod,
+            }"
         >
             {{ period }}
         </button>
@@ -28,10 +29,10 @@
 
     <!-- prettier-ignore -->
     @if (
-        activeDataType === 'Muscle groups distribution' ||
-        activeDataType === 'Training intensity' ||
-        activeDataType === 'Rep ranges types'
-    ) {
+            activeDataType === 'Muscle groups distribution' ||
+            activeDataType === 'Training intensity' ||
+            activeDataType === 'Rep ranges types'
+        ) {
     <app-radar-chart
         [data]="chartData"
         [labels]="chartLabels"
@@ -40,10 +41,10 @@
 
     <!-- prettier-ignore -->
     @if (
-        activeDataType === 'Workouts duration' ||
-        activeDataType === 'Workouts volume' ||
-        activeDataType === 'Workouts reps'
-    ) {
+            activeDataType === 'Workouts duration' ||
+            activeDataType === 'Workouts volume' ||
+            activeDataType === 'Workouts reps'
+        ) {
     <app-line-chart
         class="w-full mt-4"
         [data]="chartData"
@@ -55,9 +56,16 @@
 
     <div class="h-1 rounded-full w-80 bg-neutral-900"></div>
 
-    <app-numeric-statistics></app-numeric-statistics>
+    <app-numeric-statistics
+        [workoutsAmount]="workouts.length"
+        [setsAmount]="0"
+        [repsAmount]="0"
+        [timeSpent]="0"
+        [volume]="0"
+    ></app-numeric-statistics>
 </div>
 
+<!--  -->
 @if (dataTypeModalVisibility) {
 <!-- eslint-disable-next-line    -->
 <div
@@ -124,9 +132,9 @@
     @openClose3
     class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
     [ngClass]="{
-            'bottom-0': dataTypeModalVisibility,
-            '-bottom-full': !dataTypeModalVisibility,
-        }"
+                'bottom-0': dataTypeModalVisibility,
+                '-bottom-full': !dataTypeModalVisibility,
+            }"
 >
     <button
         type="button"
@@ -136,4 +144,9 @@
         Close
     </button>
 </div>
+}
+
+<!--  -->
+} @else {
+<div>loading</div>
 }

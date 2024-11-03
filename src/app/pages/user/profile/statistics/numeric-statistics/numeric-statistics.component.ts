@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-numeric-statistics',
@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
     templateUrl: './numeric-statistics.component.html',
     styleUrl: './numeric-statistics.component.css',
 })
-export class NumericStatisticsComponent {}
+export class NumericStatisticsComponent {
+    @Input({ required: true }) workoutsAmount!: number;
+    @Input({ required: true }) setsAmount!: number;
+    @Input({ required: true }) repsAmount!: number;
+    @Input({ required: true }) timeSpent!: number;
+    @Input({ required: true }) volume!: number;
+}
