@@ -771,4 +771,31 @@ export class UserService {
             })
         );
     }
+
+    getDoneWorkoutsStartingFromUnix(
+        unixFrom: number
+    ): Observable<WorkoutDone[]> {
+        const workoutsDoneRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workoutsDone'
+        );
+
+        const q = query(
+            workoutsDoneRef,
+            orderBy('dateStart', 'desc'),
+            startAfter(unixFrom)
+        );
+
+        return from(
+            getDocs(q).then((querySnapshot) => {
+                const workouts: WorkoutDone[] = [];
+
+                querySnapshot.docs.forEach((doc) =>
+                    workouts.push(doc.data() as WorkoutDone)
+                );
+
+                return workouts;
+            })
+        );
+    }
 }
