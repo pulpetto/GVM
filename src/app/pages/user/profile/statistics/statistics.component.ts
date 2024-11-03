@@ -3,6 +3,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { NumericStatisticsComponent } from './numeric-statistics/numeric-statistics.component';
 import { UserService } from '../../../../services/user.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { WorkoutDone } from '../../../../interfaces/workout/workout-done';
+import { DateTime } from 'luxon';
+import { filter, switchMap } from 'rxjs';
+import { LineChartComponent } from '../../../../shared/line-chart/line-chart.component';
+import { RadarChartComponent } from '../../../../shared/radar-chart/radar-chart.component';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -21,6 +26,8 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     imports: [
         CommonModule,
         NumericStatisticsComponent,
+        LineChartComponent,
+        RadarChartComponent,
     ],
     templateUrl: './statistics.component.html',
     styleUrl: './statistics.component.css',
@@ -74,8 +81,29 @@ export class StatisticsComponent implements OnInit {
     periods = ['1M', '3M', '6M', 'YTD', '1Y', 'ALL'];
     activePeriod!: string;
 
+    workouts!: WorkoutDone[];
+
+    chartData!: number[];
+    chartLabels!: string[];
+
     ngOnInit() {
-        this.changeDataType(this.dataTypes[0]);
+        const now = DateTime.now();
+        const startDate = now.minus({ months: 1 });
+
+        this.userService.user$
+            .pipe(
+                filter((user) => !!user),
+                switchMap(() =>
+                    this.userService.getDoneWorkoutsStartingFromUnix(
+                        startDate.toUnixInteger()
+                    )
+                )
+            )
+            .subscribe((data) => {
+                this.workouts = data;
+            });
+
+        this.activeDataType = this.dataTypes[0];
         this.activePeriod = this.periods[0];
     }
 
