@@ -782,7 +782,7 @@ export class UserService {
 
         const q = query(
             workoutsDoneRef,
-            orderBy('dateStart', 'desc'),
+            orderBy('dateStart', 'asc'),
             startAfter(unixFrom)
         );
 
