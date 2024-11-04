@@ -78,7 +78,7 @@ export class StatisticsComponent implements OnInit {
     ];
     activeDataType!: string;
 
-    periods = ['1M', '3M', '6M', 'YTD', '1Y', 'ALL'];
+    periods = ['1M', '3M', '6M', '1Y', 'ALL'];
     activePeriod!: string;
 
     workouts!: WorkoutDone[];
