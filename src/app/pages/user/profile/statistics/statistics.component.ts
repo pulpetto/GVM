@@ -85,6 +85,7 @@ export class StatisticsComponent implements OnInit {
 
     chartData!: number[];
     chartLabels!: string[];
+    chartMaxLabelsLimit!: number;
 
     setsAmount: number = 0;
     repsAmount: number = 0;
