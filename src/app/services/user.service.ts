@@ -21,6 +21,7 @@ import {
     DocumentData,
     limit,
     startAfter,
+    endBefore,
 } from '@angular/fire/firestore';
 import {
     Auth,
@@ -773,18 +774,59 @@ export class UserService {
     }
 
     getDoneWorkoutsStartingFromUnix(
-        unixFrom: number
+        unixFrom: number | null,
+        unixTo: number | null
     ): Observable<WorkoutDone[]> {
         const workoutsDoneRef: CollectionReference = collection(
             this.userDocRef!,
             'workoutsDone'
         );
 
-        const q = query(
-            workoutsDoneRef,
-            orderBy('dateStart', 'asc'),
-            startAfter(unixFrom)
+        let q;
+
+        if (unixFrom && unixTo) {
+            q = query(
+                workoutsDoneRef,
+                orderBy('dateStart', 'asc'),
+                startAfter(unixFrom),
+                endBefore(unixTo)
+            );
+        } else if (unixFrom && !unixTo) {
+            q = query(
+                workoutsDoneRef,
+                orderBy('dateStart', 'asc'),
+                startAfter(unixFrom)
+            );
+        } else if (!unixFrom && unixTo) {
+            q = query(
+                workoutsDoneRef,
+                orderBy('dateStart', 'asc'),
+                endBefore(unixTo)
+            );
+        } else {
+            q = query(workoutsDoneRef, orderBy('dateStart', 'asc'));
+        }
+
+        return from(
+            getDocs(q).then((querySnapshot) => {
+                const workouts: WorkoutDone[] = [];
+
+                querySnapshot.docs.forEach((doc) =>
+                    workouts.push(doc.data() as WorkoutDone)
+                );
+
+                return workouts;
+            })
         );
+    }
+
+    getAllDoneWorkouts(): Observable<WorkoutDone[]> {
+        const workoutsDoneRef: CollectionReference = collection(
+            this.userDocRef!,
+            'workoutsDone'
+        );
+
+        const q = query(workoutsDoneRef, orderBy('dateStart', 'asc'));
 
         return from(
             getDocs(q).then((querySnapshot) => {
