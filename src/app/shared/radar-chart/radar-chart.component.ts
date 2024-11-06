@@ -3,6 +3,8 @@ import {
     Component,
     ElementRef,
     Input,
+    OnChanges,
+    SimpleChanges,
     ViewChild,
 } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
@@ -16,7 +18,7 @@ Chart.register(...registerables);
     templateUrl: './radar-chart.component.html',
     styleUrl: './radar-chart.component.css',
 })
-export class RadarChartComponent implements AfterViewInit {
+export class RadarChartComponent implements AfterViewInit, OnChanges {
     @ViewChild('chart') myChart!: ElementRef<HTMLCanvasElement>;
     chart!: Chart;
 
@@ -25,6 +27,16 @@ export class RadarChartComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.initChart();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['data'] || changes['labels']) {
+            if (this.chart) {
+                this.chart.data.datasets[0].data = this.data;
+                this.chart.data.labels = this.labels;
+                this.chart.update();
+            }
+        }
     }
 
     private initChart(): void {
