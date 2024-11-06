@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { EventType, Router, RouterOutlet } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { HeaderComponent } from './shared/header/header.component';
 import { ThemeService } from './services/theme.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserService } from './services/user.service';
@@ -18,12 +17,7 @@ import { ToastWindowComponent } from './shared/toast-window/toast-window.compone
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [
-        RouterOutlet,
-        HomeComponent,
-        HeaderComponent,
-        ToastWindowComponent,
-    ],
+    imports: [RouterOutlet, HomeComponent, ToastWindowComponent],
 })
 export class AppComponent implements OnInit {
     title = 'GVM';
