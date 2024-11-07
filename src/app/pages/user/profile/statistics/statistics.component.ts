@@ -214,7 +214,7 @@ export class StatisticsComponent implements OnInit {
 
         if (period === '1Y') startDate = now.minus({ years: 1 });
 
-        if (period === 'All') startDate = null;
+        if (period === 'ALL') startDate = null;
 
         const workouts: WorkoutDone[] = this.workouts.filter(
             (workout) =>
@@ -268,7 +268,7 @@ export class StatisticsComponent implements OnInit {
                 );
             }
 
-            if (this.activePeriod === 'All') {
+            if (this.activePeriod === 'ALL') {
                 this.chartMaxLabelsLimit = 5;
 
                 this.chartLabels.push(
