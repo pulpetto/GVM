@@ -3,7 +3,11 @@
 >
     <ng-content select="[leftSide]"></ng-content>
 
-    <div class="font-semibold">- {{ title }} -</div>
+    <div
+        class="absolute font-semibold text-center -translate-x-1/2 top-4 left-1/2"
+    >
+        - {{ title }} -
+    </div>
 
     <ng-content select="[rightSide]"></ng-content>
 </div>
