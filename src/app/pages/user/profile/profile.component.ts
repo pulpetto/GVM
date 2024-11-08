@@ -1,7 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { IconButtonComponent } from '../../../shared/icon-button/icon-button.component';
 import { CommonModule } from '@angular/common';
-import { OneOptionModalComponent } from '../../../shared/one-option-modal/one-option-modal.component';
 import { RecentComponent } from './recent/recent.component';
 import { UserService } from '../../../services/user.service';
 import { RouterModule } from '@angular/router';
@@ -11,13 +10,7 @@ import { RouterModule } from '@angular/router';
     standalone: true,
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.css',
-    imports: [
-        IconButtonComponent,
-        CommonModule,
-        OneOptionModalComponent,
-        RecentComponent,
-        RouterModule,
-    ],
+    imports: [IconButtonComponent, CommonModule, RecentComponent, RouterModule],
 })
 export class ProfileComponent {
     userService = inject(UserService);
