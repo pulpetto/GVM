@@ -10,11 +10,12 @@ import {
 } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { RouterModule } from '@angular/router';
+import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
 
 @Component({
     selector: 'app-settings',
     standalone: true,
-    imports: [RouterModule],
+    imports: [RouterModule, ActivityBarComponent],
     templateUrl: './settings.component.html',
     styleUrl: './settings.component.css',
 })
