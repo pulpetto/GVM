@@ -4,13 +4,20 @@ import { CommonModule } from '@angular/common';
 import { RecentComponent } from './recent/recent.component';
 import { UserService } from '../../../services/user.service';
 import { RouterModule } from '@angular/router';
+import { ActivityBarComponent } from '../../../shared/activity-bar/activity-bar.component';
 
 @Component({
     selector: 'app-profile',
     standalone: true,
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.css',
-    imports: [IconButtonComponent, CommonModule, RecentComponent, RouterModule],
+    imports: [
+        IconButtonComponent,
+        CommonModule,
+        RecentComponent,
+        RouterModule,
+        ActivityBarComponent,
+    ],
 })
 export class ProfileComponent {
     userService = inject(UserService);
