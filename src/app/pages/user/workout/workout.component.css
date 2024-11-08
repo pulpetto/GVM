@@ -33,3 +33,11 @@
     min-height: 60px;
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 } */
+
+.golden-text-shadow:hover {
+    text-shadow: 0 0 30px #eab308, 0 0 10px #eab308;
+}
+
+.golden-text-shadow {
+    text-shadow: 0 0 20px #eab308, 0 0 5px #eab308;
+}

@@ -1,5 +1,4 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { WorkoutMiniPreviewComponent } from '../../../shared/workoutViews/workout-mini-preview/workout-mini-preview.component';
 import { WorkoutSplitComponent } from '../../../shared/workout-split/workout-split.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -16,6 +15,7 @@ import {
     CdkDragDrop,
     moveItemInArray,
 } from '@angular/cdk/drag-drop';
+import { ActivityBarComponent } from '../../../shared/activity-bar/activity-bar.component';
 
 const visibleModalTop0 = { top: '0%' };
 const visibleModal = { top: '50%' };
@@ -35,7 +35,6 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     templateUrl: './workout.component.html',
     styleUrl: './workout.component.css',
     imports: [
-        WorkoutMiniPreviewComponent,
         WorkoutSplitComponent,
         RouterModule,
         CommonModule,
@@ -43,6 +42,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         CdkDropListGroup,
         CdkDropList,
         CdkDrag,
+        ActivityBarComponent,
     ],
     animations: [
         trigger('openClose', [
