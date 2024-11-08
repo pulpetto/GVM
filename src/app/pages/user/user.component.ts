@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivityBarComponent } from '../../shared/activity-bar/activity-bar.component';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { RouterOutlet } from '@angular/router';
 
@@ -8,6 +7,6 @@ import { RouterOutlet } from '@angular/router';
     standalone: true,
     templateUrl: './user.component.html',
     styleUrl: './user.component.css',
-    imports: [ActivityBarComponent, NavbarComponent, RouterOutlet],
+    imports: [NavbarComponent, RouterOutlet],
 })
 export class UserComponent {}
