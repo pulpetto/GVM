@@ -7,6 +7,13 @@ export const routes: Routes = [
         component: HomeComponent,
     },
     {
+        path: 'pro',
+        loadComponent: () =>
+            import('./pages/pro/pro.component').then(
+                (component) => component.ProComponent
+            ),
+    },
+    {
         path: 'login',
         loadComponent: () =>
             import('./pages/login/login.component').then(
