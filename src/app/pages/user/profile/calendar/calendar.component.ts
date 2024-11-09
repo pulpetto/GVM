@@ -21,6 +21,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WorkoutDonePreviewComponent } from '../../../../shared/workoutViews/workout-done-preview/workout-done-preview.component';
 import { WorkoutDoneFull } from '../../../../interfaces/workout/workout-done-full';
 import { MonthNamePipe } from '../../../../pipes/month-name.pipe';
+import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
+import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -48,6 +50,8 @@ export interface WorkoutUnixWithId {
         RouterModule,
         WorkoutDonePreviewComponent,
         MonthNamePipe,
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
     ],
     animations: [
         trigger('openClose', [
