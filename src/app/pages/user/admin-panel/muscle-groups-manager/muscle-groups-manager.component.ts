@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../../../services/admin.service';
 import { Observable } from 'rxjs';
 import { ToastService } from '../../../../services/toast.service';
+import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
+import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -26,7 +28,12 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-muscle-groups-manager',
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
+    ],
     templateUrl: './muscle-groups-manager.component.html',
     styleUrl: './muscle-groups-manager.component.css',
     animations: [

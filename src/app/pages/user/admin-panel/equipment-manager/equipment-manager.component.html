@@ -1,3 +1,8 @@
+<app-activity-bar [title]="'Equipment'">
+    <app-previous-route-button leftSide></app-previous-route-button>
+    <div rightSide></div>
+</app-activity-bar>
+
 <div class="flex flex-col gap-4 p-4">
     @if (equipment$ | async; as equipment) {
     <div class="flex flex-col gap-1">

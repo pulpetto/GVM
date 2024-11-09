@@ -4,11 +4,18 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ExercisePreview } from '../../../../interfaces/exercise-preview';
+import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
+import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
 
 @Component({
     selector: 'app-exercise-manager',
     standalone: true,
-    imports: [RouterModule, CommonModule],
+    imports: [
+        RouterModule,
+        CommonModule,
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
+    ],
     templateUrl: './exercise-manager.component.html',
     styleUrl: './exercise-manager.component.css',
 })

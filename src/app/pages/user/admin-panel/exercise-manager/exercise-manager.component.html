@@ -1,3 +1,8 @@
+<app-activity-bar [title]="'Exercises'">
+    <app-previous-route-button leftSide></app-previous-route-button>
+    <div rightSide></div>
+</app-activity-bar>
+
 <div class="flex flex-col gap-4 p-4">
     @if (exercises$ | async; as exercises) {
     <!--  -->
