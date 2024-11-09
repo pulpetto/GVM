@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { InputComponent } from '../../../../shared/input/input.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MuscleGroupsModalComponent } from '../../../../shared/modals/muscle-groups-modal/muscle-groups-modal.component';
@@ -14,7 +13,6 @@ import { ExercisePreview } from '../../../../interfaces/exercise-preview';
     templateUrl: './exercises.component.html',
     styleUrl: './exercises.component.css',
     imports: [
-        InputComponent,
         CommonModule,
         RouterModule,
         MuscleGroupsModalComponent,
