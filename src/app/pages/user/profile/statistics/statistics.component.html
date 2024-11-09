@@ -1,14 +1,19 @@
+<app-activity-bar [title]="'Statistics'">
+    <app-previous-route-button leftSide></app-previous-route-button>
+    <div rightSide></div>
+</app-activity-bar>
+
 @if (workouts) {
 <div class="flex flex-col items-center gap-4 p-4">
     <button
         type="button"
         (click)="dataTypeModalVisibility = true"
-        class="w-full p-2 font-semibold transition-all border-2 border-solid rounded-md cursor-pointer group max-w-min text-nowrap active:opacity-50 border-neutral-900 hover:text-emerald-500 min-w-72"
+        class="w-full p-2 mt-2 font-semibold transition-all border-2 border-solid rounded-md cursor-pointer group text-nowrap active:opacity-50 border-neutral-900 hover:text-emerald-500"
     >
         {{ activeDataType }}
     </button>
 
-    <div class="flex items-center justify-between mt-4">
+    <div class="flex items-center justify-between">
         @for (period of periods; track $index) {
         <button
             type="button"
