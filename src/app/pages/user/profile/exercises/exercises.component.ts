@@ -6,6 +6,8 @@ import { EquipmentModalComponent } from '../../../../shared/modals/equipment-mod
 import { DataService } from '../../../../services/data.service';
 import { FormsModule } from '@angular/forms';
 import { ExercisePreview } from '../../../../interfaces/exercise-preview';
+import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
+import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
 
 @Component({
     selector: 'app-exercises',
@@ -19,6 +21,8 @@ import { ExercisePreview } from '../../../../interfaces/exercise-preview';
         EquipmentModalComponent,
         FormsModule,
         RouterModule,
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
     ],
 })
 export class ExercisesComponent implements OnInit {
