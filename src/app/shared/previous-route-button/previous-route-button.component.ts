@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-previous-route-button',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
     templateUrl: './previous-route-button.component.html',
     styleUrl: './previous-route-button.component.css',
 })
-export class PreviousRouteButtonComponent {}
+export class PreviousRouteButtonComponent {
+    location = inject(Location);
+
+    navigateBack() {
+        this.location.back();
+    }
+}
