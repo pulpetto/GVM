@@ -9,8 +9,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GoalComponent } from './goal/goal.component';
-import { NgxMaskDirective } from 'ngx-mask';
 import { GoalsCreatorComponent } from './goals-creator/goals-creator.component';
+import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
+import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
 
 @Component({
     selector: 'app-goals',
@@ -18,8 +19,9 @@ import { GoalsCreatorComponent } from './goals-creator/goals-creator.component';
     imports: [
         CommonModule,
         GoalComponent,
-        NgxMaskDirective,
         GoalsCreatorComponent,
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
     ],
     templateUrl: './goals.component.html',
     styleUrl: './goals.component.css',
