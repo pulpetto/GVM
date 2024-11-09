@@ -25,4 +25,16 @@ export class ProComponent {
         'Premium profile badge',
         'Support for GVM development',
     ];
+
+    freeFeaturesLimits: string[] = [
+        '4 max',
+        '6 max',
+        '7 max',
+        'Basic',
+        'x',
+        'x',
+        'x',
+        'x',
+        '😢',
+    ];
 }
