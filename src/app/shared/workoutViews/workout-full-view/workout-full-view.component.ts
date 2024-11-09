@@ -9,6 +9,8 @@ import { DataService } from '../../../services/data.service';
 import { Set } from '../../../interfaces/workout/set';
 import { RouterModule } from '@angular/router';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
+import { ActivityBarComponent } from '../../activity-bar/activity-bar.component';
+import { PreviousRouteButtonComponent } from '../../previous-route-button/previous-route-button.component';
 
 const visibleModal = { top: '50%' };
 const visibleModalLow = { top: '75%' };
@@ -27,7 +29,13 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     standalone: true,
     templateUrl: './workout-full-view.component.html',
     styleUrl: './workout-full-view.component.css',
-    imports: [CommonModule, RouterModule, LoadingSpinnerComponent],
+    imports: [
+        CommonModule,
+        RouterModule,
+        LoadingSpinnerComponent,
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
+    ],
     animations: [
         trigger('openClose', [
             transition(':enter', [
