@@ -1,9 +1,10 @@
-@if (workoutData$ | async; as workoutData) {
-<div class="flex flex-col items-center gap-4 p-4">
+<app-activity-bar [title]="'Done Workout Details'">
+    <app-previous-route-button leftSide></app-previous-route-button>
     <button
         type="button"
+        class="-translate-y-1"
         (click)="optionsModalVisibility = true"
-        class="absolute top-5 right-2"
+        rightSide
     >
         <svg
             class="w-8 h-8 transition-all stroke-white fill-white hover:stroke-emerald-500 hover:fill-emerald-500 active:opacity-50 active:scale-95"
@@ -31,7 +32,10 @@
             />
         </svg>
     </button>
+</app-activity-bar>
 
+@if (workoutData$ | async; as workoutData) {
+<div class="flex flex-col items-center gap-4 p-4">
     <div class="flex flex-col items-center gap-1">
         <div class="text-3xl font-semibold">{{ workoutData.name }}</div>
         <div class="flex items-center gap-1.5">

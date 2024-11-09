@@ -7,6 +7,8 @@ import { TimeFormatterPipe } from '../../../pipes/time-formatter.pipe';
 import { UserService } from '../../../services/user.service';
 import { filter, map, Observable, of, switchMap } from 'rxjs';
 import { FullDatePipe } from '../../../pipes/full-date.pipe';
+import { ActivityBarComponent } from '../../activity-bar/activity-bar.component';
+import { PreviousRouteButtonComponent } from '../../previous-route-button/previous-route-button.component';
 
 const visibleModal = { top: '50%' };
 const visibleModalLow = { top: '75%' };
@@ -23,7 +25,14 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-workout-done-full-view',
     standalone: true,
-    imports: [CommonModule, RouterModule, TimeFormatterPipe, FullDatePipe],
+    imports: [
+        CommonModule,
+        RouterModule,
+        TimeFormatterPipe,
+        FullDatePipe,
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
+    ],
     templateUrl: './workout-done-full-view.component.html',
     styleUrl: './workout-done-full-view.component.css',
     animations: [
