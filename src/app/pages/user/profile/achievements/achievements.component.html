@@ -1,5 +1,9 @@
+<app-activity-bar [title]="'Achievements'">
+    <app-previous-route-button leftSide></app-previous-route-button>
+    <div rightSide></div>
+</app-activity-bar>
+
 <div class="flex flex-col p-4">
-    <div class="mb-4 text-3xl font-semibold text-center">Achievements</div>
     @if (achievements$ | async; as achievements) {
     <div class="flex flex-col gap-4 mt-2">
         @for (achievement of achievements; track $index) {
