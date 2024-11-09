@@ -1,26 +1,9 @@
+<app-activity-bar [title]="'History'">
+    <app-previous-route-button leftSide></app-previous-route-button>
+    <div rightSide></div>
+</app-activity-bar>
+
 <div class="flex flex-col items-center gap-6 px-4 py-4 text-lg">
-    <div class="relative flex justify-center w-full">
-        <a>
-            <svg
-                class="absolute left-0 w-8 h-8 transition-all -translate-y-1/2 top-1/2 stroke-emerald-500 hover:-translate-x-0.5 active:opacity-50 active:scale-95"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M18.5 12H6M6 12L12 6M6 12L12 18"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-            </svg>
-        </a>
-
-        <div class="mt-1 mb-2 text-2xl font-semibold text-emerald-500">
-            Workout History
-        </div>
-    </div>
-
     <div class="flex flex-col w-full gap-4 px-2">
         @if (workouts) {
         <ng-container>

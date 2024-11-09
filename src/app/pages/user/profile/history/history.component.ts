@@ -4,11 +4,18 @@ import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WorkoutDoneFull } from '../../../../interfaces/workout/workout-done-full';
+import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
+import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
 
 @Component({
     selector: 'app-history',
     standalone: true,
-    imports: [WorkoutDonePreviewComponent, CommonModule],
+    imports: [
+        WorkoutDonePreviewComponent,
+        CommonModule,
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
+    ],
     templateUrl: './history.component.html',
     styleUrl: './history.component.css',
 })
