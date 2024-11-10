@@ -21,4 +21,5 @@ export class ProfileComponent {
     userService = inject(UserService);
 
     userRole = computed(() => this.userService.getUser()?.role);
+    proPlan = computed(() => this.userService.getUser()?.pro);
 }
