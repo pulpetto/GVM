@@ -23,6 +23,8 @@ import { Step } from '../../interfaces/step';
 import { ExercisePreview } from '../../interfaces/exercise-preview';
 import { DataService } from '../../services/data.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivityBarComponent } from '../activity-bar/activity-bar.component';
+import { PreviousRouteButtonComponent } from '../previous-route-button/previous-route-button.component';
 
 @Component({
     selector: 'app-exercise-creator',
@@ -34,6 +36,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         RouterModule,
         FormsModule,
         ReactiveFormsModule,
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
     ],
     templateUrl: './exercise-creator.component.html',
     styleUrl: './exercise-creator.component.css',
@@ -255,6 +259,7 @@ export class ExerciseCreatorComponent implements OnInit {
     addExercise() {
         const formData = this.exerciseForm.value;
 
+        // depending if it is users exercise or admin
         this.adminService.addExercise(
             formData.name!,
             formData.thumbnailFile!,
