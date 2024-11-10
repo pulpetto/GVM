@@ -1,7 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { IconButtonComponent } from '../../../shared/icon-button/icon-button.component';
 import { CommonModule } from '@angular/common';
-import { RecentComponent } from './recent/recent.component';
 import { UserService } from '../../../services/user.service';
 import { RouterModule } from '@angular/router';
 import { ActivityBarComponent } from '../../../shared/activity-bar/activity-bar.component';
@@ -14,7 +13,6 @@ import { ActivityBarComponent } from '../../../shared/activity-bar/activity-bar.
     imports: [
         IconButtonComponent,
         CommonModule,
-        RecentComponent,
         RouterModule,
         ActivityBarComponent,
     ],
