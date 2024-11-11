@@ -1,4 +1,7 @@
-<div class="h-full min-h-screen pb-24">
+<div class="h-full min-h-screen">
     <router-outlet></router-outlet>
+
+    @if (navbarVisibility$ | async) {
     <app-navbar></app-navbar>
+    }
 </div>
