@@ -1,8 +1,11 @@
 import {
+    AfterViewInit,
+    ChangeDetectorRef,
     Component,
     DestroyRef,
     ElementRef,
     inject,
+    OnDestroy,
     OnInit,
     ViewChild,
 } from '@angular/core';
@@ -25,6 +28,7 @@ import { DataService } from '../../services/data.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivityBarComponent } from '../activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../previous-route-button/previous-route-button.component';
+import { NavbarVisibilityService } from '../../services/navbar-visibility.service';
 
 @Component({
     selector: 'app-exercise-creator',
@@ -42,11 +46,15 @@ import { PreviousRouteButtonComponent } from '../previous-route-button/previous-
     templateUrl: './exercise-creator.component.html',
     styleUrl: './exercise-creator.component.css',
 })
-export class ExerciseCreatorComponent implements OnInit {
+export class ExerciseCreatorComponent
+    implements OnInit, AfterViewInit, OnDestroy
+{
     view!: 'new' | 'existing';
 
     adminService = inject(AdminService);
     dataService = inject(DataService);
+    navbarVisibilityService = inject(NavbarVisibilityService);
+    cdr = inject(ChangeDetectorRef);
     route = inject(ActivatedRoute);
     router = inject(Router);
     fb = inject(FormBuilder);
@@ -174,6 +182,14 @@ export class ExerciseCreatorComponent implements OnInit {
         }
     }
 
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.navbarVisibilityService.visibility.next(false);
+        });
+
+        this.cdr.detectChanges();
+    }
+
     get exerciseInstruction(): FormArray {
         return this.exerciseForm.get('instruction') as FormArray;
     }
@@ -271,5 +287,9 @@ export class ExerciseCreatorComponent implements OnInit {
             [],
             []
         );
+    }
+
+    ngOnDestroy() {
+        this.navbarVisibilityService.visibility.next(true);
     }
 }
