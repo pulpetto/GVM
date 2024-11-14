@@ -2,7 +2,7 @@
 <button
     @openClose
     (click)="close()"
-    class="fixed flex items-center gap-2 p-3 font-semibold transition-all border-2 border-solid rounded-md active:opacity-50 active:scale-95 h-min bg-neutral-950 top-12"
+    class="fixed z-50 flex items-center gap-2 p-3 font-semibold transition-all border-2 border-solid rounded-md active:opacity-50 active:scale-95 h-min bg-neutral-950 top-12"
     [ngClass]="{
         'right-1/2': toast(),
         'translate-x-1/2': toast(),
