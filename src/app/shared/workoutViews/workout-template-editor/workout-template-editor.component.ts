@@ -38,6 +38,8 @@ import { TimingModalComponent } from './timing-modal/timing-modal.component';
 import { DurationModalComponent } from './duration-modal/duration-modal.component';
 import { StartDateModalComponent } from './start-date-modal/start-date-modal.component';
 import { NavbarVisibilityService } from '../../../services/navbar-visibility.service';
+import { ActivityBarComponent } from '../../activity-bar/activity-bar.component';
+import { PreviousRouteButtonComponent } from '../../previous-route-button/previous-route-button.component';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop50 = { top: '50%' };
@@ -70,6 +72,8 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         TimingModalComponent,
         DurationModalComponent,
         StartDateModalComponent,
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
     ],
     animations: [
         trigger('openClose', [
@@ -145,6 +149,28 @@ export class WorkoutTemplateEditorComponent
         }),
         duration: '',
     });
+
+    get activityBarTitle(): string {
+        let nameToReturn: string;
+
+        if (this.editView === 'new') {
+            nameToReturn = 'Workout creator';
+        }
+
+        if (this.editView === 'existing') {
+            nameToReturn = 'Workout template editor';
+        }
+
+        if (this.editView === 'current') {
+            nameToReturn = 'Current workout';
+        }
+
+        if (this.editView === 'done') {
+            nameToReturn = 'Done workout editor';
+        }
+
+        return nameToReturn!;
+    }
 
     get workoutDateStartValue(): {
         year: string | null;
