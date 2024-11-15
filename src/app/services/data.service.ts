@@ -3,7 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { Equipment } from '../interfaces/equipment';
 import { Achievement } from '../interfaces/achievement';
-import { EquipmentName } from '../types/equipment-type';
 import {
     collection,
     CollectionReference,
@@ -13,7 +12,6 @@ import {
     getDoc,
     getDocs,
 } from '@angular/fire/firestore';
-import { MuscleGroupName } from '../types/muscle-group-type';
 import { MuscleGroup } from '../interfaces/muscle-group';
 import { ExercisePreview } from '../interfaces/exercise-preview';
 import { ExerciseDetails } from '../interfaces/exercise-details';
@@ -25,26 +23,6 @@ export class DataService {
     firestore = inject(Firestore);
 
     constructor(private http: HttpClient) {}
-
-    getExercises(): Observable<
-        {
-            id: number;
-            name: string;
-            imageUrl: string;
-            muscleGroups: MuscleGroupName[];
-            equipment: EquipmentName;
-        }[]
-    > {
-        return this.http.get<
-            {
-                id: number;
-                name: string;
-                imageUrl: string;
-                muscleGroups: MuscleGroupName[];
-                equipment: EquipmentName;
-            }[]
-        >('assets/data/exercises.json');
-    }
 
     getAchievements(): Observable<Achievement[]> {
         return this.http.get<Achievement[]>('assets/data/achievements.json');
