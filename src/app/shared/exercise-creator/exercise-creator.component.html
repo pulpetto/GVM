@@ -92,74 +92,30 @@
             />
         </div>
 
-        <div class="flex flex-col gap-2">
-            <div class="font-semibold">Main muscle group(s):</div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-col items-center gap-2">
+                <div class="font-semibold">
+                    Main muscle group{{
+                        exerciseMainMuscleGroups.length === 1 ? "" : "s"
+                    }}:
+                </div>
 
-            <!-- prettier-ignore -->
-            @for (mainMuscleGroup of exerciseMainMuscleGroups.controls; track $index) {
-            <app-muscle-group-selector
-                [muscleGroupId]="mainMuscleGroup"
-                (muscleGroupRemoveEvent)="removeMuscleGroup('main', $index)"
-            ></app-muscle-group-selector>
-            }
+                <app-muscle-group-selector
+                    [muscleGroupIds]="exerciseMainMuscleGroups"
+                ></app-muscle-group-selector>
+            </div>
 
-            <button
-                type="button"
-                (click)="addMainMuscleGroup()"
-                class="py-1.5 font-semibold rounded-md w-full border-2 border-solid border-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717] flex items-center justify-center"
-            >
-                <svg
-                    class="w-6 h-6 stroke-white mt-0.5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M6 12H12M18 12H12M12 12V6M12 12V18"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
+            <div class="flex flex-col items-center gap-2">
+                <div class="font-semibold">
+                    Secondary muscle group{{
+                        exerciseSecondaryMuscleGroups.length === 1 ? "" : "s"
+                    }}:
+                </div>
 
-                <div>Add muscle group</div>
-            </button>
-        </div>
-
-        <div class="flex flex-col gap-2">
-            <div class="font-semibold">Secondary muscle group(s):</div>
-
-            <!-- prettier-ignore -->
-            @for (secondaryMuscleGroup of exerciseSecondaryMuscleGroups.controls; track $index) {
-            <app-muscle-group-selector
-                [muscleGroupId]="secondaryMuscleGroup"
-                (muscleGroupRemoveEvent)="
-                    removeMuscleGroup('secondary', $index)
-                "
-            ></app-muscle-group-selector>
-            }
-
-            <button
-                type="button"
-                (click)="addSecondaryMuscleGroup()"
-                class="py-1.5 font-semibold rounded-md w-full border-2 border-solid border-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#171717] flex items-center justify-center"
-            >
-                <svg
-                    class="w-6 h-6 stroke-white mt-0.5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M6 12H12M18 12H12M12 12V6M12 12V18"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-
-                <div>Add muscle group</div>
-            </button>
+                <app-muscle-group-selector
+                    [muscleGroupIds]="exerciseSecondaryMuscleGroups"
+                ></app-muscle-group-selector>
+            </div>
         </div>
 
         <div class="flex flex-col gap-2">

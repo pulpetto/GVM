@@ -200,18 +200,10 @@ export class ExerciseCreatorComponent
         >;
     }
 
-    addMainMuscleGroup() {
-        this.exerciseMainMuscleGroups.push(this.fb.control(null));
-    }
-
     get exerciseSecondaryMuscleGroups(): FormArray<FormControl<string | null>> {
         return this.exerciseForm.get('secondaryMuscleGroupsIds') as FormArray<
             FormControl<string | null>
         >;
-    }
-
-    addSecondaryMuscleGroup() {
-        this.exerciseSecondaryMuscleGroups.push(this.fb.control(null));
     }
 
     onThumbnailSelect() {
@@ -262,14 +254,6 @@ export class ExerciseCreatorComponent
         });
 
         this.selectedVideo = null;
-    }
-
-    removeMuscleGroup(type: 'main' | 'secondary', $index: number) {
-        if (type === 'main') {
-            this.exerciseMainMuscleGroups.removeAt($index);
-        } else {
-            this.exerciseSecondaryMuscleGroups.removeAt($index);
-        }
     }
 
     addExercise() {
