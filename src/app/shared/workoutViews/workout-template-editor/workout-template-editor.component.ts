@@ -1,4 +1,12 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    DestroyRef,
+    inject,
+    OnDestroy,
+    OnInit,
+} from '@angular/core';
 import { ExerciseEditModeComponent } from '../../exercise-edit-mode/exercise-edit-mode.component';
 import { NameEditorComponent } from './name-editor/name-editor.component';
 import { ExercisesSelectorComponent } from './exercises-selector/exercises-selector.component';
@@ -29,6 +37,7 @@ import { ExercisePreview } from '../../../interfaces/exercise-preview';
 import { TimingModalComponent } from './timing-modal/timing-modal.component';
 import { DurationModalComponent } from './duration-modal/duration-modal.component';
 import { StartDateModalComponent } from './start-date-modal/start-date-modal.component';
+import { NavbarVisibilityService } from '../../../services/navbar-visibility.service';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop50 = { top: '50%' };
@@ -105,13 +114,17 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         ]),
     ],
 })
-export class WorkoutTemplateEditorComponent implements OnInit {
+export class WorkoutTemplateEditorComponent
+    implements OnInit, AfterViewInit, OnDestroy
+{
     fb = inject(FormBuilder);
     userService = inject(UserService);
     dataService = inject(DataService);
     destroyRef = inject(DestroyRef);
     route = inject(ActivatedRoute);
     location = inject(Location);
+    navbarVisibilityService = inject(NavbarVisibilityService);
+    cdr = inject(ChangeDetectorRef);
 
     loading: boolean = false;
     editView!: 'new' | 'existing' | 'current' | 'done';
@@ -391,6 +404,18 @@ export class WorkoutTemplateEditorComponent implements OnInit {
                     }
                 }
             });
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.navbarVisibilityService.visibility.next(false);
+        });
+
+        this.cdr.detectChanges();
+    }
+
+    ngOnDestroy() {
+        this.navbarVisibilityService.visibility.next(true);
     }
 
     addExercises(selectedExercisesIds: Set<string>) {
