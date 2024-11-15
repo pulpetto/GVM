@@ -9,13 +9,14 @@
         'hover:border-emerald-500': equipmentId.value,
     }"
 >
+    @if (!selectedEquipmentName) {
     <div>
         <svg
             class="rotate-45 w-5 h-5 stroke-black dark:stroke-white mt-0.5 transition-colors"
             [ngClass]="{
-                'group-hover:stroke-emerald-500': !equipmentId.value,
-                'group-focus:stroke-emerald-500': !equipmentId.value,
-            }"
+                    'group-hover:stroke-emerald-500': !equipmentId.value,
+                    'group-focus:stroke-emerald-500': !equipmentId.value,
+                }"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -52,6 +53,8 @@
             />
         </svg>
     </div>
+    }
+
     <div
         class="transition-colors"
         [ngClass]="{
