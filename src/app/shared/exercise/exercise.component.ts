@@ -19,6 +19,8 @@ import { FullDatePipe } from '../../pipes/full-date.pipe';
 import { ExercisePreviewFull } from '../../interfaces/exercise-preview-full';
 import { ExerciseChartsComponent } from './exercise-charts/exercise-charts.component';
 import { RecordsComponent } from './records/records.component';
+import { ActivityBarComponent } from '../activity-bar/activity-bar.component';
+import { PreviousRouteButtonComponent } from '../previous-route-button/previous-route-button.component';
 
 @Component({
     selector: 'app-exercise',
@@ -33,6 +35,8 @@ import { RecordsComponent } from './records/records.component';
         FullDatePipe,
         ExerciseChartsComponent,
         RecordsComponent,
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
     ],
 })
 export class ExerciseComponent implements OnInit {
