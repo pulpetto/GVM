@@ -2,6 +2,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
+    computed,
     DestroyRef,
     ElementRef,
     inject,
@@ -29,6 +30,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivityBarComponent } from '../activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../previous-route-button/previous-route-button.component';
 import { NavbarVisibilityService } from '../../services/navbar-visibility.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'app-exercise-creator',
@@ -59,6 +61,9 @@ export class ExerciseCreatorComponent
     router = inject(Router);
     fb = inject(FormBuilder);
     destroyRef = inject(DestroyRef);
+    userService = inject(UserService);
+
+    userRole = computed(() => this.userService.getUser()?.role);
 
     @ViewChild('thumbnail') thumbnailInput!: ElementRef<HTMLInputElement>;
     @ViewChild('video') videoInput!: ElementRef<HTMLInputElement>;
