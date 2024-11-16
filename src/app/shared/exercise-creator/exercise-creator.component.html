@@ -1,4 +1,10 @@
-<app-activity-bar [title]="'Exercise Creator'">
+<app-activity-bar
+    [title]="
+        this.userRole() === 'admin'
+            ? 'Exercise Creator'
+            : 'Custom Exercise Creator'
+    "
+>
     <app-previous-route-button leftSide></app-previous-route-button>
     <div rightSide></div>
 </app-activity-bar>
