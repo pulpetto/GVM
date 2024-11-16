@@ -264,18 +264,31 @@ export class ExerciseCreatorComponent
     addExercise() {
         const formData = this.exerciseForm.value;
 
-        // depending if it is users exercise or admin
-        this.adminService.addExercise(
-            formData.name!,
-            formData.thumbnailFile!,
-            formData.mainMuscleGroupsIds!,
-            formData.secondaryMuscleGroupsIds!,
-            formData.equipmentId!,
-            formData.videoFile!,
-            formData.instruction as Step[],
-            [],
-            []
-        );
+        if (this.userRole() === 'admin') {
+            this.adminService.addExercise(
+                formData.name!,
+                formData.thumbnailFile!,
+                formData.mainMuscleGroupsIds!,
+                formData.secondaryMuscleGroupsIds!,
+                formData.equipmentId!,
+                formData.videoFile!,
+                formData.instruction as Step[],
+                [],
+                []
+            );
+        } else if (this.userRole() === 'user') {
+            this.userService.addCustomExercise(
+                formData.name!,
+                formData.thumbnailFile!,
+                formData.mainMuscleGroupsIds!,
+                formData.secondaryMuscleGroupsIds!,
+                formData.equipmentId!,
+                formData.videoFile!,
+                formData.instruction as Step[],
+                [],
+                []
+            );
+        }
     }
 
     ngOnDestroy() {
