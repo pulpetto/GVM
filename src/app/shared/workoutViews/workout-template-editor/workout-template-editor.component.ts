@@ -454,6 +454,7 @@ export class WorkoutTemplateEditorComponent
                 .subscribe((exercise) => {
                     if (exercise) {
                         this.exercisesPresentionalData.push({
+                            custom: exercise.custom,
                             id: exercise.id,
                             name: exercise.name,
                             imagePreviewUrl: exercise.imagePreviewUrl,
@@ -497,6 +498,7 @@ export class WorkoutTemplateEditorComponent
                         this.selectedExercisesIds.add(exercise.id);
 
                         this.exercisesPresentionalData.push({
+                            custom: exercise.custom,
                             id: exercise.id,
                             name: exercise.name,
                             imagePreviewUrl: exercise.imagePreviewUrl,

@@ -305,6 +305,7 @@ export class AdminService {
         ).id;
 
         await setDoc(doc(this.firestore, 'exercisePreviews', newExerciseId), {
+            custom: false,
             name: name,
             imagePreviewUrl: imagePreviewUrl,
             mainMuscleGroupsIds: mainMuscleGroupsIds,
@@ -337,6 +338,7 @@ export class AdminService {
                     const exercises = querySnapshot.docs.map(
                         (doc) =>
                             ({
+                                custom: doc.data()['custom'],
                                 id: doc.id,
                                 name: doc.data()['name'],
                                 imagePreviewUrl: doc.data()['imagePreviewUrl'],
