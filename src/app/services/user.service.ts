@@ -52,6 +52,13 @@ import { WorkoutDone } from '../interfaces/workout/workout-done';
 import { WorkoutDoneFull } from '../interfaces/workout/workout-done-full';
 import { DataService } from './data.service';
 import { WorkoutDoneWithId } from '../interfaces/workout/workout-done-with-id';
+import { Step } from '../interfaces/step';
+import {
+    getDownloadURL,
+    getStorage,
+    ref,
+    uploadBytes,
+} from '@angular/fire/storage';
 
 @Injectable({
     providedIn: 'root',
@@ -62,6 +69,8 @@ export class UserService {
     router = inject(Router);
     destroyRef = inject(DestroyRef);
     dataService = inject(DataService);
+
+    storage = getStorage();
 
     user$ = user(this.authentication);
     private currentUser = signal<User | null | undefined>(undefined);
@@ -838,6 +847,65 @@ export class UserService {
 
                 return workouts;
             })
+        );
+    }
+
+    async addCustomExercise(
+        name: string,
+        imageFile: File,
+        mainMuscleGroupsIds: string[],
+        secondaryMuscleGroupsIds: string[],
+        equipmentId: string,
+        instructionVideoFile: File,
+        instructionSteps: Step[],
+        variationsIds: string[],
+        alternativesIds: string[]
+    ) {
+        // Image upload
+        const imageFilePath = `users/${
+            this.currentUser()?.username
+        }/customExercises/${Date.now()}_${name}`;
+        const storageRef = ref(this.storage, imageFilePath);
+        const snapshot = await uploadBytes(storageRef, imageFile);
+        const imagePreviewUrl = await getDownloadURL(snapshot.ref);
+
+        // Video upload
+        const videoFilePath = `users/${
+            this.currentUser()?.username
+        }/customExercises/${Date.now()}_${name}_video`;
+        const videoStorageRef = ref(this.storage, videoFilePath);
+        const videoSnapshot = await uploadBytes(
+            videoStorageRef,
+            instructionVideoFile
+        );
+        const videoPreviewUrl = await getDownloadURL(videoSnapshot.ref);
+
+        const newExerciseId = doc(
+            collection(this.userDocRef!, 'customExercisesPreviews')
+        ).id;
+
+        await setDoc(
+            doc(this.firestore, 'customExercisesPreviews', newExerciseId),
+            {
+                custom: true,
+                name: name,
+                imagePreviewUrl: imagePreviewUrl,
+                mainMuscleGroupsIds: mainMuscleGroupsIds,
+                secondaryMuscleGroupsIds: secondaryMuscleGroupsIds,
+                equipmentId: equipmentId,
+            }
+        );
+
+        await setDoc(
+            doc(this.firestore, 'customExercisesDetails', newExerciseId),
+            {
+                imageFilePath: imageFilePath,
+                instructionVideoPreviewUrl: videoPreviewUrl,
+                instructionVideoFilePath: videoFilePath,
+                instructionSteps: instructionSteps,
+                variationsIds: variationsIds,
+                alternativesIds: alternativesIds,
+            }
         );
     }
 }
