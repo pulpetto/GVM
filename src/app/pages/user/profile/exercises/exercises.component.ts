@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { ExercisePreview } from '../../../../interfaces/exercise-preview';
 import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
+import { UserService } from '../../../../services/user.service';
+import { filter, switchMap } from 'rxjs';
 
 @Component({
     selector: 'app-exercises',
@@ -27,6 +29,7 @@ import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-
 })
 export class ExercisesComponent implements OnInit {
     dataService = inject(DataService);
+    userService = inject(UserService);
 
     exercisesModalVisibility: boolean = false;
     innerModalsVisibility: boolean = false;
@@ -52,6 +55,17 @@ export class ExercisesComponent implements OnInit {
             this.exercises = data;
             this.exercisesFiltered = data;
         });
+
+        this.userService.user$
+            .pipe(
+                filter((user) => !!user),
+                switchMap(() => this.userService.getCustomExercisesPreviews())
+            )
+            .subscribe((data) => {
+                data.forEach((customExercise) =>
+                    this.exercises?.push(customExercise)
+                );
+            });
     }
 
     openExercisesModal() {
