@@ -885,7 +885,7 @@ export class UserService {
         ).id;
 
         await setDoc(
-            doc(this.firestore, 'customExercisesPreviews', newExerciseId),
+            doc(this.userDocRef!, 'customExercisesPreviews', newExerciseId),
             {
                 custom: true,
                 name: name,
@@ -897,7 +897,7 @@ export class UserService {
         );
 
         await setDoc(
-            doc(this.firestore, 'customExercisesDetails', newExerciseId),
+            doc(this.userDocRef!, 'customExercisesDetails', newExerciseId),
             {
                 imageFilePath: imageFilePath,
                 instructionVideoPreviewUrl: videoPreviewUrl,
