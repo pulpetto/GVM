@@ -59,6 +59,8 @@ import {
     ref,
     uploadBytes,
 } from '@angular/fire/storage';
+import { ExercisePreview } from '../interfaces/exercise-preview';
+import { ExerciseDetails } from '../interfaces/exercise-details';
 
 @Injectable({
     providedIn: 'root',
@@ -906,6 +908,62 @@ export class UserService {
                 variationsIds: variationsIds,
                 alternativesIds: alternativesIds,
             }
+        );
+    }
+
+    getCustomExercisesPreviews(): Observable<ExercisePreview[]> {
+        const customExercisesRef: CollectionReference = collection(
+            this.userDocRef!,
+            'customExercisesPreviews'
+        );
+
+        return from(
+            getDocs(customExercisesRef).then((qs) => {
+                const arrayToReturn: ExercisePreview[] = [];
+
+                qs.forEach((exercise) => {
+                    const exerciseObj: ExercisePreview =
+                        exercise.data() as ExercisePreview;
+
+                    exerciseObj.id = exercise.id;
+
+                    arrayToReturn.push(exerciseObj);
+                });
+
+                return arrayToReturn;
+            })
+        );
+    }
+
+    getCustomExercisePreviewById(id: string): Observable<ExercisePreview> {
+        const customExerciseRef: DocumentReference = doc(
+            this.userDocRef!,
+            'customExercisesPreviews',
+            id
+        );
+
+        return from(
+            getDoc(customExerciseRef).then((exerciseDoc) => {
+                const exercisePreview = exerciseDoc.data() as ExercisePreview;
+
+                exercisePreview.id = exerciseDoc.id;
+
+                return exercisePreview;
+            })
+        );
+    }
+
+    getCustomExerciseDetailsById(id: string): Observable<ExerciseDetails> {
+        const customExerciseRef: DocumentReference = doc(
+            this.userDocRef!,
+            'customExercisesDetails',
+            id
+        );
+
+        return from(
+            getDoc(customExerciseRef).then(
+                (exerciseDoc) => exerciseDoc.data() as ExerciseDetails
+            )
         );
     }
 }
