@@ -41,5 +41,5 @@ export class ProfileComponent {
     userRole = computed(() => this.userService.getUser()?.role);
     proPlan = computed(() => this.userService.getUser()?.pro);
 
-    pfpFullView: boolean = true;
+    pfpFullView: boolean = false;
 }
