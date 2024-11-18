@@ -3,6 +3,9 @@
 <app-loading-spinner></app-loading-spinner>
 }
 
+<!--  -->
+
+@if (!summaryLoading) {
 <app-activity-bar [title]="activityBarTitle">
     <app-previous-route-button leftSide></app-previous-route-button>
     <div rightSide></div>
@@ -146,8 +149,17 @@
     </div>
     }
 </form>
+} @else {
+<app-loading-spinner></app-loading-spinner>
 
-<!-- indent -->
+<div
+    class="absolute z-50 text-sm font-semibold text-center -translate-x-1/2 translate-y-5 top-1/2 left-1/2"
+>
+    Preparing a summary for you!
+</div>
+}
+
+<!-- -->
 
 @if (exercisesReorderModalVisibility) {
 <!-- eslint-disable-next-line -->

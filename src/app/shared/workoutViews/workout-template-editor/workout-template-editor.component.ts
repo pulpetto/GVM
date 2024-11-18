@@ -656,6 +656,8 @@ export class WorkoutTemplateEditorComponent
         this.workoutExercises.removeAt(+$event[1]);
     }
 
+    summaryLoading: boolean = false;
+
     saveWorkout() {
         if (this.editView === 'new') {
             this.userService.saveWorkout(
@@ -671,6 +673,8 @@ export class WorkoutTemplateEditorComponent
         }
 
         if (this.editView === 'current') {
+            this.summaryLoading = true;
+
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const workoutFormObjExtended: any =
                 this.workoutForm.getRawValue() as Workout;
