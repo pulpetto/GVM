@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MuscleGroupsModalComponent } from '../../../../shared/modals/muscle-groups-modal/muscle-groups-modal.component';
 import { EquipmentModalComponent } from '../../../../shared/modals/equipment-modal/equipment-modal.component';
 import { DataService } from '../../../../services/data.service';
@@ -30,6 +30,8 @@ import { filter, switchMap } from 'rxjs';
 export class ExercisesComponent implements OnInit {
     dataService = inject(DataService);
     userService = inject(UserService);
+    router = inject(Router);
+    activatedRoute = inject(ActivatedRoute);
 
     exercisesModalVisibility: boolean = false;
     innerModalsVisibility: boolean = false;
@@ -123,5 +125,12 @@ export class ExercisesComponent implements OnInit {
         this.selectedEquipmentId = null;
 
         this.applyFilters();
+    }
+
+    navigateToExercisePage(id: string, custom: boolean) {
+        this.router.navigate([id], {
+            relativeTo: this.activatedRoute,
+            queryParams: { custom: custom },
+        });
     }
 }
