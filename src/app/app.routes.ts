@@ -100,6 +100,13 @@ export const routes: Routes = [
                     ).then((component) => component.SettingsComponent),
             },
             {
+                path: 'profile/settings/account',
+                loadComponent: () =>
+                    import(
+                        './pages/user/profile/settings/account/account.component'
+                    ).then((component) => component.AccountComponent),
+            },
+            {
                 path: 'profile/calendar',
                 loadComponent: () =>
                     import(
