@@ -6,6 +6,7 @@
 <div class="flex flex-col gap-2 p-4 font-semibold">
     <button
         type="button"
+        (click)="modalVisibility = true; activeModalType = 'pfp'"
         class="flex items-center w-full gap-2.5 p-2 transition-opacity active:opacity-50 rounded-md hover:bg-neutral-900"
     >
         <svg
@@ -32,6 +33,7 @@
 
     <button
         type="button"
+        (click)="modalVisibility = true; activeModalType = 'username'"
         class="flex items-center w-full gap-2.5 p-2 transition-opacity active:opacity-50 rounded-md hover:bg-neutral-900"
     >
         <svg
@@ -58,6 +60,7 @@
 
     <button
         type="button"
+        (click)="modalVisibility = true; activeModalType = 'password'"
         class="flex items-center w-full gap-2.5 p-2 transition-opacity active:opacity-50 rounded-md hover:bg-neutral-900"
     >
         <svg
@@ -78,8 +81,57 @@
 
     <button
         type="button"
+        (click)="modalVisibility = true; activeModalType = 'deletion'"
         class="py-1.5 mt-4 font-semibold rounded-md w-full bg-red-500 transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#ef4444]"
     >
         Delete Account
     </button>
 </div>
+
+@if (modalVisibility) {
+<!-- eslint-disable-next-line -->
+<div
+    @openClose2
+    (click)="modalVisibility = false"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+></div>
+
+<div
+    @openClose
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
+    [ngClass]="{
+        'top-1/2': modalVisibility,
+        'top-full': !modalVisibility
+    }"
+>
+    <div class="self-center text-lg font-semibold">Modal title:</div>
+</div>
+}
+
+<!-- -->
+
+@if (modalVisibility) {
+<div
+    @openClose3
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
+    [ngClass]="{
+        'bottom-0': modalVisibility,
+        '-bottom-full': !modalVisibility,
+    }"
+>
+    <button
+        type="button"
+        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-emerald-500 transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
+    >
+        Action button
+    </button>
+
+    <button
+        type="button"
+        (click)="modalVisibility = false"
+        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
+    >
+        Cancel & Close
+    </button>
+</div>
+}
