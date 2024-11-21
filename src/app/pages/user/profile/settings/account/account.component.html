@@ -6,7 +6,7 @@
 <div class="flex flex-col gap-2 p-4 font-semibold">
     <button
         type="button"
-        (click)="modalVisibility = true; activeModalType = 'pfp'"
+        (click)="openModal('pfp', 'Set new profile picture', 'Save')"
         class="flex items-center w-full gap-2.5 p-2 transition-opacity active:opacity-50 rounded-md hover:bg-neutral-900"
     >
         <svg
@@ -33,7 +33,7 @@
 
     <button
         type="button"
-        (click)="modalVisibility = true; activeModalType = 'username'"
+        (click)="openModal('username', 'Change username', 'Set new username')"
         class="flex items-center w-full gap-2.5 p-2 transition-opacity active:opacity-50 rounded-md hover:bg-neutral-900"
     >
         <svg
@@ -60,7 +60,7 @@
 
     <button
         type="button"
-        (click)="modalVisibility = true; activeModalType = 'password'"
+        (click)="openModal('password', 'Change password', 'Set new password')"
         class="flex items-center w-full gap-2.5 p-2 transition-opacity active:opacity-50 rounded-md hover:bg-neutral-900"
     >
         <svg
@@ -81,7 +81,7 @@
 
     <button
         type="button"
-        (click)="modalVisibility = true; activeModalType = 'deletion'"
+        (click)="openModal('deletion', 'Delete your account', 'Proceed')"
         class="py-1.5 mt-4 font-semibold rounded-md w-full bg-red-500 transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#ef4444]"
     >
         Delete Account
@@ -104,7 +104,25 @@
         'top-full': !modalVisibility
     }"
 >
-    <div class="self-center text-lg font-semibold">Modal title:</div>
+    <div class="self-center text-lg font-semibold">{{ activeTitle }}:</div>
+
+    <!--  -->
+
+    @if (activeModalType === 'pfp') { }
+
+    <!--  -->
+
+    @if (activeModalType === 'username') { }
+
+    <!--  -->
+
+    @if (activeModalType === 'password') { }
+
+    <!--  -->
+
+    @if (activeModalType === 'deletion') { }
+
+    <!--  -->
 </div>
 }
 
@@ -121,9 +139,14 @@
 >
     <button
         type="button"
-        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-emerald-500 transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
+        class="py-1.5 mt-2 font-semibold rounded-md w-full transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+        [disabled]="1"
+        [ngClass]="{
+            'bg-red-500': activeModalType === 'deletion',
+            'bg-emerald-500': activeModalType !== 'deletion',
+        }"
     >
-        Action button
+        {{ activeActionBtnName }}
     </button>
 
     <button

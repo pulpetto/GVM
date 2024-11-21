@@ -58,4 +58,17 @@ export class AccountComponent {
     modalVisibility: boolean = false;
 
     activeModalType!: 'pfp' | 'username' | 'password' | 'deletion';
+    activeTitle: string = '';
+    activeActionBtnName: string = '';
+
+    openModal(
+        modalType: 'pfp' | 'username' | 'password' | 'deletion',
+        title: string,
+        actionBtnName: string
+    ) {
+        this.modalVisibility = true;
+        this.activeModalType = modalType;
+        this.activeTitle = title;
+        this.activeActionBtnName = actionBtnName;
+    }
 }
