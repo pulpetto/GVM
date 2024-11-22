@@ -45,21 +45,47 @@
 
 <div class="relative flex flex-col items-center gap-4 p-4 pt-6">
     <div class="flex flex-col items-center w-full gap-2">
+        @if (userPfp()) {
         <button
             type="button"
             (click)="pfpFullView = true"
             class="border-2 shadow-[0_0_10px_2px_#10b981] border-solid rounded-full border-emerald-500 overflow-hidden transition-all active:opacity-50 hover:shadow-[0_0_15px_3px_#10b981]"
         >
             <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHlY7jda7OEmJpPl0ga2UpDzFX8iE9OyVWICN1Qtefc0EWL9NqvlpI1gxKL4dTHTAuk_U&usqp=CAU"
+                [src]="userPfp()"
                 class="w-16 h-16"
-                alt=""
+                [alt]="userName() + ' full pfp'"
             />
         </button>
+        } @else {
+        <div
+            class="w-16 h-16 p-2 border-2 border-solid rounded-full shadow-[0_0_10px_2px_#fff]"
+        >
+            <svg
+                class="stroke-white"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M5 20V19C5 15.134 8.13401 12 12 12V12C15.866 12 19 15.134 19 19V20"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </div>
+        }
 
         <div class="flex flex-col items-center gap-1 scale-90">
             <div class="text-xl font-semibold">
-                User Name
+                {{ userName() }}
                 <!--  -->
                 @if (userRole() !== 'user') {
                 <span class="text-emerald-500">
@@ -363,9 +389,9 @@
     style="z-index: 60"
 >
     <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHlY7jda7OEmJpPl0ga2UpDzFX8iE9OyVWICN1Qtefc0EWL9NqvlpI1gxKL4dTHTAuk_U&usqp=CAU"
+        [src]="userPfp()"
         class="w-full h-full rounded-full"
-        alt=""
+        [alt]="userName() + ' full pfp'"
     />
 </div>
 }

@@ -38,7 +38,9 @@ const timing = '0.3s cubic-bezier(0.4, 0, 0.2, 1)';
 export class ProfileComponent {
     userService = inject(UserService);
 
+    userName = computed(() => this.userService.getUser()?.username);
     userRole = computed(() => this.userService.getUser()?.role);
+    userPfp = computed(() => this.userService.getUser()?.pfpUrl);
     proPlan = computed(() => this.userService.getUser()?.pro);
 
     pfpFullView: boolean = false;
