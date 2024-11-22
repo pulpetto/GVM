@@ -5,6 +5,16 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../../../services/user.service';
 import { ToastService } from '../../../../../services/toast.service';
+import {
+    AbstractControl,
+    AsyncValidatorFn,
+    FormBuilder,
+    ValidationErrors,
+    Validators,
+    ReactiveFormsModule,
+} from '@angular/forms';
+
+import { catchError, debounceTime, map, Observable, of, switchMap } from 'rxjs';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -20,7 +30,12 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-account',
     standalone: true,
-    imports: [ActivityBarComponent, PreviousRouteButtonComponent, CommonModule],
+    imports: [
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
+        CommonModule,
+        ReactiveFormsModule,
+    ],
     templateUrl: './account.component.html',
     styleUrl: './account.component.css',
     animations: [
@@ -59,12 +74,15 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class AccountComponent {
     userService = inject(UserService);
     toastService = inject(ToastService);
+    fb = inject(FormBuilder);
 
     modalVisibility: boolean = false;
 
     activeModalType!: 'pfp' | 'username' | 'password' | 'deletion';
     activeTitle: string = '';
     activeActionBtnName: string = '';
+
+    // Pfp ---------------------------------------------------------
 
     @ViewChild('thumbnail') thumbnailInput!: ElementRef<HTMLInputElement>;
 
@@ -113,5 +131,47 @@ export class AccountComponent {
             this.modalVisibility = false;
             this.toastService.show('Modification error', true);
         }
+    }
+
+    // Username ----------------------------------------------------------
+    singupForm = this.fb.group({
+        username: this.fb.control('', {
+            validators: [Validators.required],
+            asyncValidators: [this.usernameAsyncValidator()],
+        }),
+    });
+
+    usernameAsyncValidator(): AsyncValidatorFn {
+        return (
+            control: AbstractControl
+        ): Observable<ValidationErrors | null> => {
+            if (!control.value) {
+                return of(null);
+            }
+
+            return of(control.value).pipe(
+                debounceTime(300),
+                switchMap((username) =>
+                    this.userService.checkIfUserExists(username)
+                ),
+                map((exists) =>
+                    exists ? { usernameAlreadyTaken: true } : null
+                ),
+                catchError((error) => {
+                    console.error('Error checking username:', error);
+                    return of({ serverError: true });
+                })
+            );
+        };
+    }
+
+    changeUsername() {
+        this.userService.changeUsername(
+            this.singupForm.controls.username.value!
+        );
+
+        this.singupForm.reset();
+
+        this.modalVisibility = false;
     }
 }
