@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { ActivityBarComponent } from '../../../../../shared/activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../../../../shared/previous-route-button/previous-route-button.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../../../../services/user.service';
+import { ToastService } from '../../../../../services/toast.service';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -55,11 +57,19 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class AccountComponent {
+    userService = inject(UserService);
+    toastService = inject(ToastService);
+
     modalVisibility: boolean = false;
 
     activeModalType!: 'pfp' | 'username' | 'password' | 'deletion';
     activeTitle: string = '';
     activeActionBtnName: string = '';
+
+    @ViewChild('thumbnail') thumbnailInput!: ElementRef<HTMLInputElement>;
+
+    selectedThumbnail: string | ArrayBuffer | null = null;
+    selectedThumbnailFile!: File | null;
 
     openModal(
         modalType: 'pfp' | 'username' | 'password' | 'deletion',
@@ -70,5 +80,38 @@ export class AccountComponent {
         this.activeModalType = modalType;
         this.activeTitle = title;
         this.activeActionBtnName = actionBtnName;
+    }
+
+    onPfpSelect() {
+        if (this.thumbnailInput.nativeElement.files) {
+            this.selectedThumbnailFile =
+                this.thumbnailInput.nativeElement.files[0];
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                this.selectedThumbnail = reader.result;
+            };
+
+            reader.readAsDataURL(this.selectedThumbnailFile);
+        }
+    }
+
+    removePfp() {
+        this.selectedThumbnail = null;
+    }
+
+    async updatePfp() {
+        try {
+            this.userService.updatePfp(this.selectedThumbnailFile!);
+
+            this.selectedThumbnail = null;
+            this.selectedThumbnailFile = null;
+
+            this.modalVisibility = false;
+            this.toastService.show('Pfp updated successfully', false);
+        } catch {
+            this.modalVisibility = false;
+            this.toastService.show('Modification error', true);
+        }
     }
 }
