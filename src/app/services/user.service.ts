@@ -62,6 +62,7 @@ import {
 } from '@angular/fire/storage';
 import { ExercisePreview } from '../interfaces/exercise-preview';
 import { ExerciseDetails } from '../interfaces/exercise-details';
+import { ToastService } from './toast.service';
 
 @Injectable({
     providedIn: 'root',
@@ -72,6 +73,7 @@ export class UserService {
     router = inject(Router);
     destroyRef = inject(DestroyRef);
     dataService = inject(DataService);
+    toastService = inject(ToastService);
 
     storage = getStorage();
 
@@ -190,6 +192,17 @@ export class UserService {
             })
             .catch((error) => {
                 console.error(error);
+            });
+    }
+
+    changeUsername(newUsername: string) {
+        updateDoc(this.userDocRef!, { username: newUsername })
+            .then(() => {
+                this.toastService.show('Username updated successfully', false);
+            })
+            .catch((error) => {
+                console.error(error);
+                this.toastService.show('An error occured, try again', true);
             });
     }
 
