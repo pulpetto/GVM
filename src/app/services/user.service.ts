@@ -54,6 +54,7 @@ import { DataService } from './data.service';
 import { WorkoutDoneWithId } from '../interfaces/workout/workout-done-with-id';
 import { Step } from '../interfaces/step';
 import {
+    deleteObject,
     getDownloadURL,
     getStorage,
     ref,
@@ -126,6 +127,7 @@ export class UserService {
                     username: user.username,
                     email: user.email,
                     role: 'user',
+                    pfpUrl: null,
                 };
 
                 setDoc(

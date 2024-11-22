@@ -3,4 +3,5 @@ export interface User {
     email: string;
     role: string;
     pro: boolean;
+    pfpUrl: string | null;
 }
