@@ -134,7 +134,7 @@ export class AccountComponent {
     }
 
     // Username ----------------------------------------------------------
-    singupForm = this.fb.group({
+    usernameForm = this.fb.group({
         username: this.fb.control('', {
             validators: [Validators.required],
             asyncValidators: [this.usernameAsyncValidator()],
@@ -167,10 +167,10 @@ export class AccountComponent {
 
     changeUsername() {
         this.userService.changeUsername(
-            this.singupForm.controls.username.value!
+            this.usernameForm.controls.username.value!
         );
 
-        this.singupForm.reset();
+        this.usernameForm.reset();
 
         this.modalVisibility = false;
     }

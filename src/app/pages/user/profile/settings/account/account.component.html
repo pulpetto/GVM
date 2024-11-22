@@ -189,13 +189,13 @@
     @if (activeModalType === 'username') {
     <input
         type="text"
-        [formControl]="singupForm.controls.username"
+        [formControl]="usernameForm.controls.username"
         placeholder="New username..."
         class="p-2 mt-1 font-semibold bg-opacity-50 rounded-md outline-none bg-neutral-900 placeholder-neutral-700 focus:outline-emerald-500 outline-offset-0"
     />
     <!-- prettier-ignore -->
-    @if (singupForm.controls.username.errors) {
-    @if (singupForm.controls.username.errors['usernameAlreadyTaken']) {
+    @if (usernameForm.controls.username.errors) {
+    @if (usernameForm.controls.username.errors['usernameAlreadyTaken']) {
     <div class="text-sm font-semibold text-center text-red-500">
         Username already taken
     </div>
@@ -239,7 +239,7 @@
 
     @if (activeModalType === 'username') {
     <!--  -->
-    @if(singupForm.pending) {
+    @if(usernameForm.pending) {
     <div
         class="flex items-center justify-center w-full p-1.5 font-semibold border-2 border-transparent border-solid rounded-md cursor-wait animate-pulse text-neutral-200 bg-emerald-500"
     >
@@ -266,7 +266,7 @@
         type="button"
         (click)="changeUsername()"
         class="py-1.5 mt-2 font-semibold rounded-md w-full bg-emerald-500 transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
-        [disabled]="singupForm.invalid"
+        [disabled]="usernameForm.invalid"
     >
         {{ activeActionBtnName }}
     </button>
