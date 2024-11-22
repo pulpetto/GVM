@@ -968,4 +968,19 @@ export class UserService {
             )
         );
     }
+
+    async updatePfp(imageFile: File) {
+        const oldPfpUrl = (await getDoc(this.userDocRef!)).data()!['pfpUrl'];
+        const imageFilePath = `users/${this.currentUser()?.username}/pfp`;
+        const storageRef = ref(this.storage, imageFilePath);
+
+        if (oldPfpUrl) {
+            await deleteObject(storageRef);
+        }
+
+        const snapshot = await uploadBytes(storageRef, imageFile);
+        const imagePreviewUrl = await getDownloadURL(snapshot.ref);
+
+        updateDoc(this.userDocRef!, { pfpUrl: imagePreviewUrl });
+    }
 }
