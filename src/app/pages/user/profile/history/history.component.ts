@@ -27,7 +27,7 @@ export class HistoryComponent implements OnInit {
     workoutsCount!: number;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lastDoc: any;
-    limit = 3;
+    limit = 5;
 
     ngOnInit() {
         this.userService.user$
