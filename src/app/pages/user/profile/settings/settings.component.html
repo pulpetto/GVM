@@ -70,8 +70,9 @@
         <div>Subscription</div>
     </a>
 
-    <a
-        routerLink="theme"
+    <button
+        type="button"
+        (click)="themeModalVisibility = true"
         class="flex items-center w-full gap-2.5 p-2 transition-opacity active:opacity-50 rounded-md hover:bg-neutral-900"
     >
         <svg
@@ -88,7 +89,7 @@
             />
         </svg>
         <div>Theme</div>
-    </a>
+    </button>
 
     <a
         routerLink="guide"
@@ -130,3 +131,155 @@
         Logout
     </button>
 </div>
+
+@if (themeModalVisibility) {
+<!-- eslint-disable-next-line -->
+<div
+    @openClose2
+    (click)="themeModalVisibility = false"
+    class="fixed top-0 left-0 z-40 w-screen h-screen bg-black bg-opacity-80"
+></div>
+
+<div
+    @openClose
+    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
+    [ngClass]="{
+        'top-1/2': themeModalVisibility,
+        'top-full': !themeModalVisibility
+    }"
+>
+    <div class="self-center text-lg font-semibold">Select theme:</div>
+
+    <button
+        type="button"
+        class="flex items-center gap-2 p-2 font-semibold transition-all rounded-md hover:bg-neutral-900 active:opacity-50"
+    >
+        <svg
+            class="w-6 h-6 mt-1 stroke-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M2 15.5V2.6C2 2.26863 2.26863 2 2.6 2H21.4C21.7314 2 22 2.26863 22 2.6V15.5M2 15.5V17.4C2 17.7314 2.26863 18 2.6 18H21.4C21.7314 18 22 17.7314 22 17.4V15.5M2 15.5H22M9 22H10.5M10.5 22V18M10.5 22H13.5M13.5 22H15M13.5 22L13.5 18"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+
+        <div>System theme</div>
+    </button>
+
+    <button
+        type="button"
+        class="flex items-center gap-2 p-2 font-semibold transition-all rounded-md hover:bg-neutral-900 active:opacity-50"
+    >
+        <svg
+            class="w-6 h-6 stroke-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M22 12L23 12"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M12 2V1"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M12 23V22"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M20 20L19 19"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M20 4L19 5"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M4 20L5 19"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M4 4L5 5"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M1 12L2 12"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+
+        <div>Light theme</div>
+    </button>
+
+    <button
+        type="button"
+        class="flex items-center gap-2 p-2 font-semibold transition-all rounded-md hover:bg-neutral-900 active:opacity-50"
+    >
+        <svg
+            class="w-6 h-6 stroke-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M3 11.5066C3 16.7497 7.25034 21 12.4934 21C16.2209 21 19.4466 18.8518 21 15.7259C12.4934 15.7259 8.27411 11.5066 8.27411 3C5.14821 4.55344 3 7.77915 3 11.5066Z"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+
+        <div>Dark theme</div>
+    </button>
+</div>
+}
+
+<!--  -->
+
+@if (themeModalVisibility) {
+<div
+    @openClose3
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
+    [ngClass]="{
+        'bottom-0': themeModalVisibility,
+        '-bottom-full': !themeModalVisibility,
+    }"
+>
+    <button
+        type="button"
+        (click)="themeModalVisibility = false"
+        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-neutral-900 transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
+    >
+        Close
+    </button>
+</div>
+}
