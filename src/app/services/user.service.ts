@@ -26,8 +26,11 @@ import {
 import {
     Auth,
     createUserWithEmailAndPassword,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
     signInWithEmailAndPassword,
     signOut,
+    updatePassword,
     user,
 } from '@angular/fire/auth';
 import {
@@ -204,6 +207,27 @@ export class UserService {
                 console.error(error);
                 this.toastService.show('An error occured, try again', true);
             });
+    }
+
+    async changePassword(currentPassword: string, newPassword: string) {
+        const user = this.authentication.currentUser;
+
+        try {
+            if (user) {
+                const credential = EmailAuthProvider.credential(
+                    user.email!,
+                    currentPassword
+                );
+
+                await reauthenticateWithCredential(user, credential);
+
+                await updatePassword(user, newPassword);
+
+                this.toastService.show('Password updated successfully', false);
+            }
+        } catch (err) {
+            this.toastService.show('An error occured, try again', true);
+        }
     }
 
     checkIfUserExists(username: string): Observable<boolean> {
