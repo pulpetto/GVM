@@ -511,14 +511,14 @@ export class UserService {
         if (lastDoc) {
             q = query(
                 workoutsDoneRef,
-                orderBy('dateFinish', 'desc'),
-                startAfter(lastDoc['dateFinish']),
+                orderBy('dateStart', 'desc'),
+                startAfter(lastDoc['dateStart']),
                 limit(itemLimit)
             );
         } else {
             q = query(
                 workoutsDoneRef,
-                orderBy('dateFinish', 'desc'),
+                orderBy('dateStart', 'desc'),
                 limit(itemLimit)
             );
         }
