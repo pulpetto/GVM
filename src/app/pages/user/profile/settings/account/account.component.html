@@ -203,8 +203,55 @@
 
     <!--  -->
 
-    @if (activeModalType === 'password') { }
+    @if (activeModalType === 'password') {
+    <input
+        type="password"
+        [formControl]="passwordChangeForm.controls.currentPassword"
+        placeholder="Current password..."
+        class="p-2 mt-1 font-semibold bg-opacity-50 rounded-md outline-none bg-neutral-900 placeholder-neutral-700 focus:outline-emerald-500 outline-offset-0"
+    />
 
+    <input
+        type="password"
+        [formControl]="passwordChangeForm.controls.newPassword"
+        placeholder="New password..."
+        class="p-2 mt-1 font-semibold bg-opacity-50 rounded-md outline-none bg-neutral-900 placeholder-neutral-700 focus:outline-emerald-500 outline-offset-0"
+    />
+
+    <!-- prettier-ignore -->
+    @if (
+        passwordChangeForm.touched &&
+        passwordChangeForm.dirty &&
+        passwordChangeForm.controls.newPassword.errors
+    ) {
+    <div class="text-sm font-semibold text-center text-red-500">
+        @if (passwordChangeForm.controls.newPassword.value!.length > 0) {
+        <!-- prettier-ignore -->
+        @if (passwordChangeForm.controls.newPassword.errors['uppercaseLetterMissing']) {
+            Add at least 1 uppercase letter.
+        }
+
+        @if (passwordChangeForm.controls.newPassword.errors['lowercaseLetterMissing']) {
+            Add at least 1 lowercase letter.
+        }
+
+        @if (passwordChangeForm.controls.newPassword.errors['numberMissing']) {
+            Add at least 1 number.
+        }
+
+        @if (passwordChangeForm.controls.newPassword.errors['symbolMissing']) {
+            Add at least 1 symbol.
+        }
+
+        @if (passwordChangeForm.controls.newPassword.errors['passwordTooShort']) {
+            8 characters minimum.
+        }
+        <!--  -->
+        }
+    </div>
+    }
+    <!--  -->
+    }
     <!--  -->
 
     @if (activeModalType === 'deletion') { }
@@ -272,6 +319,19 @@
     </button>
     }
     <!--  -->
+    }
+
+    <!--  -->
+
+    @if (activeModalType === 'password') {
+    <button
+        type="button"
+        (click)="changePassword()"
+        class="py-1.5 mt-2 font-semibold rounded-md w-full bg-emerald-500 transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+        [disabled]="passwordChangeForm.invalid"
+    >
+        {{ activeActionBtnName }}
+    </button>
     }
 
     <button

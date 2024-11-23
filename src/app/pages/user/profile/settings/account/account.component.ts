@@ -174,4 +174,56 @@ export class AccountComponent {
 
         this.modalVisibility = false;
     }
+
+    // Password ----------------------------------------------------------
+    passwordChangeForm = this.fb.group({
+        currentPassword: this.fb.control('', {
+            validators: [Validators.required],
+        }),
+        newPassword: this.fb.control('', {
+            validators: [
+                Validators.required,
+                this.passwordValidator.bind(this),
+            ],
+        }),
+    });
+
+    passwordValidator(control: AbstractControl): ValidationErrors | null {
+        const value: string = control.value;
+
+        if (!/[A-Z]/.test(value)) {
+            return { uppercaseLetterMissing: true };
+        }
+
+        if (!/[a-z]/.test(value)) {
+            return { lowercaseLetterMissing: true };
+        }
+
+        if (!/[0-9]/.test(value)) {
+            return { numberMissing: true };
+        }
+
+        if (!/[!@#$%^&*()_+{}[\]:;<>,.?~\\-]/.test(value)) {
+            return {
+                symbolMissing: true,
+            };
+        }
+
+        if (value.length < 8) {
+            return { passwordTooShort: true };
+        }
+
+        return null;
+    }
+
+    changePassword() {
+        this.userService.changePassword(
+            this.passwordChangeForm.controls.currentPassword.value!,
+            this.passwordChangeForm.controls.newPassword.value!
+        );
+
+        this.passwordChangeForm.reset();
+
+        this.modalVisibility = false;
+    }
 }
