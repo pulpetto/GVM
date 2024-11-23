@@ -78,7 +78,7 @@ export class AccountComponent {
 
     modalVisibility: boolean = false;
 
-    activeModalType!: 'pfp' | 'username' | 'password' | 'deletion';
+    activeModalType!: 'pfp' | 'username' | 'password';
     activeTitle: string = '';
     activeActionBtnName: string = '';
 
@@ -90,7 +90,7 @@ export class AccountComponent {
     selectedThumbnailFile!: File | null;
 
     openModal(
-        modalType: 'pfp' | 'username' | 'password' | 'deletion',
+        modalType: 'pfp' | 'username' | 'password',
         title: string,
         actionBtnName: string
     ) {
