@@ -58,7 +58,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class SettingsComponent {
     userService = inject(UserService);
 
-    themeModalVisibility: boolean = true;
+    themeModalVisibility: boolean = false;
 
     logout() {
         this.userService.logoutUser();
