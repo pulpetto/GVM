@@ -2,11 +2,12 @@ import { Component, inject, Input } from '@angular/core';
 import { TimeFormatterPipe } from '../../../pipes/time-formatter.pipe';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { WorkoutDoneFull } from '../../../interfaces/workout/workout-done-full';
+import { TimePassedPipe } from '../../../pipes/time-passed.pipe';
 
 @Component({
     selector: 'app-workout-done-preview',
     standalone: true,
-    imports: [TimeFormatterPipe, RouterModule],
+    imports: [TimeFormatterPipe, RouterModule, TimePassedPipe],
     templateUrl: './workout-done-preview.component.html',
     styleUrl: './workout-done-preview.component.css',
 })

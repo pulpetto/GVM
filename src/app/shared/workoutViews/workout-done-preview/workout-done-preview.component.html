@@ -6,7 +6,9 @@
     <div class="flex justify-between">
         <div class="flex flex-col">
             <div class="text-lg font-semibold">{{ workoutData.name }}</div>
-            <div class="text-sm opacity-50">4h ago</div>
+            <div class="text-sm opacity-50">
+                {{ workoutData.dateStart * 1000 | timePassed }}
+            </div>
         </div>
         <button class="group">
             <svg
