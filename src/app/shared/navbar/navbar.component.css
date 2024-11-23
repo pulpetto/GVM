@@ -1,0 +1,7 @@
+a svg {
+    stroke: #fff;
+}
+
+a.active-link svg {
+    stroke: #10b981;
+}

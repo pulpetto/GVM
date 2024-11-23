@@ -7,10 +7,11 @@
 >
     <a
         routerLink="home"
+        [routerLinkActive]="['active-link', 'text-emerald-500']"
         class="flex flex-col items-center transition-opacity group active:opacity-50"
     >
         <svg
-            class="w-8 h-8 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500 group-hover:dark:stroke-emerald-500"
+            class="w-8 h-8 transition-colors group-hover:stroke-emerald-500"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -31,10 +32,11 @@
 
     <a
         routerLink="workout"
+        [routerLinkActive]="['active-link', 'text-emerald-500']"
         class="flex flex-col items-center transition-opacity group active:opacity-50"
     >
         <svg
-            class="w-8 h-8 transition-colors rotate-45 stroke-neutral-950 dark:stroke-neutral-200 group-hover:stroke-emerald-500 group-hover:dark:stroke-emerald-500"
+            class="w-8 h-8 transition-colors rotate-45 group-hover:stroke-emerald-500"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -79,10 +81,11 @@
 
     <a
         routerLink="profile"
+        [routerLinkActive]="['active-link', 'text-emerald-500']"
         class="flex flex-col items-center transition-opacity group active:opacity-50"
     >
         <svg
-            class="w-8 h-8 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500 group-hover:dark:stroke-emerald-500"
+            class="w-8 h-8 transition-colors group-hover:stroke-emerald-500"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -110,10 +113,11 @@
     @if (userRole() === 'admin') {
     <a
         routerLink="admin"
+        [routerLinkActive]="['active-link', 'text-emerald-500']"
         class="flex flex-col items-center transition-opacity group active:opacity-50"
     >
         <svg
-            class="w-8 h-8 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500 group-hover:dark:stroke-emerald-500"
+            class="w-8 h-8 transition-colors group-hover:stroke-emerald-500"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
