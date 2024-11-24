@@ -1,6 +1,6 @@
 <app-activity-bar [title]="'Goals'">
     <app-previous-route-button leftSide></app-previous-route-button>
-    <div rightSide></div>
+    <app-goals-creator rightSide class="mt-1"></app-goals-creator>
 </app-activity-bar>
 
 <div class="flex flex-col p-4">
@@ -29,7 +29,6 @@
     </div>
 
     @if (activeTabName === 'current') {
-    <app-goals-creator></app-goals-creator>
     <!--  -->
     @if (currentGoals.length === 0) {
     <div
