@@ -66,6 +66,7 @@ import {
 import { ExercisePreview } from '../interfaces/exercise-preview';
 import { ExerciseDetails } from '../interfaces/exercise-details';
 import { ToastService } from './toast.service';
+import { Goal } from '../interfaces/goal';
 
 @Injectable({
     providedIn: 'root',
@@ -1019,5 +1020,39 @@ export class UserService {
         const imagePreviewUrl = await getDownloadURL(snapshot.ref);
 
         updateDoc(this.userDocRef!, { pfpUrl: imagePreviewUrl });
+    }
+
+    addGoal(goal: { targetWeight: number; exerciseId: string }) {
+        const goalsRef: CollectionReference = collection(
+            this.userDocRef!,
+            'goals'
+        );
+
+        addDoc(goalsRef, goal);
+
+        this.toastService.show('Goal added successfully', false);
+    }
+
+    getGoals(): Observable<Goal[]> {
+        const goalsRef: CollectionReference = collection(
+            this.userDocRef!,
+            'goals'
+        );
+
+        return from(
+            getDocs(goalsRef).then((querySnapshot) => {
+                const goals: Goal[] = [];
+
+                querySnapshot.docs.forEach((doc) => {
+                    const goal: Goal = doc.data() as Goal;
+
+                    goal.id = doc.id;
+
+                    goals.push(goal);
+                });
+
+                return goals;
+            })
+        );
     }
 }
