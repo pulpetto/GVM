@@ -107,4 +107,13 @@ export class GoalsCreatorComponent {
             });
         this.newGoalModalVisibility = true;
     }
+
+    addGoal() {
+        this.userService.addGoal({
+            exerciseId: this.selectedExercise!.id,
+            targetWeight: +this.goal1rm,
+        });
+
+        this.newGoalModalVisibility = false;
+    }
 }
