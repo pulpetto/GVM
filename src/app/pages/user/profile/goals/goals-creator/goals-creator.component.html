@@ -60,17 +60,18 @@
     </button>
     <div class="mb-10 text-sm font-semibold">
         <span class="opacity-50"> Your currently estimated 1rm is </span>
-        <span class="text-emerald-5003">120kg</span>
+        <span class="text-emerald-5003">{{ estimated1rm }}kg</span>
     </div>
 
     <div class="flex flex-col items-center">
         <div class="font-semibold">Enter your goal weight:</div>
         <input
+            [(ngModel)]="goal1rm"
+            mask="000"
+            suffix="kg"
             type="text"
             placeholder="-"
-            suffix="kg"
-            mask="000"
-            class="w-24 p-2 text-2xl font-semibold text-center bg-transparent rounded-md outline-none placeholder-neutral-700"
+            class="p-2 text-2xl font-semibold text-center bg-transparent rounded-md outline-none placeholder-neutral-700"
         />
     </div>
 </div>
