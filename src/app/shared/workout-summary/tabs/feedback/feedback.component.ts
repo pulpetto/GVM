@@ -12,12 +12,9 @@ export class FeedbackComponent {
     @ViewChildren('workloadOptionBtn')
     workloadOptionButtons!: QueryList<ElementRef>;
 
-    leftDistancePxHover: number = 0;
     activeOptionIndex: number | null = null;
     activeOptionWidthPx!: number;
-    leftDistancePxActive: number = 0;
-    hoverOptionIndex: number | null = null;
-    hoverOptionWidthPx!: number;
+    leftDistancePxActive: number = -100;
 
     workloadOptions: string[] = [
         'Not a challenge, too light',
@@ -40,23 +37,5 @@ export class FeedbackComponent {
                     index
                 ].nativeElement.offsetLeft;
         }
-    }
-
-    onWorkloadOptionsMouseOver(index: number) {
-        this.hoverOptionIndex = index;
-
-        this.leftDistancePxHover =
-            this.workloadOptionButtons.toArray()[
-                index
-            ].nativeElement.offsetLeft;
-
-        this.hoverOptionWidthPx =
-            this.workloadOptionButtons.toArray()[
-                index
-            ].nativeElement.clientWidth;
-    }
-
-    onWorkloadOptionsMouseOut() {
-        this.hoverOptionIndex = null;
     }
 }
