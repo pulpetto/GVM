@@ -1,6 +1,8 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { CurrentGoal } from '../../../../../interfaces/goals/current-goal';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -16,7 +18,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-goal',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, RouterModule],
     templateUrl: './goal.component.html',
     styleUrl: './goal.component.css',
     animations: [
@@ -53,5 +55,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class GoalComponent {
+    @Input({ required: true }) goal!: CurrentGoal;
+
     optionsModalVisibility: boolean = false;
 }

@@ -31,30 +31,39 @@
         </svg>
     </button>
 
-    <div class="flex flex-col w-1/2 gap-2">
-        <div class="flex items-center gap-2">
+    <div class="flex flex-col items-center w-1/2 gap-2">
+        <a
+            routerLink=""
+            class="flex items-center gap-2 transition-opacity active:opacity-50"
+        >
             <div
-                class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-5000"
+                class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
             >
                 <img
-                    src="assets/exercisesThumbnails/frame_00_delay-1s.jpg"
+                    [src]="goal.exerciseData.imagePreviewUrl"
                     class="w-9 h-9"
-                    alt=""
+                    [alt]="goal.exerciseData.name + ' graphic'"
                 />
             </div>
-            <div class="text-xl font-semibold text-clip">Bench Press</div>
-        </div>
+            <div
+                class="text-xl font-semibold text-center max-w-40 text-ellipsis text-emerald-500"
+            >
+                {{ goal.exerciseData.name }}
+            </div>
+        </a>
 
         <div class="flex flex-col gap-1 font-semibold text-center">
             <div>
-                <span class="opacity-50">Estimated 1rm: </span>
+                <span class="text-neutral-600">Estimated 1rm: </span>
 
-                <span class="font-semibold">122kg</span>
+                <span class="font-semibold">{{ goal.current1rm }}kg</span>
             </div>
             <div>
-                <span class="opacity-50">Targeted 1rm: </span>
+                <span class="text-neutral-600">Targeted 1rm: </span>
 
-                <span class="font-semibold text-emerald-500">140kg</span>
+                <span class="font-semibold text-emerald-500">
+                    {{ goal.goal1rm }}kg
+                </span>
             </div>
         </div>
     </div>
@@ -70,7 +79,7 @@
                 cy="18"
                 r="16"
                 fill="none"
-                class="text-gray-200 stroke-current dark:text-neutral-700"
+                class="text-gray-200 stroke-current dark:text-neutral-900"
                 stroke-width="1"
                 stroke-dasharray="50 100"
                 stroke-linecap="round"
@@ -81,9 +90,25 @@
                 cy="18"
                 r="16"
                 fill="none"
-                class="stroke-current dark:text-green-500"
+                class="transition-colors stroke-current"
+                [ngClass]="{
+                    'text-red-500': goal.percentageProgress <= 10,
+                    'text-orange-500':
+                        goal.percentageProgress > 10 &&
+                        goal.percentageProgress <= 30,
+                    'text-amber-500':
+                        goal.percentageProgress > 30 &&
+                        goal.percentageProgress <= 50,
+                    'text-yellow-500':
+                        goal.percentageProgress > 50 &&
+                        goal.percentageProgress <= 70,
+                    'text-lime-500':
+                        goal.percentageProgress > 70 &&
+                        goal.percentageProgress <= 90,
+                    'text-green-500': goal.percentageProgress > 90
+                }"
                 stroke-width="1.5"
-                stroke-dasharray="37.5 100"
+                [attr.stroke-dasharray]="goal.percentageProgress / 2 + ' 100'"
                 stroke-linecap="round"
             ></circle>
         </svg>
@@ -91,8 +116,48 @@
         <div
             class="absolute text-center transform -translate-x-1/2 top-9 start-1/2"
         >
-            <span class="text-3xl font-bold text-green-500">75%</span>
-            <span class="block text-sm text-green-500">Progress</span>
+            <span
+                class="text-3xl font-bold transition-colors"
+                [ngClass]="{
+                    'text-red-500': goal.percentageProgress <= 10,
+                    'text-orange-500':
+                        goal.percentageProgress > 10 &&
+                        goal.percentageProgress <= 30,
+                    'text-amber-500':
+                        goal.percentageProgress > 30 &&
+                        goal.percentageProgress <= 50,
+                    'text-yellow-500':
+                        goal.percentageProgress > 50 &&
+                        goal.percentageProgress <= 70,
+                    'text-lime-500':
+                        goal.percentageProgress > 70 &&
+                        goal.percentageProgress <= 90,
+                    'text-green-500': goal.percentageProgress > 90
+                }"
+            >
+                {{ goal.percentageProgress }}%
+            </span>
+            <span
+                class="block text-sm transition-colors"
+                [ngClass]="{
+                    'text-red-500': goal.percentageProgress <= 10,
+                    'text-orange-500':
+                        goal.percentageProgress > 10 &&
+                        goal.percentageProgress <= 30,
+                    'text-amber-500':
+                        goal.percentageProgress > 30 &&
+                        goal.percentageProgress <= 50,
+                    'text-yellow-500':
+                        goal.percentageProgress > 50 &&
+                        goal.percentageProgress <= 70,
+                    'text-lime-500':
+                        goal.percentageProgress > 70 &&
+                        goal.percentageProgress <= 90,
+                    'text-green-500': goal.percentageProgress > 90
+                }"
+            >
+                Progress
+            </span>
         </div>
     </div>
 </div>
@@ -113,7 +178,7 @@
         'top-full': !optionsModalVisibility
     }"
 >
-    <div class="text-center font-semibold">
+    <div class="font-semibold text-center">
         Choose action for selected goal:
     </div>
     <div class="flex flex-col w-full gap-1">
