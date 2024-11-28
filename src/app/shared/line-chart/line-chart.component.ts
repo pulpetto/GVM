@@ -8,13 +8,14 @@ import {
     ViewChild,
 } from '@angular/core';
 import { Chart, ChartEvent, registerables } from 'chart.js';
+import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
 
 Chart.register(...registerables);
 
 @Component({
     selector: 'app-line-chart',
     standalone: true,
-    imports: [],
+    imports: [TimeFormatterPipe],
     templateUrl: './line-chart.component.html',
     styleUrl: './line-chart.component.css',
 })
