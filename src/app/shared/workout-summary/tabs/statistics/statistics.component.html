@@ -1,54 +1,99 @@
-<div class="flex flex-col gap-6">
-    <div class="flex flex-col gap-4">
-        <div class="text-2xl font-semibold text-center">
-            Worked muscle groups
-        </div>
-
-        <div class="flex">
-            <div>
-                <img
-                    src="https://app.fitnessai.com/musclegroups/full/08751101-Obliques_transparent.png"
-                    alt=""
-                />
-            </div>
-            <div>
-                <img
-                    src="https://app.fitnessai.com/musclegroups/full/08761101-Latissimus-Dorsi_transparent.png"
-                    alt=""
-                />
-            </div>
-        </div>
+<div class="flex flex-col gap-4 mt-2">
+    <div class="text-3xl font-semibold text-center">
+        Muscle groups distribution
     </div>
 
-    <div class="flex flex-col gap-4">
-        <div class="text-2xl font-semibold text-center">
-            Muscle groups distribution
+    @if (muscleGroupsDistribution$ | async; as muscleGroups) {
+    <div class="flex flex-col gap-8 mb-8">
+        @for (muscleGroup of muscleGroups | keyvalue; track $index) {
+        <div class="flex flex-col gap-1.5">
+            <div class="flex items-center gap-1.5">
+                <div
+                    class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+                >
+                    <img
+                        [src]="muscleGroup.value.imgPreviewUrl"
+                        class="w-10 h-10 bg-neutral-950"
+                        [alt]="muscleGroup.value.name + ' graphic'"
+                    />
+                </div>
+                <div class="font-semibold">
+                    {{ muscleGroup.value.name }}
+                </div>
+            </div>
+
+            <div class="flex items-center">
+                @if (muscleGroup.value.mainPercentage) {
+                <div
+                    class="h-4 rounded-sm bg-emerald-500 mt-0.5 relative"
+                    [style]="'width:' + muscleGroup.value.mainPercentage + '%;'"
+                    [ngClass]="{
+                        'rounded-r-none':
+                            muscleGroup.value.secondaryPercentage !== 0,
+                    }"
+                >
+                    <div
+                        class="absolute text-sm font-semibold -translate-x-1/2 text-emerald-500 left-1/2 -bottom-6 text-nowrap"
+                    >
+                        {{ muscleGroup.value.mainSets }} Sets
+                    </div>
+                </div>
+                }
+
+                <!--  -->
+
+                @if (muscleGroup.value.secondaryPercentage) {
+                <div
+                    class="h-4 rounded-sm bg-indigo-500 mt-0.5 relative"
+                    [style]="
+                        'width:' + muscleGroup.value.secondaryPercentage + '%;'
+                    "
+                    [ngClass]="{
+                        'rounded-l-none': muscleGroup.value.mainPercentage !== 0
+                    }"
+                >
+                    <div
+                        class="absolute text-sm font-semibold text-indigo-500 -translate-x-1/2 left-1/2 -bottom-6 text-nowrap"
+                    >
+                        {{ muscleGroup.value.secondarySets }} Sets
+                    </div>
+                </div>
+                }
+            </div>
         </div>
+        }
     </div>
+    }
 
     <div class="flex flex-col gap-4">
-        <div class="text-2xl font-semibold text-center">Other statistics</div>
+        <div class="text-3xl font-semibold text-center">Other statistics</div>
 
         <div class="flex flex-col gap-0.5">
             <div>
                 <span class="text-neutral-500"> Total volume: </span>
-                <span class="font-semibold">12 300kg</span>
+                <span class="font-semibold">
+                    {{ workoutData.volume | numberSeparator }}kg
+                </span>
             </div>
             <div>
                 <span class="text-neutral-500">Duration: </span>
-                <span class="font-semibold">1h 34m</span>
+                <span class="font-semibold">
+                    {{ workoutData.duration | timeFormatter }}
+                </span>
             </div>
             <div>
                 <span class="text-neutral-500"> Total sets: </span>
-                <span class="font-semibold">22</span>
+                <span class="font-semibold">{{ workoutData.totalSets }}</span>
             </div>
             <div>
                 <span class="text-neutral-500"> Done sets: </span>
-                <span class="font-semibold">20</span>
+                <span class="font-semibold">{{ workoutData.setsDone }}</span>
             </div>
             <div>
                 <span class="text-neutral-500"> Skipped sets: </span>
-                <span class="font-semibold">2</span>
+                <span class="font-semibold">
+                    {{ workoutData.totalSets - workoutData.setsDone }}
+                </span>
             </div>
         </div>
     </div>
