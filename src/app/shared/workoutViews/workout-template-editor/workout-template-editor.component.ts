@@ -25,7 +25,6 @@ import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
 import { EMPTY, filter, Observable, switchMap } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
 import {
-    CdkDropListGroup,
     CdkDropList,
     CdkDrag,
     CdkDragDrop,
@@ -65,7 +64,6 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         CommonModule,
         LoadingSpinnerComponent,
         ReactiveFormsModule,
-        CdkDropListGroup,
         CdkDropList,
         CdkDrag,
         TimeFormatterPipe,
