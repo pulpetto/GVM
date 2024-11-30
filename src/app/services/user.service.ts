@@ -463,7 +463,8 @@ export class UserService {
     finishWorkout(
         workoutTemplateId: string,
         workoutDoneObj: WorkoutDone,
-        workoutValues: Workout
+        workoutValues: Workout,
+        dataForState: WorkoutDoneFull
     ) {
         const workoutsDoneRef: CollectionReference = collection(
             this.userDocRef!,
@@ -492,9 +493,14 @@ export class UserService {
                 unixTimestamp: workoutDoneObj.dateStart,
             });
 
-            this.router.navigate([
-                `/user/profile/history/${docRef.id}/summary`,
-            ]);
+            dataForState.id = docRef.id;
+
+            this.router.navigate(
+                [`/user/profile/history/${docRef.id}/summary`],
+                {
+                    state: dataForState,
+                }
+            );
         });
     }
 

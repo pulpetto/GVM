@@ -39,6 +39,7 @@ import { StartDateModalComponent } from './start-date-modal/start-date-modal.com
 import { NavbarVisibilityService } from '../../../services/navbar-visibility.service';
 import { ActivityBarComponent } from '../../activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../previous-route-button/previous-route-button.component';
+import { WorkoutDoneFull } from '../../../interfaces/workout/workout-done-full';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop50 = { top: '50%' };
@@ -722,10 +723,21 @@ export class WorkoutTemplateEditorComponent
                 this.selectedExercisesIds
             );
 
+            const dataForState: WorkoutDoneFull =
+                workoutFormObjExtended as WorkoutDoneFull;
+
+            dataForState.exercises.forEach((exercise) => {
+                exercise.staticData = this.exercisesPresentionalData.find(
+                    (presentationalExercise) =>
+                        presentationalExercise.id === exercise.exerciseId
+                )!;
+            });
+
             this.userService.finishWorkout(
                 this.workoutId,
                 workoutFormObjExtended as WorkoutDone,
-                workoutFormObjBase
+                workoutFormObjBase,
+                dataForState
             );
         }
     }
