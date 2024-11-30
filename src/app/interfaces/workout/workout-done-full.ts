@@ -10,7 +10,6 @@ export interface WorkoutDoneFull {
     name: string;
     duration: number;
     dateStart: number;
-    dateFinish: number;
     volume: number;
     totalSets: number;
     setsDone: number;
