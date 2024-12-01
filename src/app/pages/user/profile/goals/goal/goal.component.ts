@@ -56,6 +56,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class GoalComponent {
     @Input({ required: true }) goal!: CurrentGoal;
+    @Input({ required: true }) optionsVisbility!: boolean;
 
     optionsModalVisibility: boolean = false;
 }
