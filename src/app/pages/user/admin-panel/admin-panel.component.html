@@ -1,205 +1,185 @@
-<div class="flex flex-col items-center gap-4 p-4 text-lg">
-    <div class="flex items-center gap-0.5">
+<app-activity-bar [title]="'Database'">
+    <div leftSide></div>
+    <div rightSide></div>
+</app-activity-bar>
+
+<div class="flex flex-col w-full gap-1 p-4">
+    <a
+        routerLink="users"
+        class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
+    >
         <svg
-            class="w-10 h-10 stroke-emerald-500"
+            class="w-6 h-6 mt-0.5 z-20 stroke-white group-hover:stroke-emerald-500 transition-colors"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
             <path
-                d="M5 12V18C5 18 5 21 12 21C19 21 19 18 19 18V12"
-                stroke-width="1.5"
+                d="M1 20V19C1 15.134 4.13401 12 8 12V12C11.866 12 15 15.134 15 19V20"
+                stroke-width="2"
+                stroke-linecap="round"
             />
             <path
-                d="M5 6V12C5 12 5 15 12 15C19 15 19 12 19 12V6"
-                stroke-width="1.5"
+                d="M13 14V14C13 11.2386 15.2386 9 18 9V9C20.7614 9 23 11.2386 23 14V14.5"
+                stroke-width="2"
+                stroke-linecap="round"
             />
             <path
-                d="M12 3C19 3 19 6 19 6C19 6 19 9 12 9C5 9 5 6 5 6C5 6 5 3 12 3Z"
-                stroke-width="1.5"
+                d="M8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12Z"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M18 9C19.6569 9 21 7.65685 21 6C21 4.34315 19.6569 3 18 3C16.3431 3 15 4.34315 15 6C15 7.65685 16.3431 9 18 9Z"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
             />
         </svg>
-        <div class="text-2xl font-semibold text-emerald-500">Edit Database</div>
-    </div>
+        <div class="z-20">Users</div>
+        <div
+            class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
+        ></div>
+    </a>
 
-    <div class="flex flex-col w-full gap-1">
-        <a
-            routerLink="users"
-            class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
+    <a
+        routerLink="exercises"
+        class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
+    >
+        <svg
+            class="z-20 w-5 h-5 mr-0.5 transition-colors stroke-white group-hover:stroke-emerald-500 fill-none"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
         >
-            <svg
-                class="w-6 h-6 mt-0.5 z-20 stroke-white group-hover:stroke-emerald-500 transition-colors"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
+            <g id="bench-press-6" transform="translate(-2 -2)">
                 <path
-                    d="M1 20V19C1 15.134 4.13401 12 8 12V12C11.866 12 15 15.134 15 19V20"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                />
-                <path
-                    d="M13 14V14C13 11.2386 15.2386 9 18 9V9C20.7614 9 23 11.2386 23 14V14.5"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                />
-                <path
-                    d="M8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12Z"
-                    stroke-width="2"
+                    id="primary"
+                    d="M6,21V15H18v6"
                     stroke-linecap="round"
                     stroke-linejoin="round"
+                    stroke-width="1.5"
                 />
                 <path
-                    d="M18 9C19.6569 9 21 7.65685 21 6C21 4.34315 19.6569 3 18 3C16.3431 3 15 4.34315 15 6C15 7.65685 16.3431 9 18 9Z"
-                    stroke-width="2"
+                    id="primary-2"
+                    data-name="primary"
+                    d="M4,3V9M3,4V8M20,3V9m1-5V8M4,6H20M16,4V15M8,15V4m9,17h2M5,21H7"
                     stroke-linecap="round"
                     stroke-linejoin="round"
+                    stroke-width="1.5"
                 />
-            </svg>
-            <div class="z-20">Users</div>
-            <div
-                class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
-            ></div>
-        </a>
+            </g>
+        </svg>
+        <div class="z-20">Exercises</div>
+        <div
+            class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
+        ></div>
+    </a>
+    <a
+        routerLink="muscles"
+        class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
+    >
+        <svg
+            class="z-20 w-5 h-5 mr-0.5 transition-colors stroke-white group-hover:stroke-emerald-500"
+            viewBox="0 0 24 24"
+            id="Layer_1"
+            data-name="Layer 1"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <defs>
+                <style>
+                    .cls-1 {
+                        fill: none;
 
-        <a
-            routerLink="exercises"
-            class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
-        >
-            <svg
-                class="z-20 w-5 h-5 mr-0.5 transition-colors stroke-white group-hover:stroke-emerald-500 fill-none"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <g id="bench-press-6" transform="translate(-2 -2)">
-                    <path
-                        id="primary"
-                        d="M6,21V15H18v6"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                    />
-                    <path
-                        id="primary-2"
-                        data-name="primary"
-                        d="M4,3V9M3,4V8M20,3V9m1-5V8M4,6H20M16,4V15M8,15V4m9,17h2M5,21H7"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                    />
-                </g>
-            </svg>
-            <div class="z-20">Exercises</div>
-            <div
-                class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
-            ></div>
-        </a>
-        <a
-            routerLink="muscles"
-            class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
-        >
-            <svg
-                class="z-20 w-5 h-5 mr-0.5 transition-colors stroke-white group-hover:stroke-emerald-500"
-                viewBox="0 0 24 24"
-                id="Layer_1"
-                data-name="Layer 1"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <defs>
-                    <style>
-                        .cls-1 {
-                            fill: none;
+                        stroke-miterlimit: 10;
+                        stroke-width: 2px;
+                    }
+                </style>
+            </defs>
+            <path
+                class="cls-1"
+                d="M9.14,16.77S8,13.17,10.09,11A14.12,14.12,0,0,1,13,9.13a4.78,4.78,0,1,1,5.61,4.7c-1.83,2.77-5.83,7.71-11.33,7.71C4.36,21.54,1.5,13,1.5,9.13V4.48A2.26,2.26,0,0,1,3.64,2.23c1.73-.09,4,0,4.54,1.17C9,5.11,7.23,8.18,5.32,8.18c0,1.5,1.83,4.76,3.49,6.56"
+            />
+        </svg>
+        <div class="z-20">Muscle Groups</div>
+        <div
+            class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
+        ></div>
+    </a>
 
-                            stroke-miterlimit: 10;
-                            stroke-width: 2px;
-                        }
-                    </style>
-                </defs>
-                <path
-                    class="cls-1"
-                    d="M9.14,16.77S8,13.17,10.09,11A14.12,14.12,0,0,1,13,9.13a4.78,4.78,0,1,1,5.61,4.7c-1.83,2.77-5.83,7.71-11.33,7.71C4.36,21.54,1.5,13,1.5,9.13V4.48A2.26,2.26,0,0,1,3.64,2.23c1.73-.09,4,0,4.54,1.17C9,5.11,7.23,8.18,5.32,8.18c0,1.5,1.83,4.76,3.49,6.56"
-                />
-            </svg>
-            <div class="z-20">Muscle Groups</div>
-            <div
-                class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
-            ></div>
-        </a>
-
-        <a
-            routerLink="equipment"
-            class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
+    <a
+        routerLink="equipment"
+        class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
+    >
+        <svg
+            class="w-6 h-6 mt-0.5 z-20 stroke-white group-hover:stroke-emerald-500 transition-colors rotate-45"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
         >
-            <svg
-                class="w-6 h-6 mt-0.5 z-20 stroke-white group-hover:stroke-emerald-500 transition-colors rotate-45"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M7.4 7H4.6C4.26863 7 4 7.26863 4 7.6V16.4C4 16.7314 4.26863 17 4.6 17H7.4C7.73137 17 8 16.7314 8 16.4V7.6C8 7.26863 7.73137 7 7.4 7Z"
-                    stroke-width="1.75"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-                <path
-                    d="M19.4 7H16.6C16.2686 7 16 7.26863 16 7.6V16.4C16 16.7314 16.2686 17 16.6 17H19.4C19.7314 17 20 16.7314 20 16.4V7.6C20 7.26863 19.7314 7 19.4 7Z"
-                    stroke-width="1.75"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-                <path
-                    d="M1 14.4V9.6C1 9.26863 1.26863 9 1.6 9H3.4C3.73137 9 4 9.26863 4 9.6V14.4C4 14.7314 3.73137 15 3.4 15H1.6C1.26863 15 1 14.7314 1 14.4Z"
-                    stroke-width="1.75"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-                <path
-                    d="M23 14.4V9.6C23 9.26863 22.7314 9 22.4 9H20.6C20.2686 9 20 9.26863 20 9.6V14.4C20 14.7314 20.2686 15 20.6 15H22.4C22.7314 15 23 14.7314 23 14.4Z"
-                    stroke-width="1.75"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-                <path
-                    d="M8 12H16"
-                    stroke-width="1.75"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-            </svg>
-            <div class="z-20">Equipment</div>
-            <div
-                class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
-            ></div>
-        </a>
+            <path
+                d="M7.4 7H4.6C4.26863 7 4 7.26863 4 7.6V16.4C4 16.7314 4.26863 17 4.6 17H7.4C7.73137 17 8 16.7314 8 16.4V7.6C8 7.26863 7.73137 7 7.4 7Z"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M19.4 7H16.6C16.2686 7 16 7.26863 16 7.6V16.4C16 16.7314 16.2686 17 16.6 17H19.4C19.7314 17 20 16.7314 20 16.4V7.6C20 7.26863 19.7314 7 19.4 7Z"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M1 14.4V9.6C1 9.26863 1.26863 9 1.6 9H3.4C3.73137 9 4 9.26863 4 9.6V14.4C4 14.7314 3.73137 15 3.4 15H1.6C1.26863 15 1 14.7314 1 14.4Z"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M23 14.4V9.6C23 9.26863 22.7314 9 22.4 9H20.6C20.2686 9 20 9.26863 20 9.6V14.4C20 14.7314 20.2686 15 20.6 15H22.4C22.7314 15 23 14.7314 23 14.4Z"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M8 12H16"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+        <div class="z-20">Equipment</div>
+        <div
+            class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
+        ></div>
+    </a>
 
-        <a
-            routerLink="achievements"
-            class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
+    <a
+        routerLink="achievements"
+        class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
+    >
+        <svg
+            class="z-20 w-6 h-6 transition-colors stroke-white group-hover:stroke-emerald-500"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
         >
-            <svg
-                class="z-20 w-6 h-6 transition-colors stroke-white group-hover:stroke-emerald-500"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M14.2718 10.445L18 2M9.31612 10.6323L5 2M12.7615 10.0479L8.835 2M14.36 2L13.32 4.5M6 16C6 19.3137 8.68629 22 12 22C15.3137 22 18 19.3137 18 16C18 12.6863 15.3137 10 12 10C8.68629 10 6 12.6863 6 16Z"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-                <path
-                    d="M10.5 15L12.5 13.5V18.5"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-            </svg>
-            <div class="z-20">Achievements</div>
-            <div
-                class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
-            ></div>
-        </a>
-    </div>
+            <path
+                d="M14.2718 10.445L18 2M9.31612 10.6323L5 2M12.7615 10.0479L8.835 2M14.36 2L13.32 4.5M6 16C6 19.3137 8.68629 22 12 22C15.3137 22 18 19.3137 18 16C18 12.6863 15.3137 10 12 10C8.68629 10 6 12.6863 6 16Z"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <path
+                d="M10.5 15L12.5 13.5V18.5"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+        <div class="z-20">Achievements</div>
+        <div
+            class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
+        ></div>
+    </a>
 </div>
