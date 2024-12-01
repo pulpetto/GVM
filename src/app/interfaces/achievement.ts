@@ -1,6 +1,9 @@
 export interface Achievement {
-    id: number;
+    id: string;
     name: string;
     description: string;
-    imageUrl: string;
+    imgPreviewUrl: string;
+    imgPath: string;
+    requiredNumber: number;
+    type: string;
 }
