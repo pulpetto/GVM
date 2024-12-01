@@ -88,7 +88,7 @@
             <app-feedback></app-feedback>
         </ng-template>
         <ng-template #tabContent2>
-            <app-progress></app-progress>
+            <app-progress [workout]="workoutData"></app-progress>
         </ng-template>
         <ng-template #tabContent3>
             <app-statistics [workoutDataInput]="workoutData"></app-statistics>
