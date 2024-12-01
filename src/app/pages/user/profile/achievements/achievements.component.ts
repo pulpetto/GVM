@@ -25,6 +25,6 @@ export class AchievementsComponent implements OnInit {
     achievements$!: Observable<Achievement[]>;
 
     ngOnInit() {
-        this.achievements$ = this.dataService.getAchievements();
+        this.achievements$ = this.dataService.getAchievements$();
     }
 }

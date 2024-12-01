@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { Equipment } from '../interfaces/equipment';
@@ -22,10 +21,28 @@ import { ExerciseDetails } from '../interfaces/exercise-details';
 export class DataService {
     firestore = inject(Firestore);
 
-    constructor(private http: HttpClient) {}
+    getAchievements$(): Observable<Achievement[]> {
+        const achievementsCollectionRef: CollectionReference = collection(
+            this.firestore,
+            'achievements'
+        );
 
-    getAchievements(): Observable<Achievement[]> {
-        return this.http.get<Achievement[]>('assets/data/achievements.json');
+        return from(
+            getDocs(achievementsCollectionRef).then((achievementsSnapshot) => {
+                const achievements: Achievement[] = [];
+
+                achievementsSnapshot.forEach((achievementDoc) => {
+                    const achievement: Achievement =
+                        achievementDoc.data() as Achievement;
+
+                    achievement.id = achievementDoc.id;
+
+                    achievements.push(achievement);
+                });
+
+                return achievements;
+            })
+        );
     }
 
     getMuscleGroup$(id: string): Observable<MuscleGroup> {
