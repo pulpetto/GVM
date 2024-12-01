@@ -1061,4 +1061,19 @@ export class UserService {
             })
         );
     }
+
+    getGoalsForExercises(exercisesIds: string[]): Observable<Goal[]> {
+        const goalsRef: CollectionReference = collection(
+            this.userDocRef!,
+            'goals'
+        );
+
+        const q = query(goalsRef, where('exerciseId', 'in', exercisesIds));
+
+        return from(
+            getDocs(q).then((querySnapshot) =>
+                querySnapshot.docs.map((doc) => doc.data() as Goal)
+            )
+        );
+    }
 }
