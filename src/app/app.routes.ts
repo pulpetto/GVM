@@ -86,6 +86,15 @@ export const routes: Routes = [
                     ).then((component) => component.EquipmentManagerComponent),
             },
             {
+                path: 'admin/achievements',
+                loadComponent: () =>
+                    import(
+                        './pages/user/admin-panel/achievements-manager/achievements-manager.component'
+                    ).then(
+                        (component) => component.AchievementsManagerComponent
+                    ),
+            },
+            {
                 path: 'profile',
                 loadComponent: () =>
                     import('./pages/user/profile/profile.component').then(
