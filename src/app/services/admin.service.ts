@@ -23,6 +23,7 @@ import { from, Observable } from 'rxjs';
 import { Step } from '../interfaces/step';
 import { User } from '../interfaces/user';
 import { ExercisePreview } from '../interfaces/exercise-preview';
+import { Achievement } from '../interfaces/achievement';
 
 @Injectable({
     providedIn: 'root',
@@ -358,6 +359,32 @@ export class AdminService {
             );
 
             return { unsubscribe };
+        });
+    }
+
+    // ---------- Achievements ----------
+
+    async addAchievement(
+        thumbnailFile: File,
+        name: string,
+        requiredNumber: number,
+        type: string,
+        description: string
+    ) {
+        const imageFilePath = `admin/achievements/${Date.now()}_${name}`;
+        const storageRef = ref(this.storage, imageFilePath);
+
+        const snapshot = await uploadBytes(storageRef, thumbnailFile);
+
+        const imagePreviewUrl = await getDownloadURL(snapshot.ref);
+
+        await addDoc(collection(this.firestore, 'achievements'), {
+            name: name,
+            description: description,
+            requiredNumber: requiredNumber,
+            type: type,
+            imgPreviewUrl: imagePreviewUrl,
+            imagePath: imageFilePath,
         });
     }
 }
