@@ -46,7 +46,6 @@ export class AchievementCreatorComponent {
     achievementForm = this.fb.group({
         thumbnailFile: this.fb.control<File | null>(null, Validators.required),
         name: this.fb.control<string>('', Validators.required),
-        requiredNumber: this.fb.control<string>('', Validators.required),
         type: this.fb.control<string>('', Validators.required),
         description: this.fb.control<string>('', Validators.required),
         tiers: this.fb.array(
@@ -137,7 +136,6 @@ export class AchievementCreatorComponent {
             this.adminService.addAchievement(
                 this.achievementForm.get('thumbnailFile')!.value!,
                 this.achievementForm.get('name')!.value!,
-                +this.achievementForm.get('requiredNumber')!.value!,
                 this.achievementForm.get('type')!.value!,
                 this.achievementForm.get('description')!.value!,
                 this.tiers.getRawValue() as Tier[]

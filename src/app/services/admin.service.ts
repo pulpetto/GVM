@@ -368,7 +368,6 @@ export class AdminService {
     async addAchievement(
         thumbnailFile: File,
         name: string,
-        requiredNumber: number,
         type: string,
         description: string,
         tiers: Tier[]
@@ -383,7 +382,6 @@ export class AdminService {
         await addDoc(collection(this.firestore, 'achievements'), {
             name: name,
             description: description,
-            requiredNumber: requiredNumber,
             type: type,
             imgPreviewUrl: imagePreviewUrl,
             imagePath: imageFilePath,
