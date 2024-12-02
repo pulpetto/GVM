@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputComponent } from '../../../../shared/input/input.component';
+import { ToastService } from '../../../../services/toast.service';
 
 const visibleModal = { top: '15%' };
 const hiddenModal = { top: '100%' };
@@ -73,11 +74,12 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class AchievementsManagerComponent implements OnInit {
     adminService = inject(AdminService);
+    toastService = inject(ToastService);
     fb = inject(FormBuilder);
 
     achievements$!: Observable<Achievement[]>;
 
-    newAchievementModalVisbility: boolean = true;
+    newAchievementModalVisbility: boolean = false;
 
     @ViewChild('thumbnail') thumbnailInput!: ElementRef<HTMLInputElement>;
 
@@ -114,5 +116,25 @@ export class AchievementsManagerComponent implements OnInit {
     onNewAchievementImageRemove() {
         this.selectedThumbnail = null;
         this.achievementForm.get('thumbnailFile')?.setValue(null);
+    }
+
+    async addNewAchievement() {
+        try {
+            this.adminService.addAchievement(
+                this.achievementForm.get('thumbnailFile')!.value!,
+                this.achievementForm.get('name')!.value!,
+                +this.achievementForm.get('requiredNumber')!.value!,
+                this.achievementForm.get('type')!.value!,
+                this.achievementForm.get('description')!.value!
+            );
+
+            this.newAchievementModalVisbility = false;
+            this.achievementForm.reset();
+            this.toastService.show('Uploaded successfully', false);
+        } catch (error) {
+            this.newAchievementModalVisbility = false;
+            this.achievementForm.reset();
+            this.toastService.show('Upload error occured', true);
+        }
     }
 }
