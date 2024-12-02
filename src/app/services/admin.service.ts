@@ -387,4 +387,35 @@ export class AdminService {
             imagePath: imageFilePath,
         });
     }
+
+    getAchievements$(): Observable<Achievement[]> {
+        const achievementsCollectionRef: CollectionReference = collection(
+            this.firestore,
+            'achievements'
+        );
+
+        const orderedAchievementsQuery = query(achievementsCollectionRef);
+
+        return new Observable<Achievement[]>((observer) => {
+            const unsubscribe = onSnapshot(
+                orderedAchievementsQuery,
+                (querySnapshot) => {
+                    const achievements: Achievement[] = querySnapshot.docs.map(
+                        (doc) =>
+                            ({
+                                ...doc.data(),
+                                id: doc.id,
+                            } as Achievement)
+                    );
+
+                    observer.next(achievements);
+                },
+                (error) => {
+                    observer.error(error);
+                }
+            );
+
+            return { unsubscribe };
+        });
+    }
 }
