@@ -5,15 +5,9 @@
 
 <div class="flex flex-col p-4">
     @if (achievements$ | async; as achievements) {
-    <div class="flex flex-col gap-4 mt-2">
+    <div class="flex flex-col gap-2">
         @for (achievement of achievements; track $index) {
-        <app-achievement
-            [name]="achievement.name"
-            [description]="achievement.description"
-            [imageUrl]="achievement.imgPreviewUrl"
-            [progressCurrent]="70"
-            [progressEnd]="500"
-        ></app-achievement>
+        <app-achievement [achievement]="achievement"></app-achievement>
         }
     </div>
     }

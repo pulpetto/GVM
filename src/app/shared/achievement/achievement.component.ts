@@ -1,23 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Achievement } from '../../interfaces/achievement';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-achievement',
     standalone: true,
-    imports: [],
+    imports: [CommonModule],
     templateUrl: './achievement.component.html',
     styleUrl: './achievement.component.css',
 })
 export class AchievementComponent implements OnInit {
-    @Input({ required: true }) name!: string;
-    @Input({ required: true }) description!: string;
-    @Input({ required: true }) imageUrl!: string;
-    @Input({ required: true }) progressCurrent!: number;
-    @Input({ required: true }) progressEnd!: number;
+    @Input({ required: true }) achievement!: Achievement;
 
     percentageProgress!: number;
+    activeTier: number = 0;
 
     ngOnInit() {
-        this.percentageProgress =
-            (this.progressCurrent / this.progressEnd) * 100;
+        this.percentageProgress = 55;
     }
 }
