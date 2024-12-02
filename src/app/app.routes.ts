@@ -95,6 +95,15 @@ export const routes: Routes = [
                     ),
             },
             {
+                path: 'admin/achievements/new',
+                loadComponent: () =>
+                    import(
+                        './pages/user/admin-panel/achievements-manager/achievement-creator/achievement-creator.component'
+                    ).then(
+                        (component) => component.AchievementCreatorComponent
+                    ),
+            },
+            {
                 path: 'profile',
                 loadComponent: () =>
                     import('./pages/user/profile/profile.component').then(
