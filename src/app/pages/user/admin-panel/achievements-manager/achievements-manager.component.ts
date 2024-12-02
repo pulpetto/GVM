@@ -1,4 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    inject,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
 import { AdminService } from '../../../../services/admin.service';
@@ -6,8 +12,10 @@ import { Observable } from 'rxjs';
 import { Achievement } from '../../../../interfaces/achievement';
 import { CommonModule } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { InputComponent } from '../../../../shared/input/input.component';
 
-const visibleModal = { top: '25%' };
+const visibleModal = { top: '15%' };
 const hiddenModal = { top: '100%' };
 
 const visibleBg = { opacity: '100%' };
@@ -21,7 +29,13 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-achievements-manager',
     standalone: true,
-    imports: [ActivityBarComponent, PreviousRouteButtonComponent, CommonModule],
+    imports: [
+        ActivityBarComponent,
+        PreviousRouteButtonComponent,
+        CommonModule,
+        ReactiveFormsModule,
+        InputComponent,
+    ],
     templateUrl: './achievements-manager.component.html',
     styleUrl: './achievements-manager.component.css',
     animations: [
@@ -59,12 +73,46 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class AchievementsManagerComponent implements OnInit {
     adminService = inject(AdminService);
+    fb = inject(FormBuilder);
 
     achievements$!: Observable<Achievement[]>;
 
-    newAchievementModalVisbility: boolean = false;
+    newAchievementModalVisbility: boolean = true;
+
+    @ViewChild('thumbnail') thumbnailInput!: ElementRef<HTMLInputElement>;
+
+    selectedThumbnail: string | ArrayBuffer | null = null;
+
+    achievementForm = this.fb.group({
+        thumbnailFile: this.fb.control<File | null>(null, Validators.required),
+        name: this.fb.control<string>('', Validators.required),
+        requiredNumber: this.fb.control<string>('', Validators.required),
+        type: this.fb.control<string>('', Validators.required),
+        description: this.fb.control<string>('', Validators.required),
+    });
 
     ngOnInit() {
         this.achievements$ = this.adminService.getAchievements$();
+    }
+
+    onNewAchievementImageSelect() {
+        if (this.thumbnailInput.nativeElement.files) {
+            this.achievementForm
+                .get('thumbnailFile')
+                ?.setValue(this.thumbnailInput.nativeElement.files[0]);
+
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                this.selectedThumbnail = reader.result;
+            };
+
+            reader.readAsDataURL(this.thumbnailInput.nativeElement.files[0]);
+        }
+    }
+
+    onNewAchievementImageRemove() {
+        this.selectedThumbnail = null;
+        this.achievementForm.get('thumbnailFile')?.setValue(null);
     }
 }
