@@ -24,6 +24,7 @@ import { Step } from '../interfaces/step';
 import { User } from '../interfaces/user';
 import { ExercisePreview } from '../interfaces/exercise-preview';
 import { Achievement } from '../interfaces/achievement';
+import { Tier } from '../interfaces/tier';
 
 @Injectable({
     providedIn: 'root',
@@ -369,7 +370,8 @@ export class AdminService {
         name: string,
         requiredNumber: number,
         type: string,
-        description: string
+        description: string,
+        tiers: Tier[]
     ) {
         const imageFilePath = `admin/achievements/${Date.now()}_${name}`;
         const storageRef = ref(this.storage, imageFilePath);
@@ -385,6 +387,7 @@ export class AdminService {
             type: type,
             imgPreviewUrl: imagePreviewUrl,
             imagePath: imageFilePath,
+            tiers: tiers,
         });
     }
 

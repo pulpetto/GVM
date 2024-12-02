@@ -4,7 +4,7 @@
 </app-activity-bar>
 
 <div class="flex flex-col gap-8 p-4">
-    <form [formGroup]="achievementForm" class="flex flex-col gap-4">
+    <form [formGroup]="achievementForm" class="flex flex-col gap-4 px-1">
         <div class="relative flex flex-col self-center">
             @if (selectedThumbnail) {
             <img
@@ -107,6 +107,60 @@
             [label]="'Description'"
             [formControlInput]="achievementForm.controls.description"
         ></app-input>
+
+        <div formArrayName="tiers" class="flex flex-col gap-4">
+            @for (tier of tiers.controls; track $index) {
+            <div class="flex items-center gap-4">
+                <div
+                    class="bg-gradient-to-r text-xl text-nowrap font-semibold inline-block text-transparent bg-clip-text"
+                    [ngClass]="{
+                        'from-yellow-800': $index === 0,
+                        'to-orange-800': $index === 0,
+                        'from-slate-300': $index === 1,
+                        'to-slate-500': $index === 1,
+                        'from-amber-200': $index === 2,
+                        'to-yellow-500': $index === 2,
+                        'from-cyan-300': $index === 3,
+                        'to-sky-400': $index === 3,
+                    }"
+                >
+                    Tier {{ $index + 1 }} -
+                </div>
+
+                <app-input
+                    [type]="'text'"
+                    [label]="'From'"
+                    [formControlInput]="tier.controls.from"
+                    [inputMask]="'0*'"
+                ></app-input>
+
+                <app-input
+                    [type]="'text'"
+                    [label]="'To'"
+                    [formControlInput]="tier.controls.to"
+                    [inputMask]="'0*'"
+                ></app-input>
+            </div>
+            }
+        </div>
+
+        @if ( tiers.touched && tiers.dirty && tiers.errors && !tiers.pristine) {
+        <!--  -->
+        @if (tiers.errors!["invalidRange"]) {
+        <div class="text-sm text-center font-semibold text-red-600">
+            {{ tiers.errors!["invalidRange"] }}
+        </div>
+        }
+
+        <!--  -->
+
+        @if (tiers.errors!["mismatch"]) {
+        <div class="text-sm text-center font-semibold text-red-600">
+            {{ tiers.errors!["mismatch"] }}
+        </div>
+        }
+        <!--  -->
+        }
     </form>
 
     <div class="flex flex-col gap-2">
