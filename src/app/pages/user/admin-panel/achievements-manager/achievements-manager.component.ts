@@ -130,10 +130,12 @@ export class AchievementsManagerComponent implements OnInit {
 
             this.newAchievementModalVisbility = false;
             this.achievementForm.reset();
+            this.selectedThumbnail = null;
             this.toastService.show('Uploaded successfully', false);
         } catch (error) {
             this.newAchievementModalVisbility = false;
             this.achievementForm.reset();
+            this.selectedThumbnail = null;
             this.toastService.show('Upload error occured', true);
         }
     }
