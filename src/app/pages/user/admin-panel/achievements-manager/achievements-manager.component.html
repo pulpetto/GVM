@@ -22,28 +22,41 @@
 </app-activity-bar>
 
 @if (achievements$ | async; as achievements) {
-<div class="flex flex-col gap-2 p-4">
+<div class="flex flex-col gap-0.5 p-4">
     @for (achievement of achievements; track $index) {
     <button
         type="button"
-        class="flex items-center flex-col p-1.5 transition-all rounded-md active:opacity-50 gap-1 hover:bg-neutral-900"
+        class="flex items-center p-1.5 transition-all rounded-md active:opacity-50 justify-between hover:bg-neutral-900 group"
     >
-        <div
-            class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
-        >
-            <img
-                [src]="achievement.imgPreviewUrl"
-                class="w-12 h-12 bg-neutral-950"
-                [alt]="achievement.name + ' badge'"
-            />
+        <div class="flex items-center gap-2">
+            <div
+                class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+            >
+                <img
+                    [src]="achievement.imgPreviewUrl"
+                    class="w-10 h-10 bg-neutral-950"
+                    [alt]="achievement.name + ' badge'"
+                />
+            </div>
+
+            <div class="font-semibold">
+                {{ achievement.name }}
+            </div>
         </div>
 
-        <div class="font-semibold text-lg">
-            {{ achievement.name }}
-        </div>
-        <div class="text-sm font-semibold text-neutral-700 mt-0.5">
-            {{ achievement.description }}
-        </div>
+        <svg
+            class="w-6 h-6 transition-colors stroke-transparent group-hover:stroke-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M9 6L15 12L9 18"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
     </button>
     }
 </div>
