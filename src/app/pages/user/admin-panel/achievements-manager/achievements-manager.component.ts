@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Achievement } from '../../../../interfaces/achievement';
 import { CommonModule } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AdminService } from '../../../../services/admin.service';
 
 const visibleModal = { top: '15%' };
@@ -65,9 +65,18 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class AchievementsManagerComponent implements OnInit {
     adminService = inject(AdminService);
+    router = inject(Router);
+    activatedRoute = inject(ActivatedRoute);
     achievements$!: Observable<Achievement[]>;
 
     ngOnInit() {
         this.achievements$ = this.adminService.getAchievements$();
+    }
+
+    redirectToAchievementRoute(data: Achievement) {
+        this.router.navigate([data.id], {
+            relativeTo: this.activatedRoute,
+            state: { achievementData: data },
+        });
     }
 }
