@@ -59,7 +59,10 @@ export class AchievementCreatorComponent implements OnInit {
     selectedThumbnail: string | ArrayBuffer | null = null;
 
     achievementForm = this.fb.group({
-        thumbnailFile: this.fb.control<File | null>(null, Validators.required),
+        thumbnailFile: this.fb.control<File | string | null>(
+            null,
+            Validators.required
+        ),
         name: this.fb.control<string>('', Validators.required),
         type: this.fb.control<string>('', Validators.required),
         description: this.fb.control<string>('', Validators.required),
@@ -73,6 +76,8 @@ export class AchievementCreatorComponent implements OnInit {
             [Validators.required, this.validateTiers()]
         ),
     });
+
+    oldAchievementData!: Achievement | null;
 
     get tiers(): FormArray<
         FormGroup<{
@@ -103,11 +108,18 @@ export class AchievementCreatorComponent implements OnInit {
                     .subscribe((data) => this.addDataToForm(data));
             }
         } else {
+            this.oldAchievementData = null;
             this.view = 'new';
         }
     }
 
     addDataToForm(data: Achievement) {
+        this.oldAchievementData = data;
+
+        this.achievementForm.controls.thumbnailFile.setValue(
+            data.imgPreviewUrl
+        );
+
         this.selectedThumbnail = data.imgPreviewUrl;
 
         this.achievementForm.controls.name.setValue(data.name);
@@ -188,7 +200,7 @@ export class AchievementCreatorComponent implements OnInit {
     async addNewAchievement() {
         try {
             this.adminService.addAchievement(
-                this.achievementForm.get('thumbnailFile')!.value!,
+                this.achievementForm.get('thumbnailFile')!.value! as File,
                 this.achievementForm.get('name')!.value!,
                 this.achievementForm.get('type')!.value!,
                 this.achievementForm.get('description')!.value!,
@@ -204,6 +216,29 @@ export class AchievementCreatorComponent implements OnInit {
             this.achievementForm.reset();
             this.selectedThumbnail = null;
             this.toastService.show('Upload error occured', true);
+        }
+    }
+
+    async updateAchievement() {
+        try {
+            this.adminService.modifyAchievement(
+                this.achievementForm.get('thumbnailFile')!.value!,
+                this.achievementForm.get('name')!.value!,
+                this.achievementForm.get('type')!.value!,
+                this.achievementForm.get('description')!.value!,
+                this.tiers.getRawValue() as Tier[],
+                this.oldAchievementData!
+            );
+
+            this.router.navigate(['user/admin/achievements']);
+            this.achievementForm.reset();
+            this.selectedThumbnail = null;
+            this.toastService.show('Modified successfully', false);
+        } catch (error) {
+            this.router.navigate(['user/admin/achievements']);
+            this.achievementForm.reset();
+            this.selectedThumbnail = null;
+            this.toastService.show('Modification error occured', true);
         }
     }
 }

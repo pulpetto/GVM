@@ -384,9 +384,55 @@ export class AdminService {
             description: description,
             type: type,
             imgPreviewUrl: imagePreviewUrl,
-            imagePath: imageFilePath,
+            imgPath: imageFilePath,
             tiers: tiers,
         });
+    }
+
+    async modifyAchievement(
+        thumbnailFile: File | string,
+        name: string,
+        type: string,
+        description: string,
+        tiers: Tier[],
+        oldAchievementObj: Achievement
+    ) {
+        if (thumbnailFile instanceof File) {
+            const oldImageStorageRef = ref(
+                this.storage,
+                oldAchievementObj.imgPath
+            );
+            await deleteObject(oldImageStorageRef);
+
+            const imageFilePath = `admin/achievements/${Date.now()}_${name}`;
+            const storageRef = ref(this.storage, imageFilePath);
+
+            const snapshot = await uploadBytes(storageRef, thumbnailFile);
+
+            const imagePreviewUrl = await getDownloadURL(snapshot.ref);
+
+            await updateDoc(
+                doc(this.firestore, 'achievements', oldAchievementObj.id),
+                {
+                    name: name,
+                    description: description,
+                    type: type,
+                    imgPreviewUrl: imagePreviewUrl,
+                    imgPath: imageFilePath,
+                    tiers: tiers,
+                }
+            );
+        } else {
+            await updateDoc(
+                doc(this.firestore, 'achievements', oldAchievementObj.id),
+                {
+                    name: name,
+                    description: description,
+                    type: type,
+                    tiers: tiers,
+                }
+            );
+        }
     }
 
     getAchievements$(): Observable<Achievement[]> {
