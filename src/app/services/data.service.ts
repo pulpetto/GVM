@@ -21,6 +21,25 @@ import { ExerciseDetails } from '../interfaces/exercise-details';
 export class DataService {
     firestore = inject(Firestore);
 
+    getAchievementById$(id: string): Observable<Achievement> {
+        const achievementDocRef: DocumentReference = doc(
+            this.firestore,
+            'achievements',
+            id
+        );
+
+        return from(
+            getDoc(achievementDocRef).then((achievementSnapshot) => {
+                const achievement: Achievement =
+                    achievementSnapshot.data() as Achievement;
+
+                achievement.id = id;
+
+                return achievement;
+            })
+        );
+    }
+
     getAchievements$(): Observable<Achievement[]> {
         const achievementsCollectionRef: CollectionReference = collection(
             this.firestore,
