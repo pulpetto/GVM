@@ -6,7 +6,6 @@ export interface Achievement {
     description: string;
     imgPreviewUrl: string;
     imgPath: string;
-    requiredNumber: number;
     type: string;
     tiers: Tier[];
 }
