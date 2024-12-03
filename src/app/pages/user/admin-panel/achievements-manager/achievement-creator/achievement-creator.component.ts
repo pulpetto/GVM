@@ -1,8 +1,11 @@
 import {
+    AfterViewInit,
+    ChangeDetectorRef,
     Component,
     DestroyRef,
     ElementRef,
     inject,
+    OnDestroy,
     OnInit,
     ViewChild,
 } from '@angular/core';
@@ -28,6 +31,7 @@ import { Tier } from '../../../../../interfaces/tier';
 import { Achievement } from '../../../../../interfaces/achievement';
 import { DataService } from '../../../../../services/data.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NavbarVisibilityService } from '../../../../../services/navbar-visibility.service';
 
 @Component({
     selector: 'app-achievement-creator',
@@ -43,7 +47,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     templateUrl: './achievement-creator.component.html',
     styleUrl: './achievement-creator.component.css',
 })
-export class AchievementCreatorComponent implements OnInit {
+export class AchievementCreatorComponent
+    implements OnInit, AfterViewInit, OnDestroy
+{
+    navbarVisibilityService = inject(NavbarVisibilityService);
+    cdr = inject(ChangeDetectorRef);
     router = inject(Router);
     route = inject(ActivatedRoute);
     adminService = inject(AdminService);
@@ -111,6 +119,14 @@ export class AchievementCreatorComponent implements OnInit {
             this.oldAchievementData = null;
             this.view = 'new';
         }
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.navbarVisibilityService.visibility.next(false);
+        });
+
+        this.cdr.detectChanges();
     }
 
     addDataToForm(data: Achievement) {
@@ -240,5 +256,9 @@ export class AchievementCreatorComponent implements OnInit {
             this.selectedThumbnail = null;
             this.toastService.show('Modification error occured', true);
         }
+    }
+
+    ngOnDestroy() {
+        this.navbarVisibilityService.visibility.next(true);
     }
 }
