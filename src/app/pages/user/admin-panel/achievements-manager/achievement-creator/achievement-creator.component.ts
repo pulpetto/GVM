@@ -1,4 +1,10 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    inject,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { ActivityBarComponent } from '../../../../../shared/activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../../../../shared/previous-route-button/previous-route-button.component';
 import { AdminService } from '../../../../../services/admin.service';
@@ -14,10 +20,11 @@ import {
     ValidatorFn,
     Validators,
 } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { InputComponent } from '../../../../../shared/input/input.component';
 import { CommonModule } from '@angular/common';
 import { Tier } from '../../../../../interfaces/tier';
+import { Achievement } from '../../../../../interfaces/achievement';
 
 @Component({
     selector: 'app-achievement-creator',
@@ -33,11 +40,14 @@ import { Tier } from '../../../../../interfaces/tier';
     templateUrl: './achievement-creator.component.html',
     styleUrl: './achievement-creator.component.css',
 })
-export class AchievementCreatorComponent {
+export class AchievementCreatorComponent implements OnInit {
     router = inject(Router);
+    route = inject(ActivatedRoute);
     adminService = inject(AdminService);
     toastService = inject(ToastService);
     fb = inject(FormBuilder);
+
+    view!: 'new' | 'existing';
 
     @ViewChild('thumbnail') thumbnailInput!: ElementRef<HTMLInputElement>;
 
@@ -66,6 +76,42 @@ export class AchievementCreatorComponent {
         }>
     > {
         return this.achievementForm.get('tiers') as FormArray;
+    }
+
+    ngOnInit() {
+        const hasIdParam = this.route.snapshot.paramMap.has('id');
+
+        if (hasIdParam) {
+            this.view = 'existing';
+
+            if (history.state.achievementData) {
+                const achievementData = history.state
+                    .achievementData as Achievement;
+
+                this.selectedThumbnail = achievementData.imgPreviewUrl;
+
+                this.achievementForm.controls.name.setValue(
+                    achievementData.name
+                );
+
+                this.achievementForm.controls.type.setValue(
+                    achievementData.type
+                );
+
+                this.achievementForm.controls.description.setValue(
+                    achievementData.description
+                );
+
+                this.tiers.controls.forEach((tier, i) => {
+                    tier.controls.from.setValue(achievementData.tiers[i].from);
+                    tier.controls.to.setValue(achievementData.tiers[i].to);
+                });
+            } else {
+                //
+            }
+        } else {
+            this.view = 'new';
+        }
     }
 
     createTier(): FormGroup<{
