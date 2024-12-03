@@ -1,5 +1,6 @@
 import {
     Component,
+    DestroyRef,
     ElementRef,
     inject,
     OnInit,
@@ -25,6 +26,8 @@ import { InputComponent } from '../../../../../shared/input/input.component';
 import { CommonModule } from '@angular/common';
 import { Tier } from '../../../../../interfaces/tier';
 import { Achievement } from '../../../../../interfaces/achievement';
+import { DataService } from '../../../../../services/data.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-achievement-creator',
@@ -44,8 +47,10 @@ export class AchievementCreatorComponent implements OnInit {
     router = inject(Router);
     route = inject(ActivatedRoute);
     adminService = inject(AdminService);
+    dataService = inject(DataService);
     toastService = inject(ToastService);
     fb = inject(FormBuilder);
+    destroyRef = inject(DestroyRef);
 
     view!: 'new' | 'existing';
 
@@ -88,30 +93,33 @@ export class AchievementCreatorComponent implements OnInit {
                 const achievementData = history.state
                     .achievementData as Achievement;
 
-                this.selectedThumbnail = achievementData.imgPreviewUrl;
-
-                this.achievementForm.controls.name.setValue(
-                    achievementData.name
-                );
-
-                this.achievementForm.controls.type.setValue(
-                    achievementData.type
-                );
-
-                this.achievementForm.controls.description.setValue(
-                    achievementData.description
-                );
-
-                this.tiers.controls.forEach((tier, i) => {
-                    tier.controls.from.setValue(achievementData.tiers[i].from);
-                    tier.controls.to.setValue(achievementData.tiers[i].to);
-                });
+                this.addDataToForm(achievementData);
             } else {
-                //
+                const achievementId = this.route.snapshot.paramMap.get('id');
+
+                this.dataService
+                    .getAchievementById$(achievementId!)
+                    .pipe(takeUntilDestroyed(this.destroyRef))
+                    .subscribe((data) => this.addDataToForm(data));
             }
         } else {
             this.view = 'new';
         }
+    }
+
+    addDataToForm(data: Achievement) {
+        this.selectedThumbnail = data.imgPreviewUrl;
+
+        this.achievementForm.controls.name.setValue(data.name);
+
+        this.achievementForm.controls.type.setValue(data.type);
+
+        this.achievementForm.controls.description.setValue(data.description);
+
+        this.tiers.controls.forEach((tier, i) => {
+            tier.controls.from.setValue(data.tiers[i].from);
+            tier.controls.to.setValue(data.tiers[i].to);
+        });
     }
 
     createTier(): FormGroup<{
