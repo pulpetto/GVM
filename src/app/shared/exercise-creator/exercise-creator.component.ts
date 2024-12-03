@@ -31,6 +31,7 @@ import { ActivityBarComponent } from '../activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../previous-route-button/previous-route-button.component';
 import { NavbarVisibilityService } from '../../services/navbar-visibility.service';
 import { UserService } from '../../services/user.service';
+import { ExerciseDetails } from '../../interfaces/exercise-details';
 
 @Component({
     selector: 'app-exercise-creator',
@@ -73,7 +74,10 @@ export class ExerciseCreatorComponent
 
     exerciseForm = this.fb.group({
         name: this.fb.nonNullable.control<string>('', Validators.required),
-        thumbnailFile: this.fb.control<File | null>(null, Validators.required),
+        thumbnailFile: this.fb.control<File | string | null>(
+            null,
+            Validators.required
+        ),
         mainMuscleGroupsIds: this.fb.nonNullable.array<string>(
             [],
             [Validators.required, Validators.minLength(1)]
@@ -83,24 +87,34 @@ export class ExerciseCreatorComponent
             [Validators.required, Validators.minLength(1)]
         ),
         equipmentId: this.fb.control<string | null>(null, Validators.required),
-        videoFile: this.fb.control<File | null>(null, Validators.required),
+        videoFile: this.fb.control<File | string | null>(
+            null,
+            Validators.required
+        ),
         instruction: this.fb.nonNullable.array(
             [],
             [Validators.required, Validators.minLength(3)]
         ),
     });
 
+    exerciseDetails!: ExerciseDetails;
+    exerciseId!: string | null;
+
     ngOnInit() {
         const hasIdParam = this.route.snapshot.paramMap.has('id');
 
         if (hasIdParam) {
-            const exerciseId = this.route.snapshot.paramMap.get('id');
+            this.exerciseId = this.route.snapshot.paramMap.get('id');
 
             this.view = 'existing';
 
             if (history.state.previewData) {
                 // prettier-ignore
                 const exercisePreviewData = history.state.previewData as ExercisePreview;
+
+                this.exerciseForm.controls.thumbnailFile.setValue(
+                    exercisePreviewData.imagePreviewUrl
+                );
 
                 this.exerciseForm
                     .get('name')
@@ -128,9 +142,13 @@ export class ExerciseCreatorComponent
                     ?.setValue(exercisePreviewData.equipmentId);
             } else {
                 this.dataService
-                    .getExercisePreview$(exerciseId!)
+                    .getExercisePreview$(this.exerciseId!)
                     .pipe(takeUntilDestroyed(this.destroyRef))
                     .subscribe((data) => {
+                        this.exerciseForm.controls.thumbnailFile.setValue(
+                            data.imagePreviewUrl
+                        );
+
                         this.exerciseForm.get('name')?.setValue(data.name);
                         this.selectedThumbnail = data.imagePreviewUrl;
 
@@ -157,11 +175,18 @@ export class ExerciseCreatorComponent
             }
 
             this.dataService
-                .getExerciseDetails$(exerciseId!)
+                .getExerciseDetails$(this.exerciseId!)
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((data) => {
                     // jeszcze path image'a i video
+
+                    this.exerciseDetails = data;
+
                     this.selectedVideo = data.instructionVideoPreviewUrl;
+
+                    this.exerciseForm.controls.videoFile.setValue(
+                        data.instructionVideoPreviewUrl
+                    );
 
                     const instruction = this.exerciseForm.get(
                         'instruction'
@@ -267,11 +292,11 @@ export class ExerciseCreatorComponent
         if (this.userRole() === 'admin') {
             this.adminService.addExercise(
                 formData.name!,
-                formData.thumbnailFile!,
+                formData.thumbnailFile! as File,
                 formData.mainMuscleGroupsIds!,
                 formData.secondaryMuscleGroupsIds!,
                 formData.equipmentId!,
-                formData.videoFile!,
+                formData.videoFile! as File,
                 formData.instruction as Step[],
                 [],
                 []
@@ -279,14 +304,34 @@ export class ExerciseCreatorComponent
         } else if (this.userRole() === 'user') {
             this.userService.addCustomExercise(
                 formData.name!,
-                formData.thumbnailFile!,
+                formData.thumbnailFile! as File,
                 formData.mainMuscleGroupsIds!,
                 formData.secondaryMuscleGroupsIds!,
                 formData.equipmentId!,
-                formData.videoFile!,
+                formData.videoFile! as File,
                 formData.instruction as Step[],
                 [],
                 []
+            );
+        }
+    }
+
+    modifyExercise() {
+        const formData = this.exerciseForm.value;
+
+        if (this.userRole() === 'admin') {
+            this.adminService.updateExercise(
+                formData.name!,
+                formData.thumbnailFile! as File,
+                formData.mainMuscleGroupsIds!,
+                formData.secondaryMuscleGroupsIds!,
+                formData.equipmentId!,
+                formData.videoFile! as File,
+                formData.instruction as Step[],
+                [],
+                [],
+                this.exerciseDetails,
+                this.exerciseId!
             );
         }
     }

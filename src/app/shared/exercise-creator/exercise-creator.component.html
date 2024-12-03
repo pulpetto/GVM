@@ -219,6 +219,8 @@
             } @else {
             <button
                 type="submit"
+                [disabled]="exerciseForm.invalid"
+                (click)="modifyExercise()"
                 class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
             >
                 Save Changes

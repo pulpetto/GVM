@@ -25,6 +25,7 @@ import { User } from '../interfaces/user';
 import { ExercisePreview } from '../interfaces/exercise-preview';
 import { Achievement } from '../interfaces/achievement';
 import { Tier } from '../interfaces/tier';
+import { ExerciseDetails } from '../interfaces/exercise-details';
 
 @Injectable({
     providedIn: 'root',
@@ -319,6 +320,79 @@ export class AdminService {
             imageFilePath: imageFilePath,
             instructionVideoPreviewUrl: videoPreviewUrl,
             instructionVideoFilePath: videoFilePath,
+            instructionSteps: instructionSteps,
+            variationsIds: variationsIds,
+            alternativesIds: alternativesIds,
+        });
+    }
+
+    async updateExercise(
+        name: string,
+        imageFile: File,
+        mainMuscleGroupsIds: string[],
+        secondaryMuscleGroupsIds: string[],
+        equipmentId: string,
+        instructionVideoFile: File,
+        instructionSteps: Step[],
+        variationsIds: string[],
+        alternativesIds: string[],
+        oldExerciseDetails: ExerciseDetails,
+        id: string
+    ) {
+        if (imageFile instanceof File) {
+            // Old image delete
+            const oldImageStorageRef = ref(
+                this.storage,
+                oldExerciseDetails.imageFilePath
+            );
+            await deleteObject(oldImageStorageRef);
+
+            // Image upload
+            const imageFilePath = `admin/exercises/${Date.now()}_${name}`;
+            const storageRef = ref(this.storage, imageFilePath);
+            const snapshot = await uploadBytes(storageRef, imageFile);
+            const imagePreviewUrl = await getDownloadURL(snapshot.ref);
+
+            await updateDoc(doc(this.firestore, 'exercisePreviews', id), {
+                imagePreviewUrl: imagePreviewUrl,
+            });
+
+            await updateDoc(doc(this.firestore, 'exerciseDetails', id), {
+                imageFilePath: imageFilePath,
+            });
+        }
+
+        if (instructionVideoFile instanceof File) {
+            // Old video delete
+            const oldVideoStorageRef = ref(
+                this.storage,
+                oldExerciseDetails.instructionVideoFilePath
+            );
+            await deleteObject(oldVideoStorageRef);
+
+            // Video upload
+            const videoFilePath = `admin/exercises/${Date.now()}_${name}_video`;
+            const videoStorageRef = ref(this.storage, videoFilePath);
+            const videoSnapshot = await uploadBytes(
+                videoStorageRef,
+                instructionVideoFile
+            );
+            const videoPreviewUrl = await getDownloadURL(videoSnapshot.ref);
+
+            await setDoc(doc(this.firestore, 'exerciseDetails', id), {
+                instructionVideoPreviewUrl: videoPreviewUrl,
+                instructionVideoFilePath: videoFilePath,
+            });
+        }
+
+        await updateDoc(doc(this.firestore, 'exercisePreviews', id), {
+            name: name,
+            mainMuscleGroupsIds: mainMuscleGroupsIds,
+            secondaryMuscleGroupsIds: secondaryMuscleGroupsIds,
+            equipmentId: equipmentId,
+        });
+
+        await updateDoc(doc(this.firestore, 'exerciseDetails', id), {
             instructionSteps: instructionSteps,
             variationsIds: variationsIds,
             alternativesIds: alternativesIds,
