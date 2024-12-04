@@ -6,6 +6,7 @@ import { Achievement } from '../../../../interfaces/achievement';
 import { CommonModule } from '@angular/common';
 import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
     selector: 'app-achievements',
@@ -21,6 +22,7 @@ import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-
 })
 export class AchievementsComponent implements OnInit {
     dataService = inject(DataService);
+    userService = inject(UserService);
 
     achievements$!: Observable<Achievement[]>;
 
