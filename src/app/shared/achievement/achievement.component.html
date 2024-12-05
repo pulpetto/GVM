@@ -49,7 +49,8 @@
                 <div
                     class="absolute z-10 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                 >
-                    {{ 100 }}/{{ 250 }}
+                    {{ progress | numberSeparator }} /
+                    {{ achievement.tiers[activeTier].to | numberSeparator }}
                 </div>
 
                 <div

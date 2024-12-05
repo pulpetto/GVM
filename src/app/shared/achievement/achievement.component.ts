@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Achievement } from '../../interfaces/achievement';
 import { CommonModule } from '@angular/common';
+import { NumberSeparatorPipe } from '../../pipes/number-separator.pipe';
 
 @Component({
     selector: 'app-achievement',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, NumberSeparatorPipe],
     templateUrl: './achievement.component.html',
     styleUrl: './achievement.component.css',
 })
