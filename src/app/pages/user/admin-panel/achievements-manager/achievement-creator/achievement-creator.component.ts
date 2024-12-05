@@ -168,7 +168,7 @@ export class AchievementCreatorComponent
             for (let i = 0; i < tiers.length; i++) {
                 const { from, to } = tiers[i];
 
-                if (from >= to) {
+                if (+from >= +to) {
                     return {
                         invalidRange: `Tier ${
                             i + 1
