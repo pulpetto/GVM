@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-unauthorized',
     standalone: true,
-    imports: [],
+    imports: [RouterModule],
     templateUrl: './unauthorized.component.html',
     styleUrl: './unauthorized.component.css',
 })
-export class UnauthorizedComponent {}
+export class UnauthorizedComponent {
+    location = inject(Location);
+
+    navigateBack() {
+        this.location.back();
+    }
+}
