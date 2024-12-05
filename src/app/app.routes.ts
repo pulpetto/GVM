@@ -7,6 +7,13 @@ export const routes: Routes = [
         component: HomeComponent,
     },
     {
+        path: 'unauthorized',
+        loadComponent: () =>
+            import('./pages/unauthorized/unauthorized.component').then(
+                (component) => component.UnauthorizedComponent
+            ),
+    },
+    {
         path: 'pro',
         loadComponent: () =>
             import('./pages/pro/pro.component').then(
