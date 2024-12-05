@@ -6,8 +6,17 @@
 <div class="flex flex-col p-4">
     @if (achievements$ | async; as achievements) {
     <div class="flex flex-col gap-2">
+        @if (!loading) {
+        <!--  -->
         @for (achievement of achievements; track $index) {
-        <app-achievement [achievement]="achievement"></app-achievement>
+        <ng-container>
+            <app-achievement
+                [achievement]="achievement"
+                [progress]="achievementsValues[achievement.type]"
+            ></app-achievement>
+        </ng-container>
+        }
+        <!--  -->
         }
     </div>
     }
