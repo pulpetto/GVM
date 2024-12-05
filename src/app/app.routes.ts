@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
     {
@@ -47,6 +48,7 @@ export const routes: Routes = [
                     import(
                         './pages/user/admin-panel/admin-panel.component'
                     ).then((component) => component.AdminPanelComponent),
+                canActivate: [adminGuard],
             },
             {
                 path: 'admin/users',
@@ -54,6 +56,7 @@ export const routes: Routes = [
                     import(
                         './pages/user/admin-panel/users-manager/users-manager.component'
                     ).then((component) => component.UsersManagerComponent),
+                canActivate: [adminGuard],
             },
             {
                 path: 'admin/exercises',
@@ -61,6 +64,7 @@ export const routes: Routes = [
                     import(
                         './pages/user/admin-panel/exercise-manager/exercise-manager.component'
                     ).then((component) => component.ExerciseManagerComponent),
+                canActivate: [adminGuard],
             },
             {
                 path: 'admin/exercises/new',
@@ -68,6 +72,7 @@ export const routes: Routes = [
                     import(
                         './shared/exercise-creator/exercise-creator.component'
                     ).then((component) => component.ExerciseCreatorComponent),
+                canActivate: [adminGuard],
             },
             {
                 path: 'admin/exercises/:id',
