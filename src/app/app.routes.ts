@@ -80,6 +80,7 @@ export const routes: Routes = [
                     import(
                         './shared/exercise-creator/exercise-creator.component'
                     ).then((component) => component.ExerciseCreatorComponent),
+                canActivate: [adminGuard],
             },
             {
                 path: 'admin/muscles',
@@ -89,6 +90,7 @@ export const routes: Routes = [
                     ).then(
                         (component) => component.MuscleGroupsManagerComponent
                     ),
+                canActivate: [adminGuard],
             },
             {
                 path: 'admin/equipment',
@@ -96,6 +98,7 @@ export const routes: Routes = [
                     import(
                         './pages/user/admin-panel/equipment-manager/equipment-manager.component'
                     ).then((component) => component.EquipmentManagerComponent),
+                canActivate: [adminGuard],
             },
             {
                 path: 'admin/achievements',
@@ -105,6 +108,7 @@ export const routes: Routes = [
                     ).then(
                         (component) => component.AchievementsManagerComponent
                     ),
+                canActivate: [adminGuard],
             },
             {
                 path: 'admin/achievements/new',
@@ -114,6 +118,7 @@ export const routes: Routes = [
                     ).then(
                         (component) => component.AchievementCreatorComponent
                     ),
+                canActivate: [adminGuard],
             },
             {
                 path: 'admin/achievements/:id',
@@ -123,6 +128,7 @@ export const routes: Routes = [
                     ).then(
                         (component) => component.AchievementCreatorComponent
                     ),
+                canActivate: [adminGuard],
             },
             {
                 path: 'profile',
