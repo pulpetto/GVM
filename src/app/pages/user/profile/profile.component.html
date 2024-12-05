@@ -44,7 +44,7 @@
 </app-activity-bar>
 
 <div class="relative flex flex-col items-center gap-4 p-4 pt-6">
-    <div class="flex flex-col items-center w-full gap-1">
+    <div class="flex flex-col items-center w-full gap-3">
         @if (userPfp()) {
         <button
             type="button"
@@ -53,7 +53,7 @@
         >
             <img
                 [src]="userPfp()"
-                class="w-16 h-16"
+                class="w-20 h-20"
                 [alt]="userName() + ' full pfp'"
             />
         </button>
@@ -83,30 +83,16 @@
         </div>
         }
 
-        <div class="flex flex-col items-center gap-2 scale-90">
-            <div class="text-xl font-semibold">
+        <div class="flex flex-col items-center font-semibold">
+            <div class="text-xl">
                 {{ userName() }}
-                <!--  -->
-                @if (userRole() !== 'user') {
-                <span class="text-emerald-500">
-                    ({{ userRole() | titlecase }})
-                </span>
-                }
             </div>
-            <div class="flex justify-between gap-3">
-                <div class="flex flex-col items-center">
-                    <div class="text-neutral-700">Followers:</div>
-                    <div>000</div>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="text-neutral-700">Following:</div>
-                    <div>000</div>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="text-neutral-700">Workouts:</div>
-                    <div>000</div>
-                </div>
+
+            @if (userRole() !== 'user') {
+            <div class="text-emerald-500 text-sm">
+                ({{ userRole() | titlecase }})
             </div>
+            }
         </div>
     </div>
 
