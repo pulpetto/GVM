@@ -12,13 +12,13 @@ import { NameEditorComponent } from './name-editor/name-editor.component';
 import { ExercisesSelectorComponent } from './exercises-selector/exercises-selector.component';
 import { DataService } from '../../../services/data.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { Workout } from '../../../interfaces/workout/workout';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { WorkoutExercise } from '../../../interfaces/workout/workout-exercise';
 import { DropSet } from '../../../interfaces/set-types/drop-set';
 import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
@@ -73,6 +73,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         StartDateModalComponent,
         ActivityBarComponent,
         PreviousRouteButtonComponent,
+        RouterModule,
     ],
     animations: [
         trigger('openClose', [
@@ -125,7 +126,6 @@ export class WorkoutTemplateEditorComponent
     dataService = inject(DataService);
     destroyRef = inject(DestroyRef);
     route = inject(ActivatedRoute);
-    location = inject(Location);
     navbarVisibilityService = inject(NavbarVisibilityService);
     cdr = inject(ChangeDetectorRef);
 
@@ -740,10 +740,6 @@ export class WorkoutTemplateEditorComponent
                 dataForState
             );
         }
-    }
-
-    cancelEdit() {
-        this.location.back();
     }
 
     changeExercisesOrder(event: CdkDragDrop<ExercisePreview[]>) {
