@@ -427,17 +427,25 @@ export class UserService {
         }
     }
 
-    updateWorkout(workoutId: string, workoutObj: Workout) {
-        const workoutDocRef: DocumentReference = doc(
-            this.userDocRef!,
-            'workouts',
-            workoutId
-        );
+    async updateWorkout(workoutId: string, workoutObj: Workout) {
+        try {
+            const workoutDocRef: DocumentReference = doc(
+                this.userDocRef!,
+                'workouts',
+                workoutId
+            );
 
-        updateDoc(workoutDocRef, {
-            name: workoutObj.name,
-            exercises: workoutObj.exercises,
-        });
+            await updateDoc(workoutDocRef, {
+                name: workoutObj.name,
+                exercises: workoutObj.exercises,
+            });
+
+            this.router.navigate([`/user/workout`]);
+            this.toastService.show('Workout updated successfully', false);
+        } catch (error) {
+            this.router.navigate([`/user/workout`]);
+            this.toastService.show('Error occured, try again', true);
+        }
     }
 
     deleteWorkout(splitId: string, workoutId: string) {
