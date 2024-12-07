@@ -125,6 +125,7 @@ export class WorkoutSplitComponent implements OnInit {
     changeSplitName() {
         this.userService.changeSplitName(this.splitId, this.newSplitName);
         this.closeNewSplitNameModal();
+        this.optionsModalVisibility = false;
     }
 
     closeNewSplitNameModal() {
