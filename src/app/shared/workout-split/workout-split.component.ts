@@ -5,7 +5,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
-import { forkJoin, map, mergeMap, Observable } from 'rxjs';
+import { forkJoin, map, mergeMap, Observable, of } from 'rxjs';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -98,6 +98,10 @@ export class WorkoutSplitComponent implements OnInit {
             .getSplitWorkouts(this.splitId)
             .pipe(
                 mergeMap((workoutsIds) => {
+                    if (workoutsIds.length === 0) {
+                        return of([]);
+                    }
+
                     const workoutWithNames$ = workoutsIds.map((workout) =>
                         this.userService
                             .getWorkoutNameById(workout.workoutId)
