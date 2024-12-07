@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { CanDeactivateFn } from '@angular/router';
 
-import { workoutEditGuard } from './workout-edit.guard';
+import { unsavedChangesGuard } from './unsaved-changes.guard';
 
-describe('workoutEditGuard', () => {
+describe('unsavedChangesGuard', () => {
   const executeGuard: CanDeactivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => workoutEditGuard(...guardParameters));
+      TestBed.runInInjectionContext(() => unsavedChangesGuard(...guardParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
