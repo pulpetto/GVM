@@ -448,20 +448,26 @@ export class UserService {
         }
     }
 
-    deleteWorkout(splitId: string, workoutId: string) {
-        deleteDoc(doc(this.userDocRef!, 'workouts', workoutId));
+    async deleteWorkout(splitId: string, workoutId: string) {
+        try {
+            await deleteDoc(doc(this.userDocRef!, 'workouts', workoutId));
 
-        deleteDoc(
-            doc(
-                this.userDocRef!,
-                'workoutsSplits',
-                splitId,
-                'workoutsIds',
-                workoutId
-            )
-        );
+            await deleteDoc(
+                doc(
+                    this.userDocRef!,
+                    'workoutsSplits',
+                    splitId,
+                    'workoutsIds',
+                    workoutId
+                )
+            );
 
-        this.router.navigate([`/user/workout`]);
+            this.router.navigate([`/user/workout`]);
+            this.toastService.show('Workout deleted successfully', false);
+        } catch (error) {
+            this.router.navigate([`/user/workout`]);
+            this.toastService.show('Error occured, try again', true);
+        }
     }
 
     getWorkoutById(workoutId: string): Observable<Workout> {
