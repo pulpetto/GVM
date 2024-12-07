@@ -341,14 +341,20 @@ export class UserService {
         }
     }
 
-    changeSplitName(splitDocId: string, newName: string) {
-        const splitDocRef: DocumentReference = doc(
-            this.userDocRef!,
-            'workoutsSplits',
-            splitDocId
-        );
+    async changeSplitName(splitDocId: string, newName: string) {
+        try {
+            const splitDocRef: DocumentReference = doc(
+                this.userDocRef!,
+                'workoutsSplits',
+                splitDocId
+            );
 
-        updateDoc(splitDocRef, { splitName: newName });
+            await updateDoc(splitDocRef, { splitName: newName });
+
+            this.toastService.show('Name changed successfully', false);
+        } catch (error) {
+            this.toastService.show('Name change error occured', true);
+        }
     }
 
     batchSplits(splits: WorkoutSplit[]) {
