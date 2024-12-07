@@ -134,24 +134,27 @@ export class CalendarComponent implements OnInit {
                     .getOldestDoneWorkoutsUnix()
                     .pipe(takeUntilDestroyed(this.destroyRef))
                     .subscribe((data) => {
-                        this.oldestActiveMonth =
-                            DateTime.fromSeconds(data).month;
-                        this.oldestActiveYear = DateTime.fromSeconds(data).year;
+                        if (data) {
+                            this.oldestActiveMonth =
+                                DateTime.fromSeconds(data).month;
+                            this.oldestActiveYear =
+                                DateTime.fromSeconds(data).year;
 
-                        let currentDate = DateTime.local(
-                            this.oldestActiveYear,
-                            this.oldestActiveMonth
-                        );
+                            let currentDate = DateTime.local(
+                                this.oldestActiveYear,
+                                this.oldestActiveMonth
+                            );
 
-                        const now = DateTime.now();
+                            const now = DateTime.now();
 
-                        while (currentDate <= now) {
-                            this.allActiveMonths.push({
-                                year: currentDate.year,
-                                month: currentDate.month,
-                            });
+                            while (currentDate <= now) {
+                                this.allActiveMonths.push({
+                                    year: currentDate.year,
+                                    month: currentDate.month,
+                                });
 
-                            currentDate = currentDate.plus({ months: 1 });
+                                currentDate = currentDate.plus({ months: 1 });
+                            }
                         }
                     });
 

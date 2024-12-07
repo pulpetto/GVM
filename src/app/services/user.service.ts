@@ -735,7 +735,7 @@ export class UserService {
         );
     }
 
-    getOldestDoneWorkoutsUnix(): Observable<number> {
+    getOldestDoneWorkoutsUnix(): Observable<number | null> {
         const workoutsUnixTimestampsRef: CollectionReference = collection(
             this.userDocRef!,
             'workoutsUnixTimestamps'
@@ -748,10 +748,15 @@ export class UserService {
         );
 
         return from(
-            getDocs(q).then(
-                (querySnapshot) =>
-                    querySnapshot.docs[0].data()['unixTimestamp'] as number
-            )
+            getDocs(q).then((querySnapshot) => {
+                if (querySnapshot.docs[0]) {
+                    return querySnapshot.docs[0].data()[
+                        'unixTimestamp'
+                    ] as number;
+                } else {
+                    return null;
+                }
+            })
         );
     }
 
