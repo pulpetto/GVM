@@ -391,13 +391,15 @@ export class UserService {
         }
     }
 
-    saveWorkout(workoutObj: Workout) {
-        const workoutsRef: CollectionReference = collection(
-            this.userDocRef!,
-            'workouts'
-        );
+    async saveWorkout(workoutObj: Workout) {
+        try {
+            const workoutsRef: CollectionReference = collection(
+                this.userDocRef!,
+                'workouts'
+            );
 
-        addDoc(workoutsRef, workoutObj).then((docRef) => {
+            const docRef = await addDoc(workoutsRef, workoutObj);
+
             const workoutsInSplitRef: CollectionReference = collection(
                 this.userDocRef!,
                 'workoutsSplits',
@@ -410,13 +412,19 @@ export class UserService {
                 docRef.id
             );
 
-            getCountFromServer(workoutsInSplitRef).then((snapshot) => {
-                setDoc(workoutInSplitRef, {
-                    workoutIndex: snapshot.data().count,
-                    workoutId: docRef.id,
-                });
+            const snapshot = await getCountFromServer(workoutsInSplitRef);
+
+            await setDoc(workoutInSplitRef, {
+                workoutIndex: snapshot.data().count,
+                workoutId: docRef.id,
             });
-        });
+
+            this.router.navigate([`/user/workout`]);
+            this.toastService.show('Workout added successfully', false);
+        } catch (error) {
+            this.router.navigate([`/user/workout`]);
+            this.toastService.show('Error occured, try again', true);
+        }
     }
 
     updateWorkout(workoutId: string, workoutObj: Workout) {
