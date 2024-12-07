@@ -134,6 +134,8 @@ export class WorkoutSplitComponent implements OnInit {
 
     removeSplit() {
         this.userService.removeWorkoutSplit(this.splitId);
+
+        this.optionsModalVisibility = false;
     }
 
     drop(
