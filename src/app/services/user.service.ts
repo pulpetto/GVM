@@ -369,14 +369,20 @@ export class UserService {
             });
     }
 
-    removeWorkoutSplit(splitDocId: string) {
-        const splitDocRef: DocumentReference = doc(
-            this.userDocRef!,
-            'workoutsSplits',
-            splitDocId
-        );
+    async removeWorkoutSplit(splitDocId: string) {
+        try {
+            const splitDocRef: DocumentReference = doc(
+                this.userDocRef!,
+                'workoutsSplits',
+                splitDocId
+            );
 
-        deleteDoc(splitDocRef);
+            await deleteDoc(splitDocRef);
+
+            this.toastService.show('Split deleted successfully', false);
+        } catch (error) {
+            this.toastService.show('Deletion error occured', true);
+        }
     }
 
     saveWorkout(workoutObj: Workout) {
