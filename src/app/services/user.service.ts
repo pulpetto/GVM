@@ -321,18 +321,24 @@ export class UserService {
         });
     }
 
-    addNewSplit(splitName: string) {
-        const workoutSplitsRef: CollectionReference = collection(
-            this.userDocRef!,
-            'workoutsSplits'
-        );
+    async addNewSplit(splitName: string) {
+        try {
+            const workoutSplitsRef: CollectionReference = collection(
+                this.userDocRef!,
+                'workoutsSplits'
+            );
 
-        getCountFromServer(workoutSplitsRef).then((snapshot) => {
-            setDoc(doc(workoutSplitsRef), {
+            const snapshot = await getCountFromServer(workoutSplitsRef);
+
+            await setDoc(doc(workoutSplitsRef), {
                 index: snapshot.data().count,
                 splitName: splitName,
             });
-        });
+
+            this.toastService.show('Split added successfully', false);
+        } catch (error) {
+            this.toastService.show('Upload error occured', true);
+        }
     }
 
     changeSplitName(splitDocId: string, newName: string) {
