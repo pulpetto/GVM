@@ -14,7 +14,15 @@ import { GoalsCreatorComponent } from './goals-creator/goals-creator.component';
 import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
 import { UserService } from '../../../../services/user.service';
-import { filter, forkJoin, map, mergeMap, Observable, switchMap } from 'rxjs';
+import {
+    filter,
+    forkJoin,
+    map,
+    mergeMap,
+    Observable,
+    of,
+    switchMap,
+} from 'rxjs';
 import { Goal } from '../../../../interfaces/goal';
 import { DataService } from '../../../../services/data.service';
 import { WorkoutDoneWithId } from '../../../../interfaces/workout/workout-done-with-id';
@@ -51,8 +59,12 @@ export class GoalsComponent implements OnInit, AfterViewInit {
             filter((user) => !!user),
             switchMap(() =>
                 this.userService.getGoals().pipe(
-                    mergeMap((goals) =>
-                        forkJoin(
+                    mergeMap((goals) => {
+                        if (goals.length === 0) {
+                            return of([]);
+                        }
+
+                        return forkJoin(
                             goals.map((goal) =>
                                 forkJoin({
                                     doneWorkouts: this.userService
@@ -84,8 +96,8 @@ export class GoalsComponent implements OnInit, AfterViewInit {
                                     }))
                                 )
                             )
-                        )
-                    )
+                        );
+                    })
                 )
             )
         );
