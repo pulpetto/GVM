@@ -124,6 +124,75 @@
         }
     </ng-container>
     } @else {
-    <div>louding</div>
+    <!--  -->
+    @for (x of [1,2,3]; track $index) {
+    <div class="rounded-md p-1 w-full h-36 flex justify-between">
+        <div class="flex flex-col items-center w-1/2 gap-5">
+            <div class="flex items-center gap-2">
+                <div
+                    class="w-10 h-10 rounded-full bg-neutral-900 relative overflow-hidden"
+                ></div>
+                <div
+                    data-placeholder
+                    class="w-20 rounded-full h-2 bg-neutral-900 relative overflow-hidden"
+                ></div>
+            </div>
+            <div class="flex-col flex items-center gap-3">
+                <div
+                    data-placeholder
+                    class="w-32 rounded-full h-2 bg-neutral-900 relative overflow-hidden"
+                ></div>
+                <div
+                    data-placeholder
+                    class="w-36 rounded-full h-2 bg-neutral-900 relative overflow-hidden"
+                ></div>
+            </div>
+        </div>
+
+        <div class="relative w-1/2 mt-2 size-40">
+            <svg
+                class="rotate-180 size-full"
+                viewBox="0 0 36 36"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <circle
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    fill="none"
+                    class="text-gray-200 stroke-current dark:text-neutral-900"
+                    stroke-width="1"
+                    stroke-dasharray="50 100"
+                    stroke-linecap="round"
+                ></circle>
+
+                <circle
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    fill="none"
+                    class="stroke-current text-neutral-900"
+                    stroke-width="1.5"
+                    [attr.stroke-dasharray]="100 / 2 + ' 100'"
+                    stroke-linecap="round"
+                ></circle>
+            </svg>
+
+            <div
+                class="absolute text-center transform -translate-x-1/2 top-12 start-1/2 flex flex-col gap-2 items-center"
+            >
+                <div
+                    data-placeholder
+                    class="w-12 rounded-full h-2 bg-neutral-900 relative overflow-hidden"
+                ></div>
+                <div
+                    data-placeholder
+                    class="w-16 rounded-full h-2 bg-neutral-900 relative overflow-hidden"
+                ></div>
+            </div>
+        </div>
+    </div>
+    }
+    <!--  -->
     }
 </div>
