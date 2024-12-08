@@ -10,6 +10,7 @@ import { LineChartComponent } from '../../../../shared/line-chart/line-chart.com
 import { RadarChartComponent } from '../../../../shared/radar-chart/radar-chart.component';
 import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
+import { LoadingSpinnerComponent } from '../../../../shared/loading-spinner/loading-spinner.component';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -32,6 +33,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         RadarChartComponent,
         ActivityBarComponent,
         PreviousRouteButtonComponent,
+        LoadingSpinnerComponent,
     ],
     templateUrl: './statistics.component.html',
     styleUrl: './statistics.component.css',
