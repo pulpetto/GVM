@@ -293,7 +293,7 @@
     @openClose
     class="fixed left-0 z-50 flex flex-col items-center w-full h-full gap-3 p-4 text-lg rounded-t-md bg-neutral-950"
     [ngClass]="{
-        'top-1/2': optionsModalVisibility,
+        'top-2/3': optionsModalVisibility,
         'top-full': !optionsModalVisibility
     }"
 >
@@ -324,34 +324,6 @@
                 </svg>
             </div>
             <div class="font-semibold text-white">Edit</div>
-        </button>
-
-        <button
-            type="button"
-            class="flex items-center gap-2 p-2 transition-all rounded-md active:opacity-50 active:scale-95 hover:bg-neutral-900 group"
-        >
-            <div class="mt-0.5 overflow-hidden rounded-full">
-                <svg
-                    class="w-5 h-5 stroke-white"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M20 13V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V13"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                    <path
-                        d="M12 15V3M12 3L8.5 6.5M12 3L15.5 6.5"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            </div>
-            <div class="font-semibold text-white">Share</div>
         </button>
 
         <button

@@ -10,7 +10,7 @@ import { FullDatePipe } from '../../../pipes/full-date.pipe';
 import { ActivityBarComponent } from '../../activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../previous-route-button/previous-route-button.component';
 
-const visibleModal = { top: '50%' };
+const visibleModal = { top: '66.666667%' };
 const visibleModalLow = { top: '75%' };
 const hiddenModal = { top: '100%' };
 
