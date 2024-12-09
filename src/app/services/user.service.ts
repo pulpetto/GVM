@@ -22,6 +22,7 @@ import {
     limit,
     startAfter,
     endBefore,
+    arrayRemove,
 } from '@angular/fire/firestore';
 import {
     Auth,
@@ -466,6 +467,33 @@ export class UserService {
             this.toastService.show('Workout deleted successfully', false);
         } catch (error) {
             this.router.navigate([`/user/workout`]);
+            this.toastService.show('Error occured, try again', true);
+        }
+    }
+
+    async deleteDoneWorkout(workoutTemplateId: string, workoutId: string) {
+        try {
+            const workoutTemplateRef: DocumentReference = doc(
+                this.userDocRef!,
+                'workouts',
+                workoutTemplateId
+            );
+
+            await updateDoc(workoutTemplateRef, {
+                doneWorkoutsIds: arrayRemove(workoutId),
+            });
+
+            await deleteDoc(doc(this.userDocRef!, 'workoutsDone', workoutId));
+
+            await deleteDoc(
+                doc(this.userDocRef!, 'workoutsUnixTimestamps', workoutId)
+            );
+
+            this.router.navigate([`/user/profile/history`]);
+            this.toastService.show('Workout deleted successfully', false);
+        } catch (error) {
+            console.error(error);
+            this.router.navigate([`/user/profile/history`]);
             this.toastService.show('Error occured, try again', true);
         }
     }
