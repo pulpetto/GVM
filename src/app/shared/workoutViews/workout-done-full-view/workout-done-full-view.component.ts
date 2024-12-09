@@ -156,5 +156,7 @@ export class WorkoutDoneFullViewComponent implements OnInit {
         });
     }
 
-    deleteWorkout() {}
+    deleteWorkout(workoutTemplateId: string, workoutId: string) {
+        this.userService.deleteDoneWorkout(workoutTemplateId, workoutId);
+    }
 }
