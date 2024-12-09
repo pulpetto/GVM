@@ -3,6 +3,7 @@ import { Set } from './set';
 
 export interface WorkoutDoneFull {
     id: string;
+    workoutTemplateId: string;
     name: string;
     duration: number;
     dateStart: number;
