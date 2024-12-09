@@ -726,6 +726,8 @@ export class WorkoutTemplateEditorComponent
             const dataForState: WorkoutDoneFull =
                 workoutFormObjExtended as WorkoutDoneFull;
 
+            dataForState.workoutTemplateId = this.workoutId;
+
             dataForState.exercises.forEach((exercise) => {
                 exercise.staticData = this.exercisesPresentionalData.find(
                     (presentationalExercise) =>
