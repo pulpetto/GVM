@@ -73,6 +73,8 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class StatisticsComponent implements OnInit {
     userService = inject(UserService);
 
+    tooLittleData: boolean = false;
+
     dataTypeModalVisibility: boolean = false;
     dataTypes = [
         'Rep ranges types',
