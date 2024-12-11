@@ -750,6 +750,78 @@ export class WorkoutTemplateEditorComponent
                 dataForState
             );
         }
+
+        if (this.editView === 'done') {
+            this.summaryLoading = true;
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const workoutFormObjExtended: any =
+                this.workoutForm.getRawValue() as Workout;
+
+            this.workoutExercises.controls.forEach((exercise) => {
+                const setsFormArray = exercise.get(
+                    'sets'
+                ) as FormArray<FormGroup>;
+
+                setsFormArray.controls.forEach((set) => {
+                    set.removeControl('isDone');
+                });
+            });
+
+            const workoutFormObjBase =
+                this.workoutForm.getRawValue() as Workout;
+
+            workoutFormObjExtended.duration = this.workoutDuration;
+
+            const dateStartObj =
+                this.workoutForm.controls.dateStart.getRawValue() as {
+                    year: string;
+                    month: string;
+                    day: string;
+                    hour: string;
+                    minute: string;
+                };
+
+            const dateStart = new Date(
+                +dateStartObj.year,
+                +dateStartObj.month - 1,
+                +dateStartObj.day,
+                +dateStartObj.hour,
+                +dateStartObj.minute
+            );
+
+            workoutFormObjExtended.dateStart = Math.floor(
+                dateStart.getTime() / 1000
+            );
+
+            workoutFormObjExtended.volume =
+                this.workoutComputedValues.controls.volume.value;
+            workoutFormObjExtended.setsDone =
+                this.workoutComputedValues.controls.setsDone.value;
+            workoutFormObjExtended.totalSets = this.totalSets;
+            workoutFormObjExtended.exercisesIds = Array.from(
+                this.selectedExercisesIds
+            );
+
+            const dataForState: WorkoutDoneFull =
+                workoutFormObjExtended as WorkoutDoneFull;
+
+            dataForState.workoutTemplateId = this.workoutTemplateId!;
+
+            dataForState.exercises.forEach((exercise) => {
+                exercise.staticData = this.exercisesPresentionalData.find(
+                    (presentationalExercise) =>
+                        presentationalExercise.id === exercise.exerciseId
+                )!;
+            });
+
+            this.userService.updateDoneWorkout(
+                this.workoutId,
+                workoutFormObjExtended as WorkoutDone,
+                workoutFormObjBase,
+                dataForState
+            );
+        }
     }
 
     changeExercisesOrder(event: CdkDragDrop<ExercisePreview[]>) {
