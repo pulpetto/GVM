@@ -136,6 +136,7 @@ export class WorkoutTemplateEditorComponent
     exercisesPresentionalData: ExercisePreview[] = [];
     selectedExercisesIds = new Set<string>();
     exercisesReorderModalVisibility: boolean = false;
+    workoutTemplateId: string | null = null;
     workoutForm = this.fb.group({
         name: 'My Workout 1',
         exercises: this.fb.array([]),
@@ -393,6 +394,13 @@ export class WorkoutTemplateEditorComponent
             )
             .subscribe((data) => {
                 if (data) {
+                    if (this.editView === 'done') {
+                        const workout = data as unknown as WorkoutDoneFull;
+                        this.workoutTemplateId = workout.workoutTemplateId;
+                    } else {
+                        this.workoutTemplateId = null;
+                    }
+
                     this.workoutForm.get('name')!.setValue(data.name);
                     this.addInitialExercises(data.exercises);
 
