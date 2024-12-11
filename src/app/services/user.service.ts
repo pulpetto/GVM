@@ -572,6 +572,49 @@ export class UserService {
         });
     }
 
+    async updateDoneWorkout(
+        doneWorkoutId: string,
+        workoutDoneObj: WorkoutDone,
+        workoutValues: Workout,
+        dataForState: WorkoutDoneFull
+    ) {
+        try {
+            await setDoc(
+                doc(this.userDocRef!, 'workoutsDone', doneWorkoutId),
+                workoutDoneObj
+            );
+
+            await updateDoc(
+                doc(
+                    this.userDocRef!,
+                    'workouts',
+                    dataForState.workoutTemplateId
+                ),
+                {
+                    exercises: workoutValues.exercises,
+                }
+            );
+
+            await setDoc(
+                doc(this.userDocRef!, 'workoutsUnixTimestamps', doneWorkoutId),
+                {
+                    unixTimestamp: workoutDoneObj.dateStart,
+                }
+            );
+
+            this.router.navigate([`/user/profile/history/${doneWorkoutId}`], {
+                state: dataForState,
+            });
+            this.toastService.show('Workout updated successfully', false);
+        } catch (error) {
+            console.error(error);
+            this.router.navigate([`/user/profile/history/${doneWorkoutId}`], {
+                state: dataForState,
+            });
+            this.toastService.show('Error occured, try again', true);
+        }
+    }
+
     getDoneWorkouts(
         itemLimit: number,
         lastDoc?: DocumentData
