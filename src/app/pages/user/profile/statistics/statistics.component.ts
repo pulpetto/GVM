@@ -124,6 +124,7 @@ export class StatisticsComponent implements OnInit {
 
     changeDataType(dataType: string) {
         this.activeDataType = dataType;
+        this.chartData = [];
 
         if (dataType === 'Rep ranges types') {
             this.chartLabels = ['Strength', 'Hypertrophy', 'Endurance'];
@@ -183,25 +184,30 @@ export class StatisticsComponent implements OnInit {
 
         if (dataType === 'Workouts reps') {
             this.workouts.forEach((workout) => {
+                let workoutReps = 0;
+
                 workout.exercises.forEach((exercise) =>
                     exercise.sets.forEach((set) => {
-                        if (set.isDone) {
-                            this.chartData.push(+set.reps);
-                        }
+                        if (set.isDone) workoutReps += +set.reps;
                     })
                 );
+
+                this.chartData.push(workoutReps);
             });
         }
 
         if (dataType === 'Workouts volume') {
             this.workouts.forEach((workout) => {
+                let workoutVolume = 0;
+
                 workout.exercises.forEach((exercise) =>
                     exercise.sets.forEach((set) => {
-                        if (set.isDone) {
-                            this.chartData.push(+set.reps * +set.weight);
-                        }
+                        if (set.isDone)
+                            workoutVolume += +set.reps * +set.weight;
                     })
                 );
+
+                this.chartData.push(workoutVolume);
             });
         }
 
