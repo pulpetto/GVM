@@ -90,6 +90,7 @@ export class StatisticsComponent implements OnInit {
     activePeriod!: string;
 
     workouts!: WorkoutDone[];
+    workoutsForTimeframe!: WorkoutDone[];
 
     chartData!: number[];
     chartLabels!: string[];
@@ -110,10 +111,10 @@ export class StatisticsComponent implements OnInit {
             .subscribe((data) => {
                 this.workouts = data;
 
-                this.activeDataType = this.dataTypes[0];
+                this.activeDataType = this.dataTypes[4];
                 this.activePeriod = this.periods[0];
 
-                this.changeDataType(this.activeDataType);
+                this.changePeriod('1M');
             });
     }
 
@@ -125,7 +126,7 @@ export class StatisticsComponent implements OnInit {
             this.chartLabels = ['Strength', 'Hypertrophy', 'Endurance'];
             this.chartData = [0, 0, 0];
 
-            this.workouts.forEach((workout) =>
+            this.workoutsForTimeframe.forEach((workout) =>
                 workout.exercises.forEach((exercise) =>
                     exercise.sets.forEach((set) => {
                         if (set.isDone) {
@@ -150,7 +151,7 @@ export class StatisticsComponent implements OnInit {
             this.chartLabels = ['Failure', 'RPE 8-9', 'RPE 6-7'];
             this.chartData = [0, 0, 0];
 
-            this.workouts.forEach((workout) =>
+            this.workoutsForTimeframe.forEach((workout) =>
                 workout.exercises.forEach((exercise) =>
                     exercise.sets.forEach((set) => {
                         if (set.isDone) {
@@ -172,13 +173,13 @@ export class StatisticsComponent implements OnInit {
         }
 
         if (dataType === 'Workouts duration') {
-            this.workouts.forEach((workout) => {
+            this.workoutsForTimeframe.forEach((workout) => {
                 this.chartData.push(workout.duration);
             });
         }
 
         if (dataType === 'Workouts reps') {
-            this.workouts.forEach((workout) => {
+            this.workoutsForTimeframe.forEach((workout) => {
                 let workoutReps = 0;
 
                 workout.exercises.forEach((exercise) =>
@@ -192,7 +193,7 @@ export class StatisticsComponent implements OnInit {
         }
 
         if (dataType === 'Workouts volume') {
-            this.workouts.forEach((workout) => {
+            this.workoutsForTimeframe.forEach((workout) => {
                 let workoutVolume = 0;
 
                 workout.exercises.forEach((exercise) =>
@@ -206,7 +207,39 @@ export class StatisticsComponent implements OnInit {
             });
         }
 
-        this.changePeriod('1M');
+        this.dataTypeModalVisibility = false;
+    }
+
+    validateDataAmount(
+        workouts: WorkoutDone[],
+        totalDays: number,
+        periods: number
+    ) {
+        const now = DateTime.now();
+        const daysPerPeriod = totalDays / periods;
+
+        const timePeriods = Array.from({ length: periods }, (_, i) => ({
+            start: now
+                .minus({ days: totalDays - i * daysPerPeriod })
+                .toMillis(),
+            end: now
+                .minus({ days: totalDays - (i + 1) * daysPerPeriod })
+                .toMillis(),
+        }));
+
+        const canBeShown = timePeriods.every((period) =>
+            workouts.some(
+                (workout) =>
+                    workout.dateStart * 1000 < period.end &&
+                    workout.dateStart * 1000 > period.start
+            )
+        );
+
+        if (canBeShown) {
+            this.tooLittleData = false;
+        } else {
+            this.tooLittleData = true;
+        }
     }
 
     changePeriod(period: string) {
@@ -225,20 +258,35 @@ export class StatisticsComponent implements OnInit {
 
         if (period === 'ALL') startDate = null;
 
-        const workouts: WorkoutDone[] = this.workouts.filter(
+        this.workoutsForTimeframe = this.workouts.filter(
             (workout) =>
                 workout.dateStart >=
                 (startDate ? startDate!.toUnixInteger() : 0)
         );
+
+        if (period === '1M')
+            this.validateDataAmount(this.workoutsForTimeframe, 30, 1);
+
+        if (period === '3M')
+            this.validateDataAmount(this.workoutsForTimeframe, 90, 3);
+
+        if (period === '6M')
+            this.validateDataAmount(this.workoutsForTimeframe, 180, 6);
+
+        if (period === '1Y')
+            this.validateDataAmount(this.workoutsForTimeframe, 365, 12);
+
+        if (period === 'ALL') this.tooLittleData = false;
 
         if (
             this.activeDataType === 'Workouts duration' ||
             this.activeDataType === 'Workouts reps' ||
             this.activeDataType === 'Workouts volume'
         )
-            this.setLineChartLabels(workouts);
+            this.setLineChartLabels(this.workoutsForTimeframe);
 
-        this.setNumericStats(workouts);
+        this.setNumericStats(this.workoutsForTimeframe);
+        this.changeDataType(this.activeDataType);
 
         this.dataTypeModalVisibility = false;
     }
@@ -247,43 +295,11 @@ export class StatisticsComponent implements OnInit {
         this.chartLabels = [];
 
         workouts.forEach((workout) => {
-            if (this.activePeriod === '1M') {
-                this.chartMaxLabelsLimit = 5;
+            this.chartMaxLabelsLimit = 5;
 
-                this.chartLabels.push(
-                    DateTime.fromMillis(workout.dateStart * 1000).toFormat(
-                        'MMM d'
-                    )
-                );
-            }
-
-            if (this.activePeriod === '3M') {
-                this.chartMaxLabelsLimit = 5;
-
-                this.chartLabels.push(
-                    DateTime.fromMillis(workout.dateStart * 1000).setLocale(
-                        'en'
-                    ).monthLong!
-                );
-            }
-
-            if (this.activePeriod === '6M' || this.activePeriod === '1Y') {
-                this.chartMaxLabelsLimit = 5;
-
-                this.chartLabels.push(
-                    DateTime.fromMillis(workout.dateStart * 1000).setLocale(
-                        'en'
-                    ).monthShort!
-                );
-            }
-
-            if (this.activePeriod === 'ALL') {
-                this.chartMaxLabelsLimit = 5;
-
-                this.chartLabels.push(
-                    DateTime.fromMillis(workout.dateStart * 1000).year + ''
-                );
-            }
+            this.chartLabels.push(
+                DateTime.fromMillis(workout.dateStart * 1000).toFormat('MMM d')
+            );
         });
     }
 
