@@ -162,6 +162,10 @@ export class LineChartComponent implements AfterViewInit, OnChanges {
                             },
                         },
                         y: {
+                            ticks: {
+                                autoSkip: true,
+                                maxTicksLimit: 5,
+                            },
                             grid: {
                                 color: 'rgb(23, 23, 23, 1)',
                             },
