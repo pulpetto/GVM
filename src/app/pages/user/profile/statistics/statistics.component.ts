@@ -96,6 +96,9 @@ export class StatisticsComponent implements OnInit {
     chartLabels!: string[];
     chartMaxLabelsLimit!: number;
 
+    lineChartValSuffix: string = '';
+    lineChartValPipe: 'separator' | 'time' | null = null;
+
     workoutsAmount: number = 0;
     setsAmount: number = 0;
     repsAmount: number = 0;
@@ -176,6 +179,9 @@ export class StatisticsComponent implements OnInit {
             this.workoutsForTimeframe.forEach((workout) => {
                 this.chartData.push(workout.duration);
             });
+
+            this.lineChartValSuffix = '';
+            this.lineChartValPipe = 'time';
         }
 
         if (dataType === 'Workouts reps') {
@@ -190,6 +196,9 @@ export class StatisticsComponent implements OnInit {
 
                 this.chartData.push(workoutReps);
             });
+
+            this.lineChartValSuffix = ' Reps';
+            this.lineChartValPipe = 'separator';
         }
 
         if (dataType === 'Workouts volume') {
@@ -205,6 +214,9 @@ export class StatisticsComponent implements OnInit {
 
                 this.chartData.push(workoutVolume);
             });
+
+            this.lineChartValSuffix = 'kg';
+            this.lineChartValPipe = 'separator';
         }
 
         this.dataTypeModalVisibility = false;
