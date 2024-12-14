@@ -101,12 +101,7 @@ export class StatisticsComponent implements OnInit {
     timeSpentUnix: number = 0;
     volume: number = 0;
 
-    oldestFetchedDate!: DateTime;
-
     ngOnInit() {
-        const now = DateTime.now();
-        this.oldestFetchedDate = now.minus({ months: 1 });
-
         this.userService.user$
             .pipe(
                 filter((user) => !!user),
