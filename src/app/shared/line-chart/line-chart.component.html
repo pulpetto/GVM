@@ -3,9 +3,19 @@
 @if (hoveredData) {
 <div class="mt-2 text-xl font-semibold text-center">
     {{ hoveredLabel }} -
-    <!-- prettier-ignore -->
+
     <span class="text-emerald-500">
-        {{ hoveredData }}{{ hoveredValueSuffix ? hoveredValueSuffix : "" }}
+        @if (hoveredValuePipe === 'separator') {
+        {{ hoveredData | numberSeparator }}
+        } @else if(hoveredValuePipe === 'time') {
+        {{ hoveredData | timeFormatter }}
+        } @else {
+        {{ hoveredData }}
+        }
+
+        <!--  -->
+
+        {{ hoveredValueSuffix ? hoveredValueSuffix : "" }}
     </span>
 </div>
 }

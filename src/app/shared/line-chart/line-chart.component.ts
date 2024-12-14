@@ -9,13 +9,14 @@ import {
 } from '@angular/core';
 import { Chart, ChartEvent, registerables } from 'chart.js';
 import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
+import { NumberSeparatorPipe } from '../../pipes/number-separator.pipe';
 
 Chart.register(...registerables);
 
 @Component({
     selector: 'app-line-chart',
     standalone: true,
-    imports: [TimeFormatterPipe],
+    imports: [TimeFormatterPipe, NumberSeparatorPipe],
     templateUrl: './line-chart.component.html',
     styleUrl: './line-chart.component.css',
 })
@@ -27,6 +28,7 @@ export class LineChartComponent implements AfterViewInit, OnChanges {
     @Input({ required: true }) labels!: string[];
     @Input({ required: true }) maxLabelsLimit!: number;
     @Input({ required: true }) hoveredValueSuffix!: string | null;
+    @Input() hoveredValuePipe!: 'separator' | 'time' | null;
 
     clickedData!: number;
     clickedX: number | null = null;
