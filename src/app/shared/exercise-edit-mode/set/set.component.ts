@@ -8,7 +8,6 @@ import {
     FormsModule,
 } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
-import { InfoModalButtonComponent } from '../../info-modal-button/info-modal-button.component';
 import { DropSetComponent } from './drop-set/drop-set.component';
 import { ButtonForRpeModalComponent } from '../../button-for-rpe-modal/button-for-rpe-modal.component';
 import { ClusterSetComponent } from './cluster-set/cluster-set.component';
@@ -41,7 +40,6 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         CommonModule,
         FormsModule,
         NgxMaskDirective,
-        InfoModalButtonComponent,
         DropSetComponent,
         ButtonForRpeModalComponent,
         ClusterSetComponent,
