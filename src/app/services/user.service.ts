@@ -578,42 +578,41 @@ export class UserService {
 
     async updateDoneWorkout(
         doneWorkoutId: string,
-        workoutDoneObj: WorkoutDone,
-        workoutValues: WorkoutTemplate,
-        dataForState: WorkoutDoneFull
+        workoutDoneBase: WorkoutDone,
+        workoutDoneWithExercisesData: WorkoutDoneFull
     ) {
         try {
             await setDoc(
                 doc(this.userDocRef!, 'workoutsDone', doneWorkoutId),
-                workoutDoneObj
+                workoutDoneBase
             );
 
             await updateDoc(
                 doc(
                     this.userDocRef!,
                     'workouts',
-                    dataForState.workoutTemplateId
+                    workoutDoneWithExercisesData.workoutTemplateId
                 ),
                 {
-                    exercises: workoutValues.exercises,
+                    exercises: workoutDoneBase.exercises,
                 }
             );
 
             await setDoc(
                 doc(this.userDocRef!, 'workoutsUnixTimestamps', doneWorkoutId),
                 {
-                    unixTimestamp: workoutDoneObj.dateStart,
+                    unixTimestamp: workoutDoneBase.dateStart,
                 }
             );
 
             this.router.navigate([`/user/profile/history/${doneWorkoutId}`], {
-                state: dataForState,
+                state: workoutDoneWithExercisesData,
             });
             this.toastService.show('Workout updated successfully', false);
         } catch (error) {
             console.error(error);
             this.router.navigate([`/user/profile/history/${doneWorkoutId}`], {
-                state: dataForState,
+                state: workoutDoneWithExercisesData,
             });
             this.toastService.show('Error occured, try again', true);
         }

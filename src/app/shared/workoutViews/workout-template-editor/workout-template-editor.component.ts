@@ -817,7 +817,6 @@ export class WorkoutTemplateEditorComponent
             this.userService.updateDoneWorkout(
                 this.workoutId,
                 workoutFormObjExtended as WorkoutDone,
-                workoutFormObjBase,
                 dataForState
             );
         }
