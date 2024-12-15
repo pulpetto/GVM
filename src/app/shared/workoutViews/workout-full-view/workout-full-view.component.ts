@@ -140,7 +140,7 @@ export class WorkoutFullViewComponent implements OnInit {
             .subscribe((user) => {
                 if (user && this.workoutId) {
                     this.workoutData$ = this.userService
-                        .getWorkoutById(this.workoutId)
+                        .getWorkoutTemplateById(this.workoutId)
                         .pipe(
                             switchMap((workout) =>
                                 forkJoin(
@@ -172,6 +172,6 @@ export class WorkoutFullViewComponent implements OnInit {
     }
 
     deleteWorkout() {
-        this.userService.deleteWorkout(this.splitId, this.workoutId);
+        this.userService.deleteWorkoutTemplate(this.splitId, this.workoutId);
     }
 }

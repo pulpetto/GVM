@@ -46,7 +46,6 @@ import { Router } from '@angular/router';
 import { User } from '../interfaces/user';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WorkoutSplit } from '../interfaces/workout-split';
-import { Workout } from '../interfaces/workout/workout';
 import {
     CdkDragDrop,
     moveItemInArray,
@@ -68,6 +67,7 @@ import { ExercisePreview } from '../interfaces/exercise-preview';
 import { ExerciseDetails } from '../interfaces/exercise-details';
 import { ToastService } from './toast.service';
 import { Goal } from '../interfaces/goal';
+import { WorkoutTemplate } from '../interfaces/workout-template';
 
 @Injectable({
     providedIn: 'root',
@@ -392,14 +392,14 @@ export class UserService {
         }
     }
 
-    async saveWorkout(workoutObj: Workout) {
+    async saveWorkoutTemplate(workout: WorkoutTemplate) {
         try {
             const workoutsRef: CollectionReference = collection(
                 this.userDocRef!,
                 'workouts'
             );
 
-            const docRef = await addDoc(workoutsRef, workoutObj);
+            const docRef = await addDoc(workoutsRef, workout);
 
             const workoutsInSplitRef: CollectionReference = collection(
                 this.userDocRef!,
@@ -428,17 +428,20 @@ export class UserService {
         }
     }
 
-    async updateWorkout(workoutId: string, workoutObj: Workout) {
+    async updateWorkoutTemplate(
+        workoutTemplateId: string,
+        workout: WorkoutTemplate
+    ) {
         try {
             const workoutDocRef: DocumentReference = doc(
                 this.userDocRef!,
                 'workouts',
-                workoutId
+                workoutTemplateId
             );
 
             await updateDoc(workoutDocRef, {
-                name: workoutObj.name,
-                exercises: workoutObj.exercises,
+                name: workout.name,
+                exercises: workout.exercises,
             });
 
             this.router.navigate([`/user/workout`]);
@@ -449,9 +452,11 @@ export class UserService {
         }
     }
 
-    async deleteWorkout(splitId: string, workoutId: string) {
+    async deleteWorkoutTemplate(splitId: string, workoutTemplateId: string) {
         try {
-            await deleteDoc(doc(this.userDocRef!, 'workouts', workoutId));
+            await deleteDoc(
+                doc(this.userDocRef!, 'workouts', workoutTemplateId)
+            );
 
             await deleteDoc(
                 doc(
@@ -459,7 +464,7 @@ export class UserService {
                     'workoutsSplits',
                     splitId,
                     'workoutsIds',
-                    workoutId
+                    workoutTemplateId
                 )
             );
 
@@ -498,7 +503,7 @@ export class UserService {
         }
     }
 
-    getWorkoutById(workoutId: string): Observable<Workout> {
+    getWorkoutTemplateById(workoutId: string): Observable<WorkoutTemplate> {
         const workoutDocRef: DocumentReference = doc(
             this.userDocRef!,
             'workouts',
@@ -506,13 +511,13 @@ export class UserService {
         );
 
         return from(
-            getDoc(workoutDocRef).then((workoutDoc) => {
-                return workoutDoc.data() as Workout;
-            })
+            getDoc(workoutDocRef).then(
+                (workoutDoc) => workoutDoc.data() as WorkoutTemplate
+            )
         );
     }
 
-    getWorkoutNameById(workoutId: string): Observable<string> {
+    getWorkoutTemplateNameById(workoutId: string): Observable<string> {
         const workoutDocRef: DocumentReference = doc(
             this.userDocRef!,
             'workouts',
@@ -520,18 +525,16 @@ export class UserService {
         );
 
         return from(
-            getDoc(workoutDocRef).then((workoutDoc) => {
-                const data = workoutDoc.data() as Workout;
-
-                return data.name;
-            })
+            getDoc(workoutDocRef).then(
+                (workoutDoc) => workoutDoc.data()!['name']
+            )
         );
     }
 
     finishWorkout(
         workoutTemplateId: string,
         workoutDoneObj: WorkoutDone,
-        workoutValues: Workout,
+        workoutValues: WorkoutTemplate,
         dataForState: WorkoutDoneFull
     ) {
         const workoutsDoneRef: CollectionReference = collection(
@@ -575,7 +578,7 @@ export class UserService {
     async updateDoneWorkout(
         doneWorkoutId: string,
         workoutDoneObj: WorkoutDone,
-        workoutValues: Workout,
+        workoutValues: WorkoutTemplate,
         dataForState: WorkoutDoneFull
     ) {
         try {

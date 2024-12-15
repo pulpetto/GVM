@@ -104,7 +104,7 @@ export class WorkoutSplitComponent implements OnInit {
 
                     const workoutWithNames$ = workoutsIds.map((workout) =>
                         this.userService
-                            .getWorkoutNameById(workout.workoutId)
+                            .getWorkoutTemplateNameById(workout.workoutId)
                             .pipe(
                                 map((workoutName) => ({
                                     ...workout,

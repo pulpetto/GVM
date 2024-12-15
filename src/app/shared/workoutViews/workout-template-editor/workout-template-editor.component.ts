@@ -17,7 +17,6 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
-import { Workout } from '../../../interfaces/workout/workout';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { WorkoutExercise } from '../../../interfaces/workout/workout-exercise';
 import { DropSet } from '../../../interfaces/set-types/drop-set';
@@ -40,6 +39,7 @@ import { NavbarVisibilityService } from '../../../services/navbar-visibility.ser
 import { ActivityBarComponent } from '../../activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../previous-route-button/previous-route-button.component';
 import { WorkoutDoneFull } from '../../../interfaces/workout/workout-done-full';
+import { WorkoutTemplate } from '../../../interfaces/workout-template';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop50 = { top: '50%' };
@@ -336,7 +336,7 @@ export class WorkoutTemplateEditorComponent
                         return this.route.paramMap.pipe(
                             switchMap((params) => {
                                 this.workoutId = params.get('workoutId')!;
-                                return this.userService.getWorkoutById(
+                                return this.userService.getWorkoutTemplateById(
                                     this.workoutId
                                 ) as Observable<WorkoutDone>;
                             })
@@ -373,7 +373,7 @@ export class WorkoutTemplateEditorComponent
                         return this.route.paramMap.pipe(
                             switchMap((params) => {
                                 this.workoutId = params.get('workoutId')!;
-                                return this.userService.getWorkoutById(
+                                return this.userService.getWorkoutTemplateById(
                                     this.workoutId
                                 ) as Observable<WorkoutDone>;
                             })
@@ -667,15 +667,15 @@ export class WorkoutTemplateEditorComponent
 
     saveWorkout() {
         if (this.editView === 'new') {
-            this.userService.saveWorkout(
-                this.workoutForm.getRawValue() as Workout
+            this.userService.saveWorkoutTemplate(
+                this.workoutForm.getRawValue() as WorkoutTemplate
             );
         }
 
         if (this.editView === 'existing') {
-            this.userService.updateWorkout(
+            this.userService.updateWorkoutTemplate(
                 this.workoutId,
-                this.workoutForm.getRawValue() as Workout
+                this.workoutForm.getRawValue() as WorkoutTemplate
             );
         }
 
@@ -684,7 +684,7 @@ export class WorkoutTemplateEditorComponent
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const workoutFormObjExtended: any =
-                this.workoutForm.getRawValue() as Workout;
+                this.workoutForm.getRawValue() as WorkoutTemplate;
 
             this.workoutExercises.controls.forEach((exercise) => {
                 const setsFormArray = exercise.get(
@@ -697,7 +697,7 @@ export class WorkoutTemplateEditorComponent
             });
 
             const workoutFormObjBase =
-                this.workoutForm.getRawValue() as Workout;
+                this.workoutForm.getRawValue() as WorkoutTemplate;
 
             workoutFormObjExtended.duration = this.workoutDuration;
 
@@ -756,7 +756,7 @@ export class WorkoutTemplateEditorComponent
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const workoutFormObjExtended: any =
-                this.workoutForm.getRawValue() as Workout;
+                this.workoutForm.getRawValue() as WorkoutTemplate;
 
             this.workoutExercises.controls.forEach((exercise) => {
                 const setsFormArray = exercise.get(
@@ -769,7 +769,7 @@ export class WorkoutTemplateEditorComponent
             });
 
             const workoutFormObjBase =
-                this.workoutForm.getRawValue() as Workout;
+                this.workoutForm.getRawValue() as WorkoutTemplate;
 
             workoutFormObjExtended.duration = this.workoutDuration;
 
