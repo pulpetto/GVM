@@ -531,48 +531,49 @@ export class UserService {
         );
     }
 
-    finishWorkout(
+    async finishWorkout(
         workoutTemplateId: string,
-        workoutDoneObj: WorkoutDone,
-        workoutValues: WorkoutTemplate,
-        dataForState: WorkoutDoneFull
+        workoutDoneBase: WorkoutDone,
+        workoutDoneWithExercisesData: WorkoutDoneFull
     ) {
-        const workoutsDoneRef: CollectionReference = collection(
-            this.userDocRef!,
-            'workoutsDone'
-        );
-
-        addDoc(workoutsDoneRef, workoutDoneObj).then((docRef) => {
-            const workoutTemplateRef: DocumentReference = doc(
-                this.userDocRef!,
-                'workouts',
-                workoutTemplateId
+        try {
+            const doneWorkoutSnapshot = await addDoc(
+                collection(this.userDocRef!, 'workoutsDone'),
+                workoutDoneBase
             );
 
-            updateDoc(workoutTemplateRef, {
-                doneWorkoutsIds: arrayUnion(docRef.id),
-                exercises: workoutValues.exercises,
-            });
-
-            const workoutsUnixTimestampRef: DocumentReference = doc(
-                this.userDocRef!,
-                'workoutsUnixTimestamps',
-                docRef.id
-            );
-
-            setDoc(workoutsUnixTimestampRef, {
-                unixTimestamp: workoutDoneObj.dateStart,
-            });
-
-            dataForState.id = docRef.id;
-
-            this.router.navigate(
-                [`/user/profile/history/${docRef.id}/summary`],
+            await updateDoc(
+                doc(this.userDocRef!, 'workouts', workoutTemplateId),
                 {
-                    state: dataForState,
+                    doneWorkoutsIds: arrayUnion(doneWorkoutSnapshot.id),
+                    exercises: workoutDoneBase.exercises,
                 }
             );
-        });
+
+            await setDoc(
+                doc(
+                    this.userDocRef!,
+                    'workoutsUnixTimestamps',
+                    doneWorkoutSnapshot.id
+                ),
+                {
+                    unixTimestamp: workoutDoneBase.dateStart,
+                }
+            );
+
+            workoutDoneWithExercisesData.id = doneWorkoutSnapshot.id;
+
+            this.router.navigate(
+                [`/user/profile/history/${doneWorkoutSnapshot.id}/summary`],
+                {
+                    state: workoutDoneWithExercisesData,
+                }
+            );
+        } catch (error) {
+            console.error(error);
+            this.router.navigate([`/user/workout`]);
+            this.toastService.show('Error occured, try again', true);
+        }
     }
 
     async updateDoneWorkout(
