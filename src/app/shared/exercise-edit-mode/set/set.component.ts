@@ -287,16 +287,12 @@ export class SetComponent implements OnInit {
 
             this.set.removeControl('clustersets');
             this.set.removeControl('tempo');
-        }
-
-        if (this.setTypeName.value === 'cluster') {
+        } else if (this.setTypeName.value === 'cluster') {
             this.set.addControl('clustersets', this.fb.array<ClusterSet[]>([]));
 
             this.set.removeControl('dropsets');
             this.set.removeControl('tempo');
-        }
-
-        if (this.setTypeName.value === 'tempo') {
+        } else if (this.setTypeName.value === 'tempo') {
             this.set.addControl(
                 'tempo',
                 this.fb.group<TempoSet>({
@@ -307,6 +303,10 @@ export class SetComponent implements OnInit {
                 })
             );
 
+            this.set.removeControl('dropsets');
+            this.set.removeControl('clustersets');
+        } else {
+            this.set.removeControl('tempo');
             this.set.removeControl('dropsets');
             this.set.removeControl('clustersets');
         }
