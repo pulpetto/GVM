@@ -172,10 +172,10 @@ export class SetComponent implements OnInit {
                 });
             }
 
-            this.workoutComputedValues.controls.volume.setValue(
-                this.workoutComputedValues.controls.volume.value! +
+            this.volume.setValue(
+                this.volume.value! +
                     subsetsVolume +
-                    this.set.get('weight')?.value * this.set.get('reps')?.value
+                    this.weight.value! * this.reps.value!
             );
 
             this.localVolume = this.weight.value! * this.reps.value!;
@@ -194,15 +194,14 @@ export class SetComponent implements OnInit {
 
             if (this.setTypeName.value === 'cluster') {
                 this.clustersets.controls.forEach((clusterset) => {
-                    subsetsVolume +=
-                        clusterset.value.reps * this.set.get('weight')?.value;
+                    subsetsVolume += clusterset.value.reps * this.weight.value!;
                 });
             }
 
-            this.workoutComputedValues.controls.volume.setValue(
-                this.workoutComputedValues.controls.volume.value! -
+            this.volume.setValue(
+                this.volume.value! -
                     subsetsVolume -
-                    this.set.get('weight')?.value * this.set.get('reps')?.value
+                    this.weight.value! * this.reps.value!
             );
         }
     }
@@ -290,15 +289,11 @@ export class SetComponent implements OnInit {
 
         if (this.clustersets)
             this.clustersets.controls.forEach((clusterset) => {
-                subsetsVolume +=
-                    clusterset.value.reps * this.set.get('weight')?.value;
+                subsetsVolume += clusterset.value.reps * this.weight.value!;
             });
 
         if (this.clustersets || this.dropsets)
-            this.workoutComputedValues.controls.volume.setValue(
-                this.workoutComputedValues.controls.volume.value! -
-                    subsetsVolume
-            );
+            this.volume.setValue(this.volume.value! - subsetsVolume);
 
         if (this.setTypeName.value === 'drop') {
             this.set.addControl('dropsets', this.fb.array<DropSet[]>([]));
