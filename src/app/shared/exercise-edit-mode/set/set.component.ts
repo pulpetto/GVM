@@ -133,6 +133,20 @@ export class SetComponent implements OnInit {
         return this.set.get('tempo') as FormGroup;
     }
 
+    get weight(): FormControl<number | null> {
+        return this.set.get('weight') as FormControl<number | null>;
+    }
+
+    get reps(): FormControl<number | null> {
+        return this.set.get('reps') as FormControl<number | null>;
+    }
+
+    get volume(): FormControl<number | null> {
+        return this.workoutComputedValues.get('volume') as FormControl<
+            number | null
+        >;
+    }
+
     toggleSetCompletion() {
         this.isDone.setValue(!this.isDone.value);
 
