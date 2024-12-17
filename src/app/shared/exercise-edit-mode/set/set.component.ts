@@ -96,6 +96,8 @@ export class SetComponent implements OnInit {
         | 'current'
         | 'done';
 
+    localVolume: number = 0;
+
     ngOnInit() {
         this.set.addControl('setTypeName', this.fb.control<SetType>('normal'));
 
@@ -175,6 +177,8 @@ export class SetComponent implements OnInit {
                     subsetsVolume +
                     this.set.get('weight')?.value * this.set.get('reps')?.value
             );
+
+            this.localVolume = this.weight.value! * this.reps.value!;
         } else {
             this.workoutComputedValues.controls.setsDone.setValue(
                 this.workoutComputedValues.controls.setsDone.value! - 1
@@ -326,6 +330,18 @@ export class SetComponent implements OnInit {
         }
 
         this.setTypeModalVisibility = false;
+    }
+
+    onSetVolumeChange() {
+        if (this.isDone.value) {
+            this.volume.setValue(this.volume.value! - this.localVolume);
+
+            this.volume.setValue(
+                this.volume.value! + this.weight.value! * this.reps.value!
+            );
+
+            this.localVolume = this.weight.value! * this.reps.value!;
+        }
     }
 
     // Dropset Logic ---------------------------
