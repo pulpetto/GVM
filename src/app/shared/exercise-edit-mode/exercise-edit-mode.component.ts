@@ -120,12 +120,13 @@ export class ExerciseEditModeComponent {
     removeSet($index: number) {
         const setToRemove = this.sets.at($index);
 
-        this.workoutComputedValues
-            .get('volume')!
-            .setValue(
-                this.workoutComputedValues.get('volume')!.value! -
-                    setToRemove.value.weight * setToRemove.value.reps
-            );
+        if (setToRemove.value.isDone === true)
+            this.workoutComputedValues
+                .get('volume')!
+                .setValue(
+                    this.workoutComputedValues.get('volume')!.value! -
+                        setToRemove.value.weight * setToRemove.value.reps
+                );
 
         this.sets.removeAt($index);
     }
