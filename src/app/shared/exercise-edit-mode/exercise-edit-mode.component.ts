@@ -122,6 +122,21 @@ export class ExerciseEditModeComponent {
 
     exerciseRemove() {
         this.exercisesRemoveEvent.emit([this.exerciseId, this.exerciseIndex]);
+
+        let exerciseSetsVolume = 0;
+
+        this.sets.controls.forEach((set) => {
+            if (set.value.isDone)
+                exerciseSetsVolume += set.value.weight * set.value.reps;
+        });
+
+        this.workoutComputedValues
+            .get('volume')!
+            .setValue(
+                this.workoutComputedValues.get('volume')!.value! -
+                    exerciseSetsVolume
+            );
+
         this.closeOptionsModal();
     }
 
