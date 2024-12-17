@@ -19,6 +19,7 @@
 </button>
 
 <app-exercise-selector
+    [modalTitle]="'Choose exercise for your goal:'"
     [exercisesModalVisibility]="exerciseSelectorModalVisibility"
     (exercisesModalCloseEvent)="exerciseSelectorModalVisibility = false"
     (exerciseChangeEvent)="selectExercise($event)"

@@ -83,6 +83,7 @@ export class ExerciseSelectorComponent implements OnInit {
     equipmentModalComponent!: EquipmentModalComponent;
 
     @Input({ required: true }) exercisesModalVisibility!: boolean;
+    @Input({ required: true }) modalTitle!: string;
     innerModalsVisibility: boolean = false;
 
     exercises: ExercisePreview[] | null = null;
