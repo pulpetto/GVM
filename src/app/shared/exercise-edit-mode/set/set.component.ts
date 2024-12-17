@@ -328,7 +328,11 @@ export class SetComponent implements OnInit {
     }
 
     onSetVolumeChange() {
-        if (this.isDone.value) {
+        if (
+            (this.editView === 'done' || this.editView === 'existing') &&
+            this.isDone &&
+            this.isDone.value === true
+        ) {
             this.volume.setValue(this.volume.value! - this.localVolume);
 
             this.volume.setValue(
