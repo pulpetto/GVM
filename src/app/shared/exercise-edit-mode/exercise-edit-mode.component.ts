@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
+import { RpeType } from '../../types/rpe-type';
+import { SetType } from '../../types/set-type';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -100,9 +102,17 @@ export class ExerciseEditModeComponent {
     }
 
     addSet() {
-        const set = this.fb.group({
-            setNumber: [this.sets.length + 1],
-        });
+        const set = this.fb.group({});
+
+        set.addControl(
+            'setNumber',
+            this.fb.control<number>(this.sets.length + 1)
+        );
+        set.addControl('setTypeName', this.fb.control<SetType>('normal'));
+        set.addControl('weight', this.fb.control<string>(''));
+        set.addControl('reps', this.fb.control<string>(''));
+        set.addControl('rpe', this.fb.control<RpeType>(null));
+        set.addControl('isDone', this.fb.control<boolean>(false));
 
         this.sets.push(set);
     }
