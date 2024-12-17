@@ -80,7 +80,6 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class SetComponent implements OnInit {
-    //  include volume calculations on set type change
     fb = inject(FormBuilder);
 
     @Input({ required: true }) set!: FormGroup;
