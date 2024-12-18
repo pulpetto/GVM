@@ -155,6 +155,13 @@ export const routes: Routes = [
                     ).then((component) => component.AccountComponent),
             },
             {
+                path: 'profile/settings/guide',
+                loadComponent: () =>
+                    import(
+                        './pages/user/profile/settings/guide/guide.component'
+                    ).then((component) => component.GuideComponent),
+            },
+            {
                 path: 'profile/calendar',
                 loadComponent: () =>
                     import(
