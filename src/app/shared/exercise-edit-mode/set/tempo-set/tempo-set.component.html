@@ -149,6 +149,7 @@
                     }
             </div>
         </div>
+
         @if ($index !== 3) {
         <div>
             <svg
@@ -165,15 +166,30 @@
                 />
             </svg>
         </div>
-        } }
+        }
+        <!--  -->
+        }
     </div>
+</div>
+}
 
+<!--  -->
+
+@if (tempoModalVisibility) {
+<div
+    @openClose4
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
+    [ngClass]="{
+        'bottom-0': tempoModalVisibility,
+        '-bottom-full': !tempoModalVisibility,
+    }"
+>
     <button
         type="button"
         (click)="tempoModalVisibility = false"
-        class="absolute py-1 font-semibold -translate-y-16 rounded-md left-4 right-4 top-1/2 bg-emerald-500 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981]"
+        class="py-1 font-semibold w-full rounded-md bg-neutral-900 transition-all active:scale-95 active:opacity-50 hover:shadow-[0_0_10px_1px_#171717]"
     >
-        Ok
+        Close
     </button>
 </div>
 }
@@ -293,7 +309,7 @@
 @if (instructionsModalVisibility) {
 <div
     @openClose4
-    class="fixed left-0 z-50 w-full p-4 shadow-md pb-7 rounded-t-md bg-neutral-950"
+    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
     [ngClass]="{
         'bottom-0': instructionsModalVisibility,
         '-bottom-full': !instructionsModalVisibility,
