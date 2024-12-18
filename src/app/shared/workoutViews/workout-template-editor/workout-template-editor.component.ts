@@ -40,6 +40,9 @@ import { ActivityBarComponent } from '../../activity-bar/activity-bar.component'
 import { PreviousRouteButtonComponent } from '../../previous-route-button/previous-route-button.component';
 import { WorkoutDoneFull } from '../../../interfaces/workout/workout-done-full';
 import { WorkoutTemplate } from '../../../interfaces/workout-template';
+import { ExerciseSelectorComponent } from '../../../pages/user/profile/goals/goalsCreator/exercise-selector/exercise-selector.component';
+import { SetType } from '../../../types/set-type';
+import { RpeType } from '../../../types/rpe-type';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop50 = { top: '50%' };
@@ -74,6 +77,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         ActivityBarComponent,
         PreviousRouteButtonComponent,
         RouterModule,
+        ExerciseSelectorComponent,
     ],
     animations: [
         trigger('openClose', [
@@ -207,6 +211,70 @@ export class WorkoutTemplateEditorComponent
     workoutTimingModalVisibility: boolean = false;
     workoutDurationModalVisibility: boolean = false;
     workoutStartDateModalVisibility: boolean = false;
+
+    exerciseReplaceModalVisibility: boolean = false;
+    exerciseToReplaceName!: string;
+    exerciseToReplaceIndex!: number;
+
+    replaceExercise($event: number) {
+        this.exerciseToReplaceIndex = $event;
+
+        this.exerciseToReplaceName =
+            this.exercisesPresentionalData[$event].name;
+
+        this.exerciseReplaceModalVisibility = true;
+    }
+
+    finalizeExerciseReplace($event: ExercisePreview) {
+        this.removeExercise([$event.id, this.exerciseToReplaceIndex]);
+
+        let exerciseSetsVolume = 0;
+
+        this.workoutExercises
+            .at(this.exerciseToReplaceIndex)
+            .value!.sets.forEach((set: any) => {
+                if (set.isDone) exerciseSetsVolume += set.weight * set.reps;
+            });
+
+        this.workoutComputedValues
+            .get('volume')!
+            .setValue(
+                this.workoutComputedValues.get('volume')!.value! -
+                    exerciseSetsVolume
+            );
+
+        this.exercisesPresentionalData.splice(
+            this.exerciseToReplaceIndex,
+            0,
+            $event
+        );
+
+        const exerciseGroup = this.fb.group({
+            exerciseId: $event.id,
+            superSetColor: null,
+            sets: this.fb.array([]),
+        });
+
+        const sets = exerciseGroup.get('sets') as FormArray;
+
+        const set = this.fb.group({});
+
+        sets.push(set);
+
+        this.workoutExercises.insert(
+            this.exerciseToReplaceIndex,
+            exerciseGroup
+        );
+
+        set.addControl('setNumber', this.fb.control<number>(1));
+        set.addControl('setTypeName', this.fb.control<SetType>('normal'));
+        set.addControl('weight', this.fb.control<string>(''));
+        set.addControl('reps', this.fb.control<string>(''));
+        set.addControl('rpe', this.fb.control<RpeType>(null));
+
+        if (this.editView === 'current' || this.editView === 'done')
+            set.addControl('isDone', this.fb.control<boolean>(false));
+    }
 
     supersetModalVisibility: boolean = false;
     supersetColorPickerModalVisibility: boolean = false;

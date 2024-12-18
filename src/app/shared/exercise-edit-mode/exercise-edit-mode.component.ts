@@ -68,6 +68,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class ExerciseEditModeComponent {
     fb = inject(FormBuilder);
 
+    @Output() exercisesReplaceEvent = new EventEmitter<number>();
     @Output() exercisesRemoveEvent = new EventEmitter<(string | number)[]>();
     @Output() exercisesReorderEvent = new EventEmitter<void>();
     @Output() addSupersetEvent = new EventEmitter<(string | number)[]>();
@@ -112,7 +113,9 @@ export class ExerciseEditModeComponent {
         set.addControl('weight', this.fb.control<string>(''));
         set.addControl('reps', this.fb.control<string>(''));
         set.addControl('rpe', this.fb.control<RpeType>(null));
-        set.addControl('isDone', this.fb.control<boolean>(false));
+
+        if (this.editView === 'current' || this.editView === 'done')
+            set.addControl('isDone', this.fb.control<boolean>(false));
 
         this.sets.push(set);
     }
@@ -152,6 +155,12 @@ export class ExerciseEditModeComponent {
     }
 
     closeOptionsModal() {
+        this.optionsModalVisibility = false;
+    }
+
+    replaceExercise() {
+        this.exercisesReplaceEvent.emit(this.exerciseIndex);
+
         this.optionsModalVisibility = false;
     }
 

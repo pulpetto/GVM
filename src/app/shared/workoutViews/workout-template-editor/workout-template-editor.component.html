@@ -64,6 +64,7 @@
             [workoutComputedValues]="workoutComputedValues"
             (addSupersetEvent)="initalizeSupersetModal($event)"
             (removeSupersetEvent)="removeFromSuperset($event)"
+            (exercisesReplaceEvent)="replaceExercise($event)"
             (exercisesRemoveEvent)="removeExercise($event)"
             (exercisesReorderEvent)="exercisesReorderModalVisibility = true"
             [exerciseName]="exercisesPresentionalData[$index].name"
@@ -161,6 +162,17 @@
 }
 
 <!-- -->
+
+<app-exercise-selector
+    [modalTitle]="
+        'Choose exercise to replace ' + exerciseToReplaceName + ' with:'
+    "
+    [exercisesModalVisibility]="exerciseReplaceModalVisibility"
+    (exercisesModalCloseEvent)="exerciseReplaceModalVisibility = false"
+    (exerciseChangeEvent)="finalizeExerciseReplace($event)"
+></app-exercise-selector>
+
+<!-- indent -->
 
 @if (exercisesReorderModalVisibility) {
 <!-- eslint-disable-next-line -->
