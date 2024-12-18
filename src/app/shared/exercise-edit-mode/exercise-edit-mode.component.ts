@@ -18,6 +18,7 @@ import { RpeType } from '../../types/rpe-type';
 import { SetType } from '../../types/set-type';
 
 const visibleModal = { top: '50%' };
+const visibleModalTop25 = { top: '33.333333%' };
 const hiddenModal = { top: '100%' };
 
 const visibleBg = { opacity: '100%' };
@@ -69,6 +70,16 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
             transition(':leave', [
                 style(visibleBtnFixed),
                 animate(timing, style(hiddenBtnFixed)),
+            ]),
+        ]),
+        trigger('openClose4', [
+            transition(':enter', [
+                style(hiddenModal),
+                animate(timing, style(visibleModalTop25)),
+            ]),
+            transition(':leave', [
+                style(visibleModalTop25),
+                animate(timing, style(hiddenModal)),
             ]),
         ]),
     ],
