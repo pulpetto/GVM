@@ -228,14 +228,19 @@ export class WorkoutTemplateEditorComponent
     }
 
     finalizeExerciseReplace($event: ExercisePreview) {
-        this.removeExercise([$event.id, this.exerciseToReplaceIndex]);
-
         let exerciseSetsVolume = 0;
+        let exerciseSetsDoneCount = 0;
+        let exerciseSetsTotalCount = 0;
 
         this.workoutExercises
             .at(this.exerciseToReplaceIndex)
             .value!.sets.forEach((set: any) => {
-                if (set.isDone) exerciseSetsVolume += set.weight * set.reps;
+                exerciseSetsTotalCount++;
+
+                if (set.isDone) {
+                    exerciseSetsDoneCount++;
+                    exerciseSetsVolume += set.weight * set.reps;
+                }
             });
 
         this.workoutComputedValues
@@ -244,6 +249,18 @@ export class WorkoutTemplateEditorComponent
                 this.workoutComputedValues.get('volume')!.value! -
                     exerciseSetsVolume
             );
+
+        this.workoutComputedValues.controls.setsDone.setValue(
+            this.workoutComputedValues.controls.setsDone.value! -
+                exerciseSetsDoneCount
+        );
+
+        this.workoutComputedValues.controls.setsTotal.setValue(
+            this.workoutComputedValues.controls.setsTotal.value! -
+                exerciseSetsTotalCount
+        );
+
+        this.removeExercise([$event.id, this.exerciseToReplaceIndex]);
 
         this.exercisesPresentionalData.splice(
             this.exerciseToReplaceIndex,
@@ -266,6 +283,10 @@ export class WorkoutTemplateEditorComponent
         this.workoutExercises.insert(
             this.exerciseToReplaceIndex,
             exerciseGroup
+        );
+
+        this.workoutComputedValues.controls.setsTotal.setValue(
+            this.workoutComputedValues.controls.setsTotal.value! + 1
         );
 
         set.addControl('setNumber', this.fb.control<number>(1));
@@ -392,7 +413,6 @@ export class WorkoutTemplateEditorComponent
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     workoutDurationInterval!: any;
     workoutDuration: number = 0;
-    totalSets: number = 0;
 
     ngOnInit() {
         this.userService.user$
@@ -584,7 +604,10 @@ export class WorkoutTemplateEditorComponent
                                 this.editView === 'current' ||
                                 this.editView === 'new'
                             )
-                                this.totalSets++;
+                                this.workoutComputedValues.controls.setsTotal.setValue(
+                                    this.workoutComputedValues.controls
+                                        .setsTotal.value! + 1
+                                );
 
                             const setsFormArray = exerciseGroup.get(
                                 'sets'
@@ -783,7 +806,8 @@ export class WorkoutTemplateEditorComponent
                 this.workoutComputedValues.controls.volume.value;
             workoutFormObjExtended.setsDone =
                 this.workoutComputedValues.controls.setsDone.value;
-            workoutFormObjExtended.totalSets = this.totalSets;
+            workoutFormObjExtended.totalSets =
+                this.workoutComputedValues.controls.setsTotal.value;
             workoutFormObjExtended.exercisesIds = Array.from(
                 this.selectedExercisesIds
             );
@@ -854,7 +878,8 @@ export class WorkoutTemplateEditorComponent
                 this.workoutComputedValues.controls.volume.value;
             workoutFormObjExtended.setsDone =
                 this.workoutComputedValues.controls.setsDone.value;
-            workoutFormObjExtended.totalSets = this.totalSets;
+            workoutFormObjExtended.totalSets =
+                this.workoutComputedValues.controls.setsTotal.value;
             workoutFormObjExtended.exercisesIds = Array.from(
                 this.selectedExercisesIds
             );

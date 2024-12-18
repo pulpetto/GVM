@@ -118,19 +118,32 @@ export class ExerciseEditModeComponent {
         if (this.editView === 'current' || this.editView === 'done')
             set.addControl('isDone', this.fb.control<boolean>(false));
 
+        this.workoutComputedValues.controls.setsTotal.setValue(
+            this.workoutComputedValues.controls.setsTotal.value! + 1
+        );
+
         this.sets.push(set);
     }
 
     removeSet($index: number) {
         const setToRemove = this.sets.at($index);
 
-        if (setToRemove.value.isDone === true)
+        if (setToRemove.value.isDone === true) {
             this.workoutComputedValues
                 .get('volume')!
                 .setValue(
                     this.workoutComputedValues.get('volume')!.value! -
                         setToRemove.value.weight * setToRemove.value.reps
                 );
+
+            this.workoutComputedValues.controls.setsDone.setValue(
+                this.workoutComputedValues.controls.setsDone.value! - 1
+            );
+        }
+
+        this.workoutComputedValues.controls.setsTotal.setValue(
+            this.workoutComputedValues.controls.setsTotal.value! - 1
+        );
 
         this.sets.removeAt($index);
     }
@@ -139,10 +152,16 @@ export class ExerciseEditModeComponent {
         this.exercisesRemoveEvent.emit([this.exerciseId, this.exerciseIndex]);
 
         let exerciseSetsVolume = 0;
+        let exerciseSetsDoneCount = 0;
+        let exerciseSetsTotalCount = 0;
 
         this.sets.controls.forEach((set) => {
-            if (set.value.isDone)
+            exerciseSetsTotalCount++;
+
+            if (set.value.isDone) {
                 exerciseSetsVolume += set.value.weight * set.value.reps;
+                exerciseSetsDoneCount++;
+            }
         });
 
         this.workoutComputedValues
@@ -151,6 +170,16 @@ export class ExerciseEditModeComponent {
                 this.workoutComputedValues.get('volume')!.value! -
                     exerciseSetsVolume
             );
+
+        this.workoutComputedValues.controls.setsDone.setValue(
+            this.workoutComputedValues.controls.setsDone.value! -
+                exerciseSetsDoneCount
+        );
+
+        this.workoutComputedValues.controls.setsTotal.setValue(
+            this.workoutComputedValues.controls.setsTotal.value! -
+                exerciseSetsTotalCount
+        );
 
         this.closeOptionsModal();
     }
