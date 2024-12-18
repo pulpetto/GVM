@@ -1,5 +1,13 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+    Component,
+    EventEmitter,
+    Inject,
+    inject,
+    Input,
+    Output,
+    Renderer2,
+} from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { InfoModalButtonComponent } from '../info-modal-button/info-modal-button.component';
 import { SetComponent } from './set/set.component';
 import { RouterModule } from '@angular/router';
@@ -103,6 +111,23 @@ export class ExerciseEditModeComponent {
         return this.exercise.get('sets') as FormArray<FormGroup>;
     }
 
+    constructor(
+        private renderer: Renderer2,
+        @Inject(DOCUMENT) private document: Document
+    ) {}
+
+    toogleOptionsModalVisibility() {
+        this.optionsModalVisibility = !this.optionsModalVisibility;
+
+        // prettier-ignore
+        this.optionsModalVisibility
+            ? this.renderer.addClass(this.document.body, 'overflow-y-hidden')
+            : this.renderer.removeClass(
+                this.document.body,
+                'overflow-y-hidden'
+            );
+    }
+
     addSet() {
         const set = this.fb.group({});
 
@@ -181,31 +206,29 @@ export class ExerciseEditModeComponent {
                 exerciseSetsTotalCount
         );
 
-        this.closeOptionsModal();
-    }
-
-    closeOptionsModal() {
-        this.optionsModalVisibility = false;
+        this.toogleOptionsModalVisibility();
     }
 
     replaceExercise() {
         this.exercisesReplaceEvent.emit(this.exerciseIndex);
 
-        this.optionsModalVisibility = false;
+        this.toogleOptionsModalVisibility();
     }
 
     reorderExercise() {
         this.exercisesReorderEvent.emit();
-        this.optionsModalVisibility = false;
+        this.toogleOptionsModalVisibility();
     }
 
     addSuperset() {
-        this.optionsModalVisibility = false;
+        this.toogleOptionsModalVisibility();
+
         this.addSupersetEvent.emit([this.exerciseName, this.exerciseIndex]);
     }
 
     removeSuperset() {
-        this.optionsModalVisibility = false;
+        this.toogleOptionsModalVisibility();
+
         this.removeSupersetEvent.emit([
             this.supersetColor!,
             this.exerciseIndex,
