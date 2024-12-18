@@ -90,12 +90,14 @@
 
     <div class="flex flex-col self-start w-full gap-1">
         @for (exercise of exercisesFiltered; track $index) {
+        <!--  -->
+        @if (!selectedExercisesIds.has(exercise.id)) {
         <button
             type="button"
-            (click)="onExerciseSelect(exercise.id)"
+            (click)="onExerciseSelect(exercise)"
             class="flex items-center justify-between w-full p-1 transition-all rounded-md cursor-pointer active:opacity-50 active:scale-95"
             [ngClass]="{
-                'bg-neutral-900': newlySelectedExercisesIds.has(exercise.id),
+                'bg-neutral-900': newlySelectedExercisesIds.has(exercise),
             }"
         >
             <div class="flex items-center gap-2">
@@ -112,24 +114,10 @@
                     <div class="font-semibold">
                         {{ exercise.name | titlecase }}
                     </div>
-
-                    <!-- <div class="flex gap-1">
-                        @for (muscleGroup of exercise.muscleGroups; track
-                        $index) {
-                        <div class="flex text-sm opacity-50">
-                            <span>
-                                {{ muscleGroup | titlecase }}
-                            </span>
-                            @if ($index + 1 !== exercise.muscleGroups.length) {
-                            <span>,</span>
-                            }
-                        </div>
-                        }
-                    </div> -->
                 </div>
             </div>
 
-            @if (newlySelectedExercisesIds.has(exercise.id)) {
+            @if (newlySelectedExercisesIds.has(exercise)) {
             <div>
                 <svg
                     class="w-8 h-8 stroke-emerald-500"
@@ -147,6 +135,8 @@
             </div>
             }
         </button>
+        }
+        <!--  -->
         }
 
         <!--  -->

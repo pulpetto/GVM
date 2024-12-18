@@ -519,45 +519,32 @@ export class WorkoutTemplateEditorComponent
         this.navbarVisibilityService.visibility.next(true);
     }
 
-    addExercises(selectedExercisesIds: Set<string>) {
-        this.loading = true;
+    addExercises(selectedExercisesIds: Set<ExercisePreview>) {
+        selectedExercisesIds.forEach((selectedExercise) => {
+            this.exercisesPresentionalData.push(selectedExercise);
 
-        selectedExercisesIds.forEach((selectedExerciseId: string) => {
-            this.dataService
-                .getExercisePreview$(selectedExerciseId)
-                .pipe(takeUntilDestroyed(this.destroyRef))
-                .subscribe((exercise) => {
-                    if (exercise) {
-                        this.exercisesPresentionalData.push({
-                            custom: exercise.custom,
-                            id: exercise.id,
-                            name: exercise.name,
-                            imagePreviewUrl: exercise.imagePreviewUrl,
-                            mainMuscleGroupsIds: exercise.mainMuscleGroupsIds,
-                            secondaryMuscleGroupsIds:
-                                exercise.secondaryMuscleGroupsIds,
-                            equipmentId: exercise.equipmentId,
-                        });
+            const exerciseGroup = this.fb.group({
+                exerciseId: selectedExercise.id,
+                superSetColor: null,
+                sets: this.fb.array([]),
+            });
 
-                        const exerciseGroup = this.fb.group({
-                            exerciseId: exercise.id,
-                            superSetColor: null,
-                            sets: this.fb.array([]),
-                        });
+            const sets = exerciseGroup.get('sets') as FormArray;
 
-                        const sets = exerciseGroup.get('sets') as FormArray;
+            const set = this.fb.group({});
 
-                        const set = this.fb.group({
-                            setNumber: 1,
-                        });
+            sets.push(set);
 
-                        sets.push(set);
+            this.workoutExercises.push(exerciseGroup);
 
-                        this.workoutExercises.push(exerciseGroup);
+            set.addControl('setNumber', this.fb.control<number>(1));
+            set.addControl('setTypeName', this.fb.control<SetType>('normal'));
+            set.addControl('weight', this.fb.control<string>(''));
+            set.addControl('reps', this.fb.control<string>(''));
+            set.addControl('rpe', this.fb.control<RpeType>(null));
 
-                        this.loading = false;
-                    }
-                });
+            if (this.editView === 'current' || this.editView === 'done')
+                set.addControl('isDone', this.fb.control<boolean>(false));
         });
     }
 

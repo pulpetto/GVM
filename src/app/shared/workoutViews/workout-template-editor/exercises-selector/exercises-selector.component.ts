@@ -72,7 +72,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class ExercisesSelectorComponent implements OnInit {
     @Input({ required: true }) selectedExercisesIds!: Set<string>;
-    @Output() exercisesSelectEvent = new EventEmitter<Set<string>>();
+    @Output() exercisesSelectEvent = new EventEmitter<Set<ExercisePreview>>();
 
     dataService = inject(DataService);
 
@@ -81,7 +81,7 @@ export class ExercisesSelectorComponent implements OnInit {
 
     exercises: ExercisePreview[] | null = null;
     exercisesFiltered: ExercisePreview[] = [];
-    newlySelectedExercisesIds = new Set<string>();
+    newlySelectedExercisesIds = new Set<ExercisePreview>();
 
     @ViewChild(MuscleGroupsModalComponent)
     muscleGroupsModalComponent!: MuscleGroupsModalComponent;
@@ -102,18 +102,18 @@ export class ExercisesSelectorComponent implements OnInit {
         });
     }
 
-    onExerciseSelect(id: string) {
-        if (this.newlySelectedExercisesIds.has(id)) {
-            this.newlySelectedExercisesIds.delete(id);
+    onExerciseSelect(exercise: ExercisePreview) {
+        if (this.newlySelectedExercisesIds.has(exercise)) {
+            this.newlySelectedExercisesIds.delete(exercise);
         } else {
-            this.newlySelectedExercisesIds.add(id);
+            this.newlySelectedExercisesIds.add(exercise);
         }
     }
 
     addExercises() {
         if (this.newlySelectedExercisesIds.size > 0) {
             this.newlySelectedExercisesIds.forEach((value) =>
-                this.selectedExercisesIds.add(value)
+                this.selectedExercisesIds.add(value.id)
             );
 
             this.exercisesSelectEvent.emit(this.newlySelectedExercisesIds);
