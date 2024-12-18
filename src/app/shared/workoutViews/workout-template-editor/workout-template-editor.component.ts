@@ -203,9 +203,11 @@ export class WorkoutTemplateEditorComponent
     workoutComputedValues: FormGroup<{
         volume: FormControl<number | null>;
         setsDone: FormControl<number | null>;
+        setsTotal: FormControl<number | null>;
     }> = this.fb.group({
         volume: 0,
         setsDone: 0,
+        setsTotal: 0,
     });
 
     workoutTimingModalVisibility: boolean = false;

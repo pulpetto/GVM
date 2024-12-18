@@ -88,6 +88,7 @@ export class SetComponent implements OnInit {
     @Input({ required: true }) workoutComputedValues!: FormGroup<{
         volume: FormControl<number | null>;
         setsDone: FormControl<number | null>;
+        setsTotal: FormControl<number | null>;
     }>;
     @Input({ required: true }) editView!:
         | 'new'

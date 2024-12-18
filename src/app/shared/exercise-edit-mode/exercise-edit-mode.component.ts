@@ -78,6 +78,7 @@ export class ExerciseEditModeComponent {
     @Input({ required: true }) workoutComputedValues!: FormGroup<{
         volume: FormControl<number | null>;
         setsDone: FormControl<number | null>;
+        setsTotal: FormControl<number | null>;
     }>;
     @Input({ required: true }) exerciseId!: number;
     @Input({ required: true }) exerciseIndex!: number;
