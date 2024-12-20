@@ -16,6 +16,7 @@ import {
     moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { ActivityBarComponent } from '../../../shared/activity-bar/activity-bar.component';
+import { LinkButtonBigComponent } from '../../../shared/link-button-big/link-button-big.component';
 
 const visibleModalTop0 = { top: '0%' };
 const visibleModal = { top: '50%' };
