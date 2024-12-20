@@ -4,12 +4,9 @@
 </app-activity-bar>
 
 <div class="flex flex-col w-full gap-1 p-4">
-    <a
-        routerLink="users"
-        class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
-    >
+    <app-link-button-big [link]="'users'" [name]="'Users'">
         <svg
-            class="w-6 h-6 mt-0.5 z-20 stroke-white group-hover:stroke-emerald-500 transition-colors"
+            class="w-8 h-8 z-20 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -37,18 +34,11 @@
                 stroke-linejoin="round"
             />
         </svg>
-        <div class="z-20">Users</div>
-        <div
-            class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
-        ></div>
-    </a>
+    </app-link-button-big>
 
-    <a
-        routerLink="exercises"
-        class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
-    >
+    <app-link-button-big [link]="'exercises'" [name]="'Exercises'">
         <svg
-            class="z-20 w-5 h-5 mr-0.5 transition-colors stroke-white group-hover:stroke-emerald-500 fill-none"
+            class="z-20 w-7 h-7 mr-1 transition-colors stroke-white group-hover:stroke-emerald-500 fill-none"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
         >
@@ -70,17 +60,11 @@
                 />
             </g>
         </svg>
-        <div class="z-20">Exercises</div>
-        <div
-            class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
-        ></div>
-    </a>
-    <a
-        routerLink="muscles"
-        class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
-    >
+    </app-link-button-big>
+
+    <app-link-button-big [link]="'muscles'" [name]="'Muscle Groups'">
         <svg
-            class="z-20 w-5 h-5 mr-0.5 transition-colors stroke-white group-hover:stroke-emerald-500"
+            class="z-20 w-7 h-7 mr-1 transition-colors stroke-white group-hover:stroke-emerald-500"
             viewBox="0 0 24 24"
             id="Layer_1"
             data-name="Layer 1"
@@ -101,18 +85,11 @@
                 d="M9.14,16.77S8,13.17,10.09,11A14.12,14.12,0,0,1,13,9.13a4.78,4.78,0,1,1,5.61,4.7c-1.83,2.77-5.83,7.71-11.33,7.71C4.36,21.54,1.5,13,1.5,9.13V4.48A2.26,2.26,0,0,1,3.64,2.23c1.73-.09,4,0,4.54,1.17C9,5.11,7.23,8.18,5.32,8.18c0,1.5,1.83,4.76,3.49,6.56"
             />
         </svg>
-        <div class="z-20">Muscle Groups</div>
-        <div
-            class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
-        ></div>
-    </a>
+    </app-link-button-big>
 
-    <a
-        routerLink="equipment"
-        class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
-    >
+    <app-link-button-big [link]="'equipment'" [name]="'Equipment'">
         <svg
-            class="w-6 h-6 mt-0.5 z-20 stroke-white group-hover:stroke-emerald-500 transition-colors rotate-45"
+            class="w-8 h-8 z-20 transition-colors stroke-black rotate-45 dark:stroke-white group-hover:stroke-emerald-500"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -148,18 +125,11 @@
                 stroke-linejoin="round"
             />
         </svg>
-        <div class="z-20">Equipment</div>
-        <div
-            class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
-        ></div>
-    </a>
+    </app-link-button-big>
 
-    <a
-        routerLink="achievements"
-        class="relative z-20 flex items-center w-full gap-2 p-3 overflow-hidden text-xl font-semibold text-center transition-all bg-opacity-50 rounded-md outline-none cursor-pointer group active:opacity-50 active:scale-95 bg-neutral-900 hover:text-emerald-500 focus:outline-emerald-500 outline-offset-0"
-    >
+    <app-link-button-big [link]="'achievements'" [name]="'Achievements'">
         <svg
-            class="z-20 w-6 h-6 transition-colors stroke-white group-hover:stroke-emerald-500"
+            class="w-8 h-8 z-20 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -177,9 +147,5 @@
                 stroke-linejoin="round"
             />
         </svg>
-        <div class="z-20">Achievements</div>
-        <div
-            class="absolute top-0 z-10 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
-        ></div>
-    </a>
+    </app-link-button-big>
 </div>
