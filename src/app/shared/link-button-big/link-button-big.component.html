@@ -1,17 +1,17 @@
 <a
     [routerLink]="link"
-    class="flex items-center gap-2 rounded-md border-transparent bg-neutral-900 bg-opacity-25 w-full border-solid border-2 p-3 focus-visible:border-emerald-500 relative active:opacity-50 transition-all group outline-none"
+    class="flex items-center gap-2 rounded-md bg-neutral-900 bg-opacity-25 w-full p-3.5 focus-visible:outline-emerald-500 relative active:opacity-50 transition-all group outline-none overflow-hidden"
 >
     <ng-content></ng-content>
 
     <div
-        class="font-semibold text-xl group-hover:text-emerald-500 transition-colors"
+        class="font-semibold text-xl z-20 group-hover:text-emerald-500 transition-colors"
     >
         {{ name }}
     </div>
 
     <svg
-        class="stroke-transparent group-hover:stroke-emerald-500 absolute right-6 scale-0 group-hover:scale-100 group-hover:right-0 transition-all top-1/2 -translate-y-1/2 w-11 h-11"
+        class="z-20 stroke-transparent group-hover:stroke-emerald-500 absolute right-6 scale-0 group-hover:scale-100 group-hover:right-0 transition-all top-1/2 -translate-y-1/2 w-10 h-10"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -23,4 +23,8 @@
             stroke-linejoin="round"
         />
     </svg>
+
+    <div
+        class="absolute top-0 z-10 bg-opacity-50 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
+    ></div>
 </a>
