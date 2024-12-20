@@ -96,10 +96,10 @@
         </div>
     </div>
 
-    <div class="grid w-full grid-cols-2 gap-1">
-        <app-icon-button [link]="'exercises'" [name]="'Exercises'">
+    <div class="flex flex-col gap-1 w-full">
+        <app-link-button-big [link]="'exercises'" [name]="'Exercises'">
             <svg
-                class="rotate-45 w-6 h-6 stroke-black dark:stroke-white mt-0.5 group-hover:stroke-emerald-500 transition-colors"
+                class="rotate-45 z-20 w-8 h-8 stroke-black dark:stroke-white mt-1 group-hover:stroke-emerald-500 transition-colors"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -135,11 +135,11 @@
                     stroke-linejoin="round"
                 />
             </svg>
-        </app-icon-button>
+        </app-link-button-big>
 
-        <app-icon-button [link]="'calendar'" [name]="'Calendar'">
+        <app-link-button-big [link]="'calendar'" [name]="'Calendar'">
             <svg
-                class="w-6 h-6 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500"
+                class="w-8 h-8 z-20 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -169,11 +169,11 @@
                     stroke-linejoin="round"
                 />
             </svg>
-        </app-icon-button>
+        </app-link-button-big>
 
-        <app-icon-button [link]="'statistics'" [name]="'Statistics'">
+        <app-link-button-big [link]="'statistics'" [name]="'Statistics'">
             <svg
-                class="w-6 h-6 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500"
+                class="w-8 z-20 h-8 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -191,11 +191,11 @@
                     stroke-linejoin="round"
                 />
             </svg>
-        </app-icon-button>
+        </app-link-button-big>
 
-        <app-icon-button [link]="'history'" [name]="'History'">
+        <app-link-button-big [link]="'history'" [name]="'History'">
             <svg
-                class="w-6 h-6 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500"
+                class="w-8 h-8 z-20 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500"
                 viewBox="0 0 48 48"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -219,12 +219,11 @@
                     stroke-linejoin="round"
                 />
             </svg>
-        </app-icon-button>
+        </app-link-button-big>
 
-        @if (proPlan()) {
-        <app-icon-button [link]="'goals'" [name]="'Goals'">
+        <app-link-button-big [link]="'goals'" [name]="'Goals'">
             <svg
-                class="w-6 h-6 stroke-black dark:stroke-white mt-0.5 group-hover:stroke-emerald-500 transition-colors"
+                class="w-8 h-8 z-20 stroke-black dark:stroke-white mt-0.5 group-hover:stroke-emerald-500 transition-colors"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -254,42 +253,11 @@
                     stroke-linejoin="round"
                 />
             </svg>
-        </app-icon-button>
-        } @else {
-        <a routerLink="/pro" class="relative group">
-            <div class="mt-2 text-center">Lorem impsum dolor</div>
-            <div
-                class="absolute top-0 left-0 flex items-center w-full gap-1 p-3 transition-all border-2 border-solid rounded-md cursor-pointer group-hover:border-yellow-500 border-neutral-900 backdrop-blur-xl group-active:backdrop-blur-2xl"
-            >
-                <svg
-                    class="w-6 h-6 stroke-yellow-500 mt-0.5 group-active:opacity-50 transition-opacity"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M16 12H17.4C17.7314 12 18 12.2686 18 12.6V19.4C18 19.7314 17.7314 20 17.4 20H6.6C6.26863 20 6 19.7314 6 19.4V12.6C6 12.2686 6.26863 12 6.6 12H8M16 12V8C16 6.66667 15.2 4 12 4C8.8 4 8 6.66667 8 8V12M16 12H8"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
+        </app-link-button-big>
 
-                <div
-                    class="font-semibold text-yellow-500 transition-opacity group-active:opacity-50"
-                >
-                    Goals
-                </div>
-            </div>
-        </a>
-        }
-
-        <!--  -->
-
-        @if(proPlan()) {
-        <app-icon-button [link]="'achievements'" [name]="'Achievements'">
+        <app-link-button-big [link]="'achievements'" [name]="'Achievements'">
             <svg
-                class="w-6 h-6 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500"
+                class="w-8 h-8 z-20 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -307,35 +275,7 @@
                     stroke-linejoin="round"
                 />
             </svg>
-        </app-icon-button>
-        } @else {
-        <a routerLink="/pro" class="relative group">
-            <div class="mt-2 text-center">Lorem impsum dolor</div>
-            <div
-                class="absolute top-0 left-0 flex items-center w-full gap-1 p-3 transition-all border-2 border-solid rounded-md cursor-pointer group-hover:border-yellow-500 border-neutral-900 backdrop-blur-xl group-active:backdrop-blur-2xl"
-            >
-                <svg
-                    class="w-6 h-6 stroke-yellow-500 mt-0.5 group-active:opacity-50 transition-opacity"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M16 12H17.4C17.7314 12 18 12.2686 18 12.6V19.4C18 19.7314 17.7314 20 17.4 20H6.6C6.26863 20 6 19.7314 6 19.4V12.6C6 12.2686 6.26863 12 6.6 12H8M16 12V8C16 6.66667 15.2 4 12 4C8.8 4 8 6.66667 8 8V12M16 12H8"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-
-                <div
-                    class="font-semibold text-yellow-500 transition-opacity group-active:opacity-50"
-                >
-                    Achievements
-                </div>
-            </div>
-        </a>
-        }
+        </app-link-button-big>
     </div>
 </div>
 
