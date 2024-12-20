@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit } from '@angular/core';
 import { WorkoutSplitComponent } from '../../../shared/workout-split/workout-split.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -91,6 +91,8 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 export class WorkoutComponent implements OnInit {
     userService = inject(UserService);
     destroyRef = inject(DestroyRef);
+
+    proPlan = computed(() => this.userService.getUser()?.pro);
 
     newSplitNameModalVisibility: boolean = false;
     newSplitName: string = '';
