@@ -8,6 +8,7 @@ import {
     Firestore,
     getDocs,
     onSnapshot,
+    orderBy,
     query,
     setDoc,
     updateDoc,
@@ -69,7 +70,7 @@ export class AdminService {
             'muscleGroups'
         );
 
-        const orderedMuscleGroupsQuery = query(muscleGroupsRef);
+        const q = query(muscleGroupsRef, orderBy('name'));
 
         // prettier-ignore
         return new Observable<{
@@ -79,7 +80,7 @@ export class AdminService {
             imageFilePath: string,
         }[]>((observer) => {
             const unsubscribe = onSnapshot(
-                orderedMuscleGroupsQuery,
+                q,
                 (querySnapshot) => {
                     const muscleGroups = querySnapshot.docs.map(
                         (doc) =>

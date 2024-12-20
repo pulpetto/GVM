@@ -10,6 +10,8 @@ import {
     Firestore,
     getDoc,
     getDocs,
+    orderBy,
+    query,
 } from '@angular/fire/firestore';
 import { MuscleGroup } from '../interfaces/muscle-group';
 import { ExercisePreview } from '../interfaces/exercise-preview';
@@ -89,8 +91,10 @@ export class DataService {
             'muscleGroups'
         );
 
+        const q = query(muscleGroupsCollectionRef, orderBy('name'));
+
         return from(
-            getDocs(muscleGroupsCollectionRef).then((muscleGroupsSnapshot) => {
+            getDocs(q).then((muscleGroupsSnapshot) => {
                 const muscleGroups: MuscleGroup[] = [];
 
                 muscleGroupsSnapshot.forEach((muscleGroupDoc) => {
