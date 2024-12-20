@@ -250,8 +250,10 @@
         </button>
     </div>
 
+    <div class="font-semibold text-lgg my-2">- Workout Splits -</div>
+
     @if (workoutsSplits$ | async; as workoutsSplits) {
-    <div cdkDropListGroup class="flex flex-col w-full px-2 boundary">
+    <div cdkDropListGroup class="flex flex-col w-full gap-1 boundary">
         @for (workoutsSplit of workoutsSplits; track $index) {
         <app-workout-split
             [splitName]="workoutsSplit.splitName"

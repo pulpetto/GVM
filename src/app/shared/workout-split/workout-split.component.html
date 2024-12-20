@@ -1,9 +1,11 @@
-<div class="flex flex-col gap-1 text-lg">
-    <div class="flex items-center justify-between">
+<div
+    class="flex flex-col gap-1 text-lg bg-neutral-900 bg-opacity-25 rounded-md p-2"
+>
+    <div class="flex w-full justify-center relative">
         <button
             type="button"
             (click)="isOpen = !isOpen"
-            class="flex items-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 active:scale-95 transition-all self-start"
+            class="flex items-center self-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 transition-opacity"
         >
             <div
                 class="font-semibold transition-colors group-hover:text-emerald-500"
@@ -30,10 +32,14 @@
             </div>
         </button>
 
-        @if (splitId !== 'uncategorized') {
-        <button type="button" (click)="openOptionsModal()" class="group mt-0.5">
+        @if (splitId !== 'uncategorized' && isOpen) {
+        <button
+            type="button"
+            (click)="openOptionsModal()"
+            class="group mt-0.5 absolute top-1/2 -translate-y-1/2 right-0"
+        >
             <svg
-                class="w-6 h-6 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500 fill-black dark:fill-white group-hover:fill-emerald-500"
+                class="w-7 h-7 transition-colors stroke-black dark:stroke-white group-hover:stroke-emerald-500 fill-black dark:fill-white group-hover:fill-emerald-500"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -60,6 +66,8 @@
         </button>
         }
     </div>
+
+    <!--  -->
 
     @if (isOpen) {
     <div @dropdownToggle [ngClass]="{ 'mb-2': isOpen }">
