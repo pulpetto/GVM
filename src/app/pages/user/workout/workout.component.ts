@@ -1,13 +1,12 @@
-import { Component, computed, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { WorkoutSplitComponent } from '../../../shared/workout-split/workout-split.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
-import { Observable } from 'rxjs';
+import { filter, Observable, switchMap } from 'rxjs';
 import { WorkoutSplit } from '../../../interfaces/workout-split';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
     CdkDropListGroup,
     CdkDropList,
@@ -16,7 +15,6 @@ import {
     moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { ActivityBarComponent } from '../../../shared/activity-bar/activity-bar.component';
-import { LinkButtonBigComponent } from '../../../shared/link-button-big/link-button-big.component';
 
 const visibleModalTop0 = { top: '0%' };
 const visibleModal = { top: '50%' };
@@ -90,7 +88,6 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class WorkoutComponent implements OnInit {
     userService = inject(UserService);
-    destroyRef = inject(DestroyRef);
 
     proPlan = computed(() => this.userService.getUser()?.pro);
 
@@ -102,13 +99,10 @@ export class WorkoutComponent implements OnInit {
     splitsReorderModalVisibility: boolean = false;
 
     ngOnInit() {
-        this.userService.user$
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((user) => {
-                if (user) {
-                    this.workoutsSplits$ = this.userService.getWorkoutsSplits();
-                }
-            });
+        this.workoutsSplits$ = this.userService.user$.pipe(
+            filter((user) => !!user),
+            switchMap(() => this.userService.getWorkoutsSplits())
+        );
     }
 
     closeNewSplitNameModal() {
