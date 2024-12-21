@@ -41,3 +41,21 @@
 .golden-text-shadow {
     text-shadow: 0 0 20px #eab308, 0 0 5px #eab308;
 }
+
+[data-placeholder]::after {
+    content: " ";
+    box-shadow: 0 0 50px 9px rgb(103 103 103);
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    animation: load 1.5s infinite;
+}
+@keyframes load {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 150%;
+    }
+}

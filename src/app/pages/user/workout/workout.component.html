@@ -262,52 +262,13 @@
         }
     </div>
     } @else {
-    <div
-        role="status"
-        class="flex flex-col items-start w-full gap-3 mt-1 animate-pulse"
-    >
-        <div class="flex justify-between w-full">
-            <div
-                class="w-52 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-            ></div>
-            <div
-                class="w-10 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-            ></div>
-        </div>
-        <div class="flex justify-between w-full">
-            <div
-                class="w-44 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-            ></div>
-            <div
-                class="w-10 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-            ></div>
-        </div>
-        <div class="flex justify-between w-full">
-            <div
-                class="w-48 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-            ></div>
-            <div
-                class="w-10 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-            ></div>
-        </div>
-        <div class="flex justify-between w-full">
-            <div
-                class="w-56 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-            ></div>
-            <div
-                class="w-10 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-            ></div>
-        </div>
-        <div class="flex justify-between w-full">
-            <div
-                class="w-36 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-            ></div>
-            <div
-                class="w-10 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-            ></div>
-        </div>
-
-        <span class="sr-only">Loading...</span>
+    <div class="flex flex-col gap-1 w-full">
+        @for (placeholder of [1,2,3,4]; track $index) {
+        <div
+            data-placeholder
+            class="rounded-md bg-neutral-900 bg-opacity-25 h-11 w-full relative overflow-hidden"
+        ></div>
+        }
     </div>
     }
 </div>
