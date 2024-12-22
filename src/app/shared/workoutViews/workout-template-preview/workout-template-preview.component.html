@@ -1,0 +1,23 @@
+<button
+    type="button"
+    (click)="navigateToFullView()"
+    class="flex flex-col w-full gap-2 p-3 text-base transition-all rounded-md hover:bg-neutral-900 hover:bg-opacity-50 active:opacity-25 group"
+>
+    @for (exercise of workoutData.exercises; track $index) {
+    <div class="flex items-center gap-2">
+        <div
+            class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
+        >
+            <img
+                [src]="exercise.staticData.imagePreviewUrl"
+                class="w-10 h-10"
+                [alt]="exercise.staticData.name + ' graphic'"
+            />
+        </div>
+        <div>
+            <span class="font-semiboldd">{{ exercise.staticData.name }}</span>
+            - {{ workoutData.exercises[$index].sets.length }} sets
+        </div>
+    </div>
+    }
+</button>
