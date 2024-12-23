@@ -428,7 +428,7 @@ export class WorkoutTemplateEditorComponent
                                 this.workoutId = params.get('workoutId')!;
                                 return this.userService.getWorkoutTemplateById(
                                     this.workoutId
-                                ) as Observable<WorkoutDone>;
+                                ) as unknown as Observable<WorkoutDone>;
                             })
                         );
                     } else if (this.editView === 'current') {
@@ -465,7 +465,7 @@ export class WorkoutTemplateEditorComponent
                                 this.workoutId = params.get('workoutId')!;
                                 return this.userService.getWorkoutTemplateById(
                                     this.workoutId
-                                ) as Observable<WorkoutDone>;
+                                ) as unknown as Observable<WorkoutDone>;
                             })
                         );
                     } else if (this.editView === 'done') {
@@ -748,14 +748,14 @@ export class WorkoutTemplateEditorComponent
     saveWorkout() {
         if (this.editView === 'new') {
             this.userService.saveWorkoutTemplate(
-                this.workoutForm.getRawValue() as WorkoutTemplate
+                this.workoutForm.getRawValue() as unknown as WorkoutTemplate
             );
         }
 
         if (this.editView === 'existing') {
             this.userService.updateWorkoutTemplate(
                 this.workoutId,
-                this.workoutForm.getRawValue() as WorkoutTemplate
+                this.workoutForm.getRawValue() as unknown as WorkoutTemplate
             );
         }
 
@@ -764,7 +764,7 @@ export class WorkoutTemplateEditorComponent
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const workoutFormObjExtended: any =
-                this.workoutForm.getRawValue() as WorkoutTemplate;
+                this.workoutForm.getRawValue() as unknown as WorkoutTemplate;
 
             this.workoutExercises.controls.forEach((exercise) => {
                 const setsFormArray = exercise.get(
@@ -777,7 +777,7 @@ export class WorkoutTemplateEditorComponent
             });
 
             const workoutFormObjBase =
-                this.workoutForm.getRawValue() as WorkoutTemplate;
+                this.workoutForm.getRawValue() as unknown as WorkoutTemplate;
 
             workoutFormObjExtended.duration = this.workoutDuration;
 
@@ -836,7 +836,7 @@ export class WorkoutTemplateEditorComponent
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const workoutFormObjExtended: any =
-                this.workoutForm.getRawValue() as WorkoutTemplate;
+                this.workoutForm.getRawValue() as unknown as WorkoutTemplate;
 
             this.workoutExercises.controls.forEach((exercise) => {
                 const setsFormArray = exercise.get(
@@ -849,7 +849,7 @@ export class WorkoutTemplateEditorComponent
             });
 
             const workoutFormObjBase =
-                this.workoutForm.getRawValue() as WorkoutTemplate;
+                this.workoutForm.getRawValue() as unknown as WorkoutTemplate;
 
             workoutFormObjExtended.duration = this.workoutDuration;
 
