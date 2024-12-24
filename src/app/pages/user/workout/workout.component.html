@@ -252,13 +252,10 @@
 
     <div class="font-semibold text-lgg my-2">- Workout Splits -</div>
 
-    @if (workoutsSplits$ | async; as workoutsSplits) {
+    @if (splits$ | async; as splits) {
     <div cdkDropListGroup class="flex flex-col w-full gap-1 boundary">
-        @for (workoutsSplit of workoutsSplits; track $index) {
-        <app-workout-split
-            [splitName]="workoutsSplit.splitName"
-            [splitId]="workoutsSplit.id"
-        ></app-workout-split>
+        @for (split of splits; track $index) {
+        <app-workout-split [splitData]="split"></app-workout-split>
         }
     </div>
     } @else {
@@ -349,21 +346,22 @@
 >
     <div class="font-semibold">Change splits order:</div>
 
-    @if (workoutsSplits$ | async; as workoutsSplits) {
+    @if (splits$ | async; as splits) {
     <div
+        (cdkDropListDropped)="changeSplitsOrder($event)"
         cdkDropList
         cdkDragBoundary=".boundary"
-        [cdkDropListData]="workoutsSplits"
-        (cdkDropListDropped)="drop($event)"
+        [cdkDropListData]="splits"
         class="flex flex-col w-full gap-1 boundary example-list"
     >
-        @for (split of workoutsSplits; track $index) {
+        @for (split of splits; track $index) {
         <div
             cdkDrag
             cdkDragLockAxis="y"
             class="flex items-center justify-between w-full p-2 rounded-md cursor-move example-box"
         >
-            <div class="font-semibold select-none">{{ split.splitName }}</div>
+            <div class="font-semibold select-none">{{ split.name }}</div>
+
             <svg
                 class="w-5 h-5 stroke-white mt-0.5"
                 viewBox="0 0 24 24"

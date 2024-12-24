@@ -1,4 +1,5 @@
 export interface WorkoutSplit {
     id: string;
-    splitName: string;
+    index: number;
+    name: string;
 }

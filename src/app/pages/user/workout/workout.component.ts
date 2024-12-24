@@ -6,7 +6,6 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { filter, Observable, switchMap } from 'rxjs';
-import { WorkoutSplit } from '../../../interfaces/workout-split';
 import {
     CdkDropListGroup,
     CdkDropList,
@@ -15,6 +14,7 @@ import {
     moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { ActivityBarComponent } from '../../../shared/activity-bar/activity-bar.component';
+import { WorkoutSplitFull } from '../../../interfaces/workout-split-full';
 
 const visibleModalTop0 = { top: '0%' };
 const visibleModal = { top: '50%' };
@@ -94,14 +94,14 @@ export class WorkoutComponent implements OnInit {
     newSplitNameModalVisibility: boolean = false;
     newSplitName: string = '';
 
-    workoutsSplits$!: Observable<WorkoutSplit[]>;
+    splits$!: Observable<WorkoutSplitFull[]>;
 
     splitsReorderModalVisibility: boolean = false;
 
     ngOnInit() {
-        this.workoutsSplits$ = this.userService.user$.pipe(
+        this.splits$ = this.userService.user$.pipe(
             filter((user) => !!user),
-            switchMap(() => this.userService.getWorkoutsSplits())
+            switchMap(() => this.userService.getSplits())
         );
     }
 
@@ -115,13 +115,13 @@ export class WorkoutComponent implements OnInit {
         this.closeNewSplitNameModal();
     }
 
-    drop(event: CdkDragDrop<WorkoutSplit[]>) {
+    changeSplitsOrder(event: CdkDragDrop<WorkoutSplitFull[]>) {
         moveItemInArray(
             event.container.data,
             event.previousIndex,
             event.currentIndex
         );
 
-        this.userService.batchSplits(event.container.data);
+        this.userService.changeSplitsOrder(event.container.data);
     }
 }

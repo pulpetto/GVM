@@ -5,12 +5,12 @@
         <button
             type="button"
             (click)="isOpen = !isOpen"
-            class="flex items-center self-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 transition-opacity"
+            class="flex items-center self-center gap-0.5 group max-w-min text-nowrap cursor-pointer active:opacity-50 transition-opacity outline-none outline-offset-0 focus-visible:outline-emerald-500 rounded-md"
         >
             <div
                 class="font-semibold transition-colors group-hover:text-emerald-500"
             >
-                {{ splitName }}
+                {{ splitData.name }}
             </div>
             <div>
                 <svg
@@ -32,10 +32,10 @@
             </div>
         </button>
 
-        @if (splitId !== 'uncategorized' && isOpen) {
+        @if (splitData.id !== 'uncategorized' && isOpen) {
         <button
             type="button"
-            (click)="openOptionsModal()"
+            (click)="optionsModalVisibility = true"
             class="group mt-0.5 absolute top-1/2 -translate-y-1/2 right-0"
         >
             <svg
@@ -67,16 +67,12 @@
         }
     </div>
 
-    <!--  -->
-
     @if (isOpen) {
-    <div @dropdownToggle [ngClass]="{ 'mb-2': isOpen }">
-        @if (splitWorkoutsData$ | async; as splitWorkoutsData) {
-        <!-- -->
-        @if (splitWorkoutsData.length === 0) {
+    <div @dropdownToggle>
+        @if (splitData.workoutsTemplates.length === 0) {
         <div
             cdkDropList
-            (cdkDropListDropped)="drop($event)"
+            (cdkDropListDropped)="changeWorkoutsTemplatesOrder($event)"
             class="flex flex-col items-center text-sm font-semibold text-center text-neutral-700 select-none"
         >
             <div>Nothing here yet!</div>
@@ -85,70 +81,27 @@
         } @else {
         <div
             cdkDropList
-            [cdkDropListData]="splitWorkoutsData"
-            [attr.splitId]="splitId"
-            (cdkDropListDropped)="drop($event)"
-            class="flex flex-col gap-1 example-list"
+            [cdkDropListData]="splitData.workoutsTemplates"
+            [attr.splitId]="splitData.id"
+            (cdkDropListDropped)="changeWorkoutsTemplatesOrder($event)"
+            class="flex flex-col gap-1 example-list mt-2"
         >
-            @for (splitWorkoutData of splitWorkoutsData; track $index) {
-            <app-workout-mini-preview
+            @for (splitWorkout of splitData.workoutsTemplates; track $index) {
+            <app-workout-template-preview
                 class="example-box"
                 cdkDrag
-                [cdkDragData]="splitWorkoutData"
                 cdkDragLockAxis="y"
-                [workoutId]="splitWorkoutData.workoutId"
-                [workoutName]="splitWorkoutData.workoutName"
-                [splitId]="splitId"
-            ></app-workout-mini-preview>
+                [cdkDragData]="splitWorkout"
+                [workoutData]="splitWorkout.template"
+            ></app-workout-template-preview>
             }
-        </div>
-        }
-        <!--  -->
-        } @else {
-        <div class="flex flex-col gap-1 example-list">
-            <div
-                class="flex flex-col w-full gap-1 px-3 py-5 transition-all border-2 border-solid rounded-md border-neutral-900"
-            >
-                <div class="flex items-center justify-between animate-pulse">
-                    <div
-                        class="w-40 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-                    ></div>
-                    <div
-                        class="w-5 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-                    ></div>
-                </div>
-            </div>
-            <div
-                class="flex flex-col w-full gap-1 px-3 py-5 transition-all border-2 border-solid rounded-md border-neutral-900"
-            >
-                <div class="flex items-center justify-between animate-pulse">
-                    <div
-                        class="w-36 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-                    ></div>
-                    <div
-                        class="w-5 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-                    ></div>
-                </div>
-            </div>
-            <div
-                class="flex flex-col w-full gap-1 px-3 py-5 transition-all border-2 border-solid rounded-md border-neutral-900"
-            >
-                <div class="flex items-center justify-between animate-pulse">
-                    <div
-                        class="w-44 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-                    ></div>
-                    <div
-                        class="w-5 h-2.5 bg-gray-200 rounded-md dark:bg-neutral-700"
-                    ></div>
-                </div>
-            </div>
         </div>
         }
     </div>
     }
 </div>
 
-<!-- modals -->
+<!-- -->
 
 @if (optionsModalVisibility) {
 <!-- eslint-disable-next-line    -->
@@ -168,7 +121,7 @@
 >
     <div class="self-center font-semibold">
         Choose action for
-        <span class="text-emerald-500">{{ splitName }}</span> split:
+        <span class="text-emerald-500">{{ splitData.name }}</span> split:
     </div>
 
     <div class="flex flex-col gap-1">
@@ -239,7 +192,7 @@
 </div>
 }
 
-<!-- indent -->
+<!-- -->
 
 @if (optionsModalVisibility) {
 <div
@@ -260,7 +213,7 @@
 </div>
 }
 
-<!-- indent -->
+<!-- -->
 
 @if (newSplitNameModalVisibility) {
 <!-- eslint-disable-next-line    -->
@@ -279,6 +232,7 @@
     }"
 >
     <div class="font-semibold">Split Name:</div>
+
     <input
         type="text"
         placeholder="Type here..."
@@ -288,16 +242,16 @@
 </div>
 }
 
-<!-- indent -->
+<!-- -->
 
 @if (newSplitNameModalVisibility) {
 <div
     @openClose3
     class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
     [ngClass]="{
-            'bottom-0': newSplitNameModalVisibility,
-            '-bottom-full': !newSplitNameModalVisibility,
-        }"
+        'bottom-0': newSplitNameModalVisibility,
+        '-bottom-full': !newSplitNameModalVisibility,
+    }"
 >
     <button
         type="button"
@@ -307,6 +261,7 @@
     >
         Change Name
     </button>
+
     <button
         type="button"
         (click)="closeNewSplitNameModal()"

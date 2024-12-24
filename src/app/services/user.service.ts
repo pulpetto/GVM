@@ -23,6 +23,7 @@ import {
     startAfter,
     endBefore,
     arrayRemove,
+    collectionData,
 } from '@angular/fire/firestore';
 import {
     Auth,
@@ -36,10 +37,12 @@ import {
 } from '@angular/fire/auth';
 import {
     BehaviorSubject,
+    combineLatest,
     forkJoin,
     from,
     map,
     Observable,
+    of,
     switchMap,
 } from 'rxjs';
 import { Router } from '@angular/router';
@@ -68,6 +71,8 @@ import { ExerciseDetails } from '../interfaces/exercise-details';
 import { ToastService } from './toast.service';
 import { Goal } from '../interfaces/goal';
 import { WorkoutTemplate } from '../interfaces/workout-template';
+import { WorkoutTemplateFull } from '../interfaces/workout/workout-template-full';
+import { WorkoutSplitFull } from '../interfaces/workout-split-full';
 
 @Injectable({
     providedIn: 'root',
@@ -275,51 +280,74 @@ export class UserService {
         });
     }
 
-    getSplitWorkouts(splitId: string): Observable<
-        {
-            workoutIndex: number;
-            workoutId: string;
-        }[]
-    > {
-        const splitWorkoutsRef: CollectionReference = collection(
-            this.userDocRef!,
-            'workoutsSplits',
-            splitId,
-            'workoutsIds'
+    getSplits(): Observable<WorkoutSplitFull[]> {
+        const q = query(
+            collection(this.userDocRef!, 'workoutsSplits'),
+            orderBy('index')
         );
 
-        const orderedSplitWorkoutsQuery = query(
-            splitWorkoutsRef,
+        return collectionData(q).pipe(
+            map((splits) =>
+                (splits as WorkoutSplit[]).map((splitIdAndName) =>
+                    this.getSplitWorkouts(splitIdAndName.id).pipe(
+                        map(
+                            (splitWorkouts) =>
+                                ({
+                                    id: splitIdAndName.id,
+                                    name: splitIdAndName.name,
+                                    workoutsTemplates:
+                                        splitWorkouts.length > 0
+                                            ? splitWorkouts
+                                            : [],
+                                } as unknown as WorkoutSplitFull)
+                        )
+                    )
+                )
+            ),
+            switchMap((splitObservables) => combineLatest(splitObservables))
+        );
+    }
+
+    getSplitWorkouts(splitId: string): Observable<
+        {
+            index: number;
+            template: WorkoutTemplateFull;
+        }[]
+    > {
+        const q = query(
+            collection(
+                this.userDocRef!,
+                'workoutsSplits',
+                splitId,
+                'workoutsIds'
+            ),
             orderBy('workoutIndex')
         );
 
-        // prettier-ignore
-        return new Observable<{
-            workoutIndex: number;
-            workoutId: string;
-        }[]>((observer) => {
-            const unsubscribe = onSnapshot(
-                orderedSplitWorkoutsQuery,
-                (querySnapshot) => {
-                    const workouts = querySnapshot.docs.map(
-                        (doc) =>
-                            ({
-                                ...doc.data(),
-                            } as {
-                                workoutIndex: number;
-                                workoutId: string;
-                            })
-                    );
-
-                    observer.next(workouts);
-                },
-                (error) => {
-                    observer.error(error);
-                }
-            );
-
-            return { unsubscribe };
-        });
+        return collectionData(q).pipe(
+            map((workouts) =>
+                (
+                    workouts as {
+                        workoutIndex: number;
+                        workoutId: string;
+                    }[]
+                ).map((workoutIdAndIndex) =>
+                    this.getFullWorkoutTemplateById(
+                        workoutIdAndIndex.workoutId
+                    ).pipe(
+                        map((workoutTemplate) => ({
+                            index: workoutIdAndIndex.workoutIndex,
+                            template: workoutTemplate,
+                        }))
+                    )
+                )
+            ),
+            switchMap((workoutObservables) =>
+                workoutObservables.length > 0
+                    ? combineLatest(workoutObservables)
+                    : of([])
+            )
+        );
     }
 
     async addNewSplit(splitName: string) {
@@ -331,9 +359,12 @@ export class UserService {
 
             const snapshot = await getCountFromServer(workoutSplitsRef);
 
-            await setDoc(doc(workoutSplitsRef), {
+            const docRef = doc(workoutSplitsRef);
+
+            await setDoc(docRef, {
+                id: docRef.id,
                 index: snapshot.data().count,
-                splitName: splitName,
+                name: splitName,
             });
 
             this.toastService.show('Split added successfully', false);
@@ -350,7 +381,7 @@ export class UserService {
                 splitDocId
             );
 
-            await updateDoc(splitDocRef, { splitName: newName });
+            await updateDoc(splitDocRef, { name: newName });
 
             this.toastService.show('Name changed successfully', false);
         } catch (error) {
@@ -358,7 +389,7 @@ export class UserService {
         }
     }
 
-    batchSplits(splits: WorkoutSplit[]) {
+    changeSplitsOrder(splits: WorkoutSplitFull[]) {
         const batch = writeBatch(this.firestore);
 
         splits.forEach((split, index) => {
@@ -511,22 +542,41 @@ export class UserService {
         );
 
         return from(
-            getDoc(workoutDocRef).then(
-                (workoutDoc) => workoutDoc.data() as WorkoutTemplate
-            )
+            getDoc(workoutDocRef).then((workoutDoc) => {
+                const workoutTemplate = workoutDoc.data() as WorkoutTemplate;
+
+                workoutTemplate.id = workoutDoc.id;
+
+                return workoutTemplate;
+            })
         );
     }
 
-    getWorkoutTemplateNameById(workoutId: string): Observable<string> {
-        const workoutDocRef: DocumentReference = doc(
-            this.userDocRef!,
-            'workouts',
-            workoutId
-        );
-
-        return from(
-            getDoc(workoutDocRef).then(
-                (workoutDoc) => workoutDoc.data()!['name']
+    getFullWorkoutTemplateById(
+        workoutId: string
+    ): Observable<WorkoutTemplateFull> {
+        return this.getWorkoutTemplateById(workoutId).pipe(
+            switchMap((workoutTemplate) =>
+                forkJoin(
+                    workoutTemplate.exercises.map((exercise) =>
+                        this.dataService
+                            .getExercisePreview$(exercise.exerciseId)
+                            .pipe(
+                                map((staticData) => ({
+                                    ...exercise,
+                                    staticData,
+                                }))
+                            )
+                    )
+                ).pipe(
+                    map(
+                        (exercises) =>
+                            ({
+                                ...workoutTemplate,
+                                exercises,
+                            } as unknown as WorkoutTemplateFull)
+                    )
+                )
             )
         );
     }
@@ -698,12 +748,11 @@ export class UserService {
         );
     }
 
-    drop(
+    changeWorkoutsTemplatesOrder(
         event: CdkDragDrop<
             {
-                workoutIndex: number;
-                workoutId: string;
-                workoutName: string;
+                index: number;
+                template: WorkoutTemplateFull;
             }[]
         >,
         droppedToSplitId: string
@@ -723,7 +772,7 @@ export class UserService {
                     'workoutsSplits',
                     droppedToSplitId,
                     'workoutsIds',
-                    dataObj.workoutId
+                    dataObj.template.id
                 );
                 batch.update(workoutRef, { workoutIndex: index });
             });
@@ -737,6 +786,8 @@ export class UserService {
                     console.error('Batch update failed: ', error);
                 });
         } else {
+            if (!event.container.data) event.container.data = [];
+
             transferArrayItem(
                 event.previousContainer.data,
                 event.container.data,
@@ -744,7 +795,8 @@ export class UserService {
                 event.currentIndex
             );
 
-            const droppedWorkoutId = event.item.data.workoutId;
+            const droppedWorkoutId = event.item.data.template.id;
+
             const sourceSplitId =
                 event.previousContainer.element.nativeElement.getAttribute(
                     'splitId'
@@ -768,7 +820,7 @@ export class UserService {
                     'workoutsSplits',
                     sourceSplitId!,
                     'workoutsIds',
-                    dataObj.workoutId
+                    dataObj.template.id
                 );
                 batch.update(workoutRef, { workoutIndex: index });
             });
@@ -792,7 +844,7 @@ export class UserService {
                     'workoutsSplits',
                     droppedToSplitId!,
                     'workoutsIds',
-                    dataObj.workoutId
+                    dataObj.template.id
                 );
                 batch.update(workoutRef, { workoutIndex: index });
             });

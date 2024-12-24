@@ -1,11 +1,12 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
-import { WorkoutMiniPreviewComponent } from '../workoutViews/workout-mini-preview/workout-mini-preview.component';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
-import { forkJoin, map, mergeMap, Observable, of } from 'rxjs';
+import { WorkoutTemplateFull } from '../../interfaces/workout/workout-template-full';
+import { WorkoutTemplatePreviewComponent } from '../workoutViews/workout-template-preview/workout-template-preview.component';
+import { WorkoutSplitFull } from '../../interfaces/workout-split-full';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -24,11 +25,11 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     templateUrl: './workout-split.component.html',
     styleUrl: './workout-split.component.css',
     imports: [
-        WorkoutMiniPreviewComponent,
         CommonModule,
         FormsModule,
         CdkDrag,
         CdkDropList,
+        WorkoutTemplatePreviewComponent,
     ],
     animations: [
         trigger('openClose', [
@@ -73,17 +74,8 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         ]),
     ],
 })
-export class WorkoutSplitComponent implements OnInit {
-    @Input({ required: true }) splitName!: string;
-    @Input({ required: true }) splitId!: string;
-
-    splitWorkoutsData$!: Observable<
-        {
-            workoutIndex: number;
-            workoutId: string;
-            workoutName: string;
-        }[]
-    >;
+export class WorkoutSplitComponent {
+    @Input({ required: true }) splitData!: WorkoutSplitFull;
 
     userService = inject(UserService);
 
@@ -93,37 +85,8 @@ export class WorkoutSplitComponent implements OnInit {
     newSplitName: string = '';
     newSplitNameModalVisibility: boolean = false;
 
-    ngOnInit() {
-        this.splitWorkoutsData$ = this.userService
-            .getSplitWorkouts(this.splitId)
-            .pipe(
-                mergeMap((workoutsIds) => {
-                    if (workoutsIds.length === 0) {
-                        return of([]);
-                    }
-
-                    const workoutWithNames$ = workoutsIds.map((workout) =>
-                        this.userService
-                            .getWorkoutTemplateNameById(workout.workoutId)
-                            .pipe(
-                                map((workoutName) => ({
-                                    ...workout,
-                                    workoutName,
-                                }))
-                            )
-                    );
-
-                    return forkJoin(workoutWithNames$);
-                })
-            );
-    }
-
-    openOptionsModal() {
-        this.optionsModalVisibility = true;
-    }
-
     changeSplitName() {
-        this.userService.changeSplitName(this.splitId, this.newSplitName);
+        this.userService.changeSplitName(this.splitData.id, this.newSplitName);
         this.closeNewSplitNameModal();
         this.optionsModalVisibility = false;
     }
@@ -134,20 +97,19 @@ export class WorkoutSplitComponent implements OnInit {
     }
 
     removeSplit() {
-        this.userService.removeWorkoutSplit(this.splitId);
+        this.userService.removeWorkoutSplit(this.splitData.id);
 
         this.optionsModalVisibility = false;
     }
 
-    drop(
+    changeWorkoutsTemplatesOrder(
         event: CdkDragDrop<
             {
-                workoutIndex: number;
-                workoutId: string;
-                workoutName: string;
+                index: number;
+                template: WorkoutTemplateFull;
             }[]
         >
     ) {
-        this.userService.drop(event, this.splitId);
+        this.userService.changeWorkoutsTemplatesOrder(event, this.splitData.id);
     }
 }
