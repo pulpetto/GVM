@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExerciseSelectorComponent } from '../goalsCreator/exercise-selector/exercise-selector.component';
 import { ExercisePreview } from '../../../../../interfaces/exercise-preview';
@@ -68,7 +68,7 @@ export class GoalsCreatorComponent {
     destroyRef = inject(DestroyRef);
 
     newGoalModalVisibility: boolean = false;
-    exerciseSelectorModalVisibility: boolean = false;
+    @Input({ required: true }) exerciseSelectorModalVisibility!: boolean;
 
     selectedExercise: ExercisePreview | null = null;
     estimated1rm!: number;

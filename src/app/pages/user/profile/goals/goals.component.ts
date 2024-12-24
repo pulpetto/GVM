@@ -54,6 +54,8 @@ export class GoalsComponent implements OnInit, AfterViewInit {
     doneGoals: Goal[] = [];
     doneGoals$!: Observable<CurrentGoal[]>;
 
+    exerciseSelectorModalVisibility: boolean = false;
+
     ngOnInit() {
         this.doneGoals$ = this.userService.user$.pipe(
             filter((user) => !!user),
