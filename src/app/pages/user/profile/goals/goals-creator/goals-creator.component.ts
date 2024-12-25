@@ -1,5 +1,12 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, DestroyRef, inject, Input } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExerciseSelectorComponent } from '../goalsCreator/exercise-selector/exercise-selector.component';
 import { ExercisePreview } from '../../../../../interfaces/exercise-preview';
@@ -64,6 +71,8 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class GoalsCreatorComponent {
+    @Output() exerciseSelectorModalCloseEvent = new EventEmitter<void>();
+
     userService = inject(UserService);
     destroyRef = inject(DestroyRef);
 
@@ -74,9 +83,16 @@ export class GoalsCreatorComponent {
     estimated1rm!: number;
     goal1rm!: string;
 
+    closeExerciseSelectorModal() {
+        this.exerciseSelectorModalVisibility = false;
+        this.exerciseSelectorModalCloseEvent.emit();
+    }
+
     closeNewGoalModal() {
         this.selectedExercise = null;
         this.newGoalModalVisibility = false;
+
+        this.closeExerciseSelectorModal();
     }
 
     selectExercise($event: ExercisePreview) {
