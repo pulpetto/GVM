@@ -1216,20 +1216,13 @@ export class UserService {
             'goals'
         );
 
-        return from(
-            getDocs(goalsRef).then((querySnapshot) => {
-                const goals: Goal[] = [];
-
-                querySnapshot.docs.forEach((doc) => {
-                    const goal: Goal = doc.data() as Goal;
-
-                    goal.id = doc.id;
-
-                    goals.push(goal);
-                });
-
-                return goals;
-            })
+        return collectionData(goalsRef, { idField: 'id' }).pipe(
+            map((goals) =>
+                (goals as Goal[]).map((goalDoc) => ({
+                    ...goalDoc,
+                    id: goalDoc.id,
+                }))
+            )
         );
     }
 
