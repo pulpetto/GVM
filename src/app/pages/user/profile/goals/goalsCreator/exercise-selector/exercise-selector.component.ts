@@ -117,7 +117,6 @@ export class ExerciseSelectorComponent implements OnInit {
     }
 
     filterExercisesByMusclesNames(id: string | null) {
-        console.log('s');
         this.selectedMuscleGroupId = id;
         this.applyFilters();
     }
