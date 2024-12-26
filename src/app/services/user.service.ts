@@ -1199,15 +1199,19 @@ export class UserService {
         updateDoc(this.userDocRef!, { pfpUrl: imagePreviewUrl });
     }
 
-    addGoal(goal: { targetWeight: number; exerciseId: string }) {
-        const goalsRef: CollectionReference = collection(
-            this.userDocRef!,
-            'goals'
-        );
+    async addGoal(goal: { targetWeight: number; exerciseId: string }) {
+        try {
+            const goalsRef: CollectionReference = collection(
+                this.userDocRef!,
+                'goals'
+            );
 
-        addDoc(goalsRef, goal);
+            await addDoc(goalsRef, goal);
 
-        this.toastService.show('Goal added successfully', false);
+            this.toastService.show('Goal added successfully', false);
+        } catch (error) {
+            this.toastService.show('Error occured, try again', true);
+        }
     }
 
     getGoals(): Observable<Goal[]> {
