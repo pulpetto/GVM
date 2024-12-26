@@ -1214,6 +1214,22 @@ export class UserService {
         }
     }
 
+    async deleteGoal(goalId: string) {
+        try {
+            const goalsRef: DocumentReference = doc(
+                this.userDocRef!,
+                'goals',
+                goalId
+            );
+
+            await deleteDoc(goalsRef);
+
+            this.toastService.show('Goal deleted successfully', false);
+        } catch (error) {
+            this.toastService.show('Error occured, try again', true);
+        }
+    }
+
     getGoals(): Observable<Goal[]> {
         const goalsRef: CollectionReference = collection(
             this.userDocRef!,

@@ -1,8 +1,9 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CurrentGoal } from '../../../../../interfaces/goals/current-goal';
+import { UserService } from '../../../../../services/user.service';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -58,5 +59,11 @@ export class GoalComponent {
     @Input({ required: true }) goal!: CurrentGoal;
     @Input({ required: true }) optionsVisbility!: boolean;
 
+    userService = inject(UserService);
+
     optionsModalVisibility: boolean = false;
+
+    deleteGoal() {
+        this.userService.deleteGoal(this.goal.id);
+    }
 }
