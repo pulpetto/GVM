@@ -35,7 +35,8 @@
 
     <div class="flex flex-col items-center w-1/2 gap-2">
         <a
-            routerLink=""
+            [routerLink]="'/user/profile/exercises/' + goal.exerciseData.id"
+            [queryParams]="{ custom: goal.exerciseData.custom }"
             class="flex items-center gap-2 transition-opacity active:opacity-50"
         >
             <div
