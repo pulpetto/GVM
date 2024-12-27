@@ -9,6 +9,7 @@ import { filter, map, Observable, of, switchMap } from 'rxjs';
 import { FullDatePipe } from '../../../pipes/full-date.pipe';
 import { ActivityBarComponent } from '../../activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../previous-route-button/previous-route-button.component';
+import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 
 const visibleModal = { top: '66.666667%' };
 const visibleModalLow = { top: '75%' };
@@ -32,6 +33,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         FullDatePipe,
         ActivityBarComponent,
         PreviousRouteButtonComponent,
+        LoadingSpinnerComponent,
     ],
     templateUrl: './workout-done-full-view.component.html',
     styleUrl: './workout-done-full-view.component.css',
