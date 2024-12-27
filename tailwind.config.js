@@ -3,7 +3,11 @@ module.exports = {
     darkMode: "class",
     content: ["./src/**/*.{html,ts}"],
     theme: {
-        extend: {},
+        extend: {
+            backdropBlur: {
+                xs: "3px",
+            },
+        },
     },
     plugins: [],
 };
