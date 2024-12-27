@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { ActivityBarComponent } from '../../../shared/activity-bar/activity-bar.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { LinkButtonBigComponent } from '../../../shared/link-button-big/link-button-big.component';
+import { LinkBgIconComponent } from '../../../shared/link-bg-icon/link-bg-icon.component';
 
 const visibleBg = { opacity: '100%' };
 const hiddenBg = { opacity: '0%' };
@@ -21,6 +22,7 @@ const timing = '0.3s cubic-bezier(0.4, 0, 0.2, 1)';
         RouterModule,
         ActivityBarComponent,
         LinkButtonBigComponent,
+        LinkBgIconComponent,
     ],
     animations: [
         trigger('openClose', [
