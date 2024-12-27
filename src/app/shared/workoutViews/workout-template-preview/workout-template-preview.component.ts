@@ -12,6 +12,7 @@ import { WorkoutTemplateFull } from '../../../interfaces/workout/workout-templat
 })
 export class WorkoutTemplatePreviewComponent {
     @Input({ required: true }) workoutData!: WorkoutTemplateFull;
+    @Input({ required: true }) splitId!: string;
 
     router = inject(Router);
     activatedRoute = inject(ActivatedRoute);
