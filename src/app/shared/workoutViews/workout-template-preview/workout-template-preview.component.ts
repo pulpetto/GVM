@@ -20,6 +20,7 @@ export class WorkoutTemplatePreviewComponent {
     navigateToFullView() {
         this.router.navigate([this.workoutData.id], {
             relativeTo: this.activatedRoute,
+            queryParams: { splitId: this.splitId },
             state: this.workoutData,
         });
     }
