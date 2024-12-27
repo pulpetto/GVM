@@ -278,8 +278,11 @@ export const routes: Routes = [
                 path: 'workout/:workoutId',
                 loadComponent: () =>
                     import(
-                        './shared/workoutViews/workout-full-view/workout-full-view.component'
-                    ).then((component) => component.WorkoutFullViewComponent),
+                        './shared/workoutViews/workout-template-full-view/workout-template-full-view.component'
+                    ).then(
+                        (component) =>
+                            component.WorkoutTemplateFullViewComponent
+                    ),
             },
             {
                 path: 'workout/:workoutId/edit',

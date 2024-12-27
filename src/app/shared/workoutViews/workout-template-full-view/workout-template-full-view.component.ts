@@ -25,10 +25,10 @@ const hiddenBtnFixed = { bottom: '-100%' };
 const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 
 @Component({
-    selector: 'app-workout-full-view',
+    selector: 'app-workout-template-full-view',
     standalone: true,
-    templateUrl: './workout-full-view.component.html',
-    styleUrl: './workout-full-view.component.css',
+    templateUrl: './workout-template-full-view.component.html',
+    styleUrl: './workout-template-full-view.component.css',
     imports: [
         CommonModule,
         RouterModule,
@@ -99,7 +99,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         ]),
     ],
 })
-export class WorkoutFullViewComponent implements OnInit {
+export class WorkoutTemplateFullViewComponent implements OnInit {
     workoutId!: string;
     splitId!: string;
     optionsModalVisibility: boolean = false;
