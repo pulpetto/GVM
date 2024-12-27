@@ -38,23 +38,7 @@
 <div class="flex flex-col items-center gap-4 p-4">
     <div class="flex flex-col items-center gap-1">
         <div class="text-3xl font-semibold">{{ workoutData.name }}</div>
-        <div class="flex items-center gap-1.5">
-            <div class="opacity-50">Done by:</div>
 
-            <a class="flex items-center gap-1.5 cursor-pointer">
-                <div
-                    class="border-2 shadow-[0_0_5px_1px_#10b981] border-solid rounded-full border-emerald-500 overflow-hidden mt-0.5"
-                >
-                    <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHlY7jda7OEmJpPl0ga2UpDzFX8iE9OyVWICN1Qtefc0EWL9NqvlpI1gxKL4dTHTAuk_U&usqp=CAU"
-                        class="w-4 h-4"
-                        alt=""
-                    />
-                </div>
-
-                <div class="font-semibold opacity-50">Albert</div>
-            </a>
-        </div>
         <div class="text-sm opacity-50">
             {{ workoutData.dateStart | fullDate }}
         </div>
@@ -143,7 +127,7 @@
     <button
         type="button"
         (click)="navigateToSummary(workoutData)"
-        class="w-full py-2 overflow-hidden font-semibold rounded-md bg-emerald-500 hover:shadow-[0_0_20px_2px_#10b981] transition-all hover:border-transparent active:scale-95 active:opacity-50 text-center"
+        class="w-full py-2 overflow-hidden font-semibold rounded-md bg-emerald-500 hover:shadow-[0_0_10px_1px_#10b981] transition-all hover:border-transparent active:scale-95 active:opacity-50 text-center"
     >
         See full summary
     </button>
@@ -184,7 +168,7 @@
                     class="grid grid-cols-5 py-2 font-semibold rounded-md justify-items-center gap-y-3"
                     [ngClass]="{
                         'bg-neutral-900': $index % 2 === 0,
-                        'bg-opacity-50': $index % 2 === 0
+                        'bg-opacity-25': $index % 2 === 0
                     }"
                 >
                     <div>{{ set.setNumber }}</div>
