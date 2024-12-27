@@ -91,13 +91,13 @@
                 <div>Reps</div>
                 <div>Rpe</div>
             </div>
-            <div class="flex flex-col text-lg">
+            <div class="flex flex-col text-lg font-semibold">
                 @for (set of exercise.sets; track $index) {
                 <div
                     class="grid grid-cols-5 py-2 rounded-md justify-items-center gap-y-3"
                     [ngClass]="{
                         'bg-neutral-900': $index % 2 === 0,
-                        'bg-opacity-50': $index % 2 === 0
+                        'bg-opacity-25': $index % 2 === 0
                     }"
                 >
                     <div>{{ set.setNumber }}</div>
