@@ -80,12 +80,13 @@
                 (exercisesSelectEvent)="addExercises($event)"
             ></app-exercises-selector>
             <div class="flex gap-2">
-                <a
-                    routerLink="../"
+                <button
+                    type="button"
+                    (click)="navigateBack()"
                     class="w-full py-2 overflow-hidden font-semibold rounded-md bg-red-600 hover:shadow-[0_0_10px_1px_#ef4444] transition-all hover:border-transparent active:shadow-none active:opacity-50 text-lg text-center"
                 >
                     Cancel
-                </a>
+                </button>
 
                 <button
                     type="submit"

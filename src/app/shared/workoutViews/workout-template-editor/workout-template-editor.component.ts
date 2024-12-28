@@ -17,7 +17,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { WorkoutExercise } from '../../../interfaces/workout/workout-exercise';
 import { DropSet } from '../../../interfaces/set-types/drop-set';
 import { ClusterSet } from '../../../interfaces/set-types/cluster-set';
@@ -43,6 +43,7 @@ import { WorkoutTemplate } from '../../../interfaces/workout-template';
 import { ExerciseSelectorComponent } from '../../../pages/user/profile/goals/goalsCreator/exercise-selector/exercise-selector.component';
 import { SetType } from '../../../types/set-type';
 import { RpeType } from '../../../types/rpe-type';
+import { Location } from '@angular/common';
 
 const visibleModal = { top: '0%' };
 const visibleModalTop50 = { top: '50%' };
@@ -132,6 +133,8 @@ export class WorkoutTemplateEditorComponent
     route = inject(ActivatedRoute);
     navbarVisibilityService = inject(NavbarVisibilityService);
     cdr = inject(ChangeDetectorRef);
+    location = inject(Location);
+    router = inject(Router);
 
     loading: boolean = false;
     editView!: 'new' | 'existing' | 'current' | 'done';
@@ -153,6 +156,8 @@ export class WorkoutTemplateEditorComponent
         }),
         duration: '',
     });
+
+    splitId!: string;
 
     get activityBarTitle(): string {
         let nameToReturn: string;
@@ -415,6 +420,8 @@ export class WorkoutTemplateEditorComponent
     workoutDuration: number = 0;
 
     ngOnInit() {
+        this.splitId = this.route.snapshot.queryParamMap.get('splitId')!;
+
         this.userService.user$
             .pipe(
                 takeUntilDestroyed(this.destroyRef),
@@ -916,5 +923,16 @@ export class WorkoutTemplateEditorComponent
         this.workoutExercises.removeAt(event.previousIndex);
 
         this.workoutExercises.insert(event.currentIndex, from);
+    }
+
+    navigateBack() {
+        if (window.history.length > 1) {
+            this.location.back();
+        } else {
+            this.router.navigate(['../'], {
+                relativeTo: this.route,
+                queryParams: { splitId: this.splitId },
+            });
+        }
     }
 }
