@@ -36,8 +36,6 @@ import { TimingModalComponent } from './timing-modal/timing-modal.component';
 import { DurationModalComponent } from './duration-modal/duration-modal.component';
 import { StartDateModalComponent } from './start-date-modal/start-date-modal.component';
 import { NavbarVisibilityService } from '../../../services/navbar-visibility.service';
-import { ActivityBarComponent } from '../../activity-bar/activity-bar.component';
-import { PreviousRouteButtonComponent } from '../../previous-route-button/previous-route-button.component';
 import { WorkoutDoneFull } from '../../../interfaces/workout/workout-done-full';
 import { WorkoutTemplate } from '../../../interfaces/workout-template';
 import { ExerciseSelectorComponent } from '../../../pages/user/profile/goals/goalsCreator/exercise-selector/exercise-selector.component';
@@ -75,8 +73,6 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         TimingModalComponent,
         DurationModalComponent,
         StartDateModalComponent,
-        ActivityBarComponent,
-        PreviousRouteButtonComponent,
         RouterModule,
         ExerciseSelectorComponent,
     ],

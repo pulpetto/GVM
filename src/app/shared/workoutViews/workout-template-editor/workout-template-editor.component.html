@@ -6,11 +6,6 @@
 <!--  -->
 
 @if (!summaryLoading) {
-<app-activity-bar [title]="activityBarTitle">
-    <app-previous-route-button leftSide></app-previous-route-button>
-    <div rightSide></div>
-</app-activity-bar>
-
 <form [formGroup]="workoutForm" class="flex flex-col items-center gap-4 p-4">
     @if (editView === 'new' || editView === 'existing') {
     <app-name-editor
