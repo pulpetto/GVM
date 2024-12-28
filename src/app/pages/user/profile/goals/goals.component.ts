@@ -27,6 +27,7 @@ import { Goal } from '../../../../interfaces/goal';
 import { DataService } from '../../../../services/data.service';
 import { WorkoutDoneWithId } from '../../../../interfaces/workout/workout-done-with-id';
 import { CurrentGoal } from '../../../../interfaces/goals/current-goal';
+import { SortGoalsByPercentagesPipe } from '../../../../pipes/sort-goals-by-percentages.pipe';
 
 @Component({
     selector: 'app-goals',
@@ -37,24 +38,21 @@ import { CurrentGoal } from '../../../../interfaces/goals/current-goal';
         GoalsCreatorComponent,
         ActivityBarComponent,
         PreviousRouteButtonComponent,
+        SortGoalsByPercentagesPipe,
     ],
     templateUrl: './goals.component.html',
     styleUrl: './goals.component.css',
 })
-export class GoalsComponent implements OnInit, AfterViewInit {
-    cdr = inject(ChangeDetectorRef);
+export class GoalsComponent implements OnInit {
     userService = inject(UserService);
     dataService = inject(DataService);
-    @ViewChildren('tabButton')
-    tabButtons!: QueryList<ElementRef>;
-
-    activeTabName: 'current' | 'done' = 'current';
-    tabWidthPx!: number;
 
     doneGoals: Goal[] = [];
     doneGoals$!: Observable<CurrentGoal[]>;
 
     exerciseSelectorModalVisibility: boolean = false;
+
+    ascending: boolean = true;
 
     ngOnInit() {
         this.doneGoals$ = this.userService.user$.pipe(
@@ -90,10 +88,18 @@ export class GoalsComponent implements OnInit, AfterViewInit {
                                         id: goal.id,
                                         current1rm: doneWorkouts,
                                         goal1rm: goal.targetWeight,
-                                        percentageProgress: Math.round(
-                                            (doneWorkouts / goal.targetWeight) *
-                                                100
-                                        ),
+                                        percentageProgress:
+                                            Math.round(
+                                                (doneWorkouts /
+                                                    goal.targetWeight) *
+                                                    100
+                                            ) > 100
+                                                ? 100
+                                                : Math.round(
+                                                      (doneWorkouts /
+                                                          goal.targetWeight) *
+                                                          100
+                                                  ),
                                         exerciseData,
                                     }))
                                 )
@@ -103,13 +109,6 @@ export class GoalsComponent implements OnInit, AfterViewInit {
                 )
             )
         );
-    }
-
-    ngAfterViewInit() {
-        this.tabWidthPx =
-            this.tabButtons.toArray()[0].nativeElement.clientWidth;
-
-        this.cdr.detectChanges();
     }
 
     calculateEstimated1rm(
@@ -140,9 +139,5 @@ export class GoalsComponent implements OnInit, AfterViewInit {
         });
 
         return estimated1rm;
-    }
-
-    switchTab(tabName: string) {
-        this.activeTabName = tabName as 'current' | 'done';
     }
 }
