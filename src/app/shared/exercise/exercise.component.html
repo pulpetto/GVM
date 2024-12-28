@@ -178,7 +178,7 @@
                             class="relative grid content-center grid-cols-5 py-2 overflow-hidden font-semibold transition-colors rounded-md justify-items-center gap-y-3 group"
                             [ngClass]="{
                                 'bg-neutral-900': $index % 2 === 0,
-                                'bg-opacity-50': $index % 2 === 0
+                                'bg-opacity-25': $index % 2 === 0
                             }"
                         >
                             <div>{{ set.setNumber }}</div>
@@ -232,5 +232,5 @@
     </app-tabs>
 </div>
 } @else {
-<div>loading</div>
+<app-loading-spinner></app-loading-spinner>
 }

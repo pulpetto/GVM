@@ -22,6 +22,7 @@ import { RecordsComponent } from './records/records.component';
 import { ActivityBarComponent } from '../activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../previous-route-button/previous-route-button.component';
 import { ExercisePreview } from '../../interfaces/exercise-preview';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'app-exercise',
@@ -38,6 +39,7 @@ import { ExercisePreview } from '../../interfaces/exercise-preview';
         RecordsComponent,
         ActivityBarComponent,
         PreviousRouteButtonComponent,
+        LoadingSpinnerComponent,
     ],
 })
 export class ExerciseComponent implements OnInit {
