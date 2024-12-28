@@ -13,5 +13,7 @@
 
     <app-toast-window></app-toast-window>
 
-    <router-outlet></router-outlet>
+    <div [@routeTransition]="route.snapshot.data" style="display: contents">
+        <router-outlet></router-outlet>
+    </div>
 </div>

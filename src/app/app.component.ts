@@ -5,11 +5,23 @@ import {
     inject,
     OnInit,
 } from '@angular/core';
-import { EventType, Router, RouterOutlet } from '@angular/router';
+import {
+    ActivatedRoute,
+    EventType,
+    Router,
+    RouterOutlet,
+} from '@angular/router';
 import { ThemeService } from './services/theme.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserService } from './services/user.service';
 import { ToastWindowComponent } from './shared/toast-window/toast-window.component';
+import {
+    animate,
+    query,
+    style,
+    transition,
+    trigger,
+} from '@angular/animations';
 
 @Component({
     selector: 'app-root',
@@ -17,6 +29,25 @@ import { ToastWindowComponent } from './shared/toast-window/toast-window.compone
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
     imports: [RouterOutlet, ToastWindowComponent],
+    animations: [
+        trigger('routeTransition', [
+            transition('* => *', [
+                query(':enter', [style({ opacity: 0, scale: 0.9 })], {
+                    optional: true,
+                }),
+                query(
+                    ':leave',
+                    [animate('0.2s', style({ opacity: 0, scale: 0.9 }))],
+                    { optional: true }
+                ),
+                query(
+                    ':enter',
+                    [animate('0.2s', style({ opacity: 1, scale: 1 }))],
+                    { optional: true }
+                ),
+            ]),
+        ]),
+    ],
 })
 export class AppComponent implements OnInit {
     title = 'GVM';
@@ -28,7 +59,8 @@ export class AppComponent implements OnInit {
     constructor(
         private userService: UserService,
         private themeService: ThemeService,
-        private router: Router
+        private router: Router,
+        protected route: ActivatedRoute
     ) {
         this.router.events
             .pipe(takeUntilDestroyed(this.destroyRef))
@@ -57,7 +89,6 @@ export class AppComponent implements OnInit {
             this.isNavigating = false;
         }
 
-        // Set loading state to false in both of the below events to hide the animation in case a request fails
         if (eventType === EventType.NavigationCancel) {
             this.isNavigating = false;
         }
