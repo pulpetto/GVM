@@ -76,22 +76,15 @@
         />
     </svg>
 
-    <app-workout-counter></app-workout-counter>
+    <div
+        class="p-2 px-6 text-2xl font-semibold text-center rounded-md bg-opacity-10 bg-neutral-900 backdrop-blur-lg text-emerald-500"
+    >
+        Congratulations!
+    </div>
 
     <app-motivational-quotes class="mb-4"></app-motivational-quotes>
 
-    <app-tabs
-        class="w-full px-2"
-        [tabNames]="['Feedback', 'Progress', 'Statistics']"
-    >
-        <ng-template #tabContent1>
-            <app-feedback></app-feedback>
-        </ng-template>
-        <ng-template #tabContent2>
-            <app-progress [workout]="workoutData"></app-progress>
-        </ng-template>
-        <ng-template #tabContent3>
-            <app-statistics [workoutDataInput]="workoutData"></app-statistics>
-        </ng-template>
-    </app-tabs>
+    <app-progress [workout]="workoutData"></app-progress>
+
+    <app-statistics [workoutDataInput]="workoutData"></app-statistics>
 </div>

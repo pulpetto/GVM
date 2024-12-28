@@ -1,8 +1,8 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { WorkoutDoneFull } from '../../../../interfaces/workout/workout-done-full';
-import { TimeFormatterPipe } from '../../../../pipes/time-formatter.pipe';
-import { NumberSeparatorPipe } from '../../../../pipes/number-separator.pipe';
-import { DataService } from '../../../../services/data.service';
+import { WorkoutDoneFull } from '../../../interfaces/workout/workout-done-full';
+import { TimeFormatterPipe } from '../../../pipes/time-formatter.pipe';
+import { NumberSeparatorPipe } from '../../../pipes/number-separator.pipe';
+import { DataService } from '../../../services/data.service';
 import {
     BehaviorSubject,
     forkJoin,

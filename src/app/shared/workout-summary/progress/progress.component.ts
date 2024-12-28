@@ -1,15 +1,16 @@
 import { Component, inject, Input } from '@angular/core';
-import { UserService } from '../../../../services/user.service';
-import { WorkoutDoneFull } from '../../../../interfaces/workout/workout-done-full';
+import { UserService } from '../../../services/user.service';
+import { WorkoutDoneFull } from '../../../interfaces/workout/workout-done-full';
 import { filter, map, Observable, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { CurrentGoal } from '../../../../interfaces/goals/current-goal';
-import { GoalComponent } from '../../../../pages/user/profile/goals/goal/goal.component';
+import { CurrentGoal } from '../../../interfaces/goals/current-goal';
+import { GoalComponent } from '../../../pages/user/profile/goals/goal/goal.component';
+import { SortGoalsByPercentagesPipe } from '../../../pipes/sort-goals-by-percentages.pipe';
 
 @Component({
     selector: 'app-progress',
     standalone: true,
-    imports: [CommonModule, GoalComponent],
+    imports: [CommonModule, GoalComponent, SortGoalsByPercentagesPipe],
     templateUrl: './progress.component.html',
     styleUrl: './progress.component.css',
 })
@@ -35,14 +36,24 @@ export class ProgressComponent {
                                 goal.exerciseId
                             ),
                             goal1rm: goal.targetWeight,
-                            percentageProgress: Math.round(
-                                (this.calculateEstimated1rm(
-                                    workoutDataInput,
-                                    goal.exerciseId
-                                ) /
-                                    goal.targetWeight) *
-                                    100
-                            ),
+                            percentageProgress:
+                                Math.round(
+                                    (this.calculateEstimated1rm(
+                                        workoutDataInput,
+                                        goal.exerciseId
+                                    ) /
+                                        goal.targetWeight) *
+                                        100
+                                ) > 100
+                                    ? 100
+                                    : Math.round(
+                                          (this.calculateEstimated1rm(
+                                              workoutDataInput,
+                                              goal.exerciseId
+                                          ) /
+                                              goal.targetWeight) *
+                                              100
+                                      ),
                             exerciseData: workoutDataInput.exercises.find(
                                 (exercise) =>
                                     exercise.exerciseId === goal.exerciseId
