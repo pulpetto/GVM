@@ -211,6 +211,12 @@ export class WorkoutTemplateEditorComponent
         setsTotal: 0,
     });
 
+    get progressWidth(): number {
+        const done = this.workoutComputedValues.get('setsDone')?.value || 0;
+        const total = this.workoutComputedValues.get('setsTotal')?.value || 0;
+        return total > 0 ? (done / total) * 100 : 0;
+    }
+
     workoutTimingModalVisibility: boolean = false;
     workoutDurationModalVisibility: boolean = false;
     workoutStartDateModalVisibility: boolean = false;
