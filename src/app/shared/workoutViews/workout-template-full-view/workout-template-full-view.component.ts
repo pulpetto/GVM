@@ -1,9 +1,8 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../services/user.service';
-import { forkJoin, map, Observable, switchMap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter, forkJoin, map, Observable, switchMap } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { DataService } from '../../../services/data.service';
 import { Set } from '../../../interfaces/workout/set';
@@ -114,8 +113,6 @@ export class WorkoutTemplateFullViewComponent implements OnInit {
         }[];
     }>;
 
-    destroyRef = inject(DestroyRef);
-
     constructor(
         private route: ActivatedRoute,
         private userService: UserService,
@@ -123,52 +120,39 @@ export class WorkoutTemplateFullViewComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.route.paramMap
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((params) => {
-                this.workoutId = params.get('workoutId')!;
-            });
+        this.workoutId = this.route.snapshot.paramMap.get('workoutId')!;
+        this.splitId = this.route.snapshot.queryParamMap.get('splitId')!;
 
-        this.route.queryParams
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((queryParams) => {
-                this.splitId = queryParams['splitId'];
-            });
-
-        this.userService.user$
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((user) => {
-                if (user && this.workoutId) {
-                    this.workoutData$ = this.userService
-                        .getWorkoutTemplateById(this.workoutId)
-                        .pipe(
-                            switchMap((workout) =>
-                                forkJoin(
-                                    workout.exercises.map((exercise) =>
-                                        this.dataService
-                                            .getExercisePreview$(
-                                                exercise.exerciseId
-                                            )
-                                            .pipe(
-                                                map((exerciseDetails) => ({
-                                                    ...exercise,
-                                                    name: exerciseDetails!.name,
-                                                    imageUrl:
-                                                        exerciseDetails!
-                                                            .imagePreviewUrl,
-                                                }))
-                                            )
+        this.workoutData$ = this.userService.user$.pipe(
+            filter((user) => !!user),
+            filter(() => !!this.workoutId && !!this.splitId),
+            switchMap(() =>
+                this.userService.getWorkoutTemplateById(this.workoutId).pipe(
+                    switchMap((workout) =>
+                        forkJoin(
+                            workout.exercises.map((exercise) =>
+                                this.dataService
+                                    .getExercisePreview$(exercise.exerciseId)
+                                    .pipe(
+                                        map((exerciseDetails) => ({
+                                            ...exercise,
+                                            name: exerciseDetails!.name,
+                                            imageUrl:
+                                                exerciseDetails!
+                                                    .imagePreviewUrl,
+                                        }))
                                     )
-                                ).pipe(
-                                    map((exercises) => ({
-                                        ...workout,
-                                        exercises,
-                                    }))
-                                )
                             )
-                        );
-                }
-            });
+                        ).pipe(
+                            map((exercises) => ({
+                                ...workout,
+                                exercises,
+                            }))
+                        )
+                    )
+                )
+            )
+        );
     }
 
     deleteWorkout() {
