@@ -4,9 +4,10 @@ import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../../interfaces/user';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
+import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
 
-const visibleModal = { top: '50%' };
-const visibleModal75 = { top: '75%' };
+const visibleModal = { top: '75%' };
 const hiddenModal = { top: '100%' };
 
 const visibleBg = { opacity: '100%' };
@@ -20,20 +21,10 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 @Component({
     selector: 'app-users-manager',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, ActivityBarComponent, PreviousRouteButtonComponent],
     templateUrl: './users-manager.component.html',
     styleUrl: './users-manager.component.css',
     animations: [
-        trigger('openClose', [
-            transition(':enter', [
-                style(hiddenModal),
-                animate(timing, style(visibleModal)),
-            ]),
-            transition(':leave', [
-                style(visibleModal),
-                animate(timing, style(hiddenModal)),
-            ]),
-        ]),
         trigger('openClose2', [
             transition(':enter', [
                 style(hiddenBg),
@@ -57,10 +48,10 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         trigger('openClose4', [
             transition(':enter', [
                 style(hiddenModal),
-                animate(timing, style(visibleModal75)),
+                animate(timing, style(visibleModal)),
             ]),
             transition(':leave', [
-                style(visibleModal75),
+                style(visibleModal),
                 animate(timing, style(hiddenModal)),
             ]),
         ]),
