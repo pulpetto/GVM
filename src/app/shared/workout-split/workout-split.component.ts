@@ -1,6 +1,13 @@
 import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { trigger, transition, style, animate } from '@angular/animations';
+import {
+    trigger,
+    transition,
+    style,
+    animate,
+    query,
+    group,
+} from '@angular/animations';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
@@ -62,14 +69,26 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
                 animate(timing, style(hiddenBtnFixed)),
             ]),
         ]),
-        trigger('dropdownToggle', [
+        trigger('toggle', [
             transition(':enter', [
-                style(hiddenBg),
-                animate('0.2s cubic-bezier(0.4, 0, 0.2, 1)', style(visibleBg)),
+                style({ height: 0, opacity: 0 }),
+                query('.details', [style({ translate: '0 -100%' })]),
+                group([
+                    animate(timing, style({ height: '*', opacity: 1 })),
+                    query('.details', [
+                        animate(timing, style({ translate: '0 0' })),
+                    ]),
+                ]),
             ]),
             transition(':leave', [
-                style(visibleBg),
-                animate('0.2s cubic-bezier(0.4, 0, 0.2, 1)', style(hiddenBg)),
+                style({ height: '*', opacity: 1 }),
+                query('.details', [style({ translate: '0 0' })]),
+                group([
+                    animate(timing, style({ height: 0, opacity: 0 })),
+                    query('.details', [
+                        animate(timing, style({ translate: '0 -100%' })),
+                    ]),
+                ]),
             ]),
         ]),
     ],

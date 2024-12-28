@@ -68,37 +68,40 @@
     </div>
 
     @if (isOpen) {
-    <div @dropdownToggle>
-        @if (splitData.workoutsTemplates.length === 0) {
-        <div
-            cdkDropList
-            (cdkDropListDropped)="changeWorkoutsTemplatesOrder($event)"
-            class="flex flex-col items-center text-sm font-semibold text-center text-neutral-700 select-none"
-        >
-            <div>Nothing here yet!</div>
-            <div>Drag desired workout here to add it</div>
-        </div>
-        } @else {
-        <div
-            cdkDropList
-            [cdkDropListData]="splitData.workoutsTemplates"
-            [attr.splitId]="splitData.id"
-            (cdkDropListDropped)="changeWorkoutsTemplatesOrder($event)"
-            class="flex flex-col gap-1 example-list mt-2"
-        >
-            @for (splitWorkout of splitData.workoutsTemplates; track $index) {
-            <app-workout-template-preview
-                class="example-box"
-                cdkDrag
-                cdkDragLockAxis="y"
-                [cdkDragData]="splitWorkout"
-                [workoutData]="splitWorkout.template"
-                [splitId]="splitData.id"
-            ></app-workout-template-preview>
+    <section class="overflow-hidden" @toggle>
+        <div class="details">
+            @if (splitData.workoutsTemplates.length === 0) {
+            <div
+                cdkDropList
+                (cdkDropListDropped)="changeWorkoutsTemplatesOrder($event)"
+                class="flex flex-col items-center text-sm font-semibold text-center text-neutral-700 select-none"
+            >
+                <div>Nothing here yet!</div>
+                <div>Drag desired workout here to add it</div>
+            </div>
+            } @else {
+            <div
+                cdkDropList
+                [cdkDropListData]="splitData.workoutsTemplates"
+                [attr.splitId]="splitData.id"
+                (cdkDropListDropped)="changeWorkoutsTemplatesOrder($event)"
+                class="flex flex-col gap-1 example-list mt-2"
+            >
+                @for (splitWorkout of splitData.workoutsTemplates; track $index)
+                {
+                <app-workout-template-preview
+                    class="example-box"
+                    cdkDrag
+                    cdkDragLockAxis="y"
+                    [cdkDragData]="splitWorkout"
+                    [workoutData]="splitWorkout.template"
+                    [splitId]="splitData.id"
+                ></app-workout-template-preview>
+                }
+            </div>
             }
         </div>
-        }
-    </div>
+    </section>
     }
 </div>
 
