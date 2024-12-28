@@ -6,6 +6,7 @@ import { ProgressComponent } from './progress/progress.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { WorkoutDoneFull } from '../../interfaces/workout/workout-done-full';
 import { NavbarVisibilityService } from '../../services/navbar-visibility.service';
+import { RouterLink, RouterModule } from '@angular/router';
 @Component({
     selector: 'app-workout-summary',
     standalone: true,
@@ -14,6 +15,7 @@ import { NavbarVisibilityService } from '../../services/navbar-visibility.servic
         MotivationalQuotesComponent,
         ProgressComponent,
         StatisticsComponent,
+        RouterModule,
     ],
     templateUrl: './workout-summary.component.html',
     styleUrl: './workout-summary.component.css',
