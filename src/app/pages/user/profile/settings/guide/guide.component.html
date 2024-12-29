@@ -1,1 +1,86 @@
+<app-activity-bar [title]="'Guide'">
+    <app-previous-route-button leftSide></app-previous-route-button>
+    <div rightSide></div>
+</app-activity-bar>
 
+<div class="p-4 flex flex-col gap-4 ml-3">
+    <div class="flex flex-col gap-1">
+        <div class="text-2xl font-semibold">1. App Structure</div>
+        <div class="text-sm ml-2">
+            App is divided in to 2 main parts: Profile and Workout
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-1">
+        <div class="text-2xl font-semibold">2. Logging a Workout</div>
+        <div class="text-sm ml-2">
+            You have 3 options:
+            <ul class="list-disc ml-4">
+                <li>Click quick workout option, and log your workout</li>
+                <li>
+                    Create a workout template, (so if you plan to reuse that
+                    workout structure)
+                </li>
+                <li>Choose some of premeade workout templates</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-1">
+        <div class="text-2xl font-semibold">3. In-Workout Editing</div>
+        <div class="text-sm ml-2">
+            Input your desired values and mark your sets as done
+        </div>
+        <div class="text-sm ml-2">
+            You can change set type by clicking on the letter on the type field
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-1">
+        <div class="text-2xl font-semibold">4. Managining Workouts</div>
+        <div class="text-sm ml-2">
+            By default your workout templates will appear in
+            <span class="font-semibold">Uncategorized</span> split. (You can
+            think of splits as folders for workout templates)
+        </div>
+        <div class="text-sm ml-2">
+            You can create your custom splits and drag desired workout templates
+            there
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-1">
+        <div class="text-2xl font-semibold">5. Profile Section</div>
+        <div class="text-sm ml-2">
+            In there you have 6 sections. This will become more useful after you
+            workout for awhile:
+
+            <ul class="list-disc ml-4">
+                <li>
+                    <span class="font-semibold">Exercises</span> - see your
+                    stats and how to perform them
+                </li>
+                <li>
+                    <span class="font-semibold">Calendar</span> - check your
+                    activity in calendar view
+                </li>
+                <li>
+                    <span class="font-semibold">Statistics</span> - check your
+                    stats for your activity
+                </li>
+                <li>
+                    <span class="font-semibold">History</span> - check all
+                    workouts you ever did
+                </li>
+                <li>
+                    <span class="font-semibold">Goals</span> - choose an
+                    exercise and your desired 1rm and track your progress
+                </li>
+                <li>
+                    <span class="font-semibold">Achievements</span> - check all
+                    achievements
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
