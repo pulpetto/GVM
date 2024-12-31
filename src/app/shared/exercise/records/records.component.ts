@@ -38,7 +38,7 @@ export class RecordsComponent implements OnInit {
 
                 if (+set.reps >= this.mostReps) {
                     this.mostReps = +set.reps;
-                    this.mostReppedWeight = set.reps;
+                    this.mostReppedWeight = +set.weight;
                 }
             });
         });
