@@ -118,7 +118,7 @@
         [workouts]="exerciseData.workoutsWithExercise"
     ></app-exercise-charts>
 
-    <app-tabs [tabNames]="['How to', 'History', 'Variations', 'Records']">
+    <app-tabs [tabNames]="['How to', 'History', 'Records']">
         <ng-template #tabContent1>
             <app-instruction
                 [steps]="exerciseData.detailsData.instructionSteps"
@@ -198,32 +198,6 @@
             </div>
         </ng-template>
         <ng-template #tabContent3>
-            <div class="flex flex-col gap-2">
-                <!-- @for (exercise of exercises; track $index) {
-                <a
-                    [routerLink]="exercise.name"
-                    class="flex items-center w-full gap-2 transition-all rounded-md cursor-pointer active:opacity-50 active:scale-95"
-                >
-                    <div
-                        class="overflow-hidden border-2 border-solid rounded-full min-w-max border-emerald-500"
-                    >
-                        <img
-                            [src]="exercise.iconRoute"
-                            class="w-12 h-12"
-                            [alt]="exercise.name + ' icon'"
-                        />
-                    </div>
-                    <div class="flex flex-col">
-                        <div class="font-semibold">{{ exercise.name }}</div>
-                        <div class="text-sm opacity-50">
-                            {{ exercise.muscleGroups }}
-                        </div>
-                    </div>
-                </a>
-                } -->
-            </div>
-        </ng-template>
-        <ng-template #tabContent4>
             <app-records
                 [workouts]="exerciseData.workoutsWithExercise"
                 [exerciseId]="exerciseId!"
