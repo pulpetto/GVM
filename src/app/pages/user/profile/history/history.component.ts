@@ -38,6 +38,7 @@ export class HistoryComponent implements OnInit {
 
                     this.userService
                         .getDoneWorkoutsCount()
+                        .pipe(takeUntilDestroyed(this.destroyRef))
                         .subscribe((data) => {
                             this.workoutsCount = data;
                         });
@@ -48,6 +49,7 @@ export class HistoryComponent implements OnInit {
     loadWorkouts() {
         this.userService
             .getDoneWorkouts(this.limit, this.lastDoc)
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((newWorkouts) => {
                 this.workouts.push(...newWorkouts);
                 this.lastDoc =
