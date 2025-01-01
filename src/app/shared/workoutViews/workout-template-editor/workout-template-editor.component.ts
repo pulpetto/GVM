@@ -426,7 +426,6 @@ export class WorkoutTemplateEditorComponent
 
         this.userService.user$
             .pipe(
-                takeUntilDestroyed(this.destroyRef),
                 filter((user) => !!user),
                 switchMap(() => this.route.queryParams),
                 switchMap((queryParams) => {
@@ -489,7 +488,8 @@ export class WorkoutTemplateEditorComponent
                     } else {
                         return EMPTY;
                     }
-                })
+                }),
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((data) => {
                 if (data) {
