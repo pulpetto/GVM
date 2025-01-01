@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { AchievementComponent } from '../../../../shared/achievement/achievement.component';
 import { DataService } from '../../../../services/data.service';
 import { filter, Observable, switchMap } from 'rxjs';
@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
 import { UserService } from '../../../../services/user.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface AchievementsTypes {
     [key: string]: number;
@@ -40,6 +41,7 @@ interface AchievementsTypes {
 export class AchievementsComponent implements OnInit {
     dataService = inject(DataService);
     userService = inject(UserService);
+    destroyRef = inject(DestroyRef);
 
     achievements$!: Observable<Achievement[]>;
 
@@ -67,7 +69,8 @@ export class AchievementsComponent implements OnInit {
         this.userService.user$
             .pipe(
                 filter((user) => !!user),
-                switchMap(() => this.userService.getAllDoneWorkouts())
+                switchMap(() => this.userService.getAllDoneWorkouts()),
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((workouts) => {
                 workouts.forEach((workout) => {
