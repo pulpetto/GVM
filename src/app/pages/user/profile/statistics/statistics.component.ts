@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { NumericStatisticsComponent } from './numeric-statistics/numeric-statistics.component';
 import { UserService } from '../../../../services/user.service';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -11,6 +11,7 @@ import { RadarChartComponent } from '../../../../shared/radar-chart/radar-chart.
 import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-bar.component';
 import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
 import { LoadingSpinnerComponent } from '../../../../shared/loading-spinner/loading-spinner.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -72,6 +73,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class StatisticsComponent implements OnInit {
     userService = inject(UserService);
+    destroyRef = inject(DestroyRef);
 
     tooLittleData: boolean = false;
 
@@ -109,7 +111,8 @@ export class StatisticsComponent implements OnInit {
         this.userService.user$
             .pipe(
                 filter((user) => !!user),
-                switchMap(() => this.userService.getAllDoneWorkouts())
+                switchMap(() => this.userService.getAllDoneWorkouts()),
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((data) => {
                 this.workouts = data;
