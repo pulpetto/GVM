@@ -122,7 +122,12 @@ export class UserService {
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((data) => {
-                if (data) this.currentUser.set(data as User);
+                if (data) {
+                    const userData = data as User;
+                    userData.id = uid;
+
+                    this.currentUser.set(userData);
+                }
             });
     }
 
