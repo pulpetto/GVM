@@ -1,1 +1,235 @@
-<p>custom-exercise-creator works!</p>
+<app-activity-bar
+    [title]="
+        view === 'new' ? 'Custom Exercise Creator' : 'Custom Exercise Editor'
+    "
+>
+    <app-previous-route-button leftSide></app-previous-route-button>
+    <div rightSide></div>
+</app-activity-bar>
+
+<form [formGroup]="exerciseForm">
+    <div class="flex flex-col gap-4 p-4">
+        <div class="relative flex flex-col self-center">
+            @if (selectedThumbnail) {
+            <img
+                [src]="selectedThumbnail"
+                class="w-24 h-24 rounded-full"
+                alt=""
+            />
+
+            <button
+                type="button"
+                (click)="removeThumbnail()"
+                class="absolute bottom-0 transition-all bg-red-500 rounded-full group -right-1 active:opacity-50 active:scale-95"
+            >
+                <svg
+                    class="transition-transform w-7 h-7 p-0.5 stroke-white group-hover:rotate-90"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </button>
+            } @else {
+            <label
+                for="thumbnailInput"
+                class="relative self-center w-24 h-24 transition-all bg-opacity-50 rounded-full cursor-pointer bg-neutral-900 active:scale-95 active:opacity-50"
+            >
+                <svg
+                    class="absolute w-10 h-10 -translate-x-1/2 -translate-y-1/2 stroke-neutral-700 top-1/2 left-1/2"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M2 19V9C2 7.89543 2.89543 7 4 7H4.5C5.12951 7 5.72229 6.70361 6.1 6.2L8.32 3.24C8.43331 3.08892 8.61115 3 8.8 3H15.2C15.3889 3 15.5667 3.08892 15.68 3.24L17.9 6.2C18.2777 6.70361 18.8705 7 19.5 7H20C21.1046 7 22 7.89543 22 9V19C22 20.1046 21.1046 21 20 21H4C2.89543 21 2 20.1046 2 19Z"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M12 17C14.2091 17 16 15.2091 16 13C16 10.7909 14.2091 9 12 9C9.79086 9 8 10.7909 8 13C8 15.2091 9.79086 17 12 17Z"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+
+                <svg
+                    class="absolute bottom-0 transition-transform rounded-full w-7 h-7 -right-1 stroke-white bg-emerald-500 hover:rotate-90"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6 12H12M18 12H12M12 12V6M12 12V18"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+
+                <input
+                    type="file"
+                    #thumbnail
+                    (change)="onThumbnailSelect()"
+                    id="thumbnailInput"
+                    accept=".jpg, .jpeg, .png"
+                    hidden
+                />
+            </label>
+            }
+        </div>
+
+        <div class="flex self-center justify-center w-full">
+            <input
+                type="text"
+                formControlName="name"
+                placeholder="Exercise name..."
+                class="w-full p-2 mx-auto font-semibold transition-all bg-opacity-50 rounded-md outline-none bg-neutral-900 focus:outline-emerald-500 outline-offset-0 placeholder-neutral-700"
+            />
+        </div>
+
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-col items-center gap-2">
+                <div class="font-semibold">
+                    Main muscle group{{
+                        exerciseMainMuscleGroups.length === 1 ? "" : "s"
+                    }}:
+                </div>
+
+                <app-muscle-group-selector
+                    [muscleGroupIds]="exerciseMainMuscleGroups"
+                ></app-muscle-group-selector>
+            </div>
+
+            <div class="flex flex-col items-center gap-2">
+                <div class="font-semibold">
+                    Secondary muscle group{{
+                        exerciseSecondaryMuscleGroups.length === 1 ? "" : "s"
+                    }}:
+                </div>
+
+                <app-muscle-group-selector
+                    [muscleGroupIds]="exerciseSecondaryMuscleGroups"
+                ></app-muscle-group-selector>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <div class="font-semibold">Required equipment:</div>
+
+            <app-equipment-selector
+                [equipmentId]="exerciseForm.controls.equipmentId"
+            ></app-equipment-selector>
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <div class="font-semibold">Instruction:</div>
+            <div class="relative flex flex-col self-center w-full">
+                @if (selectedVideo) {
+                <video
+                    [src]="selectedVideo"
+                    controls
+                    class="object-cover w-full bg-opacity-50 rounded-md h-44 bg-neutral-900"
+                ></video>
+
+                <button
+                    type="button"
+                    (click)="removeVideo()"
+                    class="absolute transition-all bg-red-500 rounded-full -top-2 -right-2 group active:opacity-50 active:scale-95"
+                >
+                    <svg
+                        class="transition-transform w-7 h-7 p-0.5 stroke-white group-hover:rotate-90"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
+                } @else {
+                <label
+                    for="videoInput"
+                    class="relative self-center w-full transition-all bg-opacity-50 rounded-md cursor-pointer h-44 bg-neutral-900 active:scale-95 active:opacity-50"
+                >
+                    <div
+                        class="absolute flex flex-col items-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                    >
+                        <svg
+                            class="w-12 h-12 stroke-neutral-700"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/  2000/svg"
+                        >
+                            <path
+                                d="M15 12V16.4C15 16.7314 14.7314 17 14.4 17H3.6C3.26863 17 3 16.7314 3 16.4V7.6C3 7.26863 3.26863 7 3.6 7H14.4C14.7314 7 15 7.26863 15 7.6V12ZM15 12L20.0159 7.82009C20.4067 7.49443 21 7.77232 21 8.28103V15.719C21 16.2277 20.4067 16.5056 20.0159 16.1799L15 12Z"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                        <div
+                            class="-mt-1 text-sm font-semibold text-center text-neutral-700"
+                        >
+                            Click to add intruction video!
+                        </div>
+                    </div>
+
+                    <input
+                        type="file"
+                        #video
+                        (change)="onVideoSelect()"
+                        id="videoInput"
+                        accept="video/mp4, video/webm, video/ogg, video/*"
+                        hidden
+                    />
+                </label>
+                }
+            </div>
+
+            <app-instruction-steps
+                [steps]="exerciseInstruction"
+            ></app-instruction-steps>
+        </div>
+
+        <div class="flex flex-col gap-2 mt-10">
+            @if (view === 'new') {
+            <button
+                type="submit"
+                [disabled]="exerciseForm.invalid"
+                (click)="addExercise()"
+                class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
+            >
+                Add Exercise
+            </button>
+            } @else {
+            <button
+                type="submit"
+                [disabled]="exerciseForm.invalid"
+                (click)="modifyExercise()"
+                class="py-1.5 font-semibold rounded-md w-full bg-emerald-500 transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#10b981] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
+            >
+                Save Changes
+            </button>
+            }
+            <a
+                routerLink="../"
+                class="py-1.5 font-semibold rounded-md w-full text-center bg-neutral-900 transition-all active:opacity-50 hover:shadow-[0_0_20px_2px_#171717]"
+            >
+                Cancel & Go Back
+            </a>
+        </div>
+    </div>
+</form>
