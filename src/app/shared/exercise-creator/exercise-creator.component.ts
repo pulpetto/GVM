@@ -178,8 +178,6 @@ export class ExerciseCreatorComponent
                 .getExerciseDetails$(this.exerciseId!)
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((data) => {
-                    // jeszcze path image'a i video
-
                     this.exerciseDetails = data;
 
                     this.selectedVideo = data.instructionVideoPreviewUrl;
