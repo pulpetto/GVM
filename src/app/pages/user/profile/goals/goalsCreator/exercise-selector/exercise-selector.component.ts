@@ -1,5 +1,6 @@
 import {
     Component,
+    DestroyRef,
     EventEmitter,
     inject,
     Input,
@@ -14,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { DataService } from '../../../../../../services/data.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ExercisePreview } from '../../../../../../interfaces/exercise-preview';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -72,6 +74,7 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 })
 export class ExerciseSelectorComponent implements OnInit {
     dataService = inject(DataService);
+    destroyRef = inject(DestroyRef);
 
     @Output() exerciseChangeEvent = new EventEmitter<ExercisePreview>();
     @Output() exercisesModalCloseEvent = new EventEmitter<void>();
@@ -96,10 +99,13 @@ export class ExerciseSelectorComponent implements OnInit {
     selectedEquipmentId: string | null = null;
 
     ngOnInit() {
-        this.dataService.getExercisesPreviews$().subscribe((data) => {
-            this.exercises = data;
-            this.exercisesFiltered = data;
-        });
+        this.dataService
+            .getExercisesPreviews$()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((data) => {
+                this.exercises = data;
+                this.exercisesFiltered = data;
+            });
     }
 
     onExerciseChange($index: number) {
