@@ -1,5 +1,6 @@
 import {
     Component,
+    DestroyRef,
     EventEmitter,
     inject,
     Input,
@@ -14,6 +15,7 @@ import { EquipmentModalComponent } from '../../../modals/equipment-modal/equipme
 import { DataService } from '../../../../services/data.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ExercisePreview } from '../../../../interfaces/exercise-preview';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const visibleModal = { top: '25%' };
 const hiddenModal = { top: '100%' };
@@ -75,6 +77,7 @@ export class ExercisesSelectorComponent implements OnInit {
     @Output() exercisesSelectEvent = new EventEmitter<Set<ExercisePreview>>();
 
     dataService = inject(DataService);
+    destroyRef = inject(DestroyRef);
 
     exercisesModalVisibility: boolean = false;
     innerModalsVisibility: boolean = false;
@@ -96,10 +99,13 @@ export class ExercisesSelectorComponent implements OnInit {
     selectedEquipmentId: string | null = null;
 
     ngOnInit() {
-        this.dataService.getExercisesPreviews$().subscribe((data) => {
-            this.exercises = data;
-            this.exercisesFiltered = data;
-        });
+        this.dataService
+            .getExercisesPreviews$()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((data) => {
+                this.exercises = data;
+                this.exercisesFiltered = data;
+            });
     }
 
     onExerciseSelect(exercise: ExercisePreview) {
