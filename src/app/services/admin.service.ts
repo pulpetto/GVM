@@ -162,42 +162,23 @@ export class AdminService {
             'equipment'
         );
 
-        const orderedEquipmentQuery = query(equipmentRef);
+        const q = query(equipmentRef, orderBy('name'));
 
-        // prettier-ignore
-        return new Observable<{
-            id: string;
-            name: string;
-            imagePreviewUrl: string;
-            imageFilePath: string,
-        }[]>((observer) => {
-            const unsubscribe = onSnapshot(
-                orderedEquipmentQuery,
-                (querySnapshot) => {
-                    const equipment = querySnapshot.docs.map(
-                        (doc) =>
-                            ({
-                                id: doc.id,
-                                name: doc.data()['name'],
-                                imagePreviewUrl: doc.data()['imagePreviewUrl'],
-                                imageFilePath: doc.data()['imageFilePath'],
-                            } as {
-                                id: string;
-                                name: string;
-                                imagePreviewUrl: string;
-                                imageFilePath: string,
-                            })
-                    );
-
-                    observer.next(equipment);
-                },
-                (error) => {
-                    observer.error(error);
-                }
-            );
-
-            return { unsubscribe };
-        });
+        return collectionData(q, { idField: 'id' }).pipe(
+            map((equipmentArr) =>
+                (
+                    equipmentArr as {
+                        id: string;
+                        name: string;
+                        imagePreviewUrl: string;
+                        imageFilePath: string;
+                    }[]
+                ).map((equipment) => ({
+                    ...equipment,
+                    id: equipment.id,
+                }))
+            )
+        );
     }
 
     async addEquipment(name: string, imageFile: File) {
