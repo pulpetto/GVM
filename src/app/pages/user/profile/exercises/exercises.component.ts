@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    inject,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MuscleGroupsModalComponent } from '../../../../shared/modals/muscle-groups-modal/muscle-groups-modal.component';
@@ -10,6 +16,7 @@ import { ActivityBarComponent } from '../../../../shared/activity-bar/activity-b
 import { PreviousRouteButtonComponent } from '../../../../shared/previous-route-button/previous-route-button.component';
 import { UserService } from '../../../../services/user.service';
 import { filter, switchMap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-exercises',
@@ -32,6 +39,7 @@ export class ExercisesComponent implements OnInit {
     userService = inject(UserService);
     router = inject(Router);
     activatedRoute = inject(ActivatedRoute);
+    destroyRef = inject(DestroyRef);
 
     exercisesModalVisibility: boolean = false;
     innerModalsVisibility: boolean = false;
@@ -53,21 +61,25 @@ export class ExercisesComponent implements OnInit {
     selectedEquipmentId: string | null = null;
 
     ngOnInit() {
-        this.dataService.getExercisesPreviews$().subscribe((data) => {
-            this.exercises = data;
-            this.exercisesFiltered = data;
-        });
+        this.dataService
+            .getExercisesPreviews$()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((data) => {
+                this.exercises = data;
+                this.exercisesFiltered = data;
+            });
 
         this.userService.user$
             .pipe(
                 filter((user) => !!user),
-                switchMap(() => this.userService.getCustomExercisesPreviews())
+                switchMap(() => this.userService.getCustomExercisesPreviews()),
+                takeUntilDestroyed(this.destroyRef)
             )
-            .subscribe((data) => {
+            .subscribe((data) =>
                 data.forEach((customExercise) =>
                     this.exercises?.push(customExercise)
-                );
-            });
+                )
+            );
     }
 
     openExercisesModal() {
