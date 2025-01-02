@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import {
     addDoc,
     collection,
+    collectionData,
     CollectionReference,
     deleteDoc,
     doc,
@@ -20,7 +21,7 @@ import {
     ref,
     uploadBytes,
 } from '@angular/fire/storage';
-import { from, Observable } from 'rxjs';
+import { from, map, Observable } from 'rxjs';
 import { Step } from '../interfaces/step';
 import { User } from '../interfaces/user';
 import { ExercisePreview } from '../interfaces/exercise-preview';
@@ -72,40 +73,21 @@ export class AdminService {
 
         const q = query(muscleGroupsRef, orderBy('name'));
 
-        // prettier-ignore
-        return new Observable<{
-            id: string;
-            name: string;
-            imagePreviewUrl: string;
-            imageFilePath: string,
-        }[]>((observer) => {
-            const unsubscribe = onSnapshot(
-                q,
-                (querySnapshot) => {
-                    const muscleGroups = querySnapshot.docs.map(
-                        (doc) =>
-                            ({
-                                id: doc.id,
-                                name: doc.data()['name'],
-                                imagePreviewUrl: doc.data()['imagePreviewUrl'],
-                                imageFilePath: doc.data()['imageFilePath'],
-                            } as {
-                                id: string;
-                                name: string;
-                                imagePreviewUrl: string;
-                                imageFilePath: string,
-                            })
-                    );
-
-                    observer.next(muscleGroups);
-                },
-                (error) => {
-                    observer.error(error);
-                }
-            );
-
-            return { unsubscribe };
-        });
+        return collectionData(q, { idField: 'id' }).pipe(
+            map((muscleGroups) =>
+                (
+                    muscleGroups as {
+                        id: string;
+                        name: string;
+                        imagePreviewUrl: string;
+                        imageFilePath: string;
+                    }[]
+                ).map((muscleGroup) => ({
+                    ...muscleGroup,
+                    id: muscleGroup.id,
+                }))
+            )
+        );
     }
 
     async addNewMuscleGroup(name: string, imageFile: File): Promise<void> {
