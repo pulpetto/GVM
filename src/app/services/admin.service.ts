@@ -369,36 +369,16 @@ export class AdminService {
             'exercisePreviews'
         );
 
-        const orderedExercisesQuery = query(exercisesRef);
+        const q = query(exercisesRef, orderBy('name'));
 
-        return new Observable<ExercisePreview[]>((observer) => {
-            const unsubscribe = onSnapshot(
-                orderedExercisesQuery,
-                (querySnapshot) => {
-                    const exercises = querySnapshot.docs.map(
-                        (doc) =>
-                            ({
-                                custom: doc.data()['custom'],
-                                id: doc.id,
-                                name: doc.data()['name'],
-                                imagePreviewUrl: doc.data()['imagePreviewUrl'],
-                                mainMuscleGroupsIds:
-                                    doc.data()['mainMuscleGroupsIds'],
-                                secondaryMuscleGroupsIds:
-                                    doc.data()['secondaryMuscleGroupsIds'],
-                                equipmentId: doc.data()['equipmentId'],
-                            } as ExercisePreview)
-                    );
-
-                    observer.next(exercises);
-                },
-                (error) => {
-                    observer.error(error);
-                }
-            );
-
-            return { unsubscribe };
-        });
+        return collectionData(q, { idField: 'id' }).pipe(
+            map((exercises) =>
+                (exercises as ExercisePreview[]).map((exercise) => ({
+                    ...exercise,
+                    id: exercise.id,
+                }))
+            )
+        );
     }
 
     // ---------- Achievements ----------
