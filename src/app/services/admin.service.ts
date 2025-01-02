@@ -459,28 +459,15 @@ export class AdminService {
             'achievements'
         );
 
-        const orderedAchievementsQuery = query(achievementsCollectionRef);
+        const q = query(achievementsCollectionRef, orderBy('name'));
 
-        return new Observable<Achievement[]>((observer) => {
-            const unsubscribe = onSnapshot(
-                orderedAchievementsQuery,
-                (querySnapshot) => {
-                    const achievements: Achievement[] = querySnapshot.docs.map(
-                        (doc) =>
-                            ({
-                                ...doc.data(),
-                                id: doc.id,
-                            } as Achievement)
-                    );
-
-                    observer.next(achievements);
-                },
-                (error) => {
-                    observer.error(error);
-                }
-            );
-
-            return { unsubscribe };
-        });
+        return collectionData(q, { idField: 'id' }).pipe(
+            map((achievements) =>
+                (achievements as Achievement[]).map((achievement) => ({
+                    ...achievement,
+                    id: achievement.id,
+                }))
+            )
+        );
     }
 }
