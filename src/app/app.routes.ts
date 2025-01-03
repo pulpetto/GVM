@@ -278,13 +278,6 @@ export const routes: Routes = [
                 canDeactivate: [unsavedChangesGuard],
             },
             {
-                path: 'workout/explore',
-                loadComponent: () =>
-                    import(
-                        './pages/user/workout/explore/explore.component'
-                    ).then((component) => component.ExploreComponent),
-            },
-            {
                 path: 'workout/:workoutId',
                 loadComponent: () =>
                     import(

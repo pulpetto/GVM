@@ -155,56 +155,6 @@
             ></div>
         </a>
 
-        <a
-            routerLink="editor"
-            [queryParams]="{ editView: 'new' }"
-            class="flex items-center gap-2 rounded-md bg-neutral-900 bg-opacity-25 w-full p-3.5 focus-visible:outline-emerald-500 relative active:opacity-50 transition-all group outline-none overflow-hidden"
-        >
-            <svg
-                class="w-7 h-7 mt-1 z-20 scale-110 stroke-white group-hover:stroke-emerald-500 transition-colors"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M15.5 15.5L19 19"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-                <path
-                    d="M5 11C5 14.3137 7.68629 17 11 17C12.6597 17 14.1621 16.3261 15.2483 15.237C16.3308 14.1517 17 12.654 17 11C17 7.68629 14.3137 5 11 5C7.68629 5 5 7.68629 5 11Z"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-            </svg>
-
-            <div
-                class="font-semibold text-xl z-20 group-hover:text-emerald-500 transition-colors"
-            >
-                Explore
-            </div>
-
-            <svg
-                class="z-20 stroke-transparent group-hover:stroke-emerald-500 absolute right-6 scale-0 group-hover:scale-100 group-hover:right-0 transition-all top-1/2 -translate-y-1/2 w-10 h-10"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M9 6L15 12L9 18"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-            </svg>
-
-            <div
-                class="absolute top-0 z-10 bg-opacity-50 w-full h-full transition-all duration-300 bg-neutral-900 -left-full group-hover:left-0"
-            ></div>
-        </a>
-
         <button
             type="button"
             (click)="newSplitNameModalVisibility = true"
