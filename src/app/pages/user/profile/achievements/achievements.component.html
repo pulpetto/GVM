@@ -3,7 +3,7 @@
     <div rightSide></div>
 </app-activity-bar>
 
-<div class="flex flex-col p-4">
+<div class="flex flex-col p-4 gap-2">
     @if (achievements$ | async; as achievements) {
     <div class="flex flex-col gap-2">
         @if (!loading) {
@@ -19,5 +19,27 @@
         <!--  -->
         }
     </div>
+    } @else {
+    <!--  -->
+    @for (placeholder of [1,2,3,4]; track $index) {
+    <div
+        data-placeholder
+        class="h-52 w-full rounded-md border-neutral-900 border-solid border-2 flex flex-col items-center p-2 gap-3 relative overflow-hidden"
+    >
+        <div
+            class="rounded-full justify-self-center self-center w-24 h-24 bg-neutral-900"
+        ></div>
+
+        <div class="w-1/2 rounded-md bg-neutral-900 h-2"></div>
+
+        <div class="flex flex-col w-full items-center gap-2">
+            <div class="w-11/12 rounded-md bg-neutral-900 h-2"></div>
+            <div class="w-11/12 rounded-md bg-neutral-900 h-2"></div>
+        </div>
+
+        <div class="rounded-md h-6 w-full bg-neutral-900"></div>
+    </div>
+    }
+    <!--  -->
     }
 </div>
