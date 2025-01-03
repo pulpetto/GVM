@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TabsComponent } from '../tabs/tabs.component';
 import { InstructionComponent } from './instruction/instruction.component';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../services/data.service';
 import {
@@ -46,6 +46,7 @@ export class ExerciseComponent implements OnInit {
     dataService = inject(DataService);
     userService = inject(UserService);
     activatedRoute = inject(ActivatedRoute);
+    router = inject(Router);
 
     combinedExerciseData$!: Observable<{
         baseData: ExercisePreviewFull;
@@ -148,4 +149,14 @@ export class ExerciseComponent implements OnInit {
             }))
         );
     });
+
+    redirectToExerciseEditor(
+        baseData: ExercisePreviewFull,
+        exetendedData: ExerciseDetails
+    ) {
+        this.router.navigate(['edit'], {
+            relativeTo: this.activatedRoute,
+            state: { previewData: { baseData, exetendedData } },
+        });
+    }
 }

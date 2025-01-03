@@ -3,8 +3,14 @@
     <app-previous-route-button leftSide></app-previous-route-button>
 
     @if (exerciseData.baseData.custom) {
-    <a
-        routerLink=""
+    <button
+        type="button"
+        (click)="
+            redirectToExerciseEditor(
+                exerciseData.baseData,
+                exerciseData.detailsData
+            )
+        "
         rightSide
         class="transition-opacity -translate-y-1 active:opacity-50 group"
     >
@@ -21,7 +27,7 @@
                 stroke-linejoin="round"
             />
         </svg>
-    </a>
+    </button>
     } @else {
     <div rightSide></div>
     }
