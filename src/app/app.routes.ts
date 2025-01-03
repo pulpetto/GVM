@@ -232,15 +232,25 @@ export const routes: Routes = [
                 path: 'profile/exercises/creator',
                 loadComponent: () =>
                     import(
-                        './shared/exercise-creator/exercise-creator.component'
-                    ).then((component) => component.ExerciseCreatorComponent),
-                canDeactivate: [unsavedChangesGuard],
+                        './shared/exercise/custom-exercise-creator/custom-exercise-creator.component'
+                    ).then(
+                        (component) => component.CustomExerciseCreatorComponent
+                    ),
             },
             {
                 path: 'profile/exercises/:id',
                 loadComponent: () =>
                     import('./shared/exercise/exercise.component').then(
                         (component) => component.ExerciseComponent
+                    ),
+            },
+            {
+                path: 'profile/exercises/:id/edit',
+                loadComponent: () =>
+                    import(
+                        './shared/exercise/custom-exercise-creator/custom-exercise-creator.component'
+                    ).then(
+                        (component) => component.CustomExerciseCreatorComponent
                     ),
             },
             {
