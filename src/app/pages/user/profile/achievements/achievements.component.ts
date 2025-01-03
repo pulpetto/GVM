@@ -12,18 +12,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 interface AchievementsTypes {
     [key: string]: number;
     totalWorkoutDuration: number;
-    workoutsAmount: number; //
-    totalWorkoutsVolume: number; //
-    totalWorkoutsReps: number; //
-    totalWorkoutsSets: number; //
+    workoutsAmount: number;
+    totalWorkoutsVolume: number;
+    totalWorkoutsReps: number;
+    totalWorkoutsSets: number;
     workoutsOver2Hours: number;
     workoutsOver20kVolume: number;
     workoutsOver100Reps: number;
     workoutsOver20Sets: number;
     estimatedSquat1rm: number;
     estimatedBench1rm: number;
-    estimatedDeadlift1rm: number; //
-    powerliftingTotal: number; //
+    estimatedDeadlift1rm: number;
+    powerliftingTotal: number;
 }
 
 @Component({
@@ -156,6 +156,9 @@ export class AchievementsComponent implements OnInit {
                     this.achievementsValues.estimatedDeadlift1rm;
 
                 this.achievementsValues.workoutsAmount = workouts.length;
+                this.achievementsValues.totalWorkoutDuration = Math.round(
+                    this.achievementsValues.totalWorkoutDuration / 3600
+                );
 
                 this.loading = false;
             });
