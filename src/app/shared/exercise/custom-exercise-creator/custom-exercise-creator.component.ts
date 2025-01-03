@@ -23,6 +23,7 @@ import { EquipmentSelectorComponent } from '../../exercise-creator/equipment-sel
 import { InstructionStepsComponent } from '../../exercise-creator/instruction-steps/instruction-steps.component';
 import { ExercisePreviewFull } from '../../../interfaces/exercise-preview-full';
 import { ExerciseDetails } from '../../../interfaces/exercise-details';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-custom-exercise-creator',
@@ -46,6 +47,7 @@ export class CustomExerciseCreatorComponent {
     cdr = inject(ChangeDetectorRef);
     fb = inject(FormBuilder);
     userService = inject(UserService);
+    activatedRoute = inject(ActivatedRoute);
 
     @ViewChild('thumbnail') thumbnailInput!: ElementRef<HTMLInputElement>;
     @ViewChild('video') videoInput!: ElementRef<HTMLInputElement>;
@@ -78,12 +80,15 @@ export class CustomExerciseCreatorComponent {
         ),
     });
 
+    exerciseDetails!: ExerciseDetails;
     exerciseId!: string | null;
 
     ngOnInit() {
         const routeData = history.state.previewData;
 
         if (routeData) {
+            this.exerciseId = this.activatedRoute.snapshot.paramMap.get('id');
+
             this.view = 'existing';
 
             const exercisePreviewData =
@@ -117,19 +122,20 @@ export class CustomExerciseCreatorComponent {
                 exercisePreviewData.equipment.id
             );
 
-            const exerciseDetails = routeData.exetendedData as ExerciseDetails;
+            this.exerciseDetails = routeData.exetendedData as ExerciseDetails;
 
-            this.selectedVideo = exerciseDetails.instructionVideoPreviewUrl;
+            this.selectedVideo =
+                this.exerciseDetails.instructionVideoPreviewUrl;
 
             this.exerciseForm.controls.videoFile.setValue(
-                exerciseDetails.instructionVideoPreviewUrl
+                this.exerciseDetails.instructionVideoPreviewUrl
             );
 
             const instruction = this.exerciseForm.get(
                 'instruction'
             ) as FormArray;
 
-            exerciseDetails.instructionSteps.forEach((step) => {
+            this.exerciseDetails.instructionSteps.forEach((step) => {
                 const localStep = this.fb.group({
                     name: step.name,
                     subSteps: this.fb.array([]),
@@ -239,7 +245,17 @@ export class CustomExerciseCreatorComponent {
     modifyExercise() {
         const formData = this.exerciseForm.value;
 
-        //upd
+        this.userService.modifyCustomExercise(
+            formData.name!,
+            formData.thumbnailFile as File,
+            formData.mainMuscleGroupsIds!,
+            formData.secondaryMuscleGroupsIds!,
+            formData.equipmentId!,
+            formData.videoFile as File,
+            formData.instruction as Step[],
+            this.exerciseDetails,
+            this.exerciseId!
+        );
     }
 
     ngOnDestroy() {

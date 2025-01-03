@@ -1087,7 +1087,7 @@ export class UserService {
     ) {
         // Image upload
         const imageFilePath = `users/${
-            this.currentUser()?.username
+            this.currentUser()?.id
         }/customExercises/${Date.now()}_${name}`;
         const storageRef = ref(this.storage, imageFilePath);
         const snapshot = await uploadBytes(storageRef, imageFile);
@@ -1095,7 +1095,7 @@ export class UserService {
 
         // Video upload
         const videoFilePath = `users/${
-            this.currentUser()?.username
+            this.currentUser()?.id
         }/customExercises/${Date.now()}_${name}_video`;
         const videoStorageRef = ref(this.storage, videoFilePath);
         const videoSnapshot = await uploadBytes(
@@ -1131,6 +1131,100 @@ export class UserService {
                 alternativesIds: alternativesIds,
             }
         );
+    }
+
+    async modifyCustomExercise(
+        name: string,
+        imageFile: File,
+        mainMuscleGroupsIds: string[],
+        secondaryMuscleGroupsIds: string[],
+        equipmentId: string,
+        instructionVideoFile: File,
+        instructionSteps: Step[],
+        oldExerciseDetails: ExerciseDetails,
+        id: string
+    ) {
+        try {
+            const exercisePreviewRef: DocumentReference = doc(
+                this.userDocRef!,
+                'customExercisesPreviews',
+                id
+            );
+
+            const exerciseDetailsRef: DocumentReference = doc(
+                this.userDocRef!,
+                'customExercisesDetails',
+                id
+            );
+
+            if (imageFile instanceof File) {
+                // Old image delete
+                const oldImageStorageRef = ref(
+                    this.storage,
+                    oldExerciseDetails.imageFilePath
+                );
+                await deleteObject(oldImageStorageRef);
+
+                // Image upload
+                const imageFilePath = `users/${
+                    this.currentUser()?.id
+                }/customExercises/${Date.now()}_${name}`;
+                const storageRef = ref(this.storage, imageFilePath);
+                const snapshot = await uploadBytes(storageRef, imageFile);
+                const imagePreviewUrl = await getDownloadURL(snapshot.ref);
+
+                await updateDoc(exercisePreviewRef, {
+                    imagePreviewUrl: imagePreviewUrl,
+                });
+
+                await updateDoc(exerciseDetailsRef, {
+                    imageFilePath: imageFilePath,
+                });
+            }
+
+            if (instructionVideoFile instanceof File) {
+                // Old video delete
+                const oldVideoStorageRef = ref(
+                    this.storage,
+                    oldExerciseDetails.instructionVideoFilePath
+                );
+                await deleteObject(oldVideoStorageRef);
+
+                // Video upload
+                const videoFilePath = `users/${
+                    this.currentUser()?.id
+                }/customExercises/${Date.now()}_${name}_video`;
+                const videoStorageRef = ref(this.storage, videoFilePath);
+                const videoSnapshot = await uploadBytes(
+                    videoStorageRef,
+                    instructionVideoFile
+                );
+                const videoPreviewUrl = await getDownloadURL(videoSnapshot.ref);
+
+                await setDoc(exerciseDetailsRef, {
+                    instructionVideoPreviewUrl: videoPreviewUrl,
+                    instructionVideoFilePath: videoFilePath,
+                });
+            }
+
+            await updateDoc(exercisePreviewRef, {
+                name: name,
+                mainMuscleGroupsIds: mainMuscleGroupsIds,
+                secondaryMuscleGroupsIds: secondaryMuscleGroupsIds,
+                equipmentId: equipmentId,
+            });
+
+            await updateDoc(exerciseDetailsRef, {
+                instructionSteps: instructionSteps,
+            });
+
+            this.router.navigate(['/user/profile/exercises']);
+            this.toastService.show('Exercise modified successfully', false);
+        } catch (error) {
+            console.error(error);
+            this.router.navigate(['/user/profile/exercises']);
+            this.toastService.show('Error occured, try again', true);
+        }
     }
 
     getCustomExercisesPreviews(): Observable<ExercisePreview[]> {
