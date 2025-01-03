@@ -1,9 +1,5 @@
 <app-activity-bar
-    [title]="
-        this.userRole() === 'admin'
-            ? 'Exercise Creator'
-            : 'Custom Exercise Creator'
-    "
+    [title]="view === 'new' ? 'Exercise Creator' : 'Exercise Editor'"
 >
     <app-previous-route-button leftSide></app-previous-route-button>
     <div rightSide></div>

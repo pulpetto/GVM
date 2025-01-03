@@ -64,8 +64,6 @@ export class ExerciseCreatorComponent
     destroyRef = inject(DestroyRef);
     userService = inject(UserService);
 
-    userRole = computed(() => this.userService.getUser()?.role);
-
     @ViewChild('thumbnail') thumbnailInput!: ElementRef<HTMLInputElement>;
     @ViewChild('video') videoInput!: ElementRef<HTMLInputElement>;
 
@@ -287,51 +285,35 @@ export class ExerciseCreatorComponent
     addExercise() {
         const formData = this.exerciseForm.value;
 
-        if (this.userRole() === 'admin') {
-            this.adminService.addExercise(
-                formData.name!,
-                formData.thumbnailFile! as File,
-                formData.mainMuscleGroupsIds!,
-                formData.secondaryMuscleGroupsIds!,
-                formData.equipmentId!,
-                formData.videoFile! as File,
-                formData.instruction as Step[],
-                [],
-                []
-            );
-        } else if (this.userRole() === 'user') {
-            this.userService.addCustomExercise(
-                formData.name!,
-                formData.thumbnailFile! as File,
-                formData.mainMuscleGroupsIds!,
-                formData.secondaryMuscleGroupsIds!,
-                formData.equipmentId!,
-                formData.videoFile! as File,
-                formData.instruction as Step[],
-                [],
-                []
-            );
-        }
+        this.adminService.addExercise(
+            formData.name!,
+            formData.thumbnailFile! as File,
+            formData.mainMuscleGroupsIds!,
+            formData.secondaryMuscleGroupsIds!,
+            formData.equipmentId!,
+            formData.videoFile! as File,
+            formData.instruction as Step[],
+            [],
+            []
+        );
     }
 
     modifyExercise() {
         const formData = this.exerciseForm.value;
 
-        if (this.userRole() === 'admin') {
-            this.adminService.updateExercise(
-                formData.name!,
-                formData.thumbnailFile! as File,
-                formData.mainMuscleGroupsIds!,
-                formData.secondaryMuscleGroupsIds!,
-                formData.equipmentId!,
-                formData.videoFile! as File,
-                formData.instruction as Step[],
-                [],
-                [],
-                this.exerciseDetails,
-                this.exerciseId!
-            );
-        }
+        this.adminService.updateExercise(
+            formData.name!,
+            formData.thumbnailFile! as File,
+            formData.mainMuscleGroupsIds!,
+            formData.secondaryMuscleGroupsIds!,
+            formData.equipmentId!,
+            formData.videoFile! as File,
+            formData.instruction as Step[],
+            [],
+            [],
+            this.exerciseDetails,
+            this.exerciseId!
+        );
     }
 
     ngOnDestroy() {
