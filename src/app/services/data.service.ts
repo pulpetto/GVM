@@ -48,21 +48,18 @@ export class DataService {
             'achievements'
         );
 
+        const q = query(achievementsCollectionRef, orderBy('name'));
+
         return from(
-            getDocs(achievementsCollectionRef).then((achievementsSnapshot) => {
-                const achievements: Achievement[] = [];
-
-                achievementsSnapshot.forEach((achievementDoc) => {
-                    const achievement: Achievement =
-                        achievementDoc.data() as Achievement;
-
-                    achievement.id = achievementDoc.id;
-
-                    achievements.push(achievement);
-                });
-
-                return achievements;
-            })
+            getDocs(q).then((snapshot) =>
+                snapshot.docs.map(
+                    (doc) =>
+                        ({
+                            id: doc.id,
+                            ...doc.data(),
+                        } as Achievement)
+                )
+            )
         );
     }
 
