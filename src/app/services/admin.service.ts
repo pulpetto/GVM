@@ -28,6 +28,9 @@ import { ExercisePreview } from '../interfaces/exercise-preview';
 import { Achievement } from '../interfaces/achievement';
 import { Tier } from '../interfaces/tier';
 import { ExerciseDetails } from '../interfaces/exercise-details';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+import { ToastService } from './toast.service';
 
 @Injectable({
     providedIn: 'root',
@@ -35,6 +38,9 @@ import { ExerciseDetails } from '../interfaces/exercise-details';
 export class AdminService {
     firestore = inject(Firestore);
     storage = getStorage();
+    location = inject(Location);
+    router = inject(Router);
+    toastService = inject(ToastService);
 
     // ---------- Users ----------
 
@@ -252,42 +258,67 @@ export class AdminService {
         variationsIds: string[],
         alternativesIds: string[]
     ) {
-        // Image upload
-        const imageFilePath = `admin/exercises/${Date.now()}_${name}`;
-        const storageRef = ref(this.storage, imageFilePath);
-        const snapshot = await uploadBytes(storageRef, imageFile);
-        const imagePreviewUrl = await getDownloadURL(snapshot.ref);
+        try {
+            // Image upload
+            const imageFilePath = `admin/exercises/${Date.now()}_${name}`;
+            const storageRef = ref(this.storage, imageFilePath);
+            const snapshot = await uploadBytes(storageRef, imageFile);
+            const imagePreviewUrl = await getDownloadURL(snapshot.ref);
 
-        // Video upload
-        const videoFilePath = `admin/exercises/${Date.now()}_${name}_video`;
-        const videoStorageRef = ref(this.storage, videoFilePath);
-        const videoSnapshot = await uploadBytes(
-            videoStorageRef,
-            instructionVideoFile
-        );
-        const videoPreviewUrl = await getDownloadURL(videoSnapshot.ref);
+            // Video upload
+            const videoFilePath = `admin/exercises/${Date.now()}_${name}_video`;
+            const videoStorageRef = ref(this.storage, videoFilePath);
+            const videoSnapshot = await uploadBytes(
+                videoStorageRef,
+                instructionVideoFile
+            );
+            const videoPreviewUrl = await getDownloadURL(videoSnapshot.ref);
 
-        const newExerciseId = doc(
-            collection(this.firestore, 'exercisePreviews')
-        ).id;
+            const newExerciseId = doc(
+                collection(this.firestore, 'exercisePreviews')
+            ).id;
 
-        await setDoc(doc(this.firestore, 'exercisePreviews', newExerciseId), {
-            custom: false,
-            name: name,
-            imagePreviewUrl: imagePreviewUrl,
-            mainMuscleGroupsIds: mainMuscleGroupsIds,
-            secondaryMuscleGroupsIds: secondaryMuscleGroupsIds,
-            equipmentId: equipmentId,
-        });
+            await setDoc(
+                doc(this.firestore, 'exercisePreviews', newExerciseId),
+                {
+                    custom: false,
+                    name: name,
+                    imagePreviewUrl: imagePreviewUrl,
+                    mainMuscleGroupsIds: mainMuscleGroupsIds,
+                    secondaryMuscleGroupsIds: secondaryMuscleGroupsIds,
+                    equipmentId: equipmentId,
+                }
+            );
 
-        await setDoc(doc(this.firestore, 'exerciseDetails', newExerciseId), {
-            imageFilePath: imageFilePath,
-            instructionVideoPreviewUrl: videoPreviewUrl,
-            instructionVideoFilePath: videoFilePath,
-            instructionSteps: instructionSteps,
-            variationsIds: variationsIds,
-            alternativesIds: alternativesIds,
-        });
+            await setDoc(
+                doc(this.firestore, 'exerciseDetails', newExerciseId),
+                {
+                    imageFilePath: imageFilePath,
+                    instructionVideoPreviewUrl: videoPreviewUrl,
+                    instructionVideoFilePath: videoFilePath,
+                    instructionSteps: instructionSteps,
+                    variationsIds: variationsIds,
+                    alternativesIds: alternativesIds,
+                }
+            );
+
+            this.toastService.show('Exercise added successfully!', false);
+
+            if (window.history.length > 1) {
+                this.location.back();
+            } else {
+                this.router.navigate(['user/admin/exercises']);
+            }
+        } catch (error) {
+            console.error(error);
+            this.toastService.show('Error occured, try again', true);
+
+            if (window.history.length > 1) {
+                this.location.back();
+            } else {
+                this.router.navigate(['user/admin/exercises']);
+            }
+        }
     }
 
     async updateExercise(
