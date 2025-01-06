@@ -66,15 +66,10 @@ export class RadarChartComponent implements AfterViewInit, OnChanges {
                             beginAtZero: false,
                             ticks: {
                                 display: false,
-                                // stepSize: 20,
                             },
                             grid: {
                                 color: 'rgba(23, 23, 23, 0)',
                             },
-                            // 10 - 950
-                            // 23 - 900
-                            // 38 - 800
-                            // 64 - 700
                             angleLines: {
                                 color: 'rgb(23 23 23)',
                             },
