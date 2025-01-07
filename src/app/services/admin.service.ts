@@ -254,9 +254,7 @@ export class AdminService {
         secondaryMuscleGroupsIds: string[],
         equipmentId: string,
         instructionVideoFile: File,
-        instructionSteps: Step[],
-        variationsIds: string[],
-        alternativesIds: string[]
+        instructionSteps: Step[]
     ) {
         try {
             // Image upload
@@ -297,8 +295,6 @@ export class AdminService {
                     instructionVideoPreviewUrl: videoPreviewUrl,
                     instructionVideoFilePath: videoFilePath,
                     instructionSteps: instructionSteps,
-                    variationsIds: variationsIds,
-                    alternativesIds: alternativesIds,
                 }
             );
 

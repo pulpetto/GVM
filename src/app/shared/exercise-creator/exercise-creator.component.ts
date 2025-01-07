@@ -291,9 +291,7 @@ export class ExerciseCreatorComponent
             formData.secondaryMuscleGroupsIds!,
             formData.equipmentId!,
             formData.videoFile! as File,
-            formData.instruction as Step[],
-            [],
-            []
+            formData.instruction as Step[]
         );
     }
 
