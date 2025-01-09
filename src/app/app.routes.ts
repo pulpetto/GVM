@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { adminGuard } from './guards/admin.guard';
-import { unsavedChangesGuard } from './guards/unsaved-changes.guard';
 
 export const routes: Routes = [
     {
@@ -82,7 +81,6 @@ export const routes: Routes = [
                         './shared/exercise-creator/exercise-creator.component'
                     ).then((component) => component.ExerciseCreatorComponent),
                 canActivate: [adminGuard],
-                canDeactivate: [unsavedChangesGuard],
             },
             {
                 path: 'admin/muscles',
@@ -131,7 +129,6 @@ export const routes: Routes = [
                         (component) => component.AchievementCreatorComponent
                     ),
                 canActivate: [adminGuard],
-                canDeactivate: [unsavedChangesGuard],
             },
             {
                 path: 'profile',
@@ -275,7 +272,6 @@ export const routes: Routes = [
                     ).then(
                         (component) => component.WorkoutTemplateEditorComponent
                     ),
-                canDeactivate: [unsavedChangesGuard],
             },
             {
                 path: 'workout/:workoutId',
@@ -295,7 +291,6 @@ export const routes: Routes = [
                     ).then(
                         (component) => component.WorkoutTemplateEditorComponent
                     ),
-                canDeactivate: [unsavedChangesGuard],
             },
         ],
     },
