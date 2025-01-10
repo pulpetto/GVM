@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../services/user.service';
 
 const visibleModal = { top: '50%' };
 const hiddenModal = { top: '100%' };
@@ -53,5 +54,11 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     ],
 })
 export class CredentialsModalComponent {
+    userService = inject(UserService);
+
     modalVisibility: boolean = true;
+
+    loginUser(email: string, password: string) {
+        this.userService.loginUser(email, password);
+    }
 }
