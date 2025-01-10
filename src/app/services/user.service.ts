@@ -1285,7 +1285,7 @@ export class UserService {
 
     async updatePfp(imageFile: File) {
         const oldPfpUrl = (await getDoc(this.userDocRef!)).data()!['pfpUrl'];
-        const imageFilePath = `users/${this.currentUser()?.username}/pfp`;
+        const imageFilePath = `users/${this.currentUser()?.id}/pfp`;
         const storageRef = ref(this.storage, imageFilePath);
 
         if (oldPfpUrl) {
