@@ -164,8 +164,9 @@ export class UserService {
                 );
 
                 setDoc(doc(workoutSplitsRef, 'uncategorized'), {
+                    id: 'uncategorized',
                     index: 0,
-                    splitName: 'Uncategorized',
+                    name: 'Uncategorized',
                 });
 
                 this.router.navigate([`/user/profile`]);
