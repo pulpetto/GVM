@@ -191,10 +191,12 @@ export class UserService {
 
                 this.router.navigate([`/user/profile`]);
 
+                this.toastService.show('Logged in successfully!', false);
                 this.error.next(false);
                 this.loading.next(false);
             })
             .catch((error) => {
+                this.toastService.show('Login error occured', false);
                 this.error.next(true);
                 this.loading.next(false);
                 console.error(error);
