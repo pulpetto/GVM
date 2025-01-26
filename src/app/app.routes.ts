@@ -258,6 +258,13 @@ export const routes: Routes = [
                     ).then((component) => component.StatisticsComponent),
             },
             {
+                path: 'profile/assistant',
+                loadComponent: () =>
+                    import(
+                        './pages/user/profile/assistant/assistant.component'
+                    ).then((component) => component.AssistantComponent),
+            },
+            {
                 path: 'workout',
                 loadComponent: () =>
                     import('./pages/user/workout/workout.component').then(
