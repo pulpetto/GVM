@@ -196,7 +196,7 @@ export class UserService {
                 this.loading.next(false);
             })
             .catch((error) => {
-                this.toastService.show('Login error occured', false);
+                this.toastService.show('Login error occured', true);
                 this.error.next(true);
                 this.loading.next(false);
                 console.error(error);
