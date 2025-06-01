@@ -5,3 +5,16 @@ a svg {
 a.active-link svg {
     stroke: #10b981;
 }
+
+.glowing {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 20px #10b981;
+    }
+    to {
+        text-shadow: 0 0 30px #059669, 0 0 10px #34d399;
+    }
+}
