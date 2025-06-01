@@ -171,9 +171,14 @@ export class UserService {
 
                 this.router.navigate([`/user/profile`]);
 
+                this.toastService.show('Signed up successfully!', false);
+                this.error.next(false);
                 this.loading.next(false);
             })
             .catch((error) => {
+                this.toastService.show('Signup error occured', true);
+                this.error.next(true);
+                this.loading.next(false);
                 console.error(error);
             });
     }
@@ -207,9 +212,11 @@ export class UserService {
         signOut(this.authentication)
             .then(() => {
                 this.router.navigate(['/login']);
+                this.toastService.show('Logged out successfully!', false);
             })
             .catch((error) => {
                 console.error(error);
+                this.toastService.show('Logout error occured', true);
             });
     }
 
