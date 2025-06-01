@@ -35,7 +35,10 @@ export class SignupComponent implements OnInit {
 
     singupForm = new FormGroup({
         username: new FormControl('', {
-            validators: [Validators.required],
+            validators: [
+                Validators.required,
+                Validators.pattern(/^[a-zA-Z0-9_-]+$/),
+            ],
             asyncValidators: [this.usernameAsyncValidator()],
             updateOn: 'blur',
         }),

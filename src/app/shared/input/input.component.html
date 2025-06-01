@@ -35,6 +35,10 @@
     Wrong e-mail format
     }
 
+    @if (formControlInput.errors['pattern']) {
+    Only A-Z, 0-9, _ and - are allowed
+    }
+
     @if (formControlInput.errors['usernameAlreadyTaken']) {
     Username already taken
     }
