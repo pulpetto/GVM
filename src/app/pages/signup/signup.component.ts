@@ -37,6 +37,7 @@ export class SignupComponent implements OnInit {
         username: new FormControl('', {
             validators: [
                 Validators.required,
+                Validators.minLength(3),
                 Validators.pattern(/^[a-zA-Z0-9_-]+$/),
             ],
             asyncValidators: [this.usernameAsyncValidator()],
