@@ -82,6 +82,16 @@ export class ExercisesComponent implements OnInit {
             );
     }
 
+    changeInnerModalsVisibility($event: boolean) {
+        this.innerModalsVisibility = $event;
+
+        if (this.innerModalsVisibility) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }
+
     openExercisesModal() {
         this.newlySelectedExercisesIds.clear();
         this.exercisesModalVisibility = true;

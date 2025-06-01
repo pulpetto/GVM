@@ -36,12 +36,12 @@
                 (muscleGroupIdChangeEvent)="
                     filterExercisesByMusclesNames($event!)
                 "
-                (visibilityChangeEvent)="innerModalsVisibility = $event"
+                (visibilityChangeEvent)="changeInnerModalsVisibility($event)"
                 class="w-1/2"
             ></app-muscle-groups-modal>
             <app-equipment-modal
                 (equipmentIdChangeEvent)="filterExercisesByEquipment($event)"
-                (visibilityChangeEvent)="innerModalsVisibility = $event"
+                (visibilityChangeEvent)="changeInnerModalsVisibility($event)"
                 class="w-1/2"
             ></app-equipment-modal>
         </div>
