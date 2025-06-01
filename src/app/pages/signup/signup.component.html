@@ -3,7 +3,13 @@
 >
     <app-credentials-modal></app-credentials-modal>
 
-    <div class="text-4xl font-semibold">Join Today!</div>
+    <div class="flex flex-col gap-2 items-center">
+        <div class="text-4xl font-semibold">Join Today!</div>
+
+        <div class="text-neutral-600 font-semibold text-sm">
+            Top left conrner for auto-login
+        </div>
+    </div>
 
     <form
         [formGroup]="singupForm"

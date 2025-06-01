@@ -3,7 +3,14 @@
 >
     <app-credentials-modal></app-credentials-modal>
 
-    <div class="text-4xl font-semibold">Welcome Back!</div>
+    <div class="flex flex-col gap-2 items-center">
+        <div class="text-4xl font-semibold">Welcome Back!</div>
+
+        <div class="text-neutral-600 font-semibold text-sm">
+            Top left conrner for auto-login
+        </div>
+    </div>
+
     <div class="flex flex-col gap-4 lg:w-full lg:max-w-xs">
         <app-input
             [formControlInput]="loginForm.controls.email"
