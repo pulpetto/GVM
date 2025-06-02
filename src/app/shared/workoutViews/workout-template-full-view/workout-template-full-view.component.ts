@@ -156,6 +156,9 @@ export class WorkoutTemplateFullViewComponent implements OnInit {
     }
 
     deleteWorkout() {
+        this.optionsModalVisibility = false;
+        this.confirmDeleteModalVisibility = false;
+
         this.userService.deleteWorkoutTemplate(this.splitId, this.workoutId);
     }
 }
