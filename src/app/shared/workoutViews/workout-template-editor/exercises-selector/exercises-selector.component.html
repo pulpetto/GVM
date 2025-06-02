@@ -20,7 +20,9 @@
     [ngClass]="{
         'top-1/4': exercisesModalVisibility && !innerModalsVisibility,
         'top-0': innerModalsVisibility === true,
-        'top-full': !exercisesModalVisibility
+        'top-full': !exercisesModalVisibility,
+        'overflow-y-scroll': innerModalsVisibility === false,
+        'overflow-y-hidden': innerModalsVisibility === true,
     }"
 >
     <div class="text-lg font-semibold text-center">
