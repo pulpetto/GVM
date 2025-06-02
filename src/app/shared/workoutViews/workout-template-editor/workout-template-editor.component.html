@@ -6,7 +6,10 @@
 <!--  -->
 
 @if (!summaryLoading) {
-<form [formGroup]="workoutForm" class="flex flex-col items-center gap-4 p-4">
+<form
+    [formGroup]="workoutForm"
+    class="flex flex-col items-center gap-4 p-4 max-w-lg mx-auto"
+>
     @if (editView === 'new' || editView === 'existing') {
     <app-name-editor
         [title]="workoutName"
