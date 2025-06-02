@@ -147,7 +147,7 @@
 
 <div
     @openClose
-    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
+    class="fixed left-1/2 -translate-x-1/2 max-w-lg z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-300 bg-neutral-950 rounded-t-md pb-96"
     [ngClass]="{
         'top-1/4': setTypeModalVisibility,
         'top-full': !setTypeModalVisibility
@@ -203,7 +203,7 @@
 
 <div
     @openClose3
-    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
+    class="fixed left-1/2 -translate-x-1/2 max-w-lg z-50 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
     [ngClass]="{
         'bottom-0': setTypeModalVisibility,
         '-bottom-full': !setTypeModalVisibility,

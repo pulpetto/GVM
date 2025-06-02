@@ -16,7 +16,7 @@
 
 <div
     @openClose
-    class="fixed left-0 z-50 w-full h-full p-4 bg-neutral-950 rounded-t-md"
+    class="fixed left-1/2 -translate-x-1/2 max-w-md z-50 w-full h-full p-4 bg-neutral-950 rounded-t-md"
     [ngClass]="{
         'top-3/4': modalVisibility,
         'top-full': !modalVisibility
@@ -31,7 +31,7 @@
 @if (modalVisibility) {
 <div
     @openClose3
-    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
+    class="fixed left-1/2 -translate-x-1/2 max-w-md z-50 w-full p-4 shadow-md rounded-t-md"
     [ngClass]="{
         'bottom-0': modalVisibility,
         '-bottom-full': !modalVisibility,
