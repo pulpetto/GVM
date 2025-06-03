@@ -1,5 +1,5 @@
 <div
-    class="relative z-10 flex flex-col items-center gap-4 p-4 overflow-x-hidden"
+    class="relative z-10 flex flex-col items-center gap-4 p-4 pb-8 max-w-lg mx-auto"
 >
     <svg
         class="absolute -rotate-45 opacity-50 -top-10 w-44 h-44 stroke-black dark:stroke-neutral-900 -left-10"
@@ -86,11 +86,11 @@
 
     <app-statistics [workoutDataInput]="workoutData"></app-statistics>
 
-    <app-progress [workout]="workoutData"></app-progress>
+    <app-progress class="mt-8" [workout]="workoutData"></app-progress>
 
     <a
         routerLink="/user/profile"
-        class="text-lg rounded-md w-full bg-emerald-500 active:opacity-50 transition-all hover:shadow-[0_0_10px_1px_#10b981] font-semibold text-center p-1.5"
+        class="max-w-sm text-lg rounded-md w-full bg-emerald-500 active:opacity-50 transition-all hover:shadow-[0_0_10px_1px_#10b981] font-semibold text-center p-1.5"
     >
         Got It!
     </a>
