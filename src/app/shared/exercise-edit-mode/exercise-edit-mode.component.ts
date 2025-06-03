@@ -39,7 +39,6 @@ const timing = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         InfoModalButtonComponent,
         SetComponent,
         RouterModule,
-        TimeFormatterPipe,
     ],
     animations: [
         trigger('openClose', [
@@ -111,7 +110,6 @@ export class ExerciseEditModeComponent {
         | 'done';
 
     optionsModalVisibility: boolean = false;
-    restTimeConfigModalVisibility: boolean = false;
     setRemovalView: boolean = false;
 
     get supersetColor(): string | null {
