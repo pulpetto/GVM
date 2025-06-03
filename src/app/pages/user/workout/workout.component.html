@@ -290,7 +290,7 @@
 
 <div
     @openClose4
-    class="fixed left-0 z-50 flex flex-col items-center w-full h-full gap-2 p-4 text-lg rounded-t-md bg-neutral-950"
+    class="fixed left-1/2 -translate-x-1/2 max-w-lg z-50 flex flex-col items-center w-full h-full gap-2 p-4 text-lg rounded-t-md bg-neutral-950"
     [ngClass]="{
         'top-0': splitsReorderModalVisibility,
         'top-full': !splitsReorderModalVisibility
@@ -351,7 +351,7 @@
 @if (splitsReorderModalVisibility) {
 <div
     @openClose3
-    class="fixed left-0 z-50 w-full p-4 shadow-md rounded-t-md"
+    class="fixed left-1/2 -translate-x-1/2 max-w-lg z-50 w-full p-4 shadow-md rounded-t-md"
     [ngClass]="{
         'bottom-0': splitsReorderModalVisibility,
         '-bottom-full': !splitsReorderModalVisibility,
