@@ -1,12 +1,12 @@
-<div class="text-3xl font-semibold text-center">Goals</div>
-
 @if (goals$ | async; as goals) {
+<!-- prettier-ignore -->
+@if (goals.length > 0) {
+<div class="text-3xl font-semibold text-center">Goals</div>
+}
 <!-- prettier-ignore -->
 @for (goal of goals | sortGoalsByPercentages: 'percentageProgress' : false; track $index) {
 <!--  -->
-@if (goal.percentageProgress !== 100) {
 <app-goal [goal]="goal" [optionsVisbility]="false"></app-goal>
-}
 <!--  -->
 }
 <!--  -->
