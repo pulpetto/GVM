@@ -51,6 +51,7 @@
         <button
             type="button"
             (click)="changeActiveDay(dayOfMonth)"
+            [disabled]="dayOfMonth > today()"
             [ngClass]="{
                 'border-emerald-500':
                     activeDay()?.toISODate() === dayOfMonth.toISODate(),
@@ -60,10 +61,14 @@
                     activeDay()?.toISODate() !== dayOfMonth.toISODate(),
                 'text-neutral-700':
                     activeDay()?.toISODate() !== dayOfMonth.toISODate(),
+                'opacity-50': dayOfMonth.month < firstDayOfActiveMonth().month,
                 'opacity-25':
-                    dayOfMonth.month !== firstDayOfActiveMonth().month,
+                    dayOfMonth > today() ||
+                    dayOfMonth.month > firstDayOfActiveMonth().month,
+                'cursor-not-allowed': dayOfMonth > today(),
+                'cursor-pointer': dayOfMonth <= today()
             }"
-            class="flex items-center justify-center w-10 h-10 font-semibold text-center transition-colors border-2 border-solid rounded-md cursor-pointer bg-neutral-900"
+            class="flex items-center justify-center w-10 h-10 font-semibold text-center transition-colors border-2 border-solid rounded-md bg-neutral-900"
         >
             <div>{{ dayOfMonth.day }}</div>
         </button>
