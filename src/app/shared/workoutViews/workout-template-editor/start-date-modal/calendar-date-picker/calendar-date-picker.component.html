@@ -25,6 +25,8 @@
             </svg>
         </button>
 
+        @if (firstDayOfActiveMonth().month !== today().month ||
+        firstDayOfActiveMonth().year !== today().year) {
         <button
             type="button"
             (click)="goToNextMonth()"
@@ -44,6 +46,7 @@
                 />
             </svg>
         </button>
+        }
     </div>
 
     <div class="grid grid-cols-7 gap-1">
