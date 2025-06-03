@@ -127,6 +127,7 @@ export class StatisticsComponent implements OnInit {
     changeDataType(dataType: string) {
         this.activeDataType = dataType;
         this.chartData = [];
+        this.chartLabels = [];
 
         if (dataType === 'Rep ranges types') {
             this.chartLabels = ['Strength', 'Hypertrophy', 'Endurance'];
@@ -185,6 +186,7 @@ export class StatisticsComponent implements OnInit {
 
             this.lineChartValSuffix = '';
             this.lineChartValPipe = 'time';
+            this.setLineChartLabels(this.workoutsForTimeframe);
         }
 
         if (dataType === 'Workouts reps') {
@@ -202,6 +204,7 @@ export class StatisticsComponent implements OnInit {
 
             this.lineChartValSuffix = ' Reps';
             this.lineChartValPipe = 'separator';
+            this.setLineChartLabels(this.workoutsForTimeframe);
         }
 
         if (dataType === 'Workouts volume') {
@@ -220,6 +223,7 @@ export class StatisticsComponent implements OnInit {
 
             this.lineChartValSuffix = 'kg';
             this.lineChartValPipe = 'separator';
+            this.setLineChartLabels(this.workoutsForTimeframe);
         }
 
         this.dataTypeModalVisibility = false;
