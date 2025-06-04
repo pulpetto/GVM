@@ -166,7 +166,8 @@ export class ExerciseChartsComponent implements OnInit {
             }
         });
 
-        this.toggleDataTypeModal();
+        this.dataTypeModalVisibility = false;
+        document.body.style.overflow = 'auto';
     }
 
     toggleDataTypeModal() {
