@@ -23,7 +23,7 @@ import { EquipmentSelectorComponent } from '../../exercise-creator/equipment-sel
 import { InstructionStepsComponent } from '../../exercise-creator/instruction-steps/instruction-steps.component';
 import { ExercisePreviewFull } from '../../../interfaces/exercise-preview-full';
 import { ExerciseDetails } from '../../../interfaces/exercise-details';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-custom-exercise-creator',
@@ -36,6 +36,7 @@ import { ActivatedRoute } from '@angular/router';
         MuscleGroupSelectorComponent,
         EquipmentSelectorComponent,
         InstructionStepsComponent,
+        RouterModule,
     ],
     templateUrl: './custom-exercise-creator.component.html',
     styleUrl: './custom-exercise-creator.component.css',
