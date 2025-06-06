@@ -126,6 +126,8 @@ export class ExercisesSelectorComponent implements OnInit {
         }
 
         this.closeExercisesModal();
+        this.muscleGroupsModalComponent.closeModal();
+        this.equipmentModalComponent.closeModal();
     }
 
     openExercisesModal() {
