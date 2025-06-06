@@ -8,12 +8,14 @@
 
 <div
     style="z-index: 60"
-    class="fixed left-0 z-50 flex flex-col w-full h-full gap-2 p-4 overflow-y-scroll transition-all duration-500 pb-96 bg-neutral-950 rounded-t-md"
+    class="fixed left-1/2 -translate-x-1/2 max-w-lg z-50 flex flex-col w-full h-full gap-2 p-4 overflow-x-hidden transition-all duration-500 pb-96 bg-neutral-950 rounded-t-md"
     @openClose
     [ngClass]="{
         'top-1/4': exercisesModalVisibility && !innerModalsVisibility,
         'top-0': innerModalsVisibility === true,
-        'top-full': !exercisesModalVisibility
+        'top-full': !exercisesModalVisibility,
+        'overflow-y-scroll': innerModalsVisibility === false,
+        'overflow-y-hidden': innerModalsVisibility === true,
     }"
 >
     <div class="text-lg font-semibold text-center">
@@ -98,24 +100,9 @@
                         [alt]="exercise.name + ' icon'"
                     />
                 </div>
-                <div class="flex flex-col items-start">
-                    <div class="font-semibold">
-                        {{ exercise.name | titlecase }}
-                    </div>
 
-                    <!-- <div class="flex gap-1">
-                        @for (muscleGroup of exercise.muscleGroups; track
-                        $index) {
-                        <div class="flex text-sm opacity-50">
-                            <span>
-                                {{ muscleGroup | titlecase }}
-                            </span>
-                            @if ($index + 1 !== exercise.muscleGroups.length) {
-                            <span>,</span>
-                            }
-                        </div>
-                        }
-                    </div> -->
+                <div class="font-semibold">
+                    {{ exercise.name | titlecase }}
                 </div>
             </div>
         </button>
@@ -179,7 +166,7 @@
 <div
     @openClose3
     style="z-index: 60"
-    class="fixed left-0 w-full p-4 shadow-md rounded-t-md bg-neutral-950"
+    class="fixed left-1/2 -translate-x-1/2 max-w-lg w-full p-4 shadow-md rounded-t-md bg-neutral-950"
     [ngClass]="{
         'bottom-0': exercisesModalVisibility,
         '-bottom-full': !exercisesModalVisibility,
