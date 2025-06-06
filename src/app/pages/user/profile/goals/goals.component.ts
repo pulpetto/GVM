@@ -140,4 +140,9 @@ export class GoalsComponent implements OnInit {
 
         return estimated1rm;
     }
+
+    openExerciseSelectorModal() {
+        this.exerciseSelectorModalVisibility = true;
+        document.body.style.overflow = 'hidden';
+    }
 }

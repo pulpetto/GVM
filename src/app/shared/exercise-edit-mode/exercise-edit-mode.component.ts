@@ -1,19 +1,10 @@
-import {
-    Component,
-    EventEmitter,
-    Inject,
-    inject,
-    Input,
-    Output,
-    Renderer2,
-} from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { InfoModalButtonComponent } from '../info-modal-button/info-modal-button.component';
 import { SetComponent } from './set/set.component';
 import { RouterModule } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
 import { RpeType } from '../../types/rpe-type';
 import { SetType } from '../../types/set-type';
 
@@ -120,21 +111,14 @@ export class ExerciseEditModeComponent {
         return this.exercise.get('sets') as FormArray<FormGroup>;
     }
 
-    constructor(
-        private renderer: Renderer2,
-        @Inject(DOCUMENT) private document: Document
-    ) {}
-
     toogleOptionsModalVisibility() {
         this.optionsModalVisibility = !this.optionsModalVisibility;
 
-        // prettier-ignore
-        this.optionsModalVisibility
-            ? this.renderer.addClass(this.document.body, 'overflow-y-hidden')
-            : this.renderer.removeClass(
-                this.document.body,
-                'overflow-y-hidden'
-            );
+        if (this.optionsModalVisibility) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
     }
 
     addSet() {

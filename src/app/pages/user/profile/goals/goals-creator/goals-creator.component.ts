@@ -93,6 +93,7 @@ export class GoalsCreatorComponent {
         this.newGoalModalVisibility = false;
 
         this.closeExerciseSelectorModal();
+        document.body.style.overflow = 'auto';
     }
 
     selectExercise($event: ExercisePreview) {
@@ -121,7 +122,9 @@ export class GoalsCreatorComponent {
                     );
                 });
             });
+
         this.newGoalModalVisibility = true;
+        document.body.style.overflow = 'hidden';
     }
 
     addGoal() {
@@ -131,5 +134,6 @@ export class GoalsCreatorComponent {
         });
 
         this.newGoalModalVisibility = false;
+        document.body.style.overflow = 'auto';
     }
 }

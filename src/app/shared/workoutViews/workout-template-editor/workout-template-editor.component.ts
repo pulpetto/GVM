@@ -231,6 +231,7 @@ export class WorkoutTemplateEditorComponent
         this.exerciseToReplaceName =
             this.exercisesPresentionalData[$event].name;
 
+        document.body.style.overflow = 'hidden';
         this.exerciseReplaceModalVisibility = true;
     }
 

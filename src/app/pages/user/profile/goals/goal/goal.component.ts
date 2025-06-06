@@ -80,4 +80,14 @@ export class GoalComponent {
     deleteGoal() {
         this.userService.deleteGoal(this.goal.id);
     }
+
+    toggleOptionsModal() {
+        this.optionsModalVisibility = !this.optionsModalVisibility;
+
+        if (this.optionsModalVisibility) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }
 }

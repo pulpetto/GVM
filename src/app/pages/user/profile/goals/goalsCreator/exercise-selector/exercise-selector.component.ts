@@ -110,11 +110,10 @@ export class ExerciseSelectorComponent implements OnInit {
 
     onExerciseChange($index: number) {
         this.exerciseChangeEvent.emit(this.exercises![$index]);
-        this.closeExercisesModal();
-    }
-
-    openExercisesModal() {
-        this.exercisesModalVisibility = true;
+        this.exercisesModalVisibility = false;
+        this.exercisesModalCloseEvent.emit();
+        this.muscleGroupsModalComponent.closeModal();
+        this.equipmentModalComponent.closeModal();
     }
 
     closeExercisesModal() {
@@ -122,6 +121,8 @@ export class ExerciseSelectorComponent implements OnInit {
         this.exercisesModalCloseEvent.emit();
         this.muscleGroupsModalComponent.closeModal();
         this.equipmentModalComponent.closeModal();
+
+        document.body.style.overflow = 'auto';
     }
 
     filterExercisesByMusclesNames(id: string | null) {
