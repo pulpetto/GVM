@@ -120,6 +120,8 @@ export class ExerciseSelectorComponent implements OnInit {
     closeExercisesModal() {
         this.exercisesModalVisibility = false;
         this.exercisesModalCloseEvent.emit();
+        this.muscleGroupsModalComponent.closeModal();
+        this.equipmentModalComponent.closeModal();
     }
 
     filterExercisesByMusclesNames(id: string | null) {
