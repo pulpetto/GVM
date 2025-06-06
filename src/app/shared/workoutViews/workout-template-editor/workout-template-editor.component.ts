@@ -335,6 +335,12 @@ export class WorkoutTemplateEditorComponent
         this.supersetedExerciseName = $event[0].toString();
         this.supersetedExerciseIndex = +$event[1];
         this.supersetModalVisibility = true;
+        document.body.style.overflow = 'hidden';
+    }
+
+    hideSupersetModal() {
+        this.supersetModalVisibility = false;
+        document.body.style.overflow = 'auto';
     }
 
     getSupersetColor(index: number) {
@@ -358,7 +364,7 @@ export class WorkoutTemplateEditorComponent
                 .get('superSetColor')
                 ?.setValue(selectedExerciseObj.superSetColor);
 
-            this.supersetModalVisibility = false;
+            this.hideSupersetModal();
         } else {
             this.supersetColorPickerModalVisibility = true;
         }
@@ -375,7 +381,7 @@ export class WorkoutTemplateEditorComponent
             .get('superSetColor')
             ?.setValue(color);
 
-        this.supersetModalVisibility = false;
+        this.hideSupersetModal();
         this.supersetColorPickerModalVisibility = false;
 
         this.colors = this.colors.filter((col) => col !== color);
@@ -936,6 +942,19 @@ export class WorkoutTemplateEditorComponent
                 relativeTo: this.route,
                 queryParams: { splitId: this.splitId },
             });
+        }
+    }
+
+    toggleExercisesReorderModal() {
+        this.exercisesReorderModalVisibility =
+            !this.exercisesReorderModalVisibility;
+
+        if (this.exercisesReorderModalVisibility) {
+            setTimeout(() => {
+                document.body.style.overflow = 'hidden';
+            });
+        } else {
+            document.body.style.overflow = 'auto';
         }
     }
 }
